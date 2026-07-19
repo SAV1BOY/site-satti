@@ -1,0 +1,316 @@
+{
+  "schema_version": "1.1",
+  "source": {
+    "run_dir_basename": "satti"
+  },
+  "components": {
+    "button": {
+      "states": {
+        "hover": {
+          "transform": "translateY(-1px)",
+          "text": "#F4F5F7"
+        },
+        "focus-visible": {
+          "outline": "none",
+          "shadow": "0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF"
+        }
+      },
+      "variants": {
+        "primary": {
+          "radius": "999px",
+          "padding": "18px 36px",
+          "font_weight": "600",
+          "font_size": "16px",
+          "text": "var(--c-iron, #15171B)",
+          "cursor": "pointer",
+          "transition": "transform 0.45s cubic-bezier(0.76,0,0.24,1)",
+          "transform": "translateY(-1px)",
+          "outline": "none",
+          "shadow": "0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF"
+        },
+        "secondary": {
+          "radius": "999px",
+          "padding": "17px 36px",
+          "font_weight": "500",
+          "font_size": "16px",
+          "text": "var(--c-iron, #15171B)",
+          "cursor": "pointer",
+          "transition": "transform 0.45s cubic-bezier(0.76,0,0.24,1)",
+          "outline": "none",
+          "shadow": "0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF"
+        },
+        "icon": {
+          "radius": "999px",
+          "text": "#15171B",
+          "cursor": "pointer",
+          "transition": "background 0.35s ease, color 0.35s ease"
+        }
+      }
+    },
+    "card": {
+      "radius": "28px",
+      "padding": "36px",
+      "shadow": "none",
+      "variants": {
+        "title": {
+          "font_weight": "700",
+          "font_size": "1.625rem",
+          "text": "#15171B"
+        },
+        "dark": {
+          "radius": "28px",
+          "padding": "16px",
+          "text": "var(--c-ink-on-dark, #F4F5F7)",
+          "opacity": "0.8"
+        }
+      }
+    },
+    "input": {
+      "radius": "12px",
+      "padding": "0 18px",
+      "font_size": "15px",
+      "text": "var(--c-iron, #15171B)",
+      "states": {
+        "focus-visible": {
+          "outline": "none",
+          "shadow": "0 0 0 3px rgba(47,107,255,0.18)"
+        }
+      }
+    },
+    "badge": {
+      "font_weight": "400",
+      "font_size": "12px",
+      "text": "#15171B",
+      "radius": "999px",
+      "padding": "10px 20px"
+    },
+    "label": {
+      "font_weight": "500",
+      "font_size": "0.875rem",
+      "text": "#15171B"
+    }
+  },
+  "motion": {
+    "duration_fast": "350ms",
+    "duration_base": "350ms",
+    "duration_slow": "450ms",
+    "easing": "cubic-bezier(0.76,0,0.24,1)",
+    "keyframes_count": 0
+  },
+  "meta": {
+    "style_archetype": "polaris-friendly",
+    "archetype_confidence": 88,
+    "density": "regular",
+    "motion_preference": "minimal"
+  },
+  "gradient": {
+    "primary": "linear-gradient(#E0E4EA 1px, transparent 1px)",
+    "secondary": "linear-gradient(90deg, #E0E4EA 1px, transparent 1px)",
+    "total_unique": 6
+  },
+  "opacity": {
+    "disabled": 0.8,
+    "hover": 0.8
+  },
+  "focus_ring": {
+    "outline": null,
+    "outline_offset": null,
+    "box_shadow": "0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF"
+  },
+  "themed": {
+    "supportsDark": false,
+    "preferredSelector": null,
+    "preferred": {},
+    "light": {
+      "--c-paper": "#F7F8FA",
+      "--c-iron": "#15171B",
+      "--c-graphite": "#0F1115",
+      "--c-steel": "#6E7480",
+      "--c-blaze": "#FF4D00",
+      "--c-circuit": "#2F6BFF",
+      "--c-blaze-soft": "#FFE9DE",
+      "--c-line": "#E3E6EB",
+      "--c-ink-on-dark": "#F4F5F7",
+      "--c-error": "#B43A2F",
+      "--c-success": "#15794B",
+      "--tint-card1": "#FFE9DE",
+      "--tint-card2": "#E4EBFF",
+      "--tint-card3": "#ECEEF2",
+      "--radius-sm": "8px",
+      "--radius-md": "12px",
+      "--radius-lg": "16px",
+      "--radius-xl": "28px",
+      "--radius-full": "9999px",
+      "--space-2xs": "8px",
+      "--space-xs": "12px",
+      "--space-sm": "16px",
+      "--space-md": "24px",
+      "--space-lg": "48px",
+      "--space-xl": "88px",
+      "--space-xxl": "120px",
+      "--fs-display": "10.5rem",
+      "--fs-display-hero": "8.75rem",
+      "--fs-statement": "5.25rem",
+      "--fs-section": "2.5rem",
+      "--fs-card-title": "1.625rem",
+      "--fs-body-lg": "1.25rem",
+      "--fs-body": "1rem",
+      "--fs-body-sm": "0.875rem",
+      "--fs-label": "0.875rem",
+      "--fs-eyebrow": "0.875rem",
+      "--fs-tag": "0.75rem",
+      "--fs-metric": "5.5rem",
+      "--fs-caption": "0.6875rem",
+      "--lh-tight": "0.92",
+      "--lh-display": "0.95",
+      "--lh-heading": "1.1",
+      "--lh-snug": "1.15",
+      "--lh-body": "1.6",
+      "--tracking-display": "-0.02em",
+      "--tracking-tight": "-0.015em",
+      "--tracking-mono": "0.08em",
+      "--tracking-metric": "-0.04em",
+      "--fw-display": "900",
+      "--fw-statement": "800",
+      "--fw-heading": "700",
+      "--fw-semibold": "600",
+      "--fw-medium": "500",
+      "--fw-body": "400",
+      "--case-caps": "uppercase",
+      "--font-display": "'Archivo'",
+      "--font-body": "'Inter'",
+      "--font-mono": "'JetBrains Mono'"
+    },
+    "dark": {},
+    "defaultMode": "light"
+  },
+  "coverage": {
+    "overall": {
+      "detected": 20,
+      "total": 32,
+      "percent": 62.5
+    },
+    "by_layer": {
+      "L1": {
+        "detected": 5,
+        "total": 5,
+        "percent": 100
+      },
+      "L2": {
+        "detected": 7,
+        "total": 15,
+        "percent": 47
+      },
+      "L3": {
+        "detected": 4,
+        "total": 6,
+        "percent": 67
+      },
+      "L4": {
+        "detected": 1,
+        "total": 3,
+        "percent": 33
+      },
+      "L5": {
+        "detected": 3,
+        "total": 3,
+        "percent": 100
+      }
+    },
+    "detected": [
+      "L1.colors_semantic",
+      "L1.colors_extended",
+      "L1.typography",
+      "L1.rounded",
+      "L1.spacing",
+      "L2.button",
+      "L2.button.states",
+      "L2.button.variants",
+      "L2.card",
+      "L2.input",
+      "L2.badge",
+      "L2.label",
+      "L3.motion_buckets",
+      "L3.gradient",
+      "L3.opacity_scale",
+      "L3.focus_ring",
+      "L4.breakpoints",
+      "L5.style_archetype",
+      "L5.density",
+      "L5.motion_preference"
+    ],
+    "missing": [
+      {
+        "category": "L2.link",
+        "reason": "unknown"
+      },
+      {
+        "category": "L2.nav",
+        "reason": "obfuscated"
+      },
+      {
+        "category": "L2.tab",
+        "reason": "marketing_surface"
+      },
+      {
+        "category": "L2.alert",
+        "reason": "not_used_by_site"
+      },
+      {
+        "category": "L2.table",
+        "reason": "not_used_by_site"
+      },
+      {
+        "category": "L2.tooltip",
+        "reason": "not_used_by_site"
+      },
+      {
+        "category": "L2.modal",
+        "reason": "not_used_by_site"
+      },
+      {
+        "category": "L2.avatar",
+        "reason": "marketing_surface"
+      },
+      {
+        "category": "L3.shadow_ladder",
+        "reason": "extractor_limitation"
+      },
+      {
+        "category": "L3.backdrop_blur",
+        "reason": "no_glassmorphism"
+      },
+      {
+        "category": "L4.z_index",
+        "reason": "unknown"
+      },
+      {
+        "category": "L4.container_max_width",
+        "reason": "unknown"
+      }
+    ],
+    "reason_codes": {
+      "not_used_by_site": "Site does not use this token category. CSS has no relevant declarations.",
+      "flat_design": "Site is intentionally flat. No box-shadow declarations beyond 'none'.",
+      "no_glassmorphism": "Site does not use backdrop-filter. Glass effects absent by design.",
+      "no_form_surface": "Site lacks public forms. Label/help/error tokens are conventionally undefined.",
+      "marketing_surface": "Marketing-only site. Component (tabs/avatar/tooltip) doesn't appear in homepage flow.",
+      "no_variants": "Site uses a single button style. No variant suffix detected (primary/secondary/ghost).",
+      "obfuscated": "Site uses CSS-in-JS / hash-based class names that elude pattern matching.",
+      "extractor_limitation": "Signal exists in CSS but current detector heuristics didn't match.",
+      "theme_mismatch": "Tokens encode the opposite theme of what the site renders by default. Re-extract recommended.",
+      "unknown": "Could not classify — investigate manually."
+    }
+  },
+  "theme": {
+    "default": "light",
+    "confidence": "high",
+    "signals": [
+      "meta color-scheme=\"light\" → light"
+    ],
+    "mismatch": false,
+    "expected": "light",
+    "actual": "light",
+    "surface_luminance": 0.97
+  }
+}

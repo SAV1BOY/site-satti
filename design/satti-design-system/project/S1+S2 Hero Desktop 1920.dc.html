@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#F7F8FA; }
+  body { font-family:'Inter',sans-serif; color:#15171B; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#FFE9DE; }
+  @keyframes caret-blink { 50% { opacity:0; } }
+  @keyframes cue-ping { 0% { transform:scale(0.55); opacity:0.9; } 100% { transform:scale(1.5); opacity:0; } }
+</style>
+</helmet>
+
+<div style="background:#F7F8FA; color:#15171B">
+
+  <section data-screen-label="S1+S2 Hero" style="position:relative; height:100vh; min-height:880px; overflow:hidden">
+
+    <!-- Placeholder vídeo A1 full-bleed margem 12px -->
+    <div style="position:absolute; inset:12px; border-radius:16px; background:#ECEEF2; background-image:linear-gradient(#E0E4EA 1px, transparent 1px), linear-gradient(90deg, #E0E4EA 1px, transparent 1px); background-size:40px 40px; overflow:hidden">
+      <div style="position:absolute; top:50%; left:0; right:0; height:1px; background:#DDE1E7"></div>
+      <div style="position:absolute; left:50%; top:0; bottom:0; width:1px; background:#DDE1E7"></div>
+      <div style="position:absolute; top:118px; left:50%; transform:translateX(-50%); font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480; white-space:nowrap">[ A1 · VÍDEO BG · 16:9 · 1920×1080 · ≤1,2MB ]</div>
+    </div>
+
+    <!-- S1 · StickyHeader pill -->
+    <header style="position:absolute; top:20px; left:31px; right:31px; height:66px; background:#F7F8FA; border:1px solid #E3E6EB; border-radius:999px; box-shadow:0 1px 2px rgba(15,17,21,0.04); display:flex; align-items:center; justify-content:space-between; gap:32px; padding:0 11px 0 32px; box-sizing:border-box; z-index:10">
+      <a style="font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; font-size:21px; letter-spacing:-0.01em; color:#15171B; text-decoration:none; cursor:pointer">SATTI</a>
+
+      <nav style="display:flex; align-items:center; gap:36px">
+        <sc-for list="{{ navItems }}" as="it" hint-placeholder-count="4">
+          <a onMouseEnter="{{ it.enter }}" onMouseLeave="{{ it.leave }}" style="font-size:15px; font-weight:500; color:#15171B; text-decoration:none; cursor:pointer">
+            <span style="display:block; overflow:hidden; height:20px">
+              <span style="display:block; transform: {{ it.roll }}; transition: transform 0.35s cubic-bezier(0.76, 0, 0.24, 1)">
+                <span style="display:block; height:20px; line-height:20px">{{ it.label }}</span>
+                <span style="display:block; height:20px; line-height:20px">{{ it.label }}</span>
+              </span>
+            </span>
+          </a>
+        </sc-for>
+      </nav>
+
+      <div style="display:flex; align-items:center; gap:20px">
+        <div style="display:flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase">
+          <span style="color:#15171B; cursor:pointer">PT</span>
+          <span style="color:#E3E6EB">/</span>
+          <span style="color:#6E7480; cursor:pointer">EN</span>
+        </div>
+        <button onMouseEnter="{{ enterCta }}" onMouseLeave="{{ leaveCta }}" style="border:0; background:#FF4D00; color:#15171B; border-radius:999px; padding:12px 26px; font-family:'Inter',sans-serif; font-weight:600; font-size:14px; cursor:pointer">
+          <span style="display:block; overflow:hidden; height:20px">
+            <span style="display:block; transform: {{ rollCta }}; transition: transform 0.35s cubic-bezier(0.76, 0, 0.24, 1)">
+              <span style="display:block; height:20px; line-height:20px">Falar com a SATTI</span>
+              <span style="display:block; height:20px; line-height:20px">Falar com a SATTI</span>
+            </span>
+          </span>
+        </button>
+        <button aria-label="Menu" style="width:44px; height:44px; border-radius:999px; border:1px solid #E3E6EB; background:transparent; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; padding:0">
+          <span style="display:block; width:16px; height:1.5px; background:#15171B"></span>
+          <span style="display:block; width:16px; height:1.5px; background:#15171B"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- S2 · Conteúdo do hero -->
+    <div style="position:absolute; left:120px; bottom:150px; z-index:5; display:flex; flex-direction:column; gap:36px; align-items:flex-start">
+      <span style="border:1px solid #E3E6EB; border-radius:999px; padding:10px 20px; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; color:#6E7480; background:rgba(247,248,250,0.72)">[CONFIRMAR fonte real]</span>
+      <h1 style="margin:0; font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; font-size:clamp(3rem, 13vw, 10.5rem); line-height:0.92; letter-spacing:-0.02em; color:#15171B">
+        <div>Construímos</div>
+        <div>Máquinas de</div>
+        <div style="font-size:0.9em; position:relative; white-space:nowrap">
+          <span style="visibility:hidden">CRESCER</span>
+          <span style="position:absolute; left:0; top:0; display:inline-flex; align-items:baseline; gap:0.1em">
+            <span>{{ twText }}</span>
+            <span style="display:inline-block; width:0.5em; height:0.12em; background:#FF4D00; animation: {{ caretAnim }}"></span>
+          </span>
+        </div>
+      </h1>
+    </div>
+
+    <!-- Nav âncora secundária -->
+    <div style="position:absolute; right:60px; bottom:48px; z-index:5; display:flex; align-items:center; gap:28px; border:1px solid #E3E6EB; border-radius:999px; padding:12px 28px; background:rgba(247,248,250,0.72)">
+      <a style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480; text-decoration:none; cursor:pointer">Home</a>
+      <a style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480; text-decoration:none; cursor:pointer">Serviços</a>
+      <a style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480; text-decoration:none; cursor:pointer">Sobre</a>
+      <a style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480; text-decoration:none; cursor:pointer">Portfólio</a>
+    </div>
+
+    <!-- Scroll-cue -->
+    <div style="position:absolute; left:50%; bottom:40px; transform:translateX(-50%); width:44px; height:44px; z-index:5">
+      <span style="position:absolute; inset:0; border:1px solid #E3E6EB; border-radius:999px; animation: {{ cueAnim }}"></span>
+      <span style="position:absolute; inset:0; border:1px solid #E3E6EB; border-radius:999px; background:rgba(247,248,250,0.72); display:flex; align-items:center; justify-content:center; font-size:14px; color:#6E7480">↓</span>
+    </div>
+
+  </section>
+
+  <!-- Anotações motion -->
+  <section data-screen-label="Anotações motion" style="border-top:1px solid #E3E6EB; padding:48px 120px; display:grid; grid-template-columns:1fr 1fr; gap:48px">
+    <div style="display:flex; align-items:flex-start; gap:12px">
+      <span style="width:6px; height:6px; background:#15171B; display:inline-block; margin-top:5px"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.8; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Typewriter: digita 90ms/char · segura 1400ms · apaga 45ms · caret steps(1). Reduced-motion: palavra fixa VENDER, caret estático. Largura da linha 3 reservada em "CRESCER" — zero layout shift.</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:12px">
+      <span style="width:6px; height:6px; background:#15171B; display:inline-block; margin-top:5px"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.8; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Scroll-cue: anel pulsa hairline, nunca blaze. Header: sombra quase zero · hairline 1px · blaze único da 1ª dobra = CTA.</span>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { txt: 'VENDER', rm: false, navHover: null, hcta: false };
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._onMq = (ev) => {
+      this.setState({ rm: ev.matches });
+      if (ev.matches) { clearTimeout(this._t); this.setState({ txt: 'VENDER' }); }
+      else this._startLoop();
+    };
+    this._mq.addEventListener('change', this._onMq);
+    if (this._mq.matches) this.setState({ rm: true, txt: 'VENDER' });
+    else this._startLoop();
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this._t);
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
+  }
+
+  _startLoop() {
+    const words = ['VENDER', 'ATENDER', 'OPERAR', 'CRESCER'];
+    let wi = 0;
+    const typeWord = () => {
+      const w = words[wi];
+      let i = 0;
+      const typeChar = () => {
+        if (this._mq.matches) return;
+        i++;
+        this.setState({ txt: w.slice(0, i) });
+        if (i < w.length) this._t = setTimeout(typeChar, 90);
+        else this._t = setTimeout(eraseChar, 1400);
+      };
+      const eraseChar = () => {
+        if (this._mq.matches) return;
+        const cur = this.state.txt;
+        if (cur.length > 0) {
+          this.setState({ txt: cur.slice(0, -1) });
+          this._t = setTimeout(eraseChar, 45);
+        } else {
+          wi = (wi + 1) % words.length;
+          this._t = setTimeout(typeWord, 240);
+        }
+      };
+      this.setState({ txt: '' });
+      this._t = setTimeout(typeChar, 90);
+    };
+    clearTimeout(this._t);
+    typeWord();
+  }
+
+  renderVals() {
+    const rm = this.state.rm;
+    return {
+      twText: this.state.txt,
+      caretAnim: rm ? 'none' : 'caret-blink 1.1s steps(1, end) infinite',
+      cueAnim: rm ? 'none' : 'cue-ping 2.4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite',
+      navItems: ['Serviços', 'Sobre', 'Portfólio', 'Contato'].map((label, i) => ({
+        label,
+        roll: this.state.navHover === i ? 'translateY(-20px)' : 'translateY(0px)',
+        enter: () => this.setState({ navHover: i }),
+        leave: () => this.setState({ navHover: null })
+      })),
+      rollCta: this.state.hcta ? 'translateY(-20px)' : 'translateY(0px)',
+      enterCta: () => this.setState({ hcta: true }),
+      leaveCta: () => this.setState({ hcta: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

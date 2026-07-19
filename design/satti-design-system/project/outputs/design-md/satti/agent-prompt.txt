@@ -1,0 +1,9 @@
+# SATTI — AI Agent Design Brief
+Build in the SATTI design system. Ground truth below.
+
+COLORS: paper #F7F8FA (bg) · iron #15171B (text/ink) · graphite #0F1115 (dark sections) · steel #6E7480 (muted/eyebrows) · blaze #FF4D00 (accent — RARE, max 1/viewport, ALWAYS black #15171B text on it) · circuit #2F6BFF (FUNCTIONAL only: links/diagram/focus) · line #E3E6EB (1px hairlines) · error #B43A2F · success #15794B.
+TYPE: Archivo 900/800 UPPERCASE + negative tracking (displays) · Inter 400-600 (body/UI) · JetBrains Mono UPPERCASE +0.08em (eyebrows/tags/metrics; brand names keep official casing).
+DEPTH: hairline 1px + tints + blaze glow (blur 90px). Almost no shadows. Radius: 12px functional, 28px cards, 9999px pills.
+LAWS: 60/30/10 color · blaze rare & black-on-blaze · circuit never decorative · feedback = text+border+icon only · reduced-motion base state.
+
+Example: hero on #F7F8FA, H1 Archivo 900 uppercase clamp(64-140px) LH .95 ls -.015em #15171B; lead Inter 20px #6E7480; blaze pill CTA #FF4D00 radius 9999px padding 18px 36px text #15171B weight 600.

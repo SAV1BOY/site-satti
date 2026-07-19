@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#F7F8FA; }
+  body { font-family:'Inter',sans-serif; color:#15171B; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#FFE9DE; }
+  @keyframes node-pulse { from { opacity:0.35; } to { opacity:1; } }
+  @keyframes logos-marquee { to { transform:translateX(-50%); } }
+</style>
+</helmet>
+
+<div style="background:#F7F8FA; color:#15171B; max-width:375px; margin:0 auto; min-height:100vh">
+
+  <section data-screen-label="S5 Sobre Mobile" style="padding:40px 20px 48px">
+
+    <!-- Eyebrow + título -->
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px">
+      <span style="width:8px; height:8px; background:#FF4D00; display:inline-block; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">02 — Sobre</span>
+    </div>
+    <h2 style="margin:0 0 36px; font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; font-size:40px; line-height:1.02; letter-spacing:-0.01em; max-width:12ch">Engenharia que se prova</h2>
+
+    <!-- Statements fill-text -->
+    <div style="display:flex; flex-direction:column; gap:22px; margin-bottom:48px">
+      <p style="margin:0; font-family:'Archivo',sans-serif; font-weight:700; text-transform:uppercase; font-size:24px; line-height:1.1; color: {{ fillColor }}">Estratégia sólida alinhada ao negócio e dados confiáveis são os ingredientes de qualquer automação que dura.</p>
+      <p style="margin:0; font-family:'Archivo',sans-serif; font-weight:700; text-transform:uppercase; font-size:24px; line-height:1.1; color: {{ fillColor }}">Processo ágil apoiado em medição: cada entrega sai com número antes e número depois.</p>
+      <p style="margin:0; font-family:'Archivo',sans-serif; font-weight:700; text-transform:uppercase; font-size:24px; line-height:1.1; color: {{ fillColor }}">Ideia boa é ideia testada. Experimentos contínuos são o nosso motor.</p>
+    </div>
+
+    <!-- Stat-cards grade 2x2 -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:56px">
+
+      <div style="position:relative; border:1px solid #E3E6EB; border-radius:24px; background:#FFE9DE; padding:22px; min-height:188px; overflow:hidden; box-sizing:border-box; display:flex; flex-direction:column; gap:8px">
+        <div style="font-family:'JetBrains Mono',monospace; font-weight:600; font-size:34px; line-height:1; letter-spacing:-0.03em; color:#15171B">[CONFIRMAR]</div>
+        <div style="font-size:12px; color:#5C4A40">[CONFIRMAR label 01]</div>
+        <div style="position:absolute; right:0; bottom:0; width:84px; height:84px; transform:translate(18%, 20%); border-radius:0 0 24px 0; background:#F6DCCF; background-image:linear-gradient(rgba(21,23,27,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(21,23,27,0.06) 1px, transparent 1px); background-size:16px 16px; display:flex; align-items:center; justify-content:center">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.08em; color:#9A6F58">[ A2 ]</span>
+        </div>
+      </div>
+
+      <div style="position:relative; border:1px solid #E3E6EB; border-radius:24px; background:#E4EBFF; padding:22px; min-height:188px; overflow:hidden; box-sizing:border-box; display:flex; flex-direction:column; gap:8px">
+        <div style="font-family:'JetBrains Mono',monospace; font-weight:600; font-size:34px; line-height:1; letter-spacing:-0.03em; color:#15171B">[CONFIRMAR]</div>
+        <div style="font-size:12px; color:#445377">[CONFIRMAR label 02]</div>
+        <div style="position:absolute; right:0; bottom:0; width:84px; height:84px; transform:translate(18%, 20%); border-radius:0 0 24px 0; background:#D7E1FB; background-image:linear-gradient(rgba(21,23,27,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(21,23,27,0.06) 1px, transparent 1px); background-size:16px 16px; display:flex; align-items:center; justify-content:center">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.08em; color:#6079B5">[ A3 ]</span>
+        </div>
+      </div>
+
+      <div style="position:relative; border:1px solid #E3E6EB; border-radius:24px; background:#ECEEF2; padding:22px; min-height:188px; overflow:hidden; box-sizing:border-box; display:flex; flex-direction:column; gap:8px">
+        <div style="font-family:'JetBrains Mono',monospace; font-weight:600; font-size:34px; line-height:1; letter-spacing:-0.03em; color:#15171B">[CONFIRMAR]</div>
+        <div style="font-size:12px; color:#5A606B">[CONFIRMAR label 03]</div>
+        <div style="position:absolute; right:0; bottom:0; width:84px; height:84px; transform:translate(18%, 20%); border-radius:0 0 24px 0; background:#E0E4EA; background-image:linear-gradient(rgba(21,23,27,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(21,23,27,0.06) 1px, transparent 1px); background-size:16px 16px; display:flex; align-items:center; justify-content:center">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.08em; color:#6E7480">[ A4 ]</span>
+        </div>
+      </div>
+
+      <div style="position:relative; border:1px solid #E3E6EB; border-radius:24px; background:#F7F8FA; padding:22px; min-height:188px; overflow:hidden; box-sizing:border-box; display:flex; flex-direction:column; gap:8px">
+        <div style="font-family:'JetBrains Mono',monospace; font-weight:600; font-size:34px; line-height:1; letter-spacing:-0.03em; color:#15171B">[CONFIRMAR]</div>
+        <div style="font-size:12px; color:#6E7480">[CONFIRMAR label 04]</div>
+        <div style="position:absolute; right:0; bottom:0; width:84px; height:84px; transform:translate(18%, 20%); border-radius:0 0 24px 0; background:#ECEEF2; background-image:linear-gradient(rgba(21,23,27,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(21,23,27,0.06) 1px, transparent 1px); background-size:16px 16px; display:flex; align-items:center; justify-content:center">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.08em; color:#6E7480">[ A5 ]</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Diagrama circular centrado (mesma geometria, escalado) -->
+    <div style="display:flex; flex-direction:column; align-items:center; gap:24px; margin-bottom:48px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480; align-self:flex-start">Método SATTI · 10 pontos</div>
+      <div style="width:100%; display:flex; justify-content:center">
+        {{ diagram }}
+      </div>
+      <p style="margin:0; font-size:15px; line-height:1.6; color:#15171B">Um método circular: descoberta, desenho, agentes, integração e operação assistida — cada nó conectado por linhas funcionais em circuit.</p>
+      <a style="border:0; background:#FF4D00; color:#15171B; border-radius:999px; padding:16px 28px; width:100%; box-sizing:border-box; text-align:center; font-family:'Inter',sans-serif; font-weight:600; font-size:15px; cursor:pointer; text-decoration:none">Falar com a SATTI</a>
+    </div>
+
+  </section>
+
+  <!-- Marquee de logos -->
+  <section data-screen-label="Logos Mobile" style="border-top:1px solid #E3E6EB; border-bottom:1px solid #E3E6EB; overflow:hidden">
+    <div style="display:flex; align-items:center; height:110px; white-space:nowrap; animation: {{ logosAnim }}">
+      <div style="display:flex; align-items:center; flex:none">
+        <sc-for list="{{ logosA }}" as="lg" hint-placeholder-count="6">
+          <div style="width:150px; height:110px; flex:none; border-right:1px solid #E3E6EB; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">{{ lg }}</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:8px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">[SOMENTE com autorização]</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex; align-items:center; flex:none">
+        <sc-for list="{{ logosB }}" as="lg" hint-placeholder-count="6">
+          <div style="width:150px; height:110px; flex:none; border-right:1px solid #E3E6EB; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">{{ lg }}</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:8px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">[SOMENTE com autorização]</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specs (bloco mobile) -->
+  <section data-screen-label="Specs S5 Mobile" style="border-top:1px solid #E3E6EB; padding:28px 20px; display:flex; flex-direction:column; gap:20px">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">Specs — S5 Mobile</div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#FF4D00; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Motion: fill-text iron 32%→100% por scroll. Diagrama: nodes pulsam 2s alternate · delay 0.15s × índice. Logos: marquee contínuo.</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#15171B; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Reduced-motion: fill-text 100% preenchido. Anéis e nodes estáticos sem pulso. Marquee pausado.</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#15171B; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Cor: circuit #2F6BFF = linhas/nodes (funcional). Blaze único = CTA. Diagrama mantém raios 100/68/42% e 10 nodes, só escalado.</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px; margin-top:4px">
+      <span style="width:6px; height:6px; background: {{ rmDot }}; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Estado: {{ rmLabel }}</span>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 375, &quot;height&quot;: 1600}}">
+class Component extends DCLogic {
+  state = { rm: false };
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._onMq = (ev) => this.setState({ rm: ev.matches });
+    this.setState({ rm: this._mq.matches });
+    this._mq.addEventListener('change', this._onMq);
+  }
+
+  componentWillUnmount() {
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
+  }
+
+  _diagram(rm) {
+    const e = React.createElement;
+    const cx = 280, cy = 280;
+    const rings = [200, 136, 84];
+    const labels = ['DISCOVERY','DADOS','AGENTES','AUTOMAÇÃO','PRODUTO','INTEGRAÇÕES','MÉTRICAS','ITERAÇÃO','DEPLOY','SUPORTE'];
+    const layout = [ {r:0, n:5}, {r:1, n:3}, {r:2, n:2} ];
+    const children = [];
+    rings.forEach((r, i) => {
+      children.push(e('circle', { key:'ring'+i, cx, cy, r, fill:'none', stroke:'#2F6BFF', strokeWidth:1, strokeOpacity:0.35 }));
+    });
+    children.push(e('circle', { key:'center', cx, cy, r:4, fill:'#2F6BFF' }));
+    let idx = 0;
+    layout.forEach((grp) => {
+      const r = rings[grp.r];
+      for (let k = 0; k < grp.n; k++) {
+        const ang = (-90 + (360 / grp.n) * k + grp.r * 24) * Math.PI / 180;
+        const x = cx + r * Math.cos(ang);
+        const y = cy + r * Math.sin(ang);
+        const myIdx = idx;
+        children.push(e('line', { key:'l'+myIdx, x1:cx, y1:cy, x2:x, y2:y, stroke:'#2F6BFF', strokeWidth:1, strokeOpacity:0.22 }));
+        const dotStyle = rm ? {} : { animation: `node-pulse 2s ease-in-out ${(myIdx*0.15).toFixed(2)}s infinite alternate` };
+        children.push(e('circle', { key:'d'+myIdx, cx:x, cy:y, r:5, fill:'#2F6BFF', style: dotStyle }));
+        const lx = cx + (r + 22) * Math.cos(ang);
+        const ly = cy + (r + 22) * Math.sin(ang);
+        const anchor = Math.cos(ang) > 0.2 ? 'start' : (Math.cos(ang) < -0.2 ? 'end' : 'middle');
+        children.push(e('text', { key:'t'+myIdx, x:lx, y:ly+3, textAnchor:anchor,
+          style:{ fontFamily:"'JetBrains Mono', monospace", fontSize:'11px', letterSpacing:'0.06em', fill:'#6E7480' } }, labels[myIdx]));
+        idx++;
+      }
+    });
+    return e('svg', { viewBox:'-40 -40 640 640', width:335, height:335, role:'img', 'aria-label':'Diagrama do método' }, children);
+  }
+
+  renderVals() {
+    const rm = this.state.rm;
+    return {
+      diagram: this._diagram(rm),
+      fillColor: rm ? '#15171B' : 'rgba(21,23,27,0.32)',
+      logosAnim: rm ? 'none' : 'logos-marquee 24s linear infinite',
+      logosA: ['LG1','LG2','LG3','LG4','LG5','LG6'],
+      logosB: ['LG1','LG2','LG3','LG4','LG5','LG6'],
+      rmDot: rm ? '#15171B' : '#FF4D00',
+      rmLabel: rm ? 'reduced-motion' : 'motion on'
+    };
+  }
+}
+</script>
+</body>
+</html>

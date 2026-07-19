@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "url": "SATTI Design System — 30 telas (F2–F5 · PT + EN)",
+  "provider": "manual (design-agent — no live fetch, no LLM call)",
+  "note": "Node CLI (run.cjs) not shell-executable here. Ran the squad's real lib code (extractors + enrich + render-contract + design-md scorer + preview renderer) over the in-project SATTI design system. DESIGN.md authored from ground-truth tokens instead of an LLM call.",
+  "reuse": {
+    "enabled": false,
+    "previous_run": null,
+    "hits": 0
+  },
+  "design_md": {
+    "sections_valid": true,
+    "normalize_changes": 88
+  },
+  "quality": {
+    "grade": "B",
+    "overall": 84,
+    "categories": {
+      "color_discipline": "A 100",
+      "typography": "A 100",
+      "spacing_system": "A 100",
+      "border_radii": "A 100",
+      "tokenization": "A 96",
+      "lint_compliance": "C 70",
+      "accessibility": "F 20"
+    }
+  },
+  "archetype": {
+    "primary": "polaris-friendly",
+    "confidence": 88,
+    "secondary": null
+  },
+  "coverage": {
+    "percent": 62.5,
+    "detected": 20,
+    "total": 32
+  },
+  "render_contract": {
+    "default_mode": "light",
+    "supports_dark": false,
+    "warnings": 0
+  },
+  "llm": {
+    "model": null,
+    "reused": false,
+    "cost_estimate": {
+      "usd": 0,
+      "source": "no-llm"
+    }
+  }
+}

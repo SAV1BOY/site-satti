@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#F7F8FA; }
+  body { font-family:'Inter',sans-serif; color:#15171B; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#FFE9DE; }
+  @keyframes s4-zoom { from { transform:scale(1); } to { transform:scale(1.2); } }
+</style>
+</helmet>
+
+<div style="background:#F7F8FA; color:#15171B; min-height:100vh; position:relative">
+
+  <section data-screen-label="S4 Serviços" style="padding:96px 348px 120px 120px; position:relative">
+
+    <!-- Eyebrow -->
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px">
+      <span style="width:8px; height:8px; background:#FF4D00; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">01 — Serviços</span>
+    </div>
+    <h2 style="margin:0 0 64px; font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(2.5rem, 5vw, 4rem); line-height:1.02; letter-spacing:-0.01em; max-width:18ch">O que a SATTI constrói</h2>
+
+    <!-- Faixa de cards com Linha de Automação atravessando -->
+    <div style="position:relative">
+
+      <!-- Linha de Automação horizontal (blaze único da seção) -->
+      <svg viewBox="0 0 1450 120" preserveAspectRatio="none" style="position:absolute; left:0; right:0; top:64px; width:100%; height:120px; z-index:1; pointer-events:none; overflow:visible" role="img" aria-label="Linha de automação">
+        <path d="M0,60 L1450,60" style="fill:none; stroke:#E3E6EB; stroke-width:1.5"></path>
+        {{ pulse }}
+        <circle cx="255" cy="60" r="9" style="fill:#F7F8FA; stroke:#15171B; stroke-width:1.5"></circle>
+        <circle cx="255" cy="60" r="3" style="fill:#15171B"></circle>
+        <circle cx="725" cy="60" r="9" style="fill:#F7F8FA; stroke:#15171B; stroke-width:1.5"></circle>
+        <circle cx="725" cy="60" r="3" style="fill:#15171B"></circle>
+        <circle cx="1195" cy="60" r="9" style="fill:#F7F8FA; stroke:#15171B; stroke-width:1.5"></circle>
+        <circle cx="1195" cy="60" r="3" style="fill:#15171B"></circle>
+      </svg>
+
+      <div style="display:flex; align-items:flex-start; position:relative; z-index:2">
+
+        <!-- Card 1 -->
+        <div onMouseEnter="{{ enter0 }}" onMouseLeave="{{ leave0 }}" style="width:510px; height:552px; flex:none; border-radius:28px; border:1px solid #E3E6EB; background:#FFE9DE; padding:28px; box-sizing:border-box; display:flex; flex-direction:column; gap:22px">
+          <div style="height:196px; border-radius:16px; background:#F6DCCF; overflow:hidden; position:relative; display:flex; align-items:center; justify-content:center; background-image:linear-gradient(rgba(21,23,27,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(21,23,27,0.05) 1px, transparent 1px); background-size:36px 36px">
+            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; animation: {{ zoom }}; transform-origin:center">
+              <span style="width:40px; height:40px; position:relative; display:block">
+                <span style="position:absolute; left:0; right:0; top:50%; height:1px; background:#B98A74"></span>
+                <span style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:#B98A74"></span>
+              </span>
+            </div>
+            <span style="position:absolute; bottom:14px; left:16px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#9A6F58">[ S4-IMG-1 · 16:9 ]</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#9A6F58">Serviço 01</div>
+            <div style="display:inline-flex; align-items:center; gap:12px">
+              <h3 style="margin:0; font-family:'Archivo',sans-serif; font-weight:700; text-transform:uppercase; font-size:30px; line-height:1.1; border-bottom:1px solid {{ ul0 }}; padding-bottom:3px; transition:border-color 0.3s ease">Agentes de IA & Automações</h3>
+              <span style="font-size:18px; opacity: {{ arrow0 }}; transition:opacity 0.3s ease">→</span>
+            </div>
+          </div>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:#5C4A40; max-width:42ch">Agentes que atendem, qualificam e executam — integrados ao seu WhatsApp e às suas ferramentas.</p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:auto">
+            <span style="border:1px solid #D9B7A6; border-radius:999px; padding:8px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">n8n</span>
+            <span style="border:1px solid #D9B7A6; border-radius:999px; padding:8px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">Evolution API</span>
+            <span style="border:1px solid #D9B7A6; border-radius:999px; padding:8px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">Claude / GPT</span>
+          </div>
+        </div>
+
+        <!-- Card 2 (sobrepõe ~40px) -->
+        <div onMouseEnter="{{ enter1 }}" onMouseLeave="{{ leave1 }}" style="width:510px; height:552px; flex:none; margin-left:-40px; border-radius:28px; border:1px solid #E3E6EB; background:#E4EBFF; padding:28px; box-sizing:border-box; display:flex; flex-direction:column; gap:22px">
+          <div style="height:196px; border-radius:16px; background:#D7E1FB; overflow:hidden; position:relative; display:flex; align-items:center; justify-content:center; background-image:linear-gradient(rgba(21,23,27,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(21,23,27,0.05) 1px, transparent 1px); background-size:36px 36px">
+            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; animation: {{ zoom }}; transform-origin:center">
+              <span style="width:40px; height:40px; position:relative; display:block">
+                <span style="position:absolute; left:0; right:0; top:50%; height:1px; background:#8AA0D6"></span>
+                <span style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:#8AA0D6"></span>
+              </span>
+            </div>
+            <span style="position:absolute; bottom:14px; left:16px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6079B5">[ S4-IMG-2 · 16:9 ]</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6079B5">Serviço 02</div>
+            <div style="display:inline-flex; align-items:center; gap:12px">
+              <h3 style="margin:0; font-family:'Archivo',sans-serif; font-weight:700; text-transform:uppercase; font-size:30px; line-height:1.1; border-bottom:1px solid {{ ul1 }}; padding-bottom:3px; transition:border-color 0.3s ease">Produtos Web & SaaS</h3>
+              <span style="font-size:18px; opacity: {{ arrow1 }}; transition:opacity 0.3s ease">→</span>
+            </div>
+          </div>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:#445377; max-width:42ch">Do zero ao deploy: produtos rápidos, bonitos e mensuráveis, com arquitetura que aguenta crescer.</p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:auto">
+            <span style="border:1px solid #B9C7EC; border-radius:999px; padding:8px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">Next.js</span>
+            <span style="border:1px solid #B9C7EC; border-radius:999px; padding:8px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">Supabase</span>
+            <span style="border:1px solid #B9C7EC; border-radius:999px; padding:8px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">Vercel</span>
+          </div>
+        </div>
+
+        <!-- Card 3 (sobrepõe ~40px) -->
+        <div onMouseEnter="{{ enter2 }}" onMouseLeave="{{ leave2 }}" style="width:510px; height:552px; flex:none; margin-left:-40px; border-radius:28px; border:1px solid #E3E6EB; background:#ECEEF2; padding:28px; box-sizing:border-box; display:flex; flex-direction:column; gap:22px">
+          <div style="height:196px; border-radius:16px; background:#E0E4EA; overflow:hidden; position:relative; display:flex; align-items:center; justify-content:center; background-image:linear-gradient(rgba(21,23,27,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(21,23,27,0.05) 1px, transparent 1px); background-size:36px 36px">
+            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; animation: {{ zoom }}; transform-origin:center">
+              <span style="width:40px; height:40px; position:relative; display:block">
+                <span style="position:absolute; left:0; right:0; top:50%; height:1px; background:#9AA3B2"></span>
+                <span style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:#9AA3B2"></span>
+              </span>
+            </div>
+            <span style="position:absolute; bottom:14px; left:16px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">[ S4-IMG-3 · 16:9 ]</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Serviço 03</div>
+            <div style="display:inline-flex; align-items:center; gap:12px">
+              <h3 style="margin:0; font-family:'Archivo',sans-serif; font-weight:700; text-transform:uppercase; font-size:30px; line-height:1.1; border-bottom:1px solid {{ ul2 }}; padding-bottom:3px; transition:border-color 0.3s ease">Dados & Integrações</h3>
+              <span style="font-size:18px; opacity: {{ arrow2 }}; transition:opacity 0.3s ease">→</span>
+            </div>
+          </div>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:#5A606B; max-width:42ch">Planilhas viram sistemas. Sistemas conversam entre si. Decisão passa a nascer de dado.</p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:auto">
+            <span style="border:1px solid #CBD0D9; border-radius:999px; padding:8px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">Python</span>
+            <span style="border:1px solid #CBD0D9; border-radius:999px; padding:8px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">PostgreSQL</span>
+            <span style="border:1px solid #CBD0D9; border-radius:999px; padding:8px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">Supabase</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Camada lateral de specs -->
+  <aside style="position:fixed; top:0; right:0; width:300px; height:100vh; border-left:1px solid #E3E6EB; background:rgba(247,248,250,0.86); backdrop-filter:blur(6px); padding:32px 28px; box-sizing:border-box; display:flex; flex-direction:column; gap:24px; z-index:20">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">Specs — S4</div>
+    <div style="height:1px; background:#E3E6EB"></div>
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#FF4D00">Motion</div>
+      <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Imagem do card scale 1→1.2 · 4s · ease · infinite alternate. Hover: título ganha sublinha hairline + seta. Pulso blaze atravessa os 3 cards na Linha de Automação.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">Reduced-motion</div>
+      <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Imagem fixa em scale 1, sem sublinha animada. Linha de Automação desenhada 100% sem pulso.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">Blaze</div>
+      <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Único blaze da seção = pulso móvel da linha. Tints de fundo dos cards não são acento.</p>
+    </div>
+    <div style="margin-top:auto; display:flex; align-items:center; gap:8px">
+      <span style="width:6px; height:6px; background: {{ rmDot }}; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Estado: {{ rmLabel }}</span>
+    </div>
+  </aside>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1920, &quot;height&quot;: 1080}}">
+class Component extends DCLogic {
+  state = { rm: false, h: [false, false, false] };
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._onMq = (ev) => this.setState({ rm: ev.matches });
+    this.setState({ rm: this._mq.matches });
+    this._mq.addEventListener('change', this._onMq);
+  }
+
+  componentWillUnmount() {
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
+  }
+
+  _set(i, v) {
+    const h = this.state.h.slice();
+    h[i] = v;
+    this.setState({ h });
+  }
+
+  renderVals() {
+    const e = React.createElement;
+    const rm = this.state.rm;
+    let pulse = null;
+    if (!rm) {
+      const motion = () => e('animateMotion', {
+        dur: '6s', repeatCount: 'indefinite', path: 'M0,60 L1450,60',
+        keyTimes: '0;1', calcMode: 'spline', keySplines: '0.4 0 0.6 1'
+      });
+      pulse = e('g', null,
+        e('circle', { r: 11, fill: '#FF4D00', opacity: 0.16 }, motion()),
+        e('circle', { r: 4.5, fill: '#FF4D00' }, motion())
+      );
+    }
+    const zoom = rm ? 'none' : 's4-zoom 4s ease infinite alternate';
+    return {
+      pulse,
+      zoom,
+      rmDot: rm ? '#15171B' : '#FF4D00',
+      rmLabel: rm ? 'reduced-motion' : 'motion on',
+      ul0: this.state.h[0] ? '#15171B' : 'transparent',
+      ul1: this.state.h[1] ? '#15171B' : 'transparent',
+      ul2: this.state.h[2] ? '#15171B' : 'transparent',
+      arrow0: this.state.h[0] ? 1 : 0,
+      arrow1: this.state.h[1] ? 1 : 0,
+      arrow2: this.state.h[2] ? 1 : 0,
+      enter0: () => this._set(0, true), leave0: () => this._set(0, false),
+      enter1: () => this._set(1, true), leave1: () => this._set(1, false),
+      enter2: () => this._set(2, true), leave2: () => this._set(2, false)
+    };
+  }
+}
+</script>
+</body>
+</html>

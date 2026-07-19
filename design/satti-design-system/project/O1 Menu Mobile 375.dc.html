@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#0F1115; }
+  body { font-family:'Inter',sans-serif; color:#F4F5F7; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#FF4D00; color:#15171B; }
+</style>
+</helmet>
+
+<div style="background:#0F1115; color:#F4F5F7; max-width:375px; margin:0 auto; min-height:100vh; position:relative; overflow:hidden">
+
+  <section data-screen-label="O1 Menu Mobile" style="position:relative; min-height:100vh; box-sizing:border-box; padding:24px 20px 40px">
+
+    <!-- Linha de Automação vertical decorativa -->
+    <svg viewBox="0 0 40 900" preserveAspectRatio="none" style="position:absolute; right:24px; top:0; height:100%; width:32px; overflow:visible" role="img" aria-label="Linha de automação vertical">
+      <path d="M20,0 L20,900" style="fill:none; stroke:#1E2127; stroke-width:1.5"></path>
+      {{ pulse }}
+      <circle cx="20" cy="200" r="6" style="fill:#0F1115; stroke:#2E333B; stroke-width:1.5"></circle>
+      <circle cx="20" cy="200" r="2.5" style="fill:#6E7480"></circle>
+      <circle cx="20" cy="470" r="6" style="fill:#0F1115; stroke:#2E333B; stroke-width:1.5"></circle>
+      <circle cx="20" cy="470" r="2.5" style="fill:#6E7480"></circle>
+      <circle cx="20" cy="740" r="6" style="fill:#0F1115; stroke:#2E333B; stroke-width:1.5"></circle>
+      <circle cx="20" cy="740" r="2.5" style="fill:#6E7480"></circle>
+    </svg>
+
+    <!-- Topbar -->
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:48px">
+      <div style="font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; font-size:20px; letter-spacing:-0.01em; color:#F4F5F7">SATTI</div>
+      <button aria-label="Fechar" style="width:48px; height:48px; border-radius:999px; border:1px solid #2E333B; background:transparent; color:#F4F5F7; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center">✕</button>
+    </div>
+
+    <!-- Nav numerada empilhada -->
+    <nav style="display:flex; flex-direction:column">
+      <sc-for list="{{ items }}" as="it" hint-placeholder-count="6">
+        <a onMouseEnter="{{ it.enter }}" onMouseLeave="{{ it.leave }}" style="display:flex; align-items:baseline; gap:20px; padding:16px 0; border-bottom:1px solid #1E2127; text-decoration:none; cursor:pointer">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; color: {{ it.numColor }}; width:32px; flex:none; transition:color 0.3s ease">{{ it.num }}</span>
+          <span style="font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; font-size:38px; line-height:1; letter-spacing:-0.01em; color: {{ it.labelColor }}; transform: {{ it.shift }}; transition:color 0.3s ease, transform 0.35s cubic-bezier(0.76,0,0.24,1)">{{ it.label }}</span>
+        </a>
+      </sc-for>
+    </nav>
+
+    <!-- Rodapé do overlay -->
+    <div style="display:flex; flex-direction:column; gap:12px; margin-top:40px">
+      <a style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480; text-decoration:none; cursor:pointer">[CONFIRMAR handle LinkedIn]</a>
+      <a style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480; text-decoration:none; cursor:pointer">[CONFIRMAR handle Instagram]</a>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Nova Lima — MG</span>
+    </div>
+
+  </section>
+
+  <!-- Specs -->
+  <section data-screen-label="Specs O1 Mobile" style="border-top:1px solid #1E2127; padding:28px 20px; display:flex; flex-direction:column; gap:20px">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#F4F5F7">Specs — O1 Mobile</div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#FF4D00; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Motion: overlay entra fade+slide 0.4s (stagger 40ms/item). Toque/hover: label desliza 12px + número vira blaze. Pulso vertical na linha.</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#F4F5F7; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Reduced-motion: sem fade/slide/stagger. Linha 100% desenhada sem pulso. Hover de cor mantido.</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#F4F5F7; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Blaze: único destaque = item ativo (número + label). Labels reais do site.</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px; margin-top:4px">
+      <span style="width:6px; height:6px; background: {{ rmDot }}; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Estado: {{ rmLabel }}</span>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 375, &quot;height&quot;: 812}}">
+class Component extends DCLogic {
+  state = { rm: false, hover: null };
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._onMq = (ev) => this.setState({ rm: ev.matches });
+    this.setState({ rm: this._mq.matches });
+    this._mq.addEventListener('change', this._onMq);
+  }
+
+  componentWillUnmount() {
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
+  }
+
+  renderVals() {
+    const e = React.createElement;
+    const rm = this.state.rm;
+    let pulse = null;
+    if (!rm) {
+      const motion = () => e('animateMotion', {
+        dur: '6s', repeatCount: 'indefinite', path: 'M20,0 L20,900',
+        keyTimes: '0;1', calcMode: 'spline', keySplines: '0.4 0 0.6 1'
+      });
+      pulse = e('g', null,
+        e('circle', { r: 8, fill: '#FF4D00', opacity: 0.16 }, motion()),
+        e('circle', { r: 3.5, fill: '#FF4D00' }, motion())
+      );
+    }
+    const labels = ['Início', 'Serviços', 'Sobre', 'Automação', 'Portfólio', 'Contato'];
+    return {
+      pulse,
+      items: labels.map((label, i) => {
+        const active = this.state.hover === i;
+        return {
+          num: '0' + (i + 1),
+          label,
+          numColor: active ? '#FF4D00' : '#6E7480',
+          labelColor: active ? '#FF4D00' : '#F4F5F7',
+          shift: active && !rm ? 'translateX(12px)' : 'translateX(0px)',
+          enter: () => this.setState({ hover: i }),
+          leave: () => this.setState({ hover: null })
+        };
+      }),
+      rmDot: rm ? '#F4F5F7' : '#FF4D00',
+      rmLabel: rm ? 'reduced-motion' : 'motion on'
+    };
+  }
+}
+</script>
+</body>
+</html>

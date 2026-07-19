@@ -1,0 +1,223 @@
+{
+  "schema_version": "1.0",
+  "source": {
+    "url": "SATTI Design System — 30 telas (F2–F5 · PT + EN)"
+  },
+  "theme": {
+    "default": "light",
+    "default_mode": "light",
+    "supports_dark": false,
+    "supports_dark_reason": "light-default surface without dark toggle evidence",
+    "declared_default": "light",
+    "confidence": "high",
+    "inferred_from_surface": "light",
+    "surface": "#F7F8FA",
+    "surface_alt": "#F7F8FA",
+    "text": "#15171B",
+    "muted": "#6E7480",
+    "border": "#E3E6EB",
+    "accent": "#FF4D00"
+  },
+  "native_vars": {
+    "supports_dark": false,
+    "has_explicit_dark_scope": false,
+    "preferred_selector": null,
+    "preferred_count": 0,
+    "light": {
+      "--c-paper": "#F7F8FA",
+      "--c-iron": "#15171B",
+      "--c-graphite": "#0F1115",
+      "--c-steel": "#6E7480",
+      "--c-blaze": "#FF4D00",
+      "--c-circuit": "#2F6BFF",
+      "--c-blaze-soft": "#FFE9DE",
+      "--c-line": "#E3E6EB",
+      "--c-ink-on-dark": "#F4F5F7",
+      "--c-error": "#B43A2F",
+      "--c-success": "#15794B",
+      "--tint-card1": "#FFE9DE",
+      "--tint-card2": "#E4EBFF",
+      "--tint-card3": "#ECEEF2",
+      "--radius-sm": "8px",
+      "--radius-md": "12px",
+      "--radius-lg": "16px",
+      "--radius-xl": "28px",
+      "--radius-full": "9999px",
+      "--space-2xs": "8px",
+      "--space-xs": "12px",
+      "--space-sm": "16px",
+      "--space-md": "24px",
+      "--space-lg": "48px",
+      "--space-xl": "88px",
+      "--space-xxl": "120px",
+      "--fs-display": "10.5rem",
+      "--fs-display-hero": "8.75rem",
+      "--fs-statement": "5.25rem",
+      "--fs-section": "2.5rem",
+      "--fs-card-title": "1.625rem",
+      "--fs-body-lg": "1.25rem",
+      "--fs-body": "1rem",
+      "--fs-body-sm": "0.875rem",
+      "--fs-label": "0.875rem",
+      "--fs-eyebrow": "0.875rem",
+      "--fs-tag": "0.75rem",
+      "--fs-metric": "5.5rem",
+      "--fs-caption": "0.6875rem",
+      "--lh-tight": "0.92",
+      "--lh-display": "0.95",
+      "--lh-heading": "1.1",
+      "--lh-snug": "1.15",
+      "--lh-body": "1.6",
+      "--tracking-display": "-0.02em",
+      "--tracking-tight": "-0.015em",
+      "--tracking-mono": "0.08em",
+      "--tracking-metric": "-0.04em",
+      "--fw-display": "900",
+      "--fw-statement": "800",
+      "--fw-heading": "700",
+      "--fw-semibold": "600",
+      "--fw-medium": "500",
+      "--fw-body": "400",
+      "--case-caps": "uppercase",
+      "--font-display": "'Archivo'",
+      "--font-body": "'Inter'",
+      "--font-mono": "'JetBrains Mono'"
+    },
+    "dark": {},
+    "preferred": {}
+  },
+  "components": {
+    "button": {
+      "renderable": true,
+      "base": {
+        "bg": "#FF4D00",
+        "text": "#15171B",
+        "border_color": "#FF4D00",
+        "border_width": "1px",
+        "radius": "9999px",
+        "padding": "0.65rem 1.2rem",
+        "font_size": "0.875rem",
+        "font_weight": 600
+      },
+      "variants": {
+        "primary": {
+          "renderable": true,
+          "missing": [],
+          "bg": "#FF4D00",
+          "text": "var(--c-iron, #15171B)",
+          "border_color": "#FF4D00",
+          "border_width": "1px",
+          "radius": "999px",
+          "padding": "18px 36px",
+          "font_size": "16px",
+          "font_weight": "600",
+          "cursor": "pointer",
+          "transition": "transform 0.45s cubic-bezier(0.76,0,0.24,1)",
+          "transform": "translateY(-1px)",
+          "outline": "none",
+          "shadow": "0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF"
+        },
+        "secondary": {
+          "renderable": true,
+          "missing": [],
+          "bg": "transparent",
+          "text": "var(--c-iron, #15171B)",
+          "border_color": "#E3E6EB",
+          "border_width": "1px",
+          "radius": "999px",
+          "padding": "17px 36px",
+          "font_size": "16px",
+          "font_weight": "500",
+          "cursor": "pointer",
+          "transition": "transform 0.45s cubic-bezier(0.76,0,0.24,1)",
+          "outline": "none",
+          "shadow": "0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF"
+        }
+      },
+      "states": {
+        "hover": {
+          "text": "#F4F5F7",
+          "transform": "translateY(-1px)"
+        },
+        "active": {},
+        "disabled": {},
+        "focus_visible": {
+          "outline": "none",
+          "shadow": "0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF"
+        }
+      },
+      "source_confidence": "medium"
+    },
+    "card": {
+      "renderable": true,
+      "base": {
+        "bg": "#F7F8FA",
+        "text": "#15171B",
+        "border_color": "#E3E6EB",
+        "border_width": "1px",
+        "radius": "28px",
+        "padding": "36px",
+        "shadow": "none"
+      },
+      "states": {},
+      "variants": {
+        "title": {
+          "font_weight": "700",
+          "font_size": "1.625rem",
+          "text": "#15171B"
+        },
+        "dark": {
+          "radius": "28px",
+          "padding": "16px",
+          "text": "var(--c-ink-on-dark, #F4F5F7)",
+          "opacity": "0.8"
+        }
+      },
+      "source_confidence": "thin"
+    },
+    "input": {
+      "renderable": true,
+      "base": {
+        "bg": "#F7F8FA",
+        "text": "var(--c-iron, #15171B)",
+        "border_color": "#E3E6EB",
+        "border_width": "1px",
+        "radius": "12px",
+        "padding": "0 18px"
+      },
+      "states": {
+        "focus-visible": {
+          "outline": "none",
+          "shadow": "0 0 0 3px rgba(47,107,255,0.18)"
+        }
+      },
+      "variants": {},
+      "source_confidence": "medium"
+    },
+    "badge": {
+      "renderable": true,
+      "base": {
+        "text": "#15171B",
+        "radius": "999px",
+        "padding": "10px 20px",
+        "font_size": "12px",
+        "font_weight": "400"
+      },
+      "states": {},
+      "variants": {},
+      "source_confidence": "thin"
+    },
+    "label": {
+      "renderable": true,
+      "base": {
+        "text": "#15171B",
+        "font_size": "0.875rem",
+        "font_weight": "500"
+      },
+      "states": {},
+      "variants": {},
+      "source_confidence": "thin"
+    }
+  },
+  "warnings": []
+}

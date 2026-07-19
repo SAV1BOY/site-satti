@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#F7F8FA; }
+  body { font-family:'Inter',sans-serif; color:#15171B; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#FFE9DE; }
+</style>
+</helmet>
+
+<div style="background:#F7F8FA; color:#15171B; min-height:100vh; position:relative">
+
+  <section data-screen-label="S7 Portfólio" style="padding:96px 348px 120px 120px; position:relative">
+
+    <!-- Eyebrow -->
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px">
+      <span style="width:8px; height:8px; background:#FF4D00; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">03 — Portfólio</span>
+    </div>
+    <h2 style="margin:0 0 56px; font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(2.5rem, 5vw, 4rem); line-height:1.02; letter-spacing:-0.01em; max-width:18ch">Cases que rodam em produção</h2>
+
+    <!-- Grid 2 colunas de work-cards -->
+    <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:24px; margin-bottom:64px">
+      <sc-for list="{{ cards }}" as="c" hint-placeholder-count="6">
+        <div onMouseEnter="{{ c.enter }}" onMouseLeave="{{ c.leave }}" style="position:relative; border-radius:28px; background:#0F1115; overflow:hidden; padding:16px; box-sizing:border-box; transform: {{ c.scale }}; transition:transform 0.4s cubic-bezier(0.2,0.7,0.3,1); box-shadow: {{ c.glow }}; cursor:pointer">
+          <div style="position:relative; z-index:1; aspect-ratio:16/9; border-radius:16px; background:rgba(244,245,247,0.05); border:1px solid rgba(244,245,247,0.1); background-image:linear-gradient(rgba(244,245,247,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(244,245,247,0.04) 1px, transparent 1px); background-size:36px 36px; display:flex; align-items:center; justify-content:center">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,245,247,0.45)">{{ c.thumb }}</span>
+          </div>
+          <div style="position:absolute; bottom:-130px; left:12%; width:76%; height:190px; background:#FF4D00; filter:blur(90px); opacity: {{ c.glowOpacity }}; transition:opacity 0.4s ease; z-index:0"></div>
+          <div style="position:relative; z-index:2; display:flex; justify-content:space-between; align-items:flex-end; padding:20px 12px 8px; gap:16px">
+            <div style="display:flex; flex-direction:column; gap:8px">
+              <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">{{ c.tag }}</div>
+              <div style="font-family:'Archivo',sans-serif; font-weight:700; text-transform:uppercase; font-size:24px; line-height:1.1; color:#F4F5F7">{{ c.title }}</div>
+            </div>
+            <div style="display:inline-flex; align-items:center; gap:10px; background:#F4F5F7; color:#15171B; border-radius:999px; padding:10px 18px; opacity: {{ c.pill }}; transform: {{ c.pillT }}; transition:opacity 0.4s ease, transform 0.4s ease; white-space:nowrap; flex:none">
+              <span style="font-size:13px; font-weight:600">Ver case</span>
+              <span style="font-size:14px">→</span>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- CTA -->
+    <a style="background:transparent; border:1px solid #E3E6EB; color:#15171B; border-radius:999px; padding:17px 34px; font-family:'Inter',sans-serif; font-weight:500; font-size:16px; text-decoration:none; display:inline-flex; align-items:center; gap:12px">
+      Ver todos os cases
+      <span style="font-size:15px">→</span>
+    </a>
+
+  </section>
+
+  <!-- Camada lateral de specs -->
+  <aside style="position:fixed; top:0; right:0; width:300px; height:100vh; border-left:1px solid #E3E6EB; background:rgba(247,248,250,0.86); backdrop-filter:blur(6px); padding:32px 28px; box-sizing:border-box; display:flex; flex-direction:column; gap:22px; z-index:20">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">Specs — S7</div>
+    <div style="height:1px; background:#E3E6EB"></div>
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#FF4D00">Motion</div>
+      <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Hover do work-card: scale 1.05 + glow blaze (blur 90px subindo) + info-pill paper aparece deslizando.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">Reduced-motion</div>
+      <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Sem scale e sem glow. Info-pill estática visível, sem deslize.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">Blaze</div>
+      <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Único blaze de destaque = glow do card em hover. Tela clara entre os dois darks do ritmo Atlas.</p>
+    </div>
+    <div style="margin-top:auto; display:flex; align-items:center; gap:8px">
+      <span style="width:6px; height:6px; background: {{ rmDot }}; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Estado: {{ rmLabel }}</span>
+    </div>
+  </aside>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1920, &quot;height&quot;: 1080}}">
+class Component extends DCLogic {
+  state = { rm: false, h: [false, false, false, false, false, false] };
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._onMq = (ev) => this.setState({ rm: ev.matches });
+    this.setState({ rm: this._mq.matches });
+    this._mq.addEventListener('change', this._onMq);
+  }
+
+  componentWillUnmount() {
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
+  }
+
+  _set(i, v) {
+    const h = this.state.h.slice();
+    h[i] = v;
+    this.setState({ h });
+  }
+
+  renderVals() {
+    const rm = this.state.rm;
+    const data = [
+      { title: 'CallAudit — auditoria de calls com IA', tag: 'IA · Voz', thumb: '[ WK-1 · 16:9 ]' },
+      { title: 'Expediting Tracker — PCP em tempo real', tag: 'Dados · Produto', thumb: '[ WK-2 · 16:9 ]' },
+      { title: 'Portal Comercial — System Digital', tag: 'Web · SaaS', thumb: '[ WK-3 · 16:9 ]' },
+      { title: 'Funil quiz — proteção patrimonial', tag: 'Web · Conversão', thumb: '[ WK-4 · 16:9 ]' },
+      { title: 'Pipeline de reels com IA — LS Interbank', tag: 'IA · Automação', thumb: '[ WK-5 · 16:9 ]' },
+      { title: '[CONFIRMAR 6º projeto público]', tag: '[CONFIRMAR]', thumb: '[ WK-6 · 16:9 ]' }
+    ];
+    const cards = data.map((d, i) => {
+      const on = !rm && this.state.h[i];
+      return {
+        ...d,
+        scale: on ? 'scale(1.05)' : 'scale(1)',
+        glow: on ? '0 30px 80px rgba(255,77,0,0.28)' : '0 1px 2px rgba(15,17,21,0.06)',
+        glowOpacity: on ? 0.8 : 0,
+        pill: rm ? 1 : (on ? 1 : 0),
+        pillT: rm ? 'translateY(0px)' : (on ? 'translateY(0px)' : 'translateY(10px)'),
+        enter: () => this._set(i, true),
+        leave: () => this._set(i, false)
+      };
+    });
+    return {
+      cards,
+      rmDot: rm ? '#15171B' : '#FF4D00',
+      rmLabel: rm ? 'reduced-motion' : 'motion on'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+Use the claude_design MCP (https://api.anthropic.com/v1/design/mcp, auth via /design-login) to import this project:
+https://claude.ai/design/p/363c7588-c758-4469-9147-cde5255c812b
+
+Implement: the designs in this project

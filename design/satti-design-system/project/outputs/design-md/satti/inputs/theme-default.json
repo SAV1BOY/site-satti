@@ -1,0 +1,7 @@
+{
+  "default": "light",
+  "confidence": "high",
+  "signals": [
+    "meta color-scheme=\"light\" → light"
+  ]
+}

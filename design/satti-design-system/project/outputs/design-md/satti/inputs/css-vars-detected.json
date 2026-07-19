@@ -1,0 +1,408 @@
+[
+  {
+    "selector": ":root",
+    "name": "--c-paper",
+    "value": "#F7F8FA",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--c-iron",
+    "value": "#15171B",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--c-graphite",
+    "value": "#0F1115",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--c-steel",
+    "value": "#6E7480",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--c-blaze",
+    "value": "#FF4D00",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--c-circuit",
+    "value": "#2F6BFF",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--c-blaze-soft",
+    "value": "#FFE9DE",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--c-line",
+    "value": "#E3E6EB",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--c-ink-on-dark",
+    "value": "#F4F5F7",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--c-error",
+    "value": "#B43A2F",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--c-success",
+    "value": "#15794B",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--tint-card1",
+    "value": "#FFE9DE",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--tint-card2",
+    "value": "#E4EBFF",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--tint-card3",
+    "value": "#ECEEF2",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--radius-sm",
+    "value": "8px",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--radius-md",
+    "value": "12px",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--radius-lg",
+    "value": "16px",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--radius-xl",
+    "value": "28px",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--radius-full",
+    "value": "9999px",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--space-2xs",
+    "value": "8px",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--space-xs",
+    "value": "12px",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--space-sm",
+    "value": "16px",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--space-md",
+    "value": "24px",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--space-lg",
+    "value": "48px",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--space-xl",
+    "value": "88px",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--space-xxl",
+    "value": "120px",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fs-display",
+    "value": "10.5rem",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fs-display-hero",
+    "value": "8.75rem",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fs-statement",
+    "value": "5.25rem",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fs-section",
+    "value": "2.5rem",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fs-card-title",
+    "value": "1.625rem",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fs-body-lg",
+    "value": "1.25rem",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fs-body",
+    "value": "1rem",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fs-body-sm",
+    "value": "0.875rem",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fs-label",
+    "value": "0.875rem",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fs-eyebrow",
+    "value": "0.875rem",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fs-tag",
+    "value": "0.75rem",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fs-metric",
+    "value": "5.5rem",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fs-caption",
+    "value": "0.6875rem",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--lh-tight",
+    "value": "0.92",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--lh-display",
+    "value": "0.95",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--lh-heading",
+    "value": "1.1",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--lh-snug",
+    "value": "1.15",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--lh-body",
+    "value": "1.6",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--tracking-display",
+    "value": "-0.02em",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--tracking-tight",
+    "value": "-0.015em",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--tracking-mono",
+    "value": "0.08em",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--tracking-metric",
+    "value": "-0.04em",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fw-display",
+    "value": "900",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fw-statement",
+    "value": "800",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fw-heading",
+    "value": "700",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fw-semibold",
+    "value": "600",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fw-medium",
+    "value": "500",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--fw-body",
+    "value": "400",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--case-caps",
+    "value": "uppercase",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--font-display",
+    "value": "'Archivo'",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--font-body",
+    "value": "'Inter'",
+    "is_alias": false,
+    "line": 1
+  },
+  {
+    "selector": ":root",
+    "name": "--font-mono",
+    "value": "'JetBrains Mono'",
+    "is_alias": false,
+    "line": 1
+  }
+]

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design MD"
+  short_description: "Extract DESIGN.md from website URLs"
+  default_prompt: "Use $design-md to extract a DESIGN.md and preview from https://example.com/."

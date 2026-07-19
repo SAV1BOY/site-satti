@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#F7F8FA; }
+  body { font-family:'Inter',sans-serif; color:#15171B; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#FFE9DE; }
+</style>
+</helmet>
+
+<div style="background:#F7F8FA; color:#15171B; min-height:100vh; position:relative">
+
+  <section data-screen-label="S10 Depoimentos" style="padding:96px 348px 120px 120px; position:relative">
+
+    <!-- Eyebrow -->
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px">
+      <span style="width:8px; height:8px; background:#FF4D00; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">05 — Quem já trabalhou com a gente</span>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; gap:32px">
+      <h2 style="margin:0; font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(2.5rem, 5vw, 4rem); line-height:1.02; letter-spacing:-0.01em; max-width:18ch">Na palavra de quem usou</h2>
+      <div style="display:flex; align-items:center; gap:10px; flex:none">
+        <span style="width:6px; height:6px; background:#6E7480; display:inline-block; border-radius:999px"></span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Depoimentos a confirmar com o Miguel</span>
+      </div>
+    </div>
+
+    <!-- Grade de 3 cards -->
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:24px">
+      <sc-for list="{{ cards }}" as="t" hint-placeholder-count="3">
+        <div style="border:1px solid #E3E6EB; border-radius:28px; background:#F7F8FA; padding:40px; display:flex; flex-direction:column; gap:28px; min-height:420px; box-sizing:border-box">
+          <span style="font-family:'Archivo',sans-serif; font-weight:900; font-size:64px; line-height:0.6; color:#FF4D00; height:32px">&ldquo;</span>
+          <p style="margin:0; font-size:19px; line-height:1.55; color:#6E7480; flex:1">[CONFIRMAR depoimento]</p>
+          <div style="display:flex; align-items:center; gap:16px; border-top:1px solid #E3E6EB; padding-top:24px">
+            <div style="width:52px; height:52px; border-radius:999px; background:#ECEEF2; border:1px solid #E3E6EB; flex:none; display:flex; align-items:center; justify-content:center; background-image:linear-gradient(#E0E4EA 1px, transparent 1px), linear-gradient(90deg, #E0E4EA 1px, transparent 1px); background-size:13px 13px">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; color:#6E7480">{{ t.avatar }}</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:3px">
+              <span style="font-size:15px; font-weight:600; color:#15171B">[CONFIRMAR nome]</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#6E7480">[CONFIRMAR cargo · empresa]</span>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+  </section>
+
+  <!-- Camada lateral de specs -->
+  <aside style="position:fixed; top:0; right:0; width:300px; height:100vh; border-left:1px solid #E3E6EB; background:rgba(247,248,250,0.86); backdrop-filter:blur(6px); padding:32px 28px; box-sizing:border-box; display:flex; flex-direction:column; gap:22px; z-index:20">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">Specs — S10</div>
+    <div style="height:1px; background:#E3E6EB"></div>
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#FF4D00">Motion</div>
+      <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Estático por natureza. Hover opcional: card eleva 1px via borda. Sem parallax, sem auto-rotate.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">Reduced-motion</div>
+      <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Idêntico — nenhuma animação a desativar.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">Blaze</div>
+      <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Único destaque = aspas decorativas. Todo conteúdo (citação/nome/cargo/avatar) é [CONFIRMAR] — nada inventado.</p>
+    </div>
+    <div style="margin-top:auto; display:flex; align-items:center; gap:8px">
+      <span style="width:6px; height:6px; background: {{ rmDot }}; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Estado: {{ rmLabel }}</span>
+    </div>
+  </aside>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1920, &quot;height&quot;: 1080}}">
+class Component extends DCLogic {
+  state = { rm: false };
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._onMq = (ev) => this.setState({ rm: ev.matches });
+    this.setState({ rm: this._mq.matches });
+    this._mq.addEventListener('change', this._onMq);
+  }
+
+  componentWillUnmount() {
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
+  }
+
+  renderVals() {
+    return {
+      cards: [{ avatar: '[AVATAR-1]' }, { avatar: '[AVATAR-2]' }, { avatar: '[AVATAR-3]' }],
+      rmDot: this.state.rm ? '#15171B' : '#FF4D00',
+      rmLabel: this.state.rm ? 'reduced-motion' : 'motion on'
+    };
+  }
+}
+</script>
+</body>
+</html>

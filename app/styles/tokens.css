@@ -1,0 +1,62 @@
+/* ============================================================
+   SATTI Design System — tokens
+   Fonte: handoff SATTI DS (tokens.json + SATTI DS.dc.html)
+   + ULTRAGOAL §4 D1 (linhas no escuro) + feedback + tints S4
+   Lei: nenhum hex literal em componente — sempre var(--c-*)
+   ============================================================ */
+
+:root {
+  /* --- Cores núcleo (9) --- */
+  --c-paper: #F7F8FA;
+  --c-iron: #15171B;
+  --c-graphite: #0F1115;
+  --c-steel: #6E7480;
+  --c-blaze: #FF4D00;
+  --c-circuit: #2F6BFF;
+  --c-blaze-soft: #FFE9DE;
+  --c-line: #E3E6EB;
+  --c-ink-on-dark: #F4F5F7;
+
+  /* --- D1 · linhas sobre graphite --- */
+  --c-line-dark: #1E2127;      /* separadores/hairlines */
+  --c-hairline-dark: #2A2D34;  /* bordas de card/célula/nodes */
+
+  /* --- Feedback (só texto+borda+ícone) --- */
+  --c-error: #B43A2F;
+  --c-success: #15794B;
+
+  /* --- Tints S4 (tints, não acento) --- */
+  --tint-blaze: #FFE9DE;
+  --tint-blue: #E4EBFF;
+  --tint-slate: #ECEEF2;
+
+  /* --- Espaçamento (escala 8/12/16/24/48/88/120) --- */
+  --sp-2xs: 8px;
+  --sp-xs: 12px;
+  --sp-sm: 16px;
+  --sp-md: 24px;
+  --sp-lg: 48px;
+  --sp-xl: 88px;
+  --sp-2xl: 120px;
+
+  /* --- Radius (12 funcional · 28 editorial · pill) --- */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 28px;
+  --r-pill: 9999px;
+
+  /* --- Layout --- */
+  --container: 1440px;
+  --gutter: clamp(20px, 4vw, 64px);
+
+  /* --- Motion --- */
+  --ease: cubic-bezier(0, 0, 0.4, 0.97);        /* easing global (L10) */
+  --ease-roll: cubic-bezier(0.76, 0, 0.24, 1);  /* button roll (DS) */
+  --dur-roll: 450ms;
+
+  /* --- Fontes (conectadas via next/font no layout; fallbacks reais) --- */
+  --font-display: var(--font-archivo, "Archivo"), "Arial Narrow", sans-serif;
+  --font-body: var(--font-inter, "Inter"), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains, "JetBrains Mono"), ui-monospace, monospace;
+}

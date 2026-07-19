@@ -1,0 +1,2724 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SATTI — DESIGN.md Preview</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700;800&amp;family=JetBrains%20Mono:wght@400;500;600;700;800&amp;display=swap" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" />
+
+<style>
+  :root { --bg:#fafafa; --fg:#000; --dim:#888; --line:#e5e5e5; --accent:#000; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,sans-serif;padding:32px;line-height:1.4}
+  header{display:flex;flex-direction:column;gap:8px;margin-bottom:32px;border-bottom:4px solid var(--fg);padding-bottom:16px}
+  .header-identity{display:flex;align-items:flex-start;gap:20px}
+  .favicon{width:64px;height:64px;border:2px solid var(--fg);background:#fff;flex-shrink:0;object-fit:contain;padding:6px;box-shadow:2px 2px 0 0 #000}
+  .favicon-placeholder{width:64px;height:64px;border:2px dashed var(--line);flex-shrink:0}
+  .header-text{flex:1;min-width:0}
+  .brand-name{font-family:ui-monospace,monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--dim);margin-bottom:4px}
+  h1{font-size:48px;font-weight:800;letter-spacing:-0.02em;margin:0}
+  .subtitle{color:var(--dim);font-family:ui-monospace,monospace;font-size:13px;text-transform:uppercase;letter-spacing:0.08em}
+  section{margin-bottom:48px}
+  section h2{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;border-bottom:2px solid var(--fg);padding-bottom:6px;margin-bottom:16px}
+  .name-pill{display:inline-block;background:#000;color:#fff;font-family:ui-monospace,monospace;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:6px 12px;border:2px solid #000;box-shadow:2px 2px 0 0 #000;margin-bottom:16px}
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px}
+  .swatch{display:flex;flex-direction:column;border:2px solid var(--fg);background:#fff;box-shadow:2px 2px 0 0 #000;cursor:pointer;font:inherit;text-align:left;padding:0;transition:transform .12s,box-shadow .12s}
+  .swatch:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 0 #000}
+  .swatch-fill{height:80px;border-bottom:2px solid var(--fg)}
+  .swatch-meta{padding:10px}
+  .swatch-key{font-family:ui-monospace,monospace;font-size:10px;font-weight:700;text-transform:uppercase;color:var(--dim);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .swatch-val{font-family:ui-monospace,monospace;font-size:12px;font-weight:700}
+  .type-row{display:flex;flex-direction:column;gap:8px;border-left:4px solid var(--fg);padding-left:16px;padding-block:6px;margin-bottom:24px}
+  .type-label{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+  .chip{font-family:ui-monospace,monospace;font-size:11px;font-weight:700;text-transform:uppercase;background:#f0f0f0;border:1px solid #ccc;padding:2px 8px}
+  .dim{color:var(--dim);font-family:ui-monospace,monospace;font-size:12px}
+  .type-sample{word-break:break-word}
+  .scale-row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:24px}
+  .space-cell,.radius-cell{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
+  .space-block{background:#000;box-shadow:2px 2px 0 0 #000}
+  .radius-block{width:64px;height:64px;background:#fff;border:4px solid #000;box-shadow:2px 2px 0 0 #000}
+  .space-key,.radius-key{font-family:ui-monospace,monospace;font-size:10px;font-weight:700;text-transform:uppercase}
+  .space-val,.radius-val{font-family:ui-monospace,monospace;font-size:10px;color:var(--dim)}
+  pre{background:#fff;border:2px solid var(--fg);box-shadow:4px 4px 0 0 #000;padding:20px;overflow:auto;font-size:13px;line-height:1.5;max-height:600px}
+  details{border:2px solid var(--fg);background:#fff;padding:12px 16px;margin-top:16px;box-shadow:2px 2px 0 0 #000}
+  details summary{cursor:pointer;font-family:ui-monospace,monospace;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em}
+  .empty{color:var(--dim);font-family:ui-monospace,monospace;font-size:12px;font-style:italic}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#000;color:#fff;font-family:ui-monospace,monospace;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:10px 16px;border:2px solid #000;box-shadow:2px 2px 0 0 #000;opacity:0;pointer-events:none;transition:opacity .2s}
+  .toast.show{opacity:1}
+  .meta-grid{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-family:ui-monospace,monospace;font-size:12px}
+  .meta-grid dt{color:var(--dim);text-transform:uppercase;letter-spacing:0.06em;font-weight:700}
+  .meta-grid dd{margin:0;word-break:break-all}
+
+  /* Component preview (live tokens) */
+  .preview-token-source{font-family:ui-monospace,monospace;font-size:11px;color:var(--dim);margin-bottom:10px;background:#f5f5f5;border:1px solid #ddd;padding:8px 12px;overflow-wrap:break-word}
+  .preview-token-source code{background:#fff;border:1px solid #ddd;padding:1px 5px;font-size:10px}
+
+  /* Hero zone — full-width brand showcase */
+  .preview-hero{padding:48px 40px 56px;border:2px solid var(--fg);box-shadow:4px 4px 0 0 #000;margin-bottom:24px;display:flex;flex-direction:column;gap:16px;align-items:flex-start;overflow:hidden}
+  .hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
+  .hero-display{font-size:clamp(32px,5vw,56px);font-weight:600;line-height:1.05;margin:0;max-width:80%;overflow-wrap:break-word}
+  .hero-lead{font-size:16px;line-height:1.5;margin:0;max-width:600px;overflow-wrap:break-word}
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+
+  .preview-stage{border:2px solid var(--fg);box-shadow:4px 4px 0 0 #000;padding:32px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 40px}
+  @media (max-width:720px){.preview-stage{grid-template-columns:1fr}}
+  .preview-card{display:flex;flex-direction:column;gap:12px;align-items:flex-start;min-width:0;overflow:hidden}
+  .preview-card-wide{grid-column:1/-1}
+  .preview-card>*{max-width:100%}
+  .preview-card h4{margin:0;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);font-family:ui-monospace,monospace}
+
+  .ds-btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 24px;font-weight:500;font-size:14px;cursor:pointer;text-decoration:none;font-family:inherit;line-height:1.2;transition:opacity .15s,transform .12s;max-width:100%;white-space:nowrap}
+  .ds-btn:hover{opacity:0.92;transform:translateY(-1px)}
+  .ds-btn-large{padding:14px 28px;font-size:15px;font-weight:600}
+
+  .ds-card{padding:24px;display:flex;flex-direction:column;gap:10px;width:100%;min-width:0;overflow-wrap:break-word;word-break:break-word}
+  .ds-card-editorial{padding:28px;gap:14px}
+  .card-eyebrow{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase}
+  .ds-card-title{font-weight:400;font-size:24px;line-height:1.15;overflow-wrap:break-word;hyphens:auto;margin:0}
+  .ds-card-body{font-size:14px;line-height:1.55;overflow-wrap:break-word;margin:0}
+  .card-meta{display:flex;align-items:center;gap:10px;font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-top:4px}
+  .meta-dot{display:inline-block;width:3px;height:3px;border-radius:50%}
+  .card-cta-row{display:flex;gap:14px;align-items:center;margin-top:8px}
+
+  .ds-input{width:100%;padding:12px 14px;font-size:14px;font-family:inherit;box-sizing:border-box}
+  .ds-badge{display:inline-flex;align-items:center;padding:5px 14px;font-size:11px;font-weight:600;font-family:inherit;letter-spacing:0.02em;line-height:1.2;white-space:nowrap}
+  .ds-alert{padding:14px 18px;display:flex;gap:10px;align-items:flex-start;font-size:13px;width:100%;overflow-wrap:break-word;line-height:1.5}
+  .ds-alert>*{min-width:0}
+
+  /* KPI tile */
+  .kpi-tile{padding:24px;display:flex;flex-direction:column;gap:6px;width:100%}
+  .kpi-label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase}
+  .kpi-value{font-size:42px;font-weight:600;line-height:1;letter-spacing:-0.02em;margin:4px 0 6px}
+  .kpi-trend{font-size:12px;font-weight:600}
+
+  /* Code block */
+  .ds-code{padding:18px;font-size:13px;line-height:1.6;width:100%;overflow:auto;margin:0;white-space:pre}
+
+  /* Type hierarchy stack */
+  .hierarchy-stack{display:flex;flex-direction:column;gap:14px;width:100%}
+  .h-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
+  .h-display{font-size:clamp(28px,4vw,44px);font-weight:600;line-height:1.1;margin:0}
+  .h-body{font-size:15px;line-height:1.6;margin:0}
+
+  /* WCAG contrast matrix */
+  .matrix-wrap{overflow:auto;border:2px solid var(--fg);background:#fff;box-shadow:4px 4px 0 0 #000}
+  table.matrix{border-collapse:collapse;font-family:ui-monospace,monospace;font-size:11px}
+  table.matrix th,table.matrix td{border:1px solid var(--line);padding:4px 6px;text-align:center;min-width:64px}
+  table.matrix thead th{background:#f5f5f5;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;position:sticky;top:0}
+  table.matrix tbody th{background:#f5f5f5;text-align:left;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;position:sticky;left:0;z-index:1}
+  td.cm-cell{cursor:help;font-weight:700}
+  td.cm-fail{background:#fde2e2;color:#7a1414}
+  td.cm-aa{background:#fff7d6;color:#7a4f00}
+  td.cm-aaa{background:#d9f5dd;color:#0a4a1a}
+  .matrix-legend{display:flex;gap:16px;font-family:ui-monospace,monospace;font-size:11px;margin-top:12px;flex-wrap:wrap}
+  .matrix-legend span{display:inline-flex;align-items:center;gap:6px}
+  .matrix-legend i{display:inline-block;width:12px;height:12px;border:1px solid var(--line)}
+
+  /* Export buttons */
+  .export-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .export-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--fg);box-shadow:2px 2px 0 0 #000;padding:8px 14px;font-family:ui-monospace,monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;transition:transform .12s,box-shadow .12s}
+  .export-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 0 #000;background:#000;color:#fff}
+  .export-btn-primary{background:#000;color:#fff;font-size:12px;padding:10px 18px;box-shadow:3px 3px 0 0 #000}
+  .export-btn-primary:hover{background:#fff;color:#000}
+
+  /* Technical section (collapsed by default) */
+  .technical-section{margin-top:64px}
+  .technical-section>details{border:2px dashed var(--line);background:transparent;box-shadow:none;padding:0}
+  .technical-section>details>summary{padding:14px 18px;cursor:pointer;font-family:ui-monospace,monospace;color:var(--dim);text-transform:none;letter-spacing:0;list-style:none}
+  .technical-section>details>summary::before{content:"▸ ";color:var(--dim)}
+  .technical-section>details[open]>summary::before{content:"▾ "}
+  .technical-section>details>summary h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);border:none;padding:0;display:inline-block}
+  .technical-section>details>summary:hover h2{color:var(--fg)}
+  .tech-content{padding:8px 18px 24px;border-top:1px dashed var(--line)}
+  .tech-content h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);font-family:ui-monospace,monospace;margin:24px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .tech-content h3:first-child{margin-top:8px}
+
+  /* B1 — CSS vars table */
+  .vars-table-wrap{overflow:auto;border:2px solid var(--fg);background:#fff;box-shadow:4px 4px 0 0 #000;max-height:480px}
+  table.vars-table{border-collapse:collapse;width:100%;font-family:ui-monospace,monospace;font-size:11px}
+  table.vars-table th,table.vars-table td{border-bottom:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+  table.vars-table thead th{background:#f5f5f5;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;position:sticky;top:0}
+  table.vars-table tbody tr{cursor:pointer}
+  table.vars-table tbody tr:hover{background:#fafa00}
+  .var-row.is-alias{display:none}
+  body.show-aliases .var-row.is-alias{display:table-row;opacity:0.6}
+  .pill-prim{color:#0a4a1a;font-weight:700}
+  .pill-alias{color:#7a4f00}
+  .show-aliases-toggle{display:inline-flex;align-items:center;gap:6px;font-family:ui-monospace,monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--dim);margin-top:10px;cursor:pointer}
+  .dim-label{color:var(--dim);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;font-style:italic}
+
+  /* B2 — @font-face cards */
+  .fontface-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+  .fontface-card{border:2px solid var(--fg);background:#fff;box-shadow:2px 2px 0 0 #000;padding:14px}
+  .fontface-family{font-weight:800;font-size:14px}
+  .url-line{font-family:ui-monospace,monospace;font-size:10px;word-break:break-all;color:var(--dim);margin-top:4px}
+
+  /* B3 — Usage graph */
+  .usage-grid{display:flex;flex-direction:column;gap:4px;border:2px solid var(--fg);background:#fff;box-shadow:4px 4px 0 0 #000;padding:14px;max-height:420px;overflow:auto}
+  .usage-row{display:grid;grid-template-columns:minmax(180px,30%) 1fr auto;gap:12px;align-items:center}
+  .usage-name{font-size:11px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .usage-bar{display:inline-block;height:10px;background:#000;min-width:1px}
+  .usage-count{font-size:10px;color:var(--dim)}
+  .mono{font-family:ui-monospace,monospace}
+
+  /* C2 — confidence dots */
+  .conf-dot{display:inline-block;font-family:ui-monospace,monospace;font-size:8px;letter-spacing:1px;margin-left:6px;vertical-align:middle;cursor:help}
+  .conf-high{color:#0a4a1a}
+  .conf-medium{color:#7a4f00}
+  .conf-low{color:#7a1414}
+  .conf-unknown{color:#999}
+
+  /* A3 + C2 — header badges */
+  .header-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .badge{display:inline-flex;align-items:center;gap:4px;font-family:ui-monospace,monospace;font-size:11px;font-weight:700;padding:4px 10px;border:2px solid var(--fg);text-transform:uppercase;letter-spacing:0.06em}
+  .badge-pass{background:#d9f5dd;color:#0a4a1a}
+  .badge-warn{background:#fff7d6;color:#7a4f00}
+  .badge-fail{background:#fde2e2;color:#7a1414}
+  .badge-skip{background:#f0f0f0;color:#666}
+  .badge-conf-high{background:#d9f5dd;color:#0a4a1a;text-transform:none}
+  .badge-conf-medium{background:#fff7d6;color:#7a4f00;text-transform:none}
+  .badge-conf-low{background:#fde2e2;color:#7a1414;text-transform:none}
+
+  /* S2 — usage count badge on swatches */
+  .swatch-usage{display:inline-block;font-family:ui-monospace,monospace;font-size:9px;font-weight:700;padding:1px 5px;margin-left:4px;border-radius:2px}
+  .use-hot{background:#0a4a1a;color:#fff}
+  .use-warm{background:#7a4f00;color:#fff}
+  .use-cold{background:#e5e5e5;color:#333}
+  .use-zero{background:transparent;color:var(--dim);border:1px dashed var(--line)}
+
+  /* A2 — Quality score card */
+  .quality-score{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start;background:#fff;border:2px solid var(--fg);box-shadow:4px 4px 0 0 #000;padding:24px;margin-bottom:48px}
+  .score-grade-block{display:flex;flex-direction:column;align-items:center;gap:4px;padding-right:24px;border-right:1px dashed var(--line);min-width:120px}
+  .score-grade{font-size:96px;font-weight:800;line-height:1;letter-spacing:-0.04em}
+  .score-grade-A{color:#0a4a1a}
+  .score-grade-B{color:#3a7a1a}
+  .score-grade-C{color:#7a4f00}
+  .score-grade-D{color:#a04a1a}
+  .score-grade-F{color:#7a1414}
+  .score-overall{font-family:ui-monospace,monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim)}
+  .score-categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+  .cat-row{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border:1px solid var(--line);background:#fafafa}
+  .cat-name{font-family:ui-monospace,monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--dim)}
+  .cat-grade-row{display:flex;align-items:baseline;gap:8px}
+  .cat-grade{font-size:24px;font-weight:800;line-height:1}
+  .cat-num{font-family:ui-monospace,monospace;font-size:11px;color:var(--dim)}
+  .cat-value{font-family:ui-monospace,monospace;font-size:10px;color:var(--dim)}
+  .cat-ideal{font-family:ui-monospace,monospace;font-size:9px;color:var(--dim);font-style:italic}
+
+  /* A1 — Drift report */
+  .drift-section{background:#fff;border:2px solid var(--fg);box-shadow:4px 4px 0 0 #000;padding:24px;margin-bottom:48px}
+  .drift-verdict{display:inline-flex;align-items:center;gap:8px;font-family:ui-monospace,monospace;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:8px 14px;border:2px solid var(--fg);box-shadow:2px 2px 0 0 #000;margin-bottom:16px}
+  .verdict-in-sync{background:#d9f5dd;color:#0a4a1a}
+  .verdict-minor-drift{background:#fff7d6;color:#7a4f00}
+  .verdict-notable-drift{background:#fde2e2;color:#a04a1a}
+  .verdict-major-drift{background:#7a1414;color:#fff}
+  .drift-summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:16px}
+  .drift-stat{padding:10px;border:1px solid var(--line);background:#fafafa;font-family:ui-monospace,monospace}
+  .drift-stat-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--dim)}
+  .drift-stat-value{font-size:24px;font-weight:800;margin-top:4px}
+  .drift-table{border-collapse:collapse;width:100%;font-family:ui-monospace,monospace;font-size:11px;margin-top:12px}
+  .drift-table th,.drift-table td{padding:6px 10px;border-bottom:1px solid var(--line);text-align:left}
+  .drift-table th{background:#f5f5f5;text-transform:uppercase;letter-spacing:0.06em;font-size:10px}
+  .drift-swatch{display:inline-block;width:14px;height:14px;border:1px solid #ccc;vertical-align:middle;margin-right:6px}
+
+  /* S1 — Breakpoints */
+  .breakpoints-row{display:flex;gap:8px;flex-wrap:wrap}
+  .breakpoint-chip{font-family:ui-monospace,monospace;font-size:11px;font-weight:700;background:#fff;border:2px solid var(--fg);box-shadow:2px 2px 0 0 #000;padding:4px 10px}
+  .breakpoint-chip span{color:var(--dim);font-weight:400;margin-left:4px}
+
+  /* S3/S4 — Dark mode toggle + indicator */
+  .dark-toggle{display:inline-flex;align-items:center;gap:6px;background:#000;color:#fff;border:2px solid var(--fg);padding:6px 12px;cursor:pointer;font-family:ui-monospace,monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em}
+  .dark-indicator{display:inline-flex;align-items:center;gap:4px;font-family:ui-monospace,monospace;font-size:10px;color:var(--dim)}
+
+  /* E1 — Logo display */
+  .logo-display{display:flex;flex-direction:column;align-items:center;gap:24px;padding:48px 24px;border:2px solid var(--fg);box-shadow:4px 4px 0 0 #000}
+  .logo-img{max-width:300px;max-height:120px;object-fit:contain}
+  .logo-inline-svg{display:flex;align-items:center;justify-content:center;width:300px;height:120px}
+  .logo-inline-svg svg{max-width:100%;max-height:100%;width:auto;height:auto;fill:currentColor}
+  .logo-meta{display:flex;flex-wrap:wrap;gap:18px;font-family:ui-monospace,monospace;font-size:11px;color:var(--dim);justify-content:center}
+  .logo-meta-item{display:inline-flex;gap:6px;align-items:center}
+  .logo-meta-label{font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--fg)}
+  .logo-meta a{color:var(--dim);word-break:break-all}
+
+  /* D6 — Component variants matrix */
+  .variant-matrix{padding:24px;border:2px solid var(--fg);box-shadow:4px 4px 0 0 #000;overflow:auto}
+  table.variant-table{border-collapse:separate;border-spacing:0 12px;width:100%}
+  .variant-table th{font-family:ui-monospace,monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);text-align:center;padding:6px 12px;border-bottom:1px solid var(--line)}
+  .variant-table th:first-child{text-align:left}
+  .variant-table td{padding:8px 12px;text-align:center;vertical-align:middle}
+  .variant-row-label{font-family:ui-monospace,monospace;font-size:11px;font-weight:700;text-align:left !important;color:var(--dim);padding-right:24px !important;white-space:nowrap}
+
+  /* E2 — Shadow ladder */
+  .shadow-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px 24px;padding:32px;border:2px solid var(--fg);box-shadow:4px 4px 0 0 #000}
+  .shadow-card{display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer}
+  .shadow-block{width:120px;height:80px;border:1px solid rgba(0,0,0,0.05)}
+  .shadow-meta{display:flex;flex-direction:column;align-items:center;gap:2px;font-family:ui-monospace,monospace;font-size:10px;text-align:center}
+  .shadow-rank{font-size:18px;font-weight:800;color:var(--fg)}
+  .shadow-count{color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:0.06em}
+  .shadow-value{color:var(--dim);font-size:9px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+  /* E3 — Motion tokens */
+  .motion-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+  .motion-block{background:#fff;border:2px solid var(--fg);box-shadow:2px 2px 0 0 #000;padding:18px}
+  .motion-block-title{font-family:ui-monospace,monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);margin-bottom:12px}
+  .motion-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+  .motion-chip{display:inline-flex;align-items:center;gap:4px;font-family:ui-monospace,monospace;font-size:11px;font-weight:700;background:#f5f5f5;border:1px solid var(--line);padding:4px 10px;cursor:pointer}
+  .motion-chip span{color:var(--dim);font-weight:400}
+  .motion-chip:hover{background:#000;color:#fff}
+  .motion-demo{display:flex;flex-direction:column;gap:8px}
+  .motion-demo-row{display:flex;align-items:center;gap:12px}
+  .motion-demo-label{font-family:ui-monospace,monospace;font-size:10px;color:var(--dim);min-width:60px}
+  .motion-track{flex:1;height:14px;background:#f5f5f5;position:relative;border:1px solid var(--line);overflow:hidden}
+  .motion-ball{position:absolute;top:1px;left:1px;width:12px;height:12px;border-radius:50%;animation:motion-slide var(--motion-d, 1s) cubic-bezier(0.4, 0, 0.2, 1) infinite alternate}
+  @keyframes motion-slide{0%{left:1px}100%{left:calc(100% - 13px)}}
+  .motion-keyframes{display:flex;flex-wrap:wrap;gap:5px}
+  .kf-chip{font-family:ui-monospace,monospace;font-size:10px;background:#f5f5f5;border:1px solid var(--line);padding:2px 8px;color:var(--dim)}
+
+  /* F — Stack fingerprint */
+  .stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;background:#fff;border:2px solid var(--fg);box-shadow:4px 4px 0 0 #000;padding:24px}
+  .stack-kind{display:flex;flex-direction:column;gap:8px}
+  .stack-kind-label{font-family:ui-monospace,monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);padding-bottom:4px;border-bottom:1px solid var(--line)}
+  .stack-tags{display:flex;flex-wrap:wrap;gap:6px}
+  .stack-tag{display:inline-flex;align-items:center;font-family:ui-monospace,monospace;font-size:11px;font-weight:600;background:#0a4a1a;color:#fff;padding:4px 10px;cursor:help}
+
+  /* A3 — Lint findings */
+  .lint-section{background:#fff;border:2px solid var(--fg);box-shadow:4px 4px 0 0 #000;padding:16px;margin-bottom:48px}
+  .lint-section h2{margin-top:0}
+  .lint-list{display:flex;flex-direction:column;gap:6px;font-family:ui-monospace,monospace;font-size:12px}
+  .lint-row{display:flex;gap:8px;align-items:flex-start;padding:6px 8px;border-left:3px solid;background:#fafafa}
+  .lint-error{border-left-color:#7a1414}
+  .lint-warn{border-left-color:#7a4f00}
+  .lint-tag{font-weight:700;font-size:10px;letter-spacing:0.06em;background:#000;color:#fff;padding:2px 6px;flex-shrink:0}
+  .lint-error .lint-tag{background:#7a1414}
+  .lint-warn .lint-tag{background:#7a4f00}
+</style>
+</head>
+<body>
+  <header>
+    <div class="header-identity">
+      <div class="favicon-placeholder"></div>
+      <div class="header-text">
+        <div class="brand-name">SATTI</div>
+        <h1>DESIGN.md preview</h1>
+        <div class="subtitle">extracted from <a href="SATTI Design System — 30 telas (F2–F5 · PT + EN)" target="_blank">SATTI Design System — 30 telas (F2–F5 · PT + EN)</a></div>
+      </div>
+    </div>
+    <div class="header-badges">
+      <span class="badge badge-skip" title="Lint did not run">lint: skipped</span>
+      
+          <span class="badge badge-conf-high" title="Sourced from CSS vars / @font-face">●●● 88 high</span>
+          <span class="badge badge-conf-medium" title="Sourced from non-var CSS declarations">●●○ 0 medium</span>
+          <span class="badge badge-conf-low" title="Inferred without direct CSS source">●○○ 4 low</span>
+        
+      <span class="badge score-grade-B" style="background:transparent;border-color:currentcolor" title="Design quality score">B · 84/100</span>
+      
+      <span class="badge" style="background:#f0f0f0;color:#333" title="640px · 768px">📐 2 breakpoints</span>
+      
+    </div>
+  </header>
+
+  
+
+  <div class="name-pill">SATTI</div>
+
+  
+  <section>
+    <div class="quality-score">
+      <div class="score-grade-block">
+        <div class="score-grade score-grade-B">B</div>
+        <div class="score-overall">84/100</div>
+        <div class="score-overall" style="text-transform:none;letter-spacing:0">design score</div>
+      </div>
+      <div class="score-categories">
+        
+          <div class="cat-row" title="ideal: 25-40">
+            <div class="cat-name">color discipline</div>
+            <div class="cat-grade-row">
+              <span class="cat-grade score-grade-A">A</span>
+              <span class="cat-num">100/100</span>
+            </div>
+            <div class="cat-value">15 colors</div>
+            <div class="cat-ideal">ideal: 25-40</div>
+          </div>
+        
+          <div class="cat-row" title="ideal: 2-4 families">
+            <div class="cat-name">typography</div>
+            <div class="cat-grade-row">
+              <span class="cat-grade score-grade-A">A</span>
+              <span class="cat-num">100/100</span>
+            </div>
+            <div class="cat-value">3 families, 13 scales</div>
+            <div class="cat-ideal">ideal: 2-4 families</div>
+          </div>
+        
+          <div class="cat-row" title="ideal: 4-8">
+            <div class="cat-name">spacing system</div>
+            <div class="cat-grade-row">
+              <span class="cat-grade score-grade-A">A</span>
+              <span class="cat-num">100/100</span>
+            </div>
+            <div class="cat-value">7 tokens</div>
+            <div class="cat-ideal">ideal: 4-8</div>
+          </div>
+        
+          <div class="cat-row" title="ideal: 3-6">
+            <div class="cat-name">border radii</div>
+            <div class="cat-grade-row">
+              <span class="cat-grade score-grade-A">A</span>
+              <span class="cat-num">100/100</span>
+            </div>
+            <div class="cat-value">5 levels</div>
+            <div class="cat-ideal">ideal: 3-6</div>
+          </div>
+        
+          <div class="cat-row" title="ideal: ≥80%">
+            <div class="cat-name">tokenization</div>
+            <div class="cat-grade-row">
+              <span class="cat-grade score-grade-A">A</span>
+              <span class="cat-num">96/100</span>
+            </div>
+            <div class="cat-value">96% high confidence</div>
+            <div class="cat-ideal">ideal: ≥80%</div>
+          </div>
+        
+          <div class="cat-row" title="ideal: 0E 0W">
+            <div class="cat-name">lint compliance</div>
+            <div class="cat-grade-row">
+              <span class="cat-grade score-grade-C">C</span>
+              <span class="cat-num">70/100</span>
+            </div>
+            <div class="cat-value">skipped</div>
+            <div class="cat-ideal">ideal: 0E 0W</div>
+          </div>
+        
+          <div class="cat-row" title="ideal: 100% AA">
+            <div class="cat-name">accessibility</div>
+            <div class="cat-grade-row">
+              <span class="cat-grade score-grade-F">F</span>
+              <span class="cat-num">20/100</span>
+            </div>
+            <div class="cat-value">2/10 pairs ≥AA</div>
+            <div class="cat-ideal">ideal: 100% AA</div>
+          </div>
+        
+      </div>
+    </div>
+  </section>
+  
+
+  
+
+  
+  <section>
+    <h2>Visual archetype</h2>
+    <p class="dim" style="font-family:ui-monospace,monospace;font-size:11px;margin-bottom:12px">
+      Style classification against canonical archetypes (shadcn-neutral,
+      apple-glass, carbon-enterprise, polaris-friendly, ...).
+      Complementary to the technical Stack fingerprint above.
+    </p>
+    <div class="stack-grid">
+      <div class="stack-kind">
+        <div class="stack-kind-label">primary archetype</div>
+        <div class="stack-tags">
+          <span class="stack-tag" style="background:#0a4a1a;color:#fff" title="Matched polaris-friendly on: radius_scale=moderate-high, color_saturation=very-low, typography_weight=regular-medium-semibold-bold, shadow_intensity=moderate, surface_treatment=gradient. Diverged on: spacing_density=compact (expected very-roomy|moderate).">
+            polaris-friendly
+             · 88%
+          </span>
+        </div>
+      </div>
+      
+      <div class="stack-kind">
+        <div class="stack-kind-label">extracted signals</div>
+        <div class="stack-tags">
+          <span class="stack-tag" style="background:#1f2937;color:#fff">radius scale: moderate-high</span><span class="stack-tag" style="background:#1f2937;color:#fff">color saturation: very-low</span><span class="stack-tag" style="background:#1f2937;color:#fff">spacing density: compact</span><span class="stack-tag" style="background:#1f2937;color:#fff">typography weight: regular-medium-semibold-bold</span><span class="stack-tag" style="background:#1f2937;color:#fff">shadow intensity: moderate</span><span class="stack-tag" style="background:#1f2937;color:#fff">surface treatment: gradient</span>
+        </div>
+      </div>
+    </div>
+    
+    <p class="dim" style="font-family:ui-monospace,monospace;font-size:11px;margin-top:12px;line-height:1.5">
+      <strong>Why this archetype:</strong> Matched polaris-friendly on: radius_scale=moderate-high, color_saturation=very-low, typography_weight=regular-medium-semibold-bold, shadow_intensity=moderate, surface_treatment=gradient. Diverged on: spacing_density=compact (expected very-roomy|moderate).
+    </p>
+    
+    
+    <details style="margin-top:12px;font-family:ui-monospace,monospace;font-size:11px">
+      <summary style="cursor:pointer;color:var(--dim)">Show all archetype scores</summary>
+      <ul style="margin-top:8px;list-style:none;padding-left:0">
+        <li style="display:flex;justify-content:space-between;padding:2px 0"><span>polaris-friendly</span><span>88.2%</span></li><li style="display:flex;justify-content:space-between;padding:2px 0"><span>apple-glass</span><span>60.0%</span></li><li style="display:flex;justify-content:space-between;padding:2px 0"><span>marketing-gradient</span><span>58.8%</span></li><li style="display:flex;justify-content:space-between;padding:2px 0"><span>community-polished</span><span>40.0%</span></li><li style="display:flex;justify-content:space-between;padding:2px 0"><span>carbon-enterprise</span><span>37.5%</span></li><li style="display:flex;justify-content:space-between;padding:2px 0"><span>porsche-precision</span><span>37.5%</span></li><li style="display:flex;justify-content:space-between;padding:2px 0"><span>shadcn-neutral</span><span>26.7%</span></li><li style="display:flex;justify-content:space-between;padding:2px 0"><span>material-elevation</span><span>26.7%</span></li><li style="display:flex;justify-content:space-between;padding:2px 0"><span>ant-china-enterprise</span><span>18.8%</span></li><li style="display:flex;justify-content:space-between;padding:2px 0"><span>brutalist-mono</span><span>0.0%</span></li><li style="display:flex;justify-content:space-between;padding:2px 0"><span>govuk-conservative</span><span>0.0%</span></li>
+      </ul>
+    </details>
+    
+  </section>
+  
+
+  
+
+  <section>
+    <h2>Export tokens</h2>
+    <div class="export-row">
+      <button class="export-btn export-btn-primary" data-export="design-md">Copy DESIGN.md</button>
+      <button class="export-btn export-btn-primary" data-export="agent-prompt" title="Paste into v0, Cursor, Claude, Lovable">Copy as AI agent prompt 🤖</button>
+      <button class="export-btn" data-export="tailwind">Copy as Tailwind config</button>
+      <button class="export-btn" data-export="css-vars">Copy as CSS variables</button>
+      <button class="export-btn" data-export="dtcg">Copy as DTCG JSON</button>
+      <button class="export-btn" data-export="style-dictionary">Copy as Style Dictionary</button>
+      <button class="export-btn" data-export="raw-json">Copy raw tokens.json</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Colors</h2>
+    <div class="swatches">
+      <button class="swatch" data-copy="#15171B" title="high confidence — css_var (--c-iron) · used 13× in CSS">
+        <div class="swatch-fill" style="background:#15171B"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">secondary <span class="conf-dot conf-high" title="high confidence — css_var (--c-iron) · used 13× in CSS">●●●</span></div>
+          <div class="swatch-val">#15171B <span class="swatch-usage use-warm">13×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#15171B" title="high confidence — css_var (--c-iron) · used 13× in CSS">
+        <div class="swatch-fill" style="background:#15171B"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">text <span class="conf-dot conf-high" title="high confidence — css_var (--c-iron) · used 13× in CSS">●●●</span></div>
+          <div class="swatch-val">#15171B <span class="swatch-usage use-warm">13×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#6E7480" title="high confidence — css_var (--c-steel) · used 5× in CSS">
+        <div class="swatch-fill" style="background:#6E7480"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">neutral <span class="conf-dot conf-high" title="high confidence — css_var (--c-steel) · used 5× in CSS">●●●</span></div>
+          <div class="swatch-val">#6E7480 <span class="swatch-usage use-warm">5×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#6E7480" title="high confidence — css_var (--c-steel) · used 5× in CSS">
+        <div class="swatch-fill" style="background:#6E7480"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">text-muted <span class="conf-dot conf-high" title="high confidence — css_var (--c-steel) · used 5× in CSS">●●●</span></div>
+          <div class="swatch-val">#6E7480 <span class="swatch-usage use-warm">5×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#FF4D00" title="high confidence — css_var (--c-blaze) · used 3× in CSS">
+        <div class="swatch-fill" style="background:#FF4D00"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">primary <span class="conf-dot conf-high" title="high confidence — css_var (--c-blaze) · used 3× in CSS">●●●</span></div>
+          <div class="swatch-val">#FF4D00 <span class="swatch-usage use-cold">3×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#2F6BFF" title="high confidence — css_var (--c-circuit) · used 3× in CSS">
+        <div class="swatch-fill" style="background:#2F6BFF"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">tertiary <span class="conf-dot conf-high" title="high confidence — css_var (--c-circuit) · used 3× in CSS">●●●</span></div>
+          <div class="swatch-val">#2F6BFF <span class="swatch-usage use-cold">3×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#E3E6EB" title="high confidence — css_var (--c-line) · used 3× in CSS">
+        <div class="swatch-fill" style="background:#E3E6EB"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">border <span class="conf-dot conf-high" title="high confidence — css_var (--c-line) · used 3× in CSS">●●●</span></div>
+          <div class="swatch-val">#E3E6EB <span class="swatch-usage use-cold">3×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#B43A2F" title="high confidence — css_var (--c-error) · used 3× in CSS">
+        <div class="swatch-fill" style="background:#B43A2F"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">error <span class="conf-dot conf-high" title="high confidence — css_var (--c-error) · used 3× in CSS">●●●</span></div>
+          <div class="swatch-val">#B43A2F <span class="swatch-usage use-cold">3×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#FFE9DE" title="high confidence — css_var (--c-blaze-soft) · used 3× in CSS">
+        <div class="swatch-fill" style="background:#FFE9DE"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">blaze-soft <span class="conf-dot conf-high" title="high confidence — css_var (--c-blaze-soft) · used 3× in CSS">●●●</span></div>
+          <div class="swatch-val">#FFE9DE <span class="swatch-usage use-cold">3×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#ECEEF2" title="high confidence — css_var (--tint-card3) · used 3× in CSS">
+        <div class="swatch-fill" style="background:#ECEEF2"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">tint-slate <span class="conf-dot conf-high" title="high confidence — css_var (--tint-card3) · used 3× in CSS">●●●</span></div>
+          <div class="swatch-val">#ECEEF2 <span class="swatch-usage use-cold">3×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#F7F8FA" title="high confidence — css_var (--c-paper) · used 2× in CSS">
+        <div class="swatch-fill" style="background:#F7F8FA"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">surface <span class="conf-dot conf-high" title="high confidence — css_var (--c-paper) · used 2× in CSS">●●●</span></div>
+          <div class="swatch-val">#F7F8FA <span class="swatch-usage use-cold">2×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#15794B" title="high confidence — css_var (--c-success) · used 2× in CSS">
+        <div class="swatch-fill" style="background:#15794B"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">success <span class="conf-dot conf-high" title="high confidence — css_var (--c-success) · used 2× in CSS">●●●</span></div>
+          <div class="swatch-val">#15794B <span class="swatch-usage use-cold">2×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#F4F5F7" title="high confidence — css_var (--c-ink-on-dark) · used 2× in CSS">
+        <div class="swatch-fill" style="background:#F4F5F7"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">ink-on-dark <span class="conf-dot conf-high" title="high confidence — css_var (--c-ink-on-dark) · used 2× in CSS">●●●</span></div>
+          <div class="swatch-val">#F4F5F7 <span class="swatch-usage use-cold">2×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#0F1115" title="high confidence — css_var (--c-graphite) · used 1× in CSS">
+        <div class="swatch-fill" style="background:#0F1115"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">graphite <span class="conf-dot conf-high" title="high confidence — css_var (--c-graphite) · used 1× in CSS">●●●</span></div>
+          <div class="swatch-val">#0F1115 <span class="swatch-usage use-cold">1×</span></div>
+        </div>
+      </button>
+      <button class="swatch" data-copy="#E4EBFF" title="high confidence — css_var (--tint-card2) · used 1× in CSS">
+        <div class="swatch-fill" style="background:#E4EBFF"></div>
+        <div class="swatch-meta">
+          <div class="swatch-key">tint-blue <span class="conf-dot conf-high" title="high confidence — css_var (--tint-card2) · used 1× in CSS">●●●</span></div>
+          <div class="swatch-val">#E4EBFF <span class="swatch-usage use-cold">1×</span></div>
+        </div>
+      </button></div>
+  </section>
+
+  <section>
+    <h2>Component preview (live tokens)</h2>
+    <div class="preview-token-source" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div style="flex:1;min-width:0">
+        <strong>Token source:</strong>
+        <code>preview_tokens</code> (LLM-resolved, 16 keys)
+      </div>
+      <button id="dark-toggle" class="dark-toggle" style="display:none">🌙 dark mode</button>
+    </div>
+
+    <!-- HERO ZONE — brand identity at full impact -->
+    <div class="preview-hero" style="background:#f7f8fa;color:#15171b;font-family:Inter,ui-sans-serif,system-ui,sans-serif;border-radius:16px">
+      <div class="hero-eyebrow" style="font-family:&#39;JetBrains Mono&#39;,ui-monospace,monospace;color:#ff4d00">SATTI · DESIGN SYSTEM</div>
+      <h1 class="hero-display" style="font-family:Archivo,ui-serif,Georgia,serif;color:#15171b;letter-spacing:-0.025em">Engenharia que se prova</h1>
+      <p class="hero-lead" style="font-family:Inter,ui-sans-serif,sans-serif;color:#6e7480">Precisão de engenharia que pulsa. Automação de ponta a ponta com IA — hairlines de 1px, tipografia condensada e um único acento de alto impacto.</p>
+      <div class="hero-actions">
+        <button class="ds-btn ds-btn-large" style="background:#ff4d00;color:#15171b;border:1px solid #ff4d00;border-radius:9999px">
+          Get started <span style="margin-left:6px">→</span>
+        </button>
+        <button class="ds-btn ds-btn-large" style="background:transparent;color:#15171b;border:1px solid #e3e6eb;border-radius:9999px">
+          Documentation
+        </button>
+      </div>
+    </div>
+
+    <!-- COMPONENT GRID -->
+    <div class="preview-stage" style="background:#f7f8fa;color:#15171b;font-family:Inter,ui-sans-serif,system-ui,sans-serif">
+      <div class="preview-card">
+        <h4>Buttons</h4>
+        <button class="ds-btn ds-btn-large" style="background:#ff4d00;color:#15171b;border:1px solid #ff4d00;border-radius:9999px">
+          Primary action <span style="margin-left:4px">→</span>
+        </button>
+        <button class="ds-btn ds-btn-large" style="background:transparent;color:#15171b;border:1px solid #e3e6eb;border-radius:9999px">
+          Secondary
+        </button>
+        <button class="ds-btn ds-btn-tertiary" style="background:transparent;color:#2f6bff;border:0;text-decoration:underline;justify-content:flex-start;padding-left:0">
+          Tertiary link →
+        </button>
+      </div>
+
+      <div class="preview-card">
+        <h4>Editorial card</h4>
+        <article class="ds-card ds-card-editorial" style="background:#f7f8fa;border:1px solid #e3e6eb;border-radius:28px">
+          <div class="card-eyebrow" style="font-family:&#39;JetBrains Mono&#39;,ui-monospace,monospace;color:#ff4d00">FEATURE</div>
+          <div class="ds-card-title" style="font-family:Archivo,ui-serif,Georgia,serif;color:#15171b">Engenharia que se prova</div>
+          <div class="ds-card-body" style="color:#6e7480">Precisão de engenharia que pulsa. Automação de ponta a ponta com IA — hairlines de 1px, tipografia condensada e um único acento de alto impa</div>
+          <div class="card-meta" style="font-family:&#39;JetBrains Mono&#39;,ui-monospace,monospace;color:#6e7480">
+            <span>3 MIN READ</span>
+            <span class="meta-dot" style="background:#e3e6eb"></span>
+            <span>UPDATED TODAY</span>
+          </div>
+          <div class="card-cta-row">
+            <button class="ds-btn" style="background:#ff4d00;color:#15171b;border:1px solid #ff4d00;border-radius:9999px;font-size:13px">Read more</button>
+            <button class="ds-btn ds-btn-tertiary" style="background:transparent;color:#2f6bff;border:0;font-size:13px;padding:0;text-decoration:underline">Save</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="preview-card">
+        <h4>Input + badges</h4>
+        <input class="ds-input" type="text" placeholder="hello@example.com" style="background:#f7f8fa;color:#15171b;border:1px solid #e3e6eb;border-radius:12px" />
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="ds-badge" style="background:#ff4d00;color:#15171b;border-radius:9999px">Featured</span>
+          <span class="ds-badge" style="background:transparent;color:#15171b;border:1px solid #e3e6eb;border-radius:9999px">Outline</span>
+          <span class="ds-badge" style="background:#15794B;color:#15171b;border-radius:9999px">● Live</span>
+          <span class="ds-badge" style="background:#B43A2F;color:#15171b;border-radius:9999px">● Error</span>
+        </div>
+      </div>
+
+      <div class="preview-card">
+        <h4>KPI tile</h4>
+        <div class="kpi-tile" style="background:#f7f8fa;border:1px solid #e3e6eb;border-radius:28px">
+          <div class="kpi-label" style="font-family:&#39;JetBrains Mono&#39;,ui-monospace,monospace;color:#6e7480">MONTHLY ACTIVE</div>
+          <div class="kpi-value" style="font-family:Archivo,ui-serif,Georgia,serif;color:#15171b;letter-spacing:-0.02em">128.4K</div>
+          <div class="kpi-trend" style="color:#15794B;font-family:&#39;JetBrains Mono&#39;,ui-monospace,monospace">↑ 12.4% vs last month</div>
+        </div>
+      </div>
+
+      <div class="preview-card">
+        <h4>Alerts</h4>
+        <div class="ds-alert" style="background:#f7f8fa;color:#15171b;border-left:3px solid #15794B;border-radius:8px">
+          <strong>Success</strong> — Your DESIGN.md was extracted with full provenance.
+        </div>
+        <div class="ds-alert" style="background:#f7f8fa;color:#15171b;border-left:3px solid #ff4d00;border-radius:8px">
+          <strong>Note</strong> — Token usage graph shows 58 unique tokens.
+        </div>
+        <div class="ds-alert" style="background:#f7f8fa;color:#15171b;border-left:3px solid #B43A2F;border-radius:8px">
+          <strong>Error</strong> — Could not load some stylesheets.
+        </div>
+      </div>
+
+      <div class="preview-card">
+        <h4>Code block</h4>
+        <pre class="ds-code" style="background:#f7f8fa;color:#15171b;border:1px solid #e3e6eb;border-radius:8px;font-family:&#39;JetBrains Mono&#39;,ui-monospace,monospace"><span style="color:#6e7480">// design.tokens.ts</span>
+<span style="color:#ff4d00">export const</span> tokens = {
+  primary:   <span style="color:#15794B">"#ff4d00"</span>,
+  surface:   <span style="color:#15794B">"#f7f8fa"</span>,
+  text:      <span style="color:#15794B">"#15171b"</span>,
+};</pre>
+      </div>
+
+      <div class="preview-card preview-card-wide">
+        <h4>Type hierarchy</h4>
+        <div class="hierarchy-stack">
+          <div class="h-eyebrow" style="font-family:&#39;JetBrains Mono&#39;,ui-monospace,monospace;color:#ff4d00">EYEBROW · MONO</div>
+          <div class="h-display" style="font-family:Archivo,ui-serif,Georgia,serif;color:#15171b;letter-spacing:-0.025em">Engenharia que se prova</div>
+          <div class="h-body" style="font-family:Inter,ui-sans-serif,sans-serif;color:#6e7480">Precisão de engenharia que pulsa. Automação de ponta a ponta com IA — hairlines de 1px, tipografia condensada e um único acento de alto impacto.</div>
+          <a href="#" style="color:#ff4d00;font-family:Inter;text-decoration:underline">Read more →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <!-- D6 — Component variant matrix (button states + sizes + variants) -->
+  <section>
+    <h2>Component variants matrix</h2>
+    <p class="dim" style="font-family:ui-monospace,monospace;font-size:11px;margin-bottom:12px">Each cell renders a single button using the live tokens. Use this to audit the full surface of the component at a glance.</p>
+    <div class="variant-matrix" style="background:#f7f8fa">
+      <table class="variant-table" style="color:#15171b;font-family:Inter,ui-sans-serif,sans-serif">
+        <thead>
+          <tr><th></th><th>SM</th><th>MD</th><th>LG</th></tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td class="variant-row-label">Primary · default</td>
+              
+                <td>
+                  <button class="ds-btn" style="background:#ff4d00;color:#15171b;border:1px solid #ff4d00;border-radius:9999px;opacity:1;padding:6px 12px;font-size:12px;">
+                    Action SM
+                  </button>
+                </td>
+              
+                <td>
+                  <button class="ds-btn" style="background:#ff4d00;color:#15171b;border:1px solid #ff4d00;border-radius:9999px;opacity:1;padding:10px 20px;font-size:14px;">
+                    Action MD
+                  </button>
+                </td>
+              
+                <td>
+                  <button class="ds-btn" style="background:#ff4d00;color:#15171b;border:1px solid #ff4d00;border-radius:9999px;opacity:1;padding:14px 28px;font-size:16px;">
+                    Action LG
+                  </button>
+                </td>
+              
+            </tr>
+          
+            <tr>
+              <td class="variant-row-label">Primary · hover</td>
+              
+                <td>
+                  <button class="ds-btn" style="background:#ff4d00;color:#15171b;border:1px solid #ff4d00;border-radius:9999px;opacity:0.9;padding:6px 12px;font-size:12px;">
+                    Action SM
+                  </button>
+                </td>
+              
+                <td>
+                  <button class="ds-btn" style="background:#ff4d00;color:#15171b;border:1px solid #ff4d00;border-radius:9999px;opacity:0.9;padding:10px 20px;font-size:14px;">
+                    Action MD
+                  </button>
+                </td>
+              
+                <td>
+                  <button class="ds-btn" style="background:#ff4d00;color:#15171b;border:1px solid #ff4d00;border-radius:9999px;opacity:0.9;padding:14px 28px;font-size:16px;">
+                    Action LG
+                  </button>
+                </td>
+              
+            </tr>
+          
+            <tr>
+              <td class="variant-row-label">Primary · disabled</td>
+              
+                <td>
+                  <button class="ds-btn" style="background:#ff4d00;color:#15171b;border:1px solid #ff4d00;border-radius:9999px;opacity:0.4;padding:6px 12px;font-size:12px;">
+                    Action SM
+                  </button>
+                </td>
+              
+                <td>
+                  <button class="ds-btn" style="background:#ff4d00;color:#15171b;border:1px solid #ff4d00;border-radius:9999px;opacity:0.4;padding:10px 20px;font-size:14px;">
+                    Action MD
+                  </button>
+                </td>
+              
+                <td>
+                  <button class="ds-btn" style="background:#ff4d00;color:#15171b;border:1px solid #ff4d00;border-radius:9999px;opacity:0.4;padding:14px 28px;font-size:16px;">
+                    Action LG
+                  </button>
+                </td>
+              
+            </tr>
+          
+            <tr>
+              <td class="variant-row-label">Secondary · default</td>
+              
+                <td>
+                  <button class="ds-btn" style="background:transparent;color:#15171b;border:1px solid #e3e6eb;border-radius:9999px;opacity:1;padding:6px 12px;font-size:12px;">
+                    Action SM
+                  </button>
+                </td>
+              
+                <td>
+                  <button class="ds-btn" style="background:transparent;color:#15171b;border:1px solid #e3e6eb;border-radius:9999px;opacity:1;padding:10px 20px;font-size:14px;">
+                    Action MD
+                  </button>
+                </td>
+              
+                <td>
+                  <button class="ds-btn" style="background:transparent;color:#15171b;border:1px solid #e3e6eb;border-radius:9999px;opacity:1;padding:14px 28px;font-size:16px;">
+                    Action LG
+                  </button>
+                </td>
+              
+            </tr>
+          
+            <tr>
+              <td class="variant-row-label">Secondary · hover</td>
+              
+                <td>
+                  <button class="ds-btn" style="background:transparent;color:#15171b;border:1px solid #e3e6eb;border-radius:9999px;opacity:0.7;padding:6px 12px;font-size:12px;">
+                    Action SM
+                  </button>
+                </td>
+              
+                <td>
+                  <button class="ds-btn" style="background:transparent;color:#15171b;border:1px solid #e3e6eb;border-radius:9999px;opacity:0.7;padding:10px 20px;font-size:14px;">
+                    Action MD
+                  </button>
+                </td>
+              
+                <td>
+                  <button class="ds-btn" style="background:transparent;color:#15171b;border:1px solid #e3e6eb;border-radius:9999px;opacity:0.7;padding:14px 28px;font-size:16px;">
+                    Action LG
+                  </button>
+                </td>
+              
+            </tr>
+          
+            <tr>
+              <td class="variant-row-label">Tertiary · default</td>
+              
+                <td>
+                  <button class="ds-btn" style="background:transparent;color:#2f6bff;border:1px solid transparent;border-radius:9999px;opacity:1;padding:6px 12px;font-size:12px;text-decoration:underline">
+                    Link SM
+                  </button>
+                </td>
+              
+                <td>
+                  <button class="ds-btn" style="background:transparent;color:#2f6bff;border:1px solid transparent;border-radius:9999px;opacity:1;padding:10px 20px;font-size:14px;text-decoration:underline">
+                    Link MD
+                  </button>
+                </td>
+              
+                <td>
+                  <button class="ds-btn" style="background:transparent;color:#2f6bff;border:1px solid transparent;border-radius:9999px;opacity:1;padding:14px 28px;font-size:16px;text-decoration:underline">
+                    Link LG
+                  </button>
+                </td>
+              
+            </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Spacing</h2>
+    <div class="scale-row"><div class="space-cell" data-copy="8px"><div class="space-block" style="width:8px;height:8px"></div><div class="space-key">2xs</div><div class="space-val">8px</div></div><div class="space-cell" data-copy="12px"><div class="space-block" style="width:8px;height:8px"></div><div class="space-key">xs</div><div class="space-val">12px</div></div><div class="space-cell" data-copy="16px"><div class="space-block" style="width:10.666666666666666px;height:10.666666666666666px"></div><div class="space-key">sm</div><div class="space-val">16px</div></div><div class="space-cell" data-copy="24px"><div class="space-block" style="width:16px;height:16px"></div><div class="space-key">md</div><div class="space-val">24px</div></div><div class="space-cell" data-copy="48px"><div class="space-block" style="width:32px;height:32px"></div><div class="space-key">lg</div><div class="space-val">48px</div></div><div class="space-cell" data-copy="88px"><div class="space-block" style="width:58.666666666666664px;height:58.666666666666664px"></div><div class="space-key">xl</div><div class="space-val">88px</div></div><div class="space-cell" data-copy="120px"><div class="space-block" style="width:64px;height:64px"></div><div class="space-key">xxl</div><div class="space-val">120px</div></div></div>
+  </section>
+
+  <section>
+    <h2>Radius</h2>
+    <div class="scale-row"><div class="radius-cell" data-copy="8px"><div class="radius-block" style="border-radius:8px"></div><div class="radius-key">sm</div><div class="radius-val">8px</div></div><div class="radius-cell" data-copy="12px"><div class="radius-block" style="border-radius:12px"></div><div class="radius-key">md</div><div class="radius-val">12px</div></div><div class="radius-cell" data-copy="16px"><div class="radius-block" style="border-radius:16px"></div><div class="radius-key">lg</div><div class="radius-val">16px</div></div><div class="radius-cell" data-copy="28px"><div class="radius-block" style="border-radius:28px"></div><div class="radius-key">xl</div><div class="radius-val">28px</div></div><div class="radius-cell" data-copy="9999px"><div class="radius-block" style="border-radius:32px"></div><div class="radius-key">full</div><div class="radius-val">full</div></div></div>
+  </section>
+
+  
+  <section>
+    <h2>Shadows · elevation ladder</h2>
+    <p class="dim" style="font-family:ui-monospace,monospace;font-size:11px;margin-bottom:12px">2 unique shadow values found in source CSS. Cards rendered live with the shadow applied.</p>
+    <div class="shadow-grid" style="background:#f7f8fa">
+      
+        <div class="shadow-card" data-copy="0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF" title="Click to copy box-shadow value">
+          <div class="shadow-block" style="background:#f7f8fa;box-shadow:0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF;border-radius:28px"></div>
+          <div class="shadow-meta">
+            <div class="shadow-rank">1</div>
+            <div class="shadow-count">1× use</div>
+            <div class="shadow-value">0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF</div>
+          </div>
+        </div>
+      
+        <div class="shadow-card" data-copy="0 0 0 3px rgba(47,107,255,0.18)" title="Click to copy box-shadow value">
+          <div class="shadow-block" style="background:#f7f8fa;box-shadow:0 0 0 3px rgba(47,107,255,0.18);border-radius:28px"></div>
+          <div class="shadow-meta">
+            <div class="shadow-rank">2</div>
+            <div class="shadow-count">1× use</div>
+            <div class="shadow-value">0 0 0 3px rgba(47,107,255,0.18)</div>
+          </div>
+        </div>
+      
+    </div>
+  </section>
+  
+
+  
+  <section>
+    <h2>Motion tokens</h2>
+    <div class="motion-grid">
+      
+        <div class="motion-block">
+          <div class="motion-block-title">Durations</div>
+          <div class="motion-chips">
+            <span class="motion-chip" data-copy="0.45s" title="2× declarations">0.45s <span>2×</span></span><span class="motion-chip" data-copy="0.35s" title="2× declarations">0.35s <span>2×</span></span>
+          </div>
+          <!-- Live demo: ball animates with each duration -->
+          <div class="motion-demo">
+            
+              <div class="motion-demo-row">
+                <span class="motion-demo-label">0.45s</span>
+                <div class="motion-track">
+                  <div class="motion-ball" style="--motion-d:0.45s;background:#ff4d00"></div>
+                </div>
+              </div>
+            
+              <div class="motion-demo-row">
+                <span class="motion-demo-label">0.35s</span>
+                <div class="motion-track">
+                  <div class="motion-ball" style="--motion-d:0.35s;background:#ff4d00"></div>
+                </div>
+              </div>
+            
+          </div>
+        </div>
+      
+      
+        <div class="motion-block">
+          <div class="motion-block-title">Easings</div>
+          <div class="motion-chips">
+            <span class="motion-chip" data-copy="cubic-bezier(0.76,0,0.24,1)" title="2× declarations">cubic-bezier(0.76,0,0.24,1) <span>2×</span></span>
+          </div>
+        </div>
+      
+      
+    </div>
+  </section>
+  
+
+  <section>
+    <h2>@font-face declarations</h2>
+    
+    <div class="fontface-grid">
+      
+        <div class="fontface-card">
+          <div class="fontface-family">Archivo</div>
+          <dl class="meta-grid" style="margin-top:8px">
+            <dt>weight</dt><dd>500</dd>
+            <dt>style</dt><dd>normal</dd>
+            <dt>display</dt><dd>swap</dd>
+            
+            <dt>formats</dt><dd>woff2</dd>
+          </dl>
+          <details style="margin-top:10px"><summary>1 src url(s)</summary><div class="url-line">https://fonts.gstatic.com/s/archivo/v19/archivo-500.woff2</div></details>
+        </div>
+      
+        <div class="fontface-card">
+          <div class="fontface-family">Archivo</div>
+          <dl class="meta-grid" style="margin-top:8px">
+            <dt>weight</dt><dd>700</dd>
+            <dt>style</dt><dd>normal</dd>
+            <dt>display</dt><dd>swap</dd>
+            
+            <dt>formats</dt><dd>woff2</dd>
+          </dl>
+          <details style="margin-top:10px"><summary>1 src url(s)</summary><div class="url-line">https://fonts.gstatic.com/s/archivo/v19/archivo-700.woff2</div></details>
+        </div>
+      
+        <div class="fontface-card">
+          <div class="fontface-family">Archivo</div>
+          <dl class="meta-grid" style="margin-top:8px">
+            <dt>weight</dt><dd>800</dd>
+            <dt>style</dt><dd>normal</dd>
+            <dt>display</dt><dd>swap</dd>
+            
+            <dt>formats</dt><dd>woff2</dd>
+          </dl>
+          <details style="margin-top:10px"><summary>1 src url(s)</summary><div class="url-line">https://fonts.gstatic.com/s/archivo/v19/archivo-800.woff2</div></details>
+        </div>
+      
+        <div class="fontface-card">
+          <div class="fontface-family">Archivo</div>
+          <dl class="meta-grid" style="margin-top:8px">
+            <dt>weight</dt><dd>900</dd>
+            <dt>style</dt><dd>normal</dd>
+            <dt>display</dt><dd>swap</dd>
+            
+            <dt>formats</dt><dd>woff2</dd>
+          </dl>
+          <details style="margin-top:10px"><summary>1 src url(s)</summary><div class="url-line">https://fonts.gstatic.com/s/archivo/v19/archivo-900.woff2</div></details>
+        </div>
+      
+        <div class="fontface-card">
+          <div class="fontface-family">Inter</div>
+          <dl class="meta-grid" style="margin-top:8px">
+            <dt>weight</dt><dd>400</dd>
+            <dt>style</dt><dd>normal</dd>
+            <dt>display</dt><dd>swap</dd>
+            
+            <dt>formats</dt><dd>woff2</dd>
+          </dl>
+          <details style="margin-top:10px"><summary>1 src url(s)</summary><div class="url-line">https://fonts.gstatic.com/s/inter/v13/inter-400.woff2</div></details>
+        </div>
+      
+        <div class="fontface-card">
+          <div class="fontface-family">Inter</div>
+          <dl class="meta-grid" style="margin-top:8px">
+            <dt>weight</dt><dd>500</dd>
+            <dt>style</dt><dd>normal</dd>
+            <dt>display</dt><dd>swap</dd>
+            
+            <dt>formats</dt><dd>woff2</dd>
+          </dl>
+          <details style="margin-top:10px"><summary>1 src url(s)</summary><div class="url-line">https://fonts.gstatic.com/s/inter/v13/inter-500.woff2</div></details>
+        </div>
+      
+        <div class="fontface-card">
+          <div class="fontface-family">Inter</div>
+          <dl class="meta-grid" style="margin-top:8px">
+            <dt>weight</dt><dd>600</dd>
+            <dt>style</dt><dd>normal</dd>
+            <dt>display</dt><dd>swap</dd>
+            
+            <dt>formats</dt><dd>woff2</dd>
+          </dl>
+          <details style="margin-top:10px"><summary>1 src url(s)</summary><div class="url-line">https://fonts.gstatic.com/s/inter/v13/inter-600.woff2</div></details>
+        </div>
+      
+        <div class="fontface-card">
+          <div class="fontface-family">JetBrains Mono</div>
+          <dl class="meta-grid" style="margin-top:8px">
+            <dt>weight</dt><dd>400</dd>
+            <dt>style</dt><dd>normal</dd>
+            <dt>display</dt><dd>swap</dd>
+            
+            <dt>formats</dt><dd>woff2</dd>
+          </dl>
+          <details style="margin-top:10px"><summary>1 src url(s)</summary><div class="url-line">https://fonts.gstatic.com/s/jetbrainsmono/v18/jbm-400.woff2</div></details>
+        </div>
+      
+        <div class="fontface-card">
+          <div class="fontface-family">JetBrains Mono</div>
+          <dl class="meta-grid" style="margin-top:8px">
+            <dt>weight</dt><dd>500</dd>
+            <dt>style</dt><dd>normal</dd>
+            <dt>display</dt><dd>swap</dd>
+            
+            <dt>formats</dt><dd>woff2</dd>
+          </dl>
+          <details style="margin-top:10px"><summary>1 src url(s)</summary><div class="url-line">https://fonts.gstatic.com/s/jetbrainsmono/v18/jbm-500.woff2</div></details>
+        </div>
+      
+        <div class="fontface-card">
+          <div class="fontface-family">JetBrains Mono</div>
+          <dl class="meta-grid" style="margin-top:8px">
+            <dt>weight</dt><dd>600</dd>
+            <dt>style</dt><dd>normal</dd>
+            <dt>display</dt><dd>swap</dd>
+            
+            <dt>formats</dt><dd>woff2</dd>
+          </dl>
+          <details style="margin-top:10px"><summary>1 src url(s)</summary><div class="url-line">https://fonts.gstatic.com/s/jetbrainsmono/v18/jbm-600.woff2</div></details>
+        </div>
+      
+    </div>
+    
+  </section>
+
+  <section>
+    <h2>Typography</h2>
+    
+      <div class="type-row">
+        <div class="type-label">
+          <span class="chip">display <span class="conf-dot conf-high" title="high confidence (6 properties) — hover individual specs for source">●●●</span></span>
+          <span class="dim">Archivo · 900 · 10.5rem</span>
+        </div>
+        <div class="type-sample" style="font-family:Archivo, sans-serif;font-size:10.5rem;font-weight:900;line-height:0.92;letter-spacing:-0.02em;">Engenharia que se prova</div>
+      </div>
+      <div class="type-row">
+        <div class="type-label">
+          <span class="chip">display-hero <span class="conf-dot conf-high" title="high confidence (6 properties) — hover individual specs for source">●●●</span></span>
+          <span class="dim">Archivo · 900 · 8.75rem</span>
+        </div>
+        <div class="type-sample" style="font-family:Archivo, sans-serif;font-size:8.75rem;font-weight:900;line-height:0.95;letter-spacing:-0.015em;">Engenharia que se prova</div>
+      </div>
+      <div class="type-row">
+        <div class="type-label">
+          <span class="chip">statement <span class="conf-dot conf-high" title="high confidence (6 properties) — hover individual specs for source">●●●</span></span>
+          <span class="dim">Archivo · 800 · 5.25rem</span>
+        </div>
+        <div class="type-sample" style="font-family:Archivo, sans-serif;font-size:5.25rem;font-weight:800;line-height:1.02;letter-spacing:-0.01em;">Precisão de engenharia que pulsa. Automação de ponta a ponta com IA — hairlines de 1px, tipografia condensada e um único acento de alto impacto.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-label">
+          <span class="chip">section-heading <span class="conf-dot conf-high" title="high confidence (5 properties) — hover individual specs for source">●●●</span></span>
+          <span class="dim">Archivo · 700 · 2.5rem</span>
+        </div>
+        <div class="type-sample" style="font-family:Archivo, sans-serif;font-size:2.5rem;font-weight:700;line-height:1.1;">Engenharia que se prova</div>
+      </div>
+      <div class="type-row">
+        <div class="type-label">
+          <span class="chip">card-title <span class="conf-dot conf-high" title="high confidence (5 properties) — hover individual specs for source">●●●</span></span>
+          <span class="dim">Archivo · 700 · 1.625rem</span>
+        </div>
+        <div class="type-sample" style="font-family:Archivo, sans-serif;font-size:1.625rem;font-weight:700;line-height:1.15;">Engenharia que se prova</div>
+      </div>
+      <div class="type-row">
+        <div class="type-label">
+          <span class="chip">body-large <span class="conf-dot conf-high" title="high confidence (4 properties) — hover individual specs for source">●●●</span></span>
+          <span class="dim">Inter · 400 · 1.25rem</span>
+        </div>
+        <div class="type-sample" style="font-family:Inter, sans-serif;font-size:1.25rem;font-weight:400;line-height:1.5;">Precisão de engenharia que pulsa. Automação de ponta a ponta com IA — hairlines de 1px, tipografia condensada e um único acento de alto impacto.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-label">
+          <span class="chip">body <span class="conf-dot conf-high" title="high confidence (4 properties) — hover individual specs for source">●●●</span></span>
+          <span class="dim">Inter · 400 · 1rem</span>
+        </div>
+        <div class="type-sample" style="font-family:Inter, sans-serif;font-size:1rem;font-weight:400;line-height:1.6;">Precisão de engenharia que pulsa. Automação de ponta a ponta com IA — hairlines de 1px, tipografia condensada e um único acento de alto impacto.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-label">
+          <span class="chip">body-small <span class="conf-dot conf-high" title="high confidence (4 properties) — hover individual specs for source">●●●</span></span>
+          <span class="dim">Inter · 400 · 0.875rem</span>
+        </div>
+        <div class="type-sample" style="font-family:Inter, sans-serif;font-size:0.875rem;font-weight:400;line-height:1.6;">Precisão de engenharia que pulsa. Automação de ponta a ponta com IA — hairlines de 1px, tipografia condensada e um único acento de alto impacto.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-label">
+          <span class="chip">label <span class="conf-dot conf-low" title="low confidence (4 properties) — hover individual specs for source">●○○</span></span>
+          <span class="dim">Inter · 500 · 0.875rem</span>
+        </div>
+        <div class="type-sample" style="font-family:Inter, sans-serif;font-size:0.875rem;font-weight:500;line-height:1.4;">Precisão de engenharia que pulsa. Automação de ponta a ponta com IA — hairlines de 1px, tipografia condensada e um único acento de alto impacto.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-label">
+          <span class="chip">eyebrow-mono <span class="conf-dot conf-low" title="low confidence (6 properties) — hover individual specs for source">●○○</span></span>
+          <span class="dim">JetBrains Mono · 500 · 0.875rem</span>
+        </div>
+        <div class="type-sample" style="font-family:'JetBrains Mono', sans-serif;font-size:0.875rem;font-weight:500;line-height:1.4;letter-spacing:0.08em;">Precisão de engenharia que pulsa. Automação de ponta a ponta com IA — hairlines de 1px, tipografia condensada e um único acento de alto impacto.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-label">
+          <span class="chip">tag-mono <span class="conf-dot conf-low" title="low confidence (4 properties) — hover individual specs for source">●○○</span></span>
+          <span class="dim">JetBrains Mono · 400 · 0.75rem</span>
+        </div>
+        <div class="type-sample" style="font-family:'JetBrains Mono', sans-serif;font-size:0.75rem;font-weight:400;line-height:1.2;">Precisão de engenharia que pulsa. Automação de ponta a ponta com IA — hairlines de 1px, tipografia condensada e um único acento de alto impacto.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-label">
+          <span class="chip">metric-mono <span class="conf-dot conf-high" title="high confidence (5 properties) — hover individual specs for source">●●●</span></span>
+          <span class="dim">JetBrains Mono · 500 · 5.5rem</span>
+        </div>
+        <div class="type-sample" style="font-family:'JetBrains Mono', sans-serif;font-size:5.5rem;font-weight:500;line-height:1;letter-spacing:-0.04em;">Precisão de engenharia que pulsa. Automação de ponta a ponta com IA — hairlines de 1px, tipografia condensada e um único acento de alto impacto.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-label">
+          <span class="chip">caption-mono <span class="conf-dot conf-low" title="low confidence (6 properties) — hover individual specs for source">●○○</span></span>
+          <span class="dim">JetBrains Mono · 500 · 0.6875rem</span>
+        </div>
+        <div class="type-sample" style="font-family:'JetBrains Mono', sans-serif;font-size:0.6875rem;font-weight:500;line-height:1.4;letter-spacing:0.08em;">Precisão de engenharia que pulsa. Automação de ponta a ponta com IA — hairlines de 1px, tipografia condensada e um único acento de alto impacto.</div>
+      </div>
+  </section>
+
+  <section>
+    <h2>Token usage graph</h2>
+    
+    <p class="dim" style="font-family:ui-monospace,monospace;font-size:11px;margin-bottom:12px">Most-referenced tokens are canonical. Zero references suggest legacy/dead tokens.</p>
+    <div class="usage-grid">
+      <div class="usage-row">
+          <span class="mono usage-name">--c-line</span>
+          <span class="usage-bar" style="width:27%"></span>
+          <span class="mono usage-count">9× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--c-paper</span>
+          <span class="usage-bar" style="width:12%"></span>
+          <span class="mono usage-count">4× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--c-iron</span>
+          <span class="usage-bar" style="width:12%"></span>
+          <span class="mono usage-count">4× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--c-graphite</span>
+          <span class="usage-bar" style="width:3%"></span>
+          <span class="mono usage-count">1× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--c-blaze</span>
+          <span class="usage-bar" style="width:3%"></span>
+          <span class="mono usage-count">1× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--c-ink-on-dark</span>
+          <span class="usage-bar" style="width:3%"></span>
+          <span class="mono usage-count">1× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--c-steel</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--c-circuit</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--c-blaze-soft</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--c-error</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--c-success</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--tint-card1</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--tint-card2</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--tint-card3</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--radius-sm</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--radius-md</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--radius-lg</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--radius-xl</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--radius-full</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--space-2xs</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--space-xs</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--space-sm</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--space-md</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--space-lg</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--space-xl</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--space-xxl</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fs-display</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fs-display-hero</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fs-statement</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fs-section</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fs-card-title</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fs-body-lg</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fs-body</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fs-body-sm</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fs-label</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fs-eyebrow</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fs-tag</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fs-metric</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fs-caption</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--lh-tight</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--lh-display</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--lh-heading</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--lh-snug</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--lh-body</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--tracking-display</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--tracking-tight</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--tracking-mono</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--tracking-metric</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fw-display</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fw-statement</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fw-heading</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fw-semibold</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fw-medium</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--fw-body</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--case-caps</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--font-display</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--font-body</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div><div class="usage-row">
+          <span class="mono usage-name">--font-mono</span>
+          <span class="usage-bar" style="width:0%"></span>
+          <span class="mono usage-count">0× refs · 1× decl</span>
+        </div>
+    </div>
+    
+  </section>
+
+  <section>
+    <h2>Native CSS tokens (ground truth)</h2>
+    
+    <p class="dim" style="font-family:ui-monospace,monospace;font-size:11px;margin-bottom:12px">58 declarations found · primitives shown first, aliases (var-of-var) hidden by default</p>
+    <div class="vars-table-wrap">
+      <table class="vars-table">
+        <thead><tr><th>name</th><th>value</th><th>scope</th><th>refs</th><th>kind</th></tr></thead>
+        <tbody id="cssvars-tbody">
+          <tr class="var-row is-primitive" data-copy="#F7F8FA" title="Click to copy">
+              <td class="mono">--c-paper</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#F7F8FA;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#F7F8FA</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">4</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="#15171B" title="Click to copy">
+              <td class="mono">--c-iron</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#15171B;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#15171B</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">4</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="#0F1115" title="Click to copy">
+              <td class="mono">--c-graphite</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#0F1115;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#0F1115</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">1</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="#6E7480" title="Click to copy">
+              <td class="mono">--c-steel</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#6E7480;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#6E7480</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="#FF4D00" title="Click to copy">
+              <td class="mono">--c-blaze</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#FF4D00;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#FF4D00</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">1</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="#2F6BFF" title="Click to copy">
+              <td class="mono">--c-circuit</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#2F6BFF;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#2F6BFF</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="#FFE9DE" title="Click to copy">
+              <td class="mono">--c-blaze-soft</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#FFE9DE;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#FFE9DE</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="#E3E6EB" title="Click to copy">
+              <td class="mono">--c-line</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#E3E6EB;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#E3E6EB</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">9</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="#F4F5F7" title="Click to copy">
+              <td class="mono">--c-ink-on-dark</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#F4F5F7;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#F4F5F7</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">1</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="#B43A2F" title="Click to copy">
+              <td class="mono">--c-error</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#B43A2F;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#B43A2F</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="#15794B" title="Click to copy">
+              <td class="mono">--c-success</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#15794B;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#15794B</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="#FFE9DE" title="Click to copy">
+              <td class="mono">--tint-card1</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#FFE9DE;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#FFE9DE</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="#E4EBFF" title="Click to copy">
+              <td class="mono">--tint-card2</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#E4EBFF;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#E4EBFF</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="#ECEEF2" title="Click to copy">
+              <td class="mono">--tint-card3</td>
+              <td class="mono"><span style="display:inline-block;width:14px;height:14px;background:#ECEEF2;border:1px solid #ccc;vertical-align:middle;margin-right:6px"></span>#ECEEF2</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="8px" title="Click to copy">
+              <td class="mono">--radius-sm</td>
+              <td class="mono">8px</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="12px" title="Click to copy">
+              <td class="mono">--radius-md</td>
+              <td class="mono">12px</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="16px" title="Click to copy">
+              <td class="mono">--radius-lg</td>
+              <td class="mono">16px</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="28px" title="Click to copy">
+              <td class="mono">--radius-xl</td>
+              <td class="mono">28px</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="9999px" title="Click to copy">
+              <td class="mono">--radius-full</td>
+              <td class="mono">9999px</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="8px" title="Click to copy">
+              <td class="mono">--space-2xs</td>
+              <td class="mono">8px</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="12px" title="Click to copy">
+              <td class="mono">--space-xs</td>
+              <td class="mono">12px</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="16px" title="Click to copy">
+              <td class="mono">--space-sm</td>
+              <td class="mono">16px</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="24px" title="Click to copy">
+              <td class="mono">--space-md</td>
+              <td class="mono">24px</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="48px" title="Click to copy">
+              <td class="mono">--space-lg</td>
+              <td class="mono">48px</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="88px" title="Click to copy">
+              <td class="mono">--space-xl</td>
+              <td class="mono">88px</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="120px" title="Click to copy">
+              <td class="mono">--space-xxl</td>
+              <td class="mono">120px</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="10.5rem" title="Click to copy">
+              <td class="mono">--fs-display</td>
+              <td class="mono">10.5rem</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="8.75rem" title="Click to copy">
+              <td class="mono">--fs-display-hero</td>
+              <td class="mono">8.75rem</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="5.25rem" title="Click to copy">
+              <td class="mono">--fs-statement</td>
+              <td class="mono">5.25rem</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="2.5rem" title="Click to copy">
+              <td class="mono">--fs-section</td>
+              <td class="mono">2.5rem</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="1.625rem" title="Click to copy">
+              <td class="mono">--fs-card-title</td>
+              <td class="mono">1.625rem</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="1.25rem" title="Click to copy">
+              <td class="mono">--fs-body-lg</td>
+              <td class="mono">1.25rem</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="1rem" title="Click to copy">
+              <td class="mono">--fs-body</td>
+              <td class="mono">1rem</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="0.875rem" title="Click to copy">
+              <td class="mono">--fs-body-sm</td>
+              <td class="mono">0.875rem</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="0.875rem" title="Click to copy">
+              <td class="mono">--fs-label</td>
+              <td class="mono">0.875rem</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="0.875rem" title="Click to copy">
+              <td class="mono">--fs-eyebrow</td>
+              <td class="mono">0.875rem</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="0.75rem" title="Click to copy">
+              <td class="mono">--fs-tag</td>
+              <td class="mono">0.75rem</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="5.5rem" title="Click to copy">
+              <td class="mono">--fs-metric</td>
+              <td class="mono">5.5rem</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="0.6875rem" title="Click to copy">
+              <td class="mono">--fs-caption</td>
+              <td class="mono">0.6875rem</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="0.92" title="Click to copy">
+              <td class="mono">--lh-tight</td>
+              <td class="mono">0.92</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="0.95" title="Click to copy">
+              <td class="mono">--lh-display</td>
+              <td class="mono">0.95</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="1.1" title="Click to copy">
+              <td class="mono">--lh-heading</td>
+              <td class="mono">1.1</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="1.15" title="Click to copy">
+              <td class="mono">--lh-snug</td>
+              <td class="mono">1.15</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="1.6" title="Click to copy">
+              <td class="mono">--lh-body</td>
+              <td class="mono">1.6</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="-0.02em" title="Click to copy">
+              <td class="mono">--tracking-display</td>
+              <td class="mono">-0.02em</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="-0.015em" title="Click to copy">
+              <td class="mono">--tracking-tight</td>
+              <td class="mono">-0.015em</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="0.08em" title="Click to copy">
+              <td class="mono">--tracking-mono</td>
+              <td class="mono">0.08em</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="-0.04em" title="Click to copy">
+              <td class="mono">--tracking-metric</td>
+              <td class="mono">-0.04em</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="900" title="Click to copy">
+              <td class="mono">--fw-display</td>
+              <td class="mono">900</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="800" title="Click to copy">
+              <td class="mono">--fw-statement</td>
+              <td class="mono">800</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="700" title="Click to copy">
+              <td class="mono">--fw-heading</td>
+              <td class="mono">700</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="600" title="Click to copy">
+              <td class="mono">--fw-semibold</td>
+              <td class="mono">600</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="500" title="Click to copy">
+              <td class="mono">--fw-medium</td>
+              <td class="mono">500</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="400" title="Click to copy">
+              <td class="mono">--fw-body</td>
+              <td class="mono">400</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="uppercase" title="Click to copy">
+              <td class="mono">--case-caps</td>
+              <td class="mono">uppercase</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="&#39;Archivo&#39;" title="Click to copy">
+              <td class="mono">--font-display</td>
+              <td class="mono">&#39;Archivo&#39;</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="&#39;Inter&#39;" title="Click to copy">
+              <td class="mono">--font-body</td>
+              <td class="mono">&#39;Inter&#39;</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr><tr class="var-row is-primitive" data-copy="&#39;JetBrains Mono&#39;" title="Click to copy">
+              <td class="mono">--font-mono</td>
+              <td class="mono">&#39;JetBrains Mono&#39;</td>
+              <td class="mono dim">:root</td>
+              <td class="mono">0</td>
+              <td class="mono pill-prim">primitive</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <label class="show-aliases-toggle">
+      <input type="checkbox" id="show-aliases" /> show aliases
+    </label>
+    
+  </section>
+
+  <section>
+    <h2>WCAG contrast matrix</h2>
+    <div id="contrast-matrix" class="matrix-wrap"><p class="empty" style="padding:16px">Computing…</p></div>
+    <div class="matrix-legend">
+      <span><i style="background:#d9f5dd"></i> AAA (≥7.0)</span>
+      <span><i style="background:#fff7d6"></i> AA (≥4.5)</span>
+      <span><i style="background:#fde2e2"></i> Fail (&lt;4.5)</span>
+      <span style="color:var(--dim)">cell shows ratio · hover for status</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>DESIGN.md (raw)</h2>
+    <pre><code class="language-markdown">---
+name: SATTI
+colors:
+  primary: &quot;#FF4D00&quot;
+  secondary: &quot;#15171B&quot;
+  tertiary: &quot;#2F6BFF&quot;
+  neutral: &quot;#6E7480&quot;
+  surface: &quot;#F7F8FA&quot;
+  text: &quot;#15171B&quot;
+  text-muted: &quot;#6E7480&quot;
+  border: &quot;#E3E6EB&quot;
+  error: &quot;#B43A2F&quot;
+  success: &quot;#15794B&quot;
+  graphite: &quot;#0F1115&quot;
+  blaze-soft: &quot;#FFE9DE&quot;
+  ink-on-dark: &quot;#F4F5F7&quot;
+  tint-blue: &quot;#E4EBFF&quot;
+  tint-slate: &quot;#ECEEF2&quot;
+typography:
+  display:
+    fontFamily: &quot;Archivo, sans-serif&quot;
+    fontSize: &quot;10.5rem&quot;
+    fontWeight: &quot;900&quot;
+    lineHeight: &quot;0.92&quot;
+    letterSpacing: &quot;-0.02em&quot;
+    features: &quot;caps&quot;
+  display-hero:
+    fontFamily: &quot;Archivo, sans-serif&quot;
+    fontSize: &quot;8.75rem&quot;
+    fontWeight: &quot;900&quot;
+    lineHeight: &quot;0.95&quot;
+    letterSpacing: &quot;-0.015em&quot;
+    features: &quot;caps&quot;
+  statement:
+    fontFamily: &quot;Archivo, sans-serif&quot;
+    fontSize: &quot;5.25rem&quot;
+    fontWeight: &quot;800&quot;
+    lineHeight: &quot;1.02&quot;
+    letterSpacing: &quot;-0.01em&quot;
+    features: &quot;caps&quot;
+  section-heading:
+    fontFamily: &quot;Archivo, sans-serif&quot;
+    fontSize: &quot;2.5rem&quot;
+    fontWeight: &quot;700&quot;
+    lineHeight: &quot;1.1&quot;
+    features: &quot;caps&quot;
+  card-title:
+    fontFamily: &quot;Archivo, sans-serif&quot;
+    fontSize: &quot;1.625rem&quot;
+    fontWeight: &quot;700&quot;
+    lineHeight: &quot;1.15&quot;
+    features: &quot;caps&quot;
+  body-large:
+    fontFamily: &quot;Inter, sans-serif&quot;
+    fontSize: &quot;1.25rem&quot;
+    fontWeight: &quot;400&quot;
+    lineHeight: &quot;1.5&quot;
+  body:
+    fontFamily: &quot;Inter, sans-serif&quot;
+    fontSize: &quot;1rem&quot;
+    fontWeight: &quot;400&quot;
+    lineHeight: &quot;1.6&quot;
+  body-small:
+    fontFamily: &quot;Inter, sans-serif&quot;
+    fontSize: &quot;0.875rem&quot;
+    fontWeight: &quot;400&quot;
+    lineHeight: &quot;1.6&quot;
+  label:
+    fontFamily: &quot;Inter, sans-serif&quot;
+    fontSize: &quot;0.875rem&quot;
+    fontWeight: &quot;500&quot;
+    lineHeight: &quot;1.4&quot;
+  eyebrow-mono:
+    fontFamily: &quot;JetBrains Mono, monospace&quot;
+    fontSize: &quot;0.875rem&quot;
+    fontWeight: &quot;500&quot;
+    lineHeight: &quot;1.4&quot;
+    letterSpacing: &quot;0.08em&quot;
+    features: &quot;caps&quot;
+  tag-mono:
+    fontFamily: &quot;JetBrains Mono, monospace&quot;
+    fontSize: &quot;0.75rem&quot;
+    fontWeight: &quot;400&quot;
+    lineHeight: &quot;1.2&quot;
+  metric-mono:
+    fontFamily: &quot;JetBrains Mono, monospace&quot;
+    fontSize: &quot;5.5rem&quot;
+    fontWeight: &quot;500&quot;
+    lineHeight: &quot;1&quot;
+    letterSpacing: &quot;-0.04em&quot;
+  caption-mono:
+    fontFamily: &quot;JetBrains Mono, monospace&quot;
+    fontSize: &quot;0.6875rem&quot;
+    fontWeight: &quot;500&quot;
+    lineHeight: &quot;1.4&quot;
+    letterSpacing: &quot;0.08em&quot;
+    features: &quot;caps&quot;
+rounded:
+  sm: &quot;8px&quot;
+  md: &quot;12px&quot;
+  lg: &quot;16px&quot;
+  xl: &quot;28px&quot;
+  full: &quot;9999px&quot;
+spacing:
+  2xs: &quot;8px&quot;
+  xs: &quot;12px&quot;
+  sm: &quot;16px&quot;
+  md: &quot;24px&quot;
+  lg: &quot;48px&quot;
+  xl: &quot;88px&quot;
+  xxl: &quot;120px&quot;
+preview_tokens:
+  button_primary_bg: &quot;#FF4D00&quot;
+  button_primary_text: &quot;#15171B&quot;
+  button_primary_border: &quot;#FF4D00&quot;
+  button_secondary_bg: &quot;transparent&quot;
+  button_secondary_text: &quot;#15171B&quot;
+  button_secondary_border: &quot;#E3E6EB&quot;
+  button_tertiary_text: &quot;#2F6BFF&quot;
+  surface_bg: &quot;#F7F8FA&quot;
+  card_bg: &quot;#F7F8FA&quot;
+  text: &quot;#15171B&quot;
+  text_muted: &quot;#6E7480&quot;
+  border: &quot;#E3E6EB&quot;
+  accent: &quot;#FF4D00&quot;
+  button_radius: &quot;9999px&quot;
+  card_radius: &quot;28px&quot;
+  input_radius: &quot;12px&quot;
+components:
+  button-primary:
+    bg: &quot;#FF4D00&quot;
+    text: &quot;#15171B&quot;
+    border: &quot;#FF4D00&quot;
+    radius: &quot;9999px&quot;
+    padding: &quot;18px 36px&quot;
+    font: &quot;16px Inter weight 600&quot;
+    hover: &quot;text roll-up, cubic-bezier(0.76,0,0.24,1) 450ms&quot;
+  button-secondary:
+    bg: &quot;transparent&quot;
+    text: &quot;#15171B&quot;
+    border: &quot;#E3E6EB&quot;
+    radius: &quot;9999px&quot;
+    padding: &quot;17px 36px&quot;
+    font: &quot;16px Inter weight 500&quot;
+    hover: &quot;text roll-up&quot;
+  button-icon:
+    bg: &quot;transparent&quot;
+    text: &quot;#15171B&quot;
+    border: &quot;#E3E6EB&quot;
+    radius: &quot;9999px&quot;
+    padding: &quot;0px&quot;
+    hover_bg: &quot;#15171B&quot;
+    hover_text: &quot;#F4F5F7&quot;
+  card:
+    bg: &quot;#F7F8FA&quot;
+    border: &quot;#E3E6EB&quot;
+    radius: &quot;28px&quot;
+    padding: &quot;36px&quot;
+    shadow: &quot;none&quot;
+  card-dark:
+    bg: &quot;#0F1115&quot;
+    text: &quot;#F4F5F7&quot;
+    border: &quot;transparent&quot;
+    radius: &quot;28px&quot;
+    padding: &quot;16px&quot;
+    shadow: &quot;0 0 90px #FF4D00 (glow, blur 90, opacity 0.8)&quot;
+  input-text:
+    bg: &quot;#F7F8FA&quot;
+    text: &quot;#15171B&quot;
+    border: &quot;#E3E6EB&quot;
+    radius: &quot;12px&quot;
+    padding: &quot;0px 18px&quot;
+    focus_border: &quot;#2F6BFF&quot;
+    focus_ring: &quot;0 0 0 3px rgba(47,107,255,0.18)&quot;
+  badge-default:
+    bg: &quot;transparent&quot;
+    text: &quot;#15171B&quot;
+    border: &quot;#E3E6EB&quot;
+    radius: &quot;9999px&quot;
+    padding: &quot;10px 20px&quot;
+    font: &quot;12px JetBrains Mono weight 400&quot;
+  nav-marker:
+    bg: &quot;#FF4D00&quot;
+    text: &quot;#15171B&quot;
+    border: &quot;transparent&quot;
+    radius: &quot;0px&quot;
+    size: &quot;8px&quot;
+---
+
+# SATTI — Design System
+
+&gt; Fundação visual da SATTI (IA &amp; Automação). Sistema técnico, editorial e de alta precisão: hairlines de 1px, tipografia condensada em caixa-alta e um único acento de alto impacto (blaze) usado com rigor. Extraído da fonte-de-verdade `SATTI DS` que governa as 30 telas aprovadas (F2–F5, PT + EN espelho).
+
+## 1. Visual Theme &amp; Atmosphere
+
+A SATTI se apresenta como **engenharia que pulsa**: uma linguagem de desenho técnico onde a profundidade nasce da linha, não da sombra. O sistema é construído sobre `paper` (#F7F8FA) — um branco levemente frio — pontuado por `iron` (#15171B) para texto e por seções `graphite` (#0F1115) quase-pretas. A atmosfera é a de um blueprint: grades de 12/48px, réguas com ticks e hairlines de 1px em `line` (#E3E6EB) que organizam cada superfície.
+
+O acento `blaze` (#FF4D00 — laranja-vermelho de alta cromas) é a assinatura da marca e o seu recurso mais controlado: **raro e caro**, no máximo um elemento blaze de destaque por dobra/viewport, e sempre com texto preto (`iron`) sobre ele — nunca branco. O marcador-eyebrow (quadrado 8×8 blaze) é a exceção e não conta para esse limite. Um segundo azul, `circuit` (#2F6BFF), existe apenas para funções: links, diagramas e o anel de foco — nunca como decoração.
+
+A personalidade tipográfica combina três vozes: **Archivo** em peso 900/800 e caixa-alta para displays com tracking negativo apertado (a voz condensada e industrial da marca), **Inter** para corpo e interface, e **JetBrains Mono** em caixa-alta com tracking +0.08em para eyebrows, tags e métricas — a voz de &quot;instrumento técnico&quot;. A única quebra do mono-caps é a grafia oficial das marcas citadas (n8n, Next.js, Supabase…), que aparecem sem caps.
+
+O tratamento de superfície é deliberadamente plano. Sombras são quase-zero: a profundidade vem de hairline + tint + glow. O único brilho colorido do sistema é o *glow* blaze (filtro blur 90px, opacidade 0.8) sob os work-cards escuros — um respiro de energia num sistema, no restante, contido. O estado-base de captura é reduced-motion: a Linha de Automação (elemento-assinatura) é desenhada 100% estática, com o pulso pausado.
+
+**Key Characteristics:**
+- Paleta fria e neutra (paper/iron/steel) com um único acento quente de alto impacto (blaze).
+- Blaze é raro: máx. 1 destaque por viewport, sempre com texto preto sobre ele.
+- `circuit` (azul) é estritamente funcional — links, diagrama, focus ring — nunca decorativo.
+- Profundidade por hairline de 1px + tints + glow; sombras praticamente ausentes.
+- Archivo 900/800 caixa-alta com tracking negativo para displays condensados e industriais.
+- JetBrains Mono caixa-alta +0.08em como voz técnica (eyebrows, tags, métricas).
+- Raio bimodal: 12px funcional (inputs, mídia) e 28px editorial (cards); pills 9999px.
+- Régua/grade blueprint (12/48px) como motivo estrutural recorrente.
+- Estado-base reduced-motion; animações estáticas na captura.
+- 60/30/10 como lei de proporção de cor.
+
+## 2. Color Palette &amp; Roles
+
+### Primary
+- **Blaze** (`#FF4D00`): `--c-blaze`. Acento de identidade. CTAs primários, marcador-eyebrow (8×8), glow. Sempre com texto `iron` (#15171B) sobre ele — nunca branco. Uso ≤ 10% da dobra.
+
+### Brand &amp; Dark
+- **Iron** (`#15171B`): `--c-iron`. Texto principal e blocos de UI escura; a &quot;tinta&quot; do sistema.
+- **Graphite** (`#0F1115`): `--c-graphite`. Fundo das seções dark e work-cards; recebe texto `ink-on-dark`.
+- **Ink-on-dark** (`#F4F5F7`): `--c-ink-on-dark`. Texto/ícones sobre graphite.
+
+### Accent Colors
+- **Blaze-soft** (`#FFE9DE`): `--c-blaze-soft`. Tint do acento — chips e realces suaves; também a cor de `::selection`.
+- **Tint-blue** (`#E4EBFF`) e **Tint-slate** (`#ECEEF2`): tints de card (S4) e fundo dos placeholders de mídia blueprint.
+
+### Interactive
+- **Circuit** (`#2F6BFF`): `--c-circuit`. **Somente funcional**: links, linhas de diagrama e anel de foco (ring 2px, ou `rgba(47,107,255,0.18)` de 3px em inputs). Nunca decorativo, nunca CTA.
+
+### Neutral Scale
+- **Paper** (`#F7F8FA`): `--c-paper`. Fundo base / canvas.
+- **Steel** (`#6E7480`): `--c-steel`. Texto secundário, eyebrows, labels de métrica; também o cinza de *copy sugerida/provisória* ([CONFIRMAR]).
+
+### Surface &amp; Borders
+- **Line** (`#E3E6EB`): `--c-line`. Hairline de 1px — a unidade de desenho de toda a interface (bordas de card, input, régua, colunas).
+
+### Feedback (texto/borda/ícone apenas)
+- **Error** (`#B43A2F`): `--c-error`. 5.51:1 sobre paper — WCAG AA.
+- **Success** (`#15794B`): `--c-success`. 5.11:1 sobre paper — WCAG AA.
+
+### Color Philosophy
+A regra 60/30/10 governa tudo: ~60% paper e neutros, ~30% iron/graphite, ~10% acento. O blaze não domina — ele *ancora*. Por isso é usado com parcimônia deliberada (logo/eyebrow + 1 CTA por dobra). O azul circuit foi separado do papel de marca para nunca competir com o blaze: azul = função, laranja = identidade. Feedback nunca é um bloco cheio — aparece só como texto + borda + ícone.
+
+## 3. Typography Rules
+
+### Font Family
+- **Display / títulos:** Archivo (500–900), sempre em `text-transform: uppercase`, com tracking negativo (−0.02em a −0.01em) em tamanhos grandes.
+- **Corpo / UI:** Inter (400–600).
+- **Técnica / mono:** JetBrains Mono (400–600), caixa-alta com `letter-spacing: 0.08em`. Exceção única: grafia oficial de marcas (sem caps).
+
+### Hierarchy
+
+| Role | Font | Size | Weight | Line Height | Letter Spacing | Features | Notes |
+|---|---|---|---|---|---|---|---|
+| display | Archivo | 10.5rem (clamp 3rem→) | 900 | 0.92 | −0.02em | caps | Wordmark / hero máximo |
+| display-hero | Archivo | 8.75rem (clamp 64px→140px) | 900 | 0.95 | −0.015em | caps | H1 de página |
+| statement | Archivo | 5.25rem (clamp 2.5rem→) | 800 | 1.02 | −0.01em | caps | Banners / afirmações |
+| section-heading | Archivo | 2.5rem | 700 | 1.1 | — | caps | Títulos de seção |
+| card-title | Archivo | 1.625rem | 700 | 1.15 | — | caps | Títulos de card |
+| body-large | Inter | 1.25rem | 400 | 1.5 | — | — | Lead / subtítulo do hero |
+| body | Inter | 1rem | 400 | 1.6 | — | — | Corpo padrão |
+| body-small | Inter | 0.875rem | 400 | 1.6 | — | — | Descrições de card |
+| label | Inter | 0.875rem | 500 | 1.4 | — | — | Rótulos de formulário |
+| eyebrow-mono | JetBrains Mono | 0.875rem | 500 | 1.4 | 0.08em | caps | Numeração de seção |
+| tag-mono | JetBrains Mono | 0.75rem | 400 | 1.2 | — | — | Tags de stack (grafia oficial) |
+| metric-mono | JetBrains Mono | 5.5rem | 500 | 1 | −0.04em | — | Número de stat-card |
+| caption-mono | JetBrains Mono | 0.6875rem | 500 | 1.4 | 0.08em | caps | Legendas técnicas / labels de slot |
+
+### Principles
+- Todo display é Archivo caixa-alta — nunca title-case; o peso 900 é a voz condensada da marca.
+- Tracking é sempre **negativo** em Archivo grande (−0.02em a −0.01em); nunca positivo em display.
+- Mono é sempre caixa-alta +0.08em, exceto na grafia oficial de marcas (n8n, Next.js, Supabase, Evolution API, Claude / GPT, Python, PostgreSQL, Vercel).
+- Corpo vive em iron ou steel sobre paper — nunca em blaze por trechos longos.
+- Números de métrica usam JetBrains Mono 500 com tracking −0.04em (tabular, técnico).
+
+## 4. Components
+
+### Buttons
+
+**Primário — Blaze** (`button-primary`)
+- Fundo: `#FF4D00` · Texto: `#15171B` · Borda: `#FF4D00`
+- Padding: 18px 36px · Raio: 9999px (pill) · Fonte: 16px Inter weight 600
+- Hover: &quot;roll&quot; — texto duplicado sobe dentro da máscara, `cubic-bezier(0.76,0,0.24,1)` 450ms
+- Uso: CTA primário (&quot;Falar com a SATTI&quot;). Sempre texto preto sobre blaze.
+
+**Secundário / Ghost** (`button-secondary`)
+- Fundo: `transparent` · Texto: `#15171B` · Borda: `#E3E6EB` (hairline)
+- Padding: 17px 36px · Raio: 9999px · Fonte: 16px Inter weight 500 · Hover: &quot;roll&quot;
+
+**Ícone — Círculo + Seta** (`button-icon`)
+- 64×64, `transparent` com hairline `#E3E6EB`, raio 9999px
+- Hover: fundo → `#15171B`, seta → `#F4F5F7`, seta desliza (translateX 40px)
+
+**Focus (todos):** ring de 2px `#2F6BFF` (`box-shadow: 0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF`).
+
+### Cards &amp; Containers
+
+**Card base** (`card`)
+- Fundo: `#F7F8FA` · Borda: `#E3E6EB` · Raio: 28px · Padding: 36px · Sombra: nenhuma
+- Profundidade = hairline. Stat-card usa número `metric-mono` (88px) + slot 1:1.
+
+**Work-card / dark** (`card-dark`)
+- Fundo: `#0F1115` · Raio: 28px · Texto: `#F4F5F7`
+- Glow blaze: `filter: blur(90px)`, opacidade 0.8, ancorado no rodapé; info-pill `#F4F5F7` sobre ele.
+
+### Inputs &amp; Forms
+
+**Input de texto** (`input-text`)
+- Fundo: `#F7F8FA` · Texto: `#15171B` · Borda: `#E3E6EB` · Raio: 12px · Altura: 54px · Padding: 0 18px
+- Focus: borda `#2F6BFF` + ring `0 0 0 3px rgba(47,107,255,0.18)`
+- Erro: borda `#B43A2F` + texto de erro `#B43A2F`. Sucesso: borda `#15794B` + ícone ✓.
+- Regra: feedback é texto + borda + ícone — nunca botão ou bloco cheio.
+
+### Badges / Tags / Pills
+
+**Tag mono** (`badge-default`)
+- Fundo: `transparent` · Texto: `#15171B` · Borda: `#E3E6EB` · Raio: 9999px · Padding: 10px 20px
+- Fonte: 12px JetBrains Mono weight 400. Nomes de marca em grafia oficial (sem caps).
+
+### Navigation
+- **Marcador-eyebrow** (`nav-marker`): quadrado 8×8 `#FF4D00` que precede eyebrows em mono/steel. Não conta para o limite de 1 blaze/viewport.
+
+### Decorative Elements
+- Grades blueprint (`linear-gradient` de linhas 1px, 12/48px e 24/40px) em placeholders de mídia e no painel de grade técnica — estruturais, não decorativas.
+- Régua com ticks (64px) e colunas com hairlines verticais.
+- Glow blaze (blur 90px) — o único brilho de cor do sistema.
+
+## 5. Layout Principles
+
+### Spacing System
+Base 4px. Escala usada: 8, 12, 16, 24, 48, 88, 120px. Padding de seção desktop = 88px (vertical) × 120px (horizontal). Gaps de grade tipicamente 24px (cards) e 48–56px (colunas de conteúdo).
+
+### Grid &amp; Container
+Layout de página cheia (1920 desktop / 375 mobile). Seções separadas por hairline `border-top: 1px #E3E6EB`. Grids de 3 colunas para cards e paleta; grids assimétricos (ex.: `1fr 380px`, `320px 1fr`) para pares rótulo/conteúdo.
+
+### Whitespace Philosophy
+O respiro é generoso e intencional: displays enormes contra grandes áreas de paper. O vazio é parte do desenho técnico — a página respira como uma prancheta, com a informação ancorada por linhas, não empurrada por caixas.
+
+### Border Radius Scale
+- `sm` 8px — chips pequenos, réguas.
+- `md` 12px — inputs, swatches, placeholders de mídia (raio funcional).
+- `lg` 16px — slots internos de card dark.
+- `xl` 28px — cards (raio editorial).
+- `full` 9999px — botões, tags, info-pills.
+
+## 6. Depth &amp; Elevation
+
+| Level | Treatment | Use |
+|---|---|---|
+| Flat | Sem borda, sem sombra | Fundo paper / seções |
+| Ambient | Hairline 1px `#E3E6EB` | Cards, inputs, divisórias — a profundidade padrão |
+| Standard | Hairline + tint (`#ECEEF2` / `#FFE9DE`) | Slots de mídia, chips, realces |
+| Elevated | Fundo graphite `#0F1115` | Work-cards, seções dark |
+| Deep | Glow blaze `blur(90px)` opac. 0.8 | Único brilho de cor — sob work-cards |
+| Ring (focus) | `0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF` (botões) · `0 0 0 3px rgba(47,107,255,0.18)` (inputs) | Foco de teclado |
+
+### Shadow Philosophy
+Sombras são quase-zero por decisão de marca: a profundidade é comunicada por hairline + tint + glow, não por drop-shadow. As únicas &quot;sombras&quot; reais são os anéis de foco funcionais (circuit) e o glow blaze — ambos com propósito, nunca ornamentais.
+
+## 7. Do&#39;s and Don&#39;ts
+
+**Do&#39;s**
+- ✅ Use blaze `#FF4D00` no máximo 1× por dobra, sempre com texto `#15171B` (preto) sobre ele.
+- ✅ Reserve circuit `#2F6BFF` para função pura: links, diagrama, focus ring.
+- ✅ Componha profundidade com hairline de 1px `#E3E6EB` + tint, não com sombra.
+- ✅ Escreva displays em Archivo 900 caixa-alta com tracking negativo.
+- ✅ Grafe marcas na forma oficial (n8n, Next.js, Supabase) — a exceção ao mono-caps.
+
+**Don&#39;ts**
+- ❌ Não use texto branco sobre blaze — o par correto é `iron` (#15171B) preto sobre blaze.
+- ❌ Não use blaze `#FF4D00` como cor de link ou de diagrama — isso é papel do circuit `#2F6BFF`.
+- ❌ Não use circuit `#2F6BFF` como CTA ou decoração — ele é estritamente funcional.
+- ❌ Não aplique tracking positivo nem title-case em displays Archivo — sempre caps + tracking negativo.
+- ❌ Não adicione drop-shadows em cards — a profundidade é hairline + tint; o único brilho é o glow blaze.
+- ❌ Não mostre feedback como bloco cheio/botão — só texto + borda + ícone do campo.
+- ❌ Não exiba mais de 1 elemento blaze de destaque por viewport (o marcador 8×8 não conta).
+
+## 8. Responsive Behavior
+
+### Breakpoints
+
+| Name | Width | Key Changes |
+|---|---|---|
+| Mobile | 375px | Coluna única; padding de seção reduzido; displays via clamp() menores |
+| Desktop | 1920px | Grades de 3 colunas; padding 88×120px; displays no topo do clamp |
+
+### Touch Targets
+Botões pill com padding 17–18px × 36px e ícone-círculo de 64×64 garantem alvos ≥ 44px. Inputs com 54px de altura.
+
+### Collapsing Strategy
+Do desktop para o mobile: grids de 3 colunas colapsam para 1; tipografia escala por `clamp()` (não por breakpoints rígidos); a numeração de seção mono permanece; a Linha de Automação vira faixa full-bleed. O overlay O2 (Contato) vira tela cheia no mobile.
+
+### Image Behavior
+Mídia usa placeholders blueprint `#ECEEF2` com grade e cruz central e rótulo mono (`[ A1 · 16:9 · ≤1,2MB ]`). Proporções fixas (16:9, 1:1) preservadas; largura plena no LG, meia-coluna no SM.
+
+## 9. Agent Prompt Guide
+
+### Quick Color Reference
+- CTA primário: SATTI Blaze (`#FF4D00`) com texto `#15171B`
+- Texto/ink: Iron (`#15171B`)
+- Texto secundário / eyebrows: Steel (`#6E7480`)
+- Fundo: Paper (`#F7F8FA`)
+- Seções dark: Graphite (`#0F1115`) com texto `#F4F5F7`
+- Hairline / bordas: Line (`#E3E6EB`)
+- Link / foco / diagrama: Circuit (`#2F6BFF`)
+- Erro: `#B43A2F` · Sucesso: `#15794B` (só texto/borda/ícone)
+
+### Example Component Prompts
+&gt; &quot;Hero em fundo paper `#F7F8FA`. H1 em Archivo weight 900, caixa-alta, clamp(64px,7.5vw,140px), line-height 0.95, letter-spacing −0.015em, cor `#15171B`. Subtítulo Inter 20px, line-height 1.5, cor `#6E7480`. CTA pill blaze `#FF4D00` (raio 9999px, padding 18px 36px, texto `#15171B` weight 600) com hover &#39;roll&#39;.&quot;
+
+&gt; &quot;Card base: fundo `#F7F8FA`, borda 1px `#E3E6EB`, raio 28px, padding 36px, sem sombra. Eyebrow em JetBrains Mono 11px caixa-alta +0.08em cor `#6E7480`; título Archivo 26px caixa-alta; corpo Inter 14px `#6E7480`.&quot;
+
+&gt; &quot;Stat-card: mesmo card, número em JetBrains Mono 88px weight 500 letter-spacing −0.04em cor `#15171B`, label Inter 15px `#6E7480`, e um slot 1:1 blueprint `#ECEEF2` no canto superior direito.&quot;
+
+&gt; &quot;Tag de stack: pill transparente, borda 1px `#E3E6EB`, raio 9999px, padding 10px 20px, JetBrains Mono 12px weight 400. Use a grafia oficial da marca (ex.: Next.js) sem caixa-alta.&quot;
+
+&gt; &quot;Seção dark: fundo `#0F1115`, texto `#F4F5F7`; um único glow blaze `filter: blur(90px)` opacidade 0.8 ancorado embaixo; info-pill `#F4F5F7` com texto `#15171B`.&quot;
+
+### Iteration Guide
+1. Blaze é raro — só 1 destaque por dobra, sempre texto preto `#15171B` sobre ele; o marcador 8×8 não conta.
+2. Azul `#2F6BFF` só entra em link/diagrama/foco — se você usou azul como CTA, está errado.
+3. Displays: sempre Archivo 900/800, caixa-alta, tracking negativo. Nunca title-case.
+4. Mono sempre caixa-alta +0.08em; a única exceção é a grafia de marca.
+5. Profundidade = hairline 1px `#E3E6EB` + tint. Não adicione box-shadow em cards.
+6. Raio: 12px para elementos funcionais (input, mídia), 28px para cards, 9999px para pills.
+7. Estado-base é reduced-motion: entregue a versão estática primeiro; animação é progressiva.
+8. Copy nunca é inventada — texto oficial literal; sem versão final → [CONFIRMAR] em cinza `#6E7480`.
+</code></pre>
+  </section>
+
+  <section class="technical-section">
+    <details>
+      <summary><h2 style="display:inline-block;margin:0">Technical details</h2></summary>
+      <div class="tech-content">
+        <h3>Source</h3>
+        <dl class="meta-grid">
+          <dt>URL</dt><dd>SATTI Design System — 30 telas (F2–F5 · PT + EN)</dd>
+          <dt>External CSS files</dt><dd>1</dd>
+          <dt>Preload CSS files</dt><dd>0</dd>
+          <dt>@import resolved</dt><dd>0</dd>
+          <dt>Inline &lt;style&gt; blocks</dt><dd>1</dd>
+          <dt>Inline style="" attrs</dt><dd>0</dd>
+          <dt>Failed fetches</dt><dd>0</dd>
+          <dt class="dim-label">— detected —</dt><dd></dd>
+          <dt>Hex colors</dt><dd>15</dd>
+          <dt>Font families</dt><dd>5</dd>
+          <dt>Font sizes</dt><dd>16</dd>
+          <dt>Radii</dt><dd>3</dd>
+          <dt>Native CSS vars</dt><dd>58</dd>
+          <dt>@font-face blocks</dt><dd>10</dd>
+          <dt>Unique tokens (graph)</dt><dd>58</dd>
+        </dl>
+
+        
+        <h3>Breakpoints</h3>
+        <div class="breakpoints-row">
+          <span class="breakpoint-chip">640px <span>1×</span></span><span class="breakpoint-chip">768px <span>1×</span></span>
+        </div>
+        
+
+        
+        <h3>Dark mode signals</h3>
+        <p class="empty">No dark mode signals detected.</p>
+        
+
+        <h3>Audit</h3>
+        <details>
+          <summary>Detected tokens (regex pass over CSS)</summary>
+          <pre><code class="language-json">{
+  &quot;colors&quot;: {
+    &quot;hex&quot;: [
+      &quot;#0f1115&quot;,
+      &quot;#15171b&quot;,
+      &quot;#15794b&quot;,
+      &quot;#2f6bff&quot;,
+      &quot;#6e7480&quot;,
+      &quot;#b43a2f&quot;,
+      &quot;#e0e4ea&quot;,
+      &quot;#e3e6eb&quot;,
+      &quot;#e4ebff&quot;,
+      &quot;#eceef2&quot;,
+      &quot;#eef0f3&quot;,
+      &quot;#f4f5f7&quot;,
+      &quot;#f7f8fa&quot;,
+      &quot;#ff4d00&quot;,
+      &quot;#ffe9de&quot;
+    ],
+    &quot;rgb&quot;: [
+      &quot;rgba(47,107,255,0.18)&quot;
+    ],
+    &quot;hsl&quot;: [],
+    &quot;hex_usage&quot;: {
+      &quot;#0f1115&quot;: 1,
+      &quot;#15171b&quot;: 13,
+      &quot;#15794b&quot;: 2,
+      &quot;#2f6bff&quot;: 3,
+      &quot;#6e7480&quot;: 5,
+      &quot;#b43a2f&quot;: 3,
+      &quot;#e0e4ea&quot;: 4,
+      &quot;#e3e6eb&quot;: 3,
+      &quot;#e4ebff&quot;: 1,
+      &quot;#eceef2&quot;: 3,
+      &quot;#eef0f3&quot;: 2,
+      &quot;#f4f5f7&quot;: 2,
+      &quot;#f7f8fa&quot;: 2,
+      &quot;#ff4d00&quot;: 3,
+      &quot;#ffe9de&quot;: 3
+    }
+  },
+  &quot;typography&quot;: {
+    &quot;family&quot;: [
+      &quot;Archivo&quot;,
+      &quot;Inter&quot;,
+      &quot;JetBrains Mono&quot;,
+      &quot;monospace&quot;,
+      &quot;sans-serif&quot;
+    ],
+    &quot;size&quot;: [
+      &quot;16px&quot;,
+      &quot;8.75rem&quot;,
+      &quot;10.5rem&quot;,
+      &quot;5.25rem&quot;,
+      &quot;2.5rem&quot;,
+      &quot;1.625rem&quot;,
+      &quot;1.25rem&quot;,
+      &quot;1rem&quot;,
+      &quot;0.875rem&quot;,
+      &quot;5.5rem&quot;,
+      &quot;0.6875rem&quot;,
+      &quot;15px&quot;,
+      &quot;13px&quot;,
+      &quot;12px&quot;,
+      &quot;3rem&quot;,
+      &quot;64px&quot;
+    ],
+    &quot;weight&quot;: [
+      &quot;400&quot;,
+      &quot;500&quot;,
+      &quot;600&quot;,
+      &quot;700&quot;,
+      &quot;800&quot;,
+      &quot;900&quot;
+    ],
+    &quot;line_height&quot;: [
+      &quot;1.6&quot;,
+      &quot;0.95&quot;,
+      &quot;0.92&quot;,
+      &quot;1.02&quot;,
+      &quot;1.1&quot;,
+      &quot;1.15&quot;,
+      &quot;1.5&quot;,
+      &quot;1.4&quot;,
+      &quot;1&quot;
+    ]
+  },
+  &quot;radii&quot;: [
+    &quot;999px&quot;,
+    &quot;28px&quot;,
+    &quot;12px&quot;
+  ],
+  &quot;spacing&quot;: [
+    &quot;0&quot;,
+    &quot;18px 36px&quot;,
+    &quot;17px 36px&quot;,
+    &quot;36px&quot;,
+    &quot;16px&quot;,
+    &quot;0 18px&quot;,
+    &quot;10px 20px&quot;,
+    &quot;88px 120px&quot;,
+    &quot;48px 20px&quot;,
+    &quot;24px&quot;
+  ],
+  &quot;google_fonts_urls&quot;: []
+}</code></pre>
+        </details>
+        <details>
+          <summary>CSS fetch trace</summary>
+          <pre><code class="language-json">{
+  &quot;external&quot;: [
+    &quot;https://fonts.googleapis.com/css2?family=Archivo&amp;family=Inter&amp;family=JetBrains+Mono&quot;
+  ],
+  &quot;preload&quot;: [],
+  &quot;imports_resolved&quot;: 0,
+  &quot;inline_style_blocks&quot;: 1,
+  &quot;inline_style_attrs&quot;: 0,
+  &quot;failed&quot;: []
+}</code></pre>
+        </details>
+        
+        <details>
+          <summary>Quality score breakdown</summary>
+          <pre><code class="language-json">{
+  &quot;overall&quot;: 84,
+  &quot;grade&quot;: &quot;B&quot;,
+  &quot;categories&quot;: {
+    &quot;color_discipline&quot;: {
+      &quot;score&quot;: 100,
+      &quot;grade&quot;: &quot;A&quot;,
+      &quot;value&quot;: &quot;15 colors&quot;,
+      &quot;ideal&quot;: &quot;25-40&quot;
+    },
+    &quot;typography&quot;: {
+      &quot;score&quot;: 100,
+      &quot;grade&quot;: &quot;A&quot;,
+      &quot;value&quot;: &quot;3 families, 13 scales&quot;,
+      &quot;ideal&quot;: &quot;2-4 families&quot;
+    },
+    &quot;spacing_system&quot;: {
+      &quot;score&quot;: 100,
+      &quot;grade&quot;: &quot;A&quot;,
+      &quot;value&quot;: &quot;7 tokens&quot;,
+      &quot;ideal&quot;: &quot;4-8&quot;
+    },
+    &quot;border_radii&quot;: {
+      &quot;score&quot;: 100,
+      &quot;grade&quot;: &quot;A&quot;,
+      &quot;value&quot;: &quot;5 levels&quot;,
+      &quot;ideal&quot;: &quot;3-6&quot;
+    },
+    &quot;tokenization&quot;: {
+      &quot;score&quot;: 96,
+      &quot;grade&quot;: &quot;A&quot;,
+      &quot;value&quot;: &quot;96% high confidence&quot;,
+      &quot;ideal&quot;: &quot;≥80%&quot;
+    },
+    &quot;lint_compliance&quot;: {
+      &quot;score&quot;: 70,
+      &quot;grade&quot;: &quot;C&quot;,
+      &quot;value&quot;: &quot;skipped&quot;,
+      &quot;ideal&quot;: &quot;0E 0W&quot;
+    },
+    &quot;accessibility&quot;: {
+      &quot;score&quot;: 20,
+      &quot;grade&quot;: &quot;F&quot;,
+      &quot;value&quot;: &quot;2/10 pairs ≥AA&quot;,
+      &quot;ideal&quot;: &quot;100% AA&quot;
+    }
+  }
+}</code></pre>
+        </details>
+        
+      </div>
+    </details>
+  </section>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script>
+    var TOKENS = {"name":"SATTI","colors":{"primary":"#FF4D00","secondary":"#15171B","tertiary":"#2F6BFF","neutral":"#6E7480","surface":"#F7F8FA","text":"#15171B","text-muted":"#6E7480","border":"#E3E6EB","error":"#B43A2F","success":"#15794B","graphite":"#0F1115","blaze-soft":"#FFE9DE","ink-on-dark":"#F4F5F7","tint-blue":"#E4EBFF","tint-slate":"#ECEEF2"},"typography":{"display":{"fontFamily":"Archivo, sans-serif","fontSize":"10.5rem","fontWeight":"900","lineHeight":"0.92","letterSpacing":"-0.02em","features":"caps"},"display-hero":{"fontFamily":"Archivo, sans-serif","fontSize":"8.75rem","fontWeight":"900","lineHeight":"0.95","letterSpacing":"-0.015em","features":"caps"},"statement":{"fontFamily":"Archivo, sans-serif","fontSize":"5.25rem","fontWeight":"800","lineHeight":"1.02","letterSpacing":"-0.01em","features":"caps"},"section-heading":{"fontFamily":"Archivo, sans-serif","fontSize":"2.5rem","fontWeight":"700","lineHeight":"1.1","features":"caps"},"card-title":{"fontFamily":"Archivo, sans-serif","fontSize":"1.625rem","fontWeight":"700","lineHeight":"1.15","features":"caps"},"body-large":{"fontFamily":"Inter, sans-serif","fontSize":"1.25rem","fontWeight":"400","lineHeight":"1.5"},"body":{"fontFamily":"Inter, sans-serif","fontSize":"1rem","fontWeight":"400","lineHeight":"1.6"},"body-small":{"fontFamily":"Inter, sans-serif","fontSize":"0.875rem","fontWeight":"400","lineHeight":"1.6"},"label":{"fontFamily":"Inter, sans-serif","fontSize":"0.875rem","fontWeight":"500","lineHeight":"1.4"},"eyebrow-mono":{"fontFamily":"JetBrains Mono, monospace","fontSize":"0.875rem","fontWeight":"500","lineHeight":"1.4","letterSpacing":"0.08em","features":"caps"},"tag-mono":{"fontFamily":"JetBrains Mono, monospace","fontSize":"0.75rem","fontWeight":"400","lineHeight":"1.2"},"metric-mono":{"fontFamily":"JetBrains Mono, monospace","fontSize":"5.5rem","fontWeight":"500","lineHeight":"1","letterSpacing":"-0.04em"},"caption-mono":{"fontFamily":"JetBrains Mono, monospace","fontSize":"0.6875rem","fontWeight":"500","lineHeight":"1.4","letterSpacing":"0.08em","features":"caps"}},"rounded":{"sm":"8px","md":"12px","lg":"16px","xl":"28px","full":"9999px"},"spacing":{"2xs":"8px","xs":"12px","sm":"16px","md":"24px","lg":"48px","xl":"88px","xxl":"120px"},"preview_tokens":{"button_primary_bg":"#FF4D00","button_primary_text":"#15171B","button_primary_border":"#FF4D00","button_secondary_bg":"transparent","button_secondary_text":"#15171B","button_secondary_border":"#E3E6EB","button_tertiary_text":"#2F6BFF","surface_bg":"#F7F8FA","card_bg":"#F7F8FA","text":"#15171B","text_muted":"#6E7480","border":"#E3E6EB","accent":"#FF4D00","button_radius":"9999px","card_radius":"28px","input_radius":"12px"},"components":{"button-primary":{"bg":"#FF4D00","text":"#15171B","border":"#FF4D00","radius":"9999px","padding":"18px 36px"},"button-secondary":{"bg":"transparent","text":"#15171B","border":"#E3E6EB","radius":"9999px","padding":"17px 36px"},"card":{"radius":"28px","padding":"36px","shadow":"none","variants":{"title":{"font_weight":"700","font_size":"1.625rem","text":"#15171B"},"dark":{"radius":"28px","padding":"16px","text":"var(--c-ink-on-dark, #F4F5F7)","opacity":"0.8"}},"bg":"#F7F8FA","border":"#E3E6EB"},"input-text":{"bg":"#F7F8FA","text":"#15171B","border":"#E3E6EB","radius":"12px","padding":"0px 18px","focus_border":"#2F6BFF"},"badge-default":{"bg":"transparent","text":"#15171B","border":"#E3E6EB","radius":"9999px","padding":"10px 20px"},"button":{"states":{"hover":{"transform":"translateY(-1px)","text":"#F4F5F7"},"focus-visible":{"outline":"none","shadow":"0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF"}},"variants":{"primary":{"radius":"999px","padding":"18px 36px","font_weight":"600","font_size":"16px","text":"var(--c-iron, #15171B)","cursor":"pointer","transition":"transform 0.45s cubic-bezier(0.76,0,0.24,1)","transform":"translateY(-1px)","outline":"none","shadow":"0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF"},"secondary":{"radius":"999px","padding":"17px 36px","font_weight":"500","font_size":"16px","text":"var(--c-iron, #15171B)","cursor":"pointer","transition":"transform 0.45s cubic-bezier(0.76,0,0.24,1)","outline":"none","shadow":"0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF"},"icon":{"radius":"999px","text":"#15171B","cursor":"pointer","transition":"background 0.35s ease, color 0.35s ease"}}},"input":{"radius":"12px","padding":"0 18px","font_size":"15px","text":"var(--c-iron, #15171B)","states":{"focus-visible":{"outline":"none","shadow":"0 0 0 3px rgba(47,107,255,0.18)"}}},"badge":{"font_weight":"400","font_size":"12px","text":"#15171B","radius":"999px","padding":"10px 20px"},"label":{"font_weight":"500","font_size":"0.875rem","text":"#15171B"}}};
+    var COLORS = [{"key":"primary","value":"#FF4D00"},{"key":"secondary","value":"#15171B"},{"key":"tertiary","value":"#2F6BFF"},{"key":"neutral","value":"#6E7480"},{"key":"surface","value":"#F7F8FA"},{"key":"text","value":"#15171B"},{"key":"text-muted","value":"#6E7480"},{"key":"border","value":"#E3E6EB"},{"key":"error","value":"#B43A2F"},{"key":"success","value":"#15794B"},{"key":"graphite","value":"#0F1115"},{"key":"blaze-soft","value":"#FFE9DE"},{"key":"ink-on-dark","value":"#F4F5F7"},{"key":"tint-blue","value":"#E4EBFF"},{"key":"tint-slate","value":"#ECEEF2"}];
+    var DESIGN_MD = "---\nname: SATTI\ncolors:\n  primary: \"#FF4D00\"\n  secondary: \"#15171B\"\n  tertiary: \"#2F6BFF\"\n  neutral: \"#6E7480\"\n  surface: \"#F7F8FA\"\n  text: \"#15171B\"\n  text-muted: \"#6E7480\"\n  border: \"#E3E6EB\"\n  error: \"#B43A2F\"\n  success: \"#15794B\"\n  graphite: \"#0F1115\"\n  blaze-soft: \"#FFE9DE\"\n  ink-on-dark: \"#F4F5F7\"\n  tint-blue: \"#E4EBFF\"\n  tint-slate: \"#ECEEF2\"\ntypography:\n  display:\n    fontFamily: \"Archivo, sans-serif\"\n    fontSize: \"10.5rem\"\n    fontWeight: \"900\"\n    lineHeight: \"0.92\"\n    letterSpacing: \"-0.02em\"\n    features: \"caps\"\n  display-hero:\n    fontFamily: \"Archivo, sans-serif\"\n    fontSize: \"8.75rem\"\n    fontWeight: \"900\"\n    lineHeight: \"0.95\"\n    letterSpacing: \"-0.015em\"\n    features: \"caps\"\n  statement:\n    fontFamily: \"Archivo, sans-serif\"\n    fontSize: \"5.25rem\"\n    fontWeight: \"800\"\n    lineHeight: \"1.02\"\n    letterSpacing: \"-0.01em\"\n    features: \"caps\"\n  section-heading:\n    fontFamily: \"Archivo, sans-serif\"\n    fontSize: \"2.5rem\"\n    fontWeight: \"700\"\n    lineHeight: \"1.1\"\n    features: \"caps\"\n  card-title:\n    fontFamily: \"Archivo, sans-serif\"\n    fontSize: \"1.625rem\"\n    fontWeight: \"700\"\n    lineHeight: \"1.15\"\n    features: \"caps\"\n  body-large:\n    fontFamily: \"Inter, sans-serif\"\n    fontSize: \"1.25rem\"\n    fontWeight: \"400\"\n    lineHeight: \"1.5\"\n  body:\n    fontFamily: \"Inter, sans-serif\"\n    fontSize: \"1rem\"\n    fontWeight: \"400\"\n    lineHeight: \"1.6\"\n  body-small:\n    fontFamily: \"Inter, sans-serif\"\n    fontSize: \"0.875rem\"\n    fontWeight: \"400\"\n    lineHeight: \"1.6\"\n  label:\n    fontFamily: \"Inter, sans-serif\"\n    fontSize: \"0.875rem\"\n    fontWeight: \"500\"\n    lineHeight: \"1.4\"\n  eyebrow-mono:\n    fontFamily: \"JetBrains Mono, monospace\"\n    fontSize: \"0.875rem\"\n    fontWeight: \"500\"\n    lineHeight: \"1.4\"\n    letterSpacing: \"0.08em\"\n    features: \"caps\"\n  tag-mono:\n    fontFamily: \"JetBrains Mono, monospace\"\n    fontSize: \"0.75rem\"\n    fontWeight: \"400\"\n    lineHeight: \"1.2\"\n  metric-mono:\n    fontFamily: \"JetBrains Mono, monospace\"\n    fontSize: \"5.5rem\"\n    fontWeight: \"500\"\n    lineHeight: \"1\"\n    letterSpacing: \"-0.04em\"\n  caption-mono:\n    fontFamily: \"JetBrains Mono, monospace\"\n    fontSize: \"0.6875rem\"\n    fontWeight: \"500\"\n    lineHeight: \"1.4\"\n    letterSpacing: \"0.08em\"\n    features: \"caps\"\nrounded:\n  sm: \"8px\"\n  md: \"12px\"\n  lg: \"16px\"\n  xl: \"28px\"\n  full: \"9999px\"\nspacing:\n  2xs: \"8px\"\n  xs: \"12px\"\n  sm: \"16px\"\n  md: \"24px\"\n  lg: \"48px\"\n  xl: \"88px\"\n  xxl: \"120px\"\npreview_tokens:\n  button_primary_bg: \"#FF4D00\"\n  button_primary_text: \"#15171B\"\n  button_primary_border: \"#FF4D00\"\n  button_secondary_bg: \"transparent\"\n  button_secondary_text: \"#15171B\"\n  button_secondary_border: \"#E3E6EB\"\n  button_tertiary_text: \"#2F6BFF\"\n  surface_bg: \"#F7F8FA\"\n  card_bg: \"#F7F8FA\"\n  text: \"#15171B\"\n  text_muted: \"#6E7480\"\n  border: \"#E3E6EB\"\n  accent: \"#FF4D00\"\n  button_radius: \"9999px\"\n  card_radius: \"28px\"\n  input_radius: \"12px\"\ncomponents:\n  button-primary:\n    bg: \"#FF4D00\"\n    text: \"#15171B\"\n    border: \"#FF4D00\"\n    radius: \"9999px\"\n    padding: \"18px 36px\"\n    font: \"16px Inter weight 600\"\n    hover: \"text roll-up, cubic-bezier(0.76,0,0.24,1) 450ms\"\n  button-secondary:\n    bg: \"transparent\"\n    text: \"#15171B\"\n    border: \"#E3E6EB\"\n    radius: \"9999px\"\n    padding: \"17px 36px\"\n    font: \"16px Inter weight 500\"\n    hover: \"text roll-up\"\n  button-icon:\n    bg: \"transparent\"\n    text: \"#15171B\"\n    border: \"#E3E6EB\"\n    radius: \"9999px\"\n    padding: \"0px\"\n    hover_bg: \"#15171B\"\n    hover_text: \"#F4F5F7\"\n  card:\n    bg: \"#F7F8FA\"\n    border: \"#E3E6EB\"\n    radius: \"28px\"\n    padding: \"36px\"\n    shadow: \"none\"\n  card-dark:\n    bg: \"#0F1115\"\n    text: \"#F4F5F7\"\n    border: \"transparent\"\n    radius: \"28px\"\n    padding: \"16px\"\n    shadow: \"0 0 90px #FF4D00 (glow, blur 90, opacity 0.8)\"\n  input-text:\n    bg: \"#F7F8FA\"\n    text: \"#15171B\"\n    border: \"#E3E6EB\"\n    radius: \"12px\"\n    padding: \"0px 18px\"\n    focus_border: \"#2F6BFF\"\n    focus_ring: \"0 0 0 3px rgba(47,107,255,0.18)\"\n  badge-default:\n    bg: \"transparent\"\n    text: \"#15171B\"\n    border: \"#E3E6EB\"\n    radius: \"9999px\"\n    padding: \"10px 20px\"\n    font: \"12px JetBrains Mono weight 400\"\n  nav-marker:\n    bg: \"#FF4D00\"\n    text: \"#15171B\"\n    border: \"transparent\"\n    radius: \"0px\"\n    size: \"8px\"\n---\n\n# SATTI — Design System\n\n> Fundação visual da SATTI (IA & Automação). Sistema técnico, editorial e de alta precisão: hairlines de 1px, tipografia condensada em caixa-alta e um único acento de alto impacto (blaze) usado com rigor. Extraído da fonte-de-verdade `SATTI DS` que governa as 30 telas aprovadas (F2–F5, PT + EN espelho).\n\n## 1. Visual Theme & Atmosphere\n\nA SATTI se apresenta como **engenharia que pulsa**: uma linguagem de desenho técnico onde a profundidade nasce da linha, não da sombra. O sistema é construído sobre `paper` (#F7F8FA) — um branco levemente frio — pontuado por `iron` (#15171B) para texto e por seções `graphite` (#0F1115) quase-pretas. A atmosfera é a de um blueprint: grades de 12/48px, réguas com ticks e hairlines de 1px em `line` (#E3E6EB) que organizam cada superfície.\n\nO acento `blaze` (#FF4D00 — laranja-vermelho de alta cromas) é a assinatura da marca e o seu recurso mais controlado: **raro e caro**, no máximo um elemento blaze de destaque por dobra/viewport, e sempre com texto preto (`iron`) sobre ele — nunca branco. O marcador-eyebrow (quadrado 8×8 blaze) é a exceção e não conta para esse limite. Um segundo azul, `circuit` (#2F6BFF), existe apenas para funções: links, diagramas e o anel de foco — nunca como decoração.\n\nA personalidade tipográfica combina três vozes: **Archivo** em peso 900/800 e caixa-alta para displays com tracking negativo apertado (a voz condensada e industrial da marca), **Inter** para corpo e interface, e **JetBrains Mono** em caixa-alta com tracking +0.08em para eyebrows, tags e métricas — a voz de \"instrumento técnico\". A única quebra do mono-caps é a grafia oficial das marcas citadas (n8n, Next.js, Supabase…), que aparecem sem caps.\n\nO tratamento de superfície é deliberadamente plano. Sombras são quase-zero: a profundidade vem de hairline + tint + glow. O único brilho colorido do sistema é o *glow* blaze (filtro blur 90px, opacidade 0.8) sob os work-cards escuros — um respiro de energia num sistema, no restante, contido. O estado-base de captura é reduced-motion: a Linha de Automação (elemento-assinatura) é desenhada 100% estática, com o pulso pausado.\n\n**Key Characteristics:**\n- Paleta fria e neutra (paper/iron/steel) com um único acento quente de alto impacto (blaze).\n- Blaze é raro: máx. 1 destaque por viewport, sempre com texto preto sobre ele.\n- `circuit` (azul) é estritamente funcional — links, diagrama, focus ring — nunca decorativo.\n- Profundidade por hairline de 1px + tints + glow; sombras praticamente ausentes.\n- Archivo 900/800 caixa-alta com tracking negativo para displays condensados e industriais.\n- JetBrains Mono caixa-alta +0.08em como voz técnica (eyebrows, tags, métricas).\n- Raio bimodal: 12px funcional (inputs, mídia) e 28px editorial (cards); pills 9999px.\n- Régua/grade blueprint (12/48px) como motivo estrutural recorrente.\n- Estado-base reduced-motion; animações estáticas na captura.\n- 60/30/10 como lei de proporção de cor.\n\n## 2. Color Palette & Roles\n\n### Primary\n- **Blaze** (`#FF4D00`): `--c-blaze`. Acento de identidade. CTAs primários, marcador-eyebrow (8×8), glow. Sempre com texto `iron` (#15171B) sobre ele — nunca branco. Uso ≤ 10% da dobra.\n\n### Brand & Dark\n- **Iron** (`#15171B`): `--c-iron`. Texto principal e blocos de UI escura; a \"tinta\" do sistema.\n- **Graphite** (`#0F1115`): `--c-graphite`. Fundo das seções dark e work-cards; recebe texto `ink-on-dark`.\n- **Ink-on-dark** (`#F4F5F7`): `--c-ink-on-dark`. Texto/ícones sobre graphite.\n\n### Accent Colors\n- **Blaze-soft** (`#FFE9DE`): `--c-blaze-soft`. Tint do acento — chips e realces suaves; também a cor de `::selection`.\n- **Tint-blue** (`#E4EBFF`) e **Tint-slate** (`#ECEEF2`): tints de card (S4) e fundo dos placeholders de mídia blueprint.\n\n### Interactive\n- **Circuit** (`#2F6BFF`): `--c-circuit`. **Somente funcional**: links, linhas de diagrama e anel de foco (ring 2px, ou `rgba(47,107,255,0.18)` de 3px em inputs). Nunca decorativo, nunca CTA.\n\n### Neutral Scale\n- **Paper** (`#F7F8FA`): `--c-paper`. Fundo base / canvas.\n- **Steel** (`#6E7480`): `--c-steel`. Texto secundário, eyebrows, labels de métrica; também o cinza de *copy sugerida/provisória* ([CONFIRMAR]).\n\n### Surface & Borders\n- **Line** (`#E3E6EB`): `--c-line`. Hairline de 1px — a unidade de desenho de toda a interface (bordas de card, input, régua, colunas).\n\n### Feedback (texto/borda/ícone apenas)\n- **Error** (`#B43A2F`): `--c-error`. 5.51:1 sobre paper — WCAG AA.\n- **Success** (`#15794B`): `--c-success`. 5.11:1 sobre paper — WCAG AA.\n\n### Color Philosophy\nA regra 60/30/10 governa tudo: ~60% paper e neutros, ~30% iron/graphite, ~10% acento. O blaze não domina — ele *ancora*. Por isso é usado com parcimônia deliberada (logo/eyebrow + 1 CTA por dobra). O azul circuit foi separado do papel de marca para nunca competir com o blaze: azul = função, laranja = identidade. Feedback nunca é um bloco cheio — aparece só como texto + borda + ícone.\n\n## 3. Typography Rules\n\n### Font Family\n- **Display / títulos:** Archivo (500–900), sempre em `text-transform: uppercase`, com tracking negativo (−0.02em a −0.01em) em tamanhos grandes.\n- **Corpo / UI:** Inter (400–600).\n- **Técnica / mono:** JetBrains Mono (400–600), caixa-alta com `letter-spacing: 0.08em`. Exceção única: grafia oficial de marcas (sem caps).\n\n### Hierarchy\n\n| Role | Font | Size | Weight | Line Height | Letter Spacing | Features | Notes |\n|---|---|---|---|---|---|---|---|\n| display | Archivo | 10.5rem (clamp 3rem→) | 900 | 0.92 | −0.02em | caps | Wordmark / hero máximo |\n| display-hero | Archivo | 8.75rem (clamp 64px→140px) | 900 | 0.95 | −0.015em | caps | H1 de página |\n| statement | Archivo | 5.25rem (clamp 2.5rem→) | 800 | 1.02 | −0.01em | caps | Banners / afirmações |\n| section-heading | Archivo | 2.5rem | 700 | 1.1 | — | caps | Títulos de seção |\n| card-title | Archivo | 1.625rem | 700 | 1.15 | — | caps | Títulos de card |\n| body-large | Inter | 1.25rem | 400 | 1.5 | — | — | Lead / subtítulo do hero |\n| body | Inter | 1rem | 400 | 1.6 | — | — | Corpo padrão |\n| body-small | Inter | 0.875rem | 400 | 1.6 | — | — | Descrições de card |\n| label | Inter | 0.875rem | 500 | 1.4 | — | — | Rótulos de formulário |\n| eyebrow-mono | JetBrains Mono | 0.875rem | 500 | 1.4 | 0.08em | caps | Numeração de seção |\n| tag-mono | JetBrains Mono | 0.75rem | 400 | 1.2 | — | — | Tags de stack (grafia oficial) |\n| metric-mono | JetBrains Mono | 5.5rem | 500 | 1 | −0.04em | — | Número de stat-card |\n| caption-mono | JetBrains Mono | 0.6875rem | 500 | 1.4 | 0.08em | caps | Legendas técnicas / labels de slot |\n\n### Principles\n- Todo display é Archivo caixa-alta — nunca title-case; o peso 900 é a voz condensada da marca.\n- Tracking é sempre **negativo** em Archivo grande (−0.02em a −0.01em); nunca positivo em display.\n- Mono é sempre caixa-alta +0.08em, exceto na grafia oficial de marcas (n8n, Next.js, Supabase, Evolution API, Claude / GPT, Python, PostgreSQL, Vercel).\n- Corpo vive em iron ou steel sobre paper — nunca em blaze por trechos longos.\n- Números de métrica usam JetBrains Mono 500 com tracking −0.04em (tabular, técnico).\n\n## 4. Components\n\n### Buttons\n\n**Primário — Blaze** (`button-primary`)\n- Fundo: `#FF4D00` · Texto: `#15171B` · Borda: `#FF4D00`\n- Padding: 18px 36px · Raio: 9999px (pill) · Fonte: 16px Inter weight 600\n- Hover: \"roll\" — texto duplicado sobe dentro da máscara, `cubic-bezier(0.76,0,0.24,1)` 450ms\n- Uso: CTA primário (\"Falar com a SATTI\"). Sempre texto preto sobre blaze.\n\n**Secundário / Ghost** (`button-secondary`)\n- Fundo: `transparent` · Texto: `#15171B` · Borda: `#E3E6EB` (hairline)\n- Padding: 17px 36px · Raio: 9999px · Fonte: 16px Inter weight 500 · Hover: \"roll\"\n\n**Ícone — Círculo + Seta** (`button-icon`)\n- 64×64, `transparent` com hairline `#E3E6EB`, raio 9999px\n- Hover: fundo → `#15171B`, seta → `#F4F5F7`, seta desliza (translateX 40px)\n\n**Focus (todos):** ring de 2px `#2F6BFF` (`box-shadow: 0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF`).\n\n### Cards & Containers\n\n**Card base** (`card`)\n- Fundo: `#F7F8FA` · Borda: `#E3E6EB` · Raio: 28px · Padding: 36px · Sombra: nenhuma\n- Profundidade = hairline. Stat-card usa número `metric-mono` (88px) + slot 1:1.\n\n**Work-card / dark** (`card-dark`)\n- Fundo: `#0F1115` · Raio: 28px · Texto: `#F4F5F7`\n- Glow blaze: `filter: blur(90px)`, opacidade 0.8, ancorado no rodapé; info-pill `#F4F5F7` sobre ele.\n\n### Inputs & Forms\n\n**Input de texto** (`input-text`)\n- Fundo: `#F7F8FA` · Texto: `#15171B` · Borda: `#E3E6EB` · Raio: 12px · Altura: 54px · Padding: 0 18px\n- Focus: borda `#2F6BFF` + ring `0 0 0 3px rgba(47,107,255,0.18)`\n- Erro: borda `#B43A2F` + texto de erro `#B43A2F`. Sucesso: borda `#15794B` + ícone ✓.\n- Regra: feedback é texto + borda + ícone — nunca botão ou bloco cheio.\n\n### Badges / Tags / Pills\n\n**Tag mono** (`badge-default`)\n- Fundo: `transparent` · Texto: `#15171B` · Borda: `#E3E6EB` · Raio: 9999px · Padding: 10px 20px\n- Fonte: 12px JetBrains Mono weight 400. Nomes de marca em grafia oficial (sem caps).\n\n### Navigation\n- **Marcador-eyebrow** (`nav-marker`): quadrado 8×8 `#FF4D00` que precede eyebrows em mono/steel. Não conta para o limite de 1 blaze/viewport.\n\n### Decorative Elements\n- Grades blueprint (`linear-gradient` de linhas 1px, 12/48px e 24/40px) em placeholders de mídia e no painel de grade técnica — estruturais, não decorativas.\n- Régua com ticks (64px) e colunas com hairlines verticais.\n- Glow blaze (blur 90px) — o único brilho de cor do sistema.\n\n## 5. Layout Principles\n\n### Spacing System\nBase 4px. Escala usada: 8, 12, 16, 24, 48, 88, 120px. Padding de seção desktop = 88px (vertical) × 120px (horizontal). Gaps de grade tipicamente 24px (cards) e 48–56px (colunas de conteúdo).\n\n### Grid & Container\nLayout de página cheia (1920 desktop / 375 mobile). Seções separadas por hairline `border-top: 1px #E3E6EB`. Grids de 3 colunas para cards e paleta; grids assimétricos (ex.: `1fr 380px`, `320px 1fr`) para pares rótulo/conteúdo.\n\n### Whitespace Philosophy\nO respiro é generoso e intencional: displays enormes contra grandes áreas de paper. O vazio é parte do desenho técnico — a página respira como uma prancheta, com a informação ancorada por linhas, não empurrada por caixas.\n\n### Border Radius Scale\n- `sm` 8px — chips pequenos, réguas.\n- `md` 12px — inputs, swatches, placeholders de mídia (raio funcional).\n- `lg` 16px — slots internos de card dark.\n- `xl` 28px — cards (raio editorial).\n- `full` 9999px — botões, tags, info-pills.\n\n## 6. Depth & Elevation\n\n| Level | Treatment | Use |\n|---|---|---|\n| Flat | Sem borda, sem sombra | Fundo paper / seções |\n| Ambient | Hairline 1px `#E3E6EB` | Cards, inputs, divisórias — a profundidade padrão |\n| Standard | Hairline + tint (`#ECEEF2` / `#FFE9DE`) | Slots de mídia, chips, realces |\n| Elevated | Fundo graphite `#0F1115` | Work-cards, seções dark |\n| Deep | Glow blaze `blur(90px)` opac. 0.8 | Único brilho de cor — sob work-cards |\n| Ring (focus) | `0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF` (botões) · `0 0 0 3px rgba(47,107,255,0.18)` (inputs) | Foco de teclado |\n\n### Shadow Philosophy\nSombras são quase-zero por decisão de marca: a profundidade é comunicada por hairline + tint + glow, não por drop-shadow. As únicas \"sombras\" reais são os anéis de foco funcionais (circuit) e o glow blaze — ambos com propósito, nunca ornamentais.\n\n## 7. Do's and Don'ts\n\n**Do's**\n- ✅ Use blaze `#FF4D00` no máximo 1× por dobra, sempre com texto `#15171B` (preto) sobre ele.\n- ✅ Reserve circuit `#2F6BFF` para função pura: links, diagrama, focus ring.\n- ✅ Componha profundidade com hairline de 1px `#E3E6EB` + tint, não com sombra.\n- ✅ Escreva displays em Archivo 900 caixa-alta com tracking negativo.\n- ✅ Grafe marcas na forma oficial (n8n, Next.js, Supabase) — a exceção ao mono-caps.\n\n**Don'ts**\n- ❌ Não use texto branco sobre blaze — o par correto é `iron` (#15171B) preto sobre blaze.\n- ❌ Não use blaze `#FF4D00` como cor de link ou de diagrama — isso é papel do circuit `#2F6BFF`.\n- ❌ Não use circuit `#2F6BFF` como CTA ou decoração — ele é estritamente funcional.\n- ❌ Não aplique tracking positivo nem title-case em displays Archivo — sempre caps + tracking negativo.\n- ❌ Não adicione drop-shadows em cards — a profundidade é hairline + tint; o único brilho é o glow blaze.\n- ❌ Não mostre feedback como bloco cheio/botão — só texto + borda + ícone do campo.\n- ❌ Não exiba mais de 1 elemento blaze de destaque por viewport (o marcador 8×8 não conta).\n\n## 8. Responsive Behavior\n\n### Breakpoints\n\n| Name | Width | Key Changes |\n|---|---|---|\n| Mobile | 375px | Coluna única; padding de seção reduzido; displays via clamp() menores |\n| Desktop | 1920px | Grades de 3 colunas; padding 88×120px; displays no topo do clamp |\n\n### Touch Targets\nBotões pill com padding 17–18px × 36px e ícone-círculo de 64×64 garantem alvos ≥ 44px. Inputs com 54px de altura.\n\n### Collapsing Strategy\nDo desktop para o mobile: grids de 3 colunas colapsam para 1; tipografia escala por `clamp()` (não por breakpoints rígidos); a numeração de seção mono permanece; a Linha de Automação vira faixa full-bleed. O overlay O2 (Contato) vira tela cheia no mobile.\n\n### Image Behavior\nMídia usa placeholders blueprint `#ECEEF2` com grade e cruz central e rótulo mono (`[ A1 · 16:9 · ≤1,2MB ]`). Proporções fixas (16:9, 1:1) preservadas; largura plena no LG, meia-coluna no SM.\n\n## 9. Agent Prompt Guide\n\n### Quick Color Reference\n- CTA primário: SATTI Blaze (`#FF4D00`) com texto `#15171B`\n- Texto/ink: Iron (`#15171B`)\n- Texto secundário / eyebrows: Steel (`#6E7480`)\n- Fundo: Paper (`#F7F8FA`)\n- Seções dark: Graphite (`#0F1115`) com texto `#F4F5F7`\n- Hairline / bordas: Line (`#E3E6EB`)\n- Link / foco / diagrama: Circuit (`#2F6BFF`)\n- Erro: `#B43A2F` · Sucesso: `#15794B` (só texto/borda/ícone)\n\n### Example Component Prompts\n> \"Hero em fundo paper `#F7F8FA`. H1 em Archivo weight 900, caixa-alta, clamp(64px,7.5vw,140px), line-height 0.95, letter-spacing −0.015em, cor `#15171B`. Subtítulo Inter 20px, line-height 1.5, cor `#6E7480`. CTA pill blaze `#FF4D00` (raio 9999px, padding 18px 36px, texto `#15171B` weight 600) com hover 'roll'.\"\n\n> \"Card base: fundo `#F7F8FA`, borda 1px `#E3E6EB`, raio 28px, padding 36px, sem sombra. Eyebrow em JetBrains Mono 11px caixa-alta +0.08em cor `#6E7480`; título Archivo 26px caixa-alta; corpo Inter 14px `#6E7480`.\"\n\n> \"Stat-card: mesmo card, número em JetBrains Mono 88px weight 500 letter-spacing −0.04em cor `#15171B`, label Inter 15px `#6E7480`, e um slot 1:1 blueprint `#ECEEF2` no canto superior direito.\"\n\n> \"Tag de stack: pill transparente, borda 1px `#E3E6EB`, raio 9999px, padding 10px 20px, JetBrains Mono 12px weight 400. Use a grafia oficial da marca (ex.: Next.js) sem caixa-alta.\"\n\n> \"Seção dark: fundo `#0F1115`, texto `#F4F5F7`; um único glow blaze `filter: blur(90px)` opacidade 0.8 ancorado embaixo; info-pill `#F4F5F7` com texto `#15171B`.\"\n\n### Iteration Guide\n1. Blaze é raro — só 1 destaque por dobra, sempre texto preto `#15171B` sobre ele; o marcador 8×8 não conta.\n2. Azul `#2F6BFF` só entra em link/diagrama/foco — se você usou azul como CTA, está errado.\n3. Displays: sempre Archivo 900/800, caixa-alta, tracking negativo. Nunca title-case.\n4. Mono sempre caixa-alta +0.08em; a única exceção é a grafia de marca.\n5. Profundidade = hairline 1px `#E3E6EB` + tint. Não adicione box-shadow em cards.\n6. Raio: 12px para elementos funcionais (input, mídia), 28px para cards, 9999px para pills.\n7. Estado-base é reduced-motion: entregue a versão estática primeiro; animação é progressiva.\n8. Copy nunca é inventada — texto oficial literal; sem versão final → [CONFIRMAR] em cinza `#6E7480`.\n";
+    var AGENT_PROMPT = "# SATTI — AI Agent Design Brief\nBuild in the SATTI design system. Ground truth below.\n\nCOLORS: paper #F7F8FA (bg) · iron #15171B (text/ink) · graphite #0F1115 (dark sections) · steel #6E7480 (muted/eyebrows) · blaze #FF4D00 (accent — RARE, max 1/viewport, ALWAYS black #15171B text on it) · circuit #2F6BFF (FUNCTIONAL only: links/diagram/focus) · line #E3E6EB (1px hairlines) · error #B43A2F · success #15794B.\nTYPE: Archivo 900/800 UPPERCASE + negative tracking (displays) · Inter 400-600 (body/UI) · JetBrains Mono UPPERCASE +0.08em (eyebrows/tags/metrics; brand names keep official casing).\nDEPTH: hairline 1px + tints + blaze glow (blur 90px). Almost no shadows. Radius: 12px functional, 28px cards, 9999px pills.\nLAWS: 60/30/10 color · blaze rare & black-on-blaze · circuit never decorative · feedback = text+border+icon only · reduced-motion base state.\n\nExample: hero on #F7F8FA, H1 Archivo 900 uppercase clamp(64-140px) LH .95 ls -.015em #15171B; lead Inter 20px #6E7480; blaze pill CTA #FF4D00 radius 9999px padding 18px 36px text #15171B weight 600.";
+  </script>
+  <script>
+    (function(){
+      var toast = document.getElementById('toast');
+      var t;
+      function showToast(msg){
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(t);
+        t = setTimeout(function(){ toast.classList.remove('show'); }, 1600);
+      }
+
+      // ── data-copy clicks (swatches, spacing, radii, var rows) ───
+      document.body.addEventListener('click', function(e){
+        var el = e.target.closest('[data-copy]');
+        if (!el) return;
+        var v = el.getAttribute('data-copy');
+        navigator.clipboard.writeText(v).then(function(){ showToast('Copied ' + v); });
+      });
+
+      // ── B1 toggle — show aliases ───────────────────────────────
+      var aliasToggle = document.getElementById('show-aliases');
+      if (aliasToggle) {
+        aliasToggle.addEventListener('change', function(){
+          document.body.classList.toggle('show-aliases', aliasToggle.checked);
+        });
+      }
+
+      // ── S4 — Dark/light toggle for component preview ──────────
+      var darkToggle = document.getElementById('dark-toggle');
+      if (darkToggle && TOKENS && TOKENS.colors) {
+        var isDark = false;
+        var c = TOKENS.colors;
+        // Pre-compute dark variants if present in the colors map
+        var darkSurface = c['surface-dark'] || c['background-dark'] || c['bg-dark'] || c.dark || c.void;
+        var darkText = c['text-dark'] || c['foreground-dark'] || c['fg-dark'] || c.cream || c['ivory-light'];
+        var darkCard = c['surface-elevated-dark'] || c['surface-dark'] || c.dark;
+
+        var lightSurface = c.surface || c.background || c.neutral || '#ffffff';
+        var lightText = c.text || c.foreground || c['ink'] || '#111111';
+        var lightCard = c.surface || c['surface-muted'] || c.neutral || '#ffffff';
+
+        function applyTheme(dark) {
+          var stage = document.querySelector('.preview-stage');
+          var hero = document.querySelector('.preview-hero');
+          var cards = document.querySelectorAll('.ds-card, .kpi-tile, .ds-input, .ds-code, .ds-alert');
+          if (!stage) return;
+          var surface = dark ? (darkSurface || '#0a0a0a') : lightSurface;
+          var text = dark ? (darkText || '#f5f4e7') : lightText;
+          var cardBg = dark ? (darkCard || '#181918') : lightCard;
+          stage.style.background = surface;
+          stage.style.color = text;
+          if (hero) { hero.style.background = surface; hero.style.color = text; }
+          cards.forEach(function(card){
+            if (card.classList.contains('ds-input') || card.classList.contains('ds-code') || card.classList.contains('ds-alert')) {
+              card.style.background = cardBg;
+              card.style.color = text;
+            } else {
+              card.style.background = cardBg;
+            }
+          });
+          darkToggle.textContent = dark ? '☀️ light mode' : '🌙 dark mode';
+        }
+
+        // Only show toggle if both light and dark variants exist
+        if (darkSurface && darkText) {
+          darkToggle.style.display = 'inline-flex';
+          darkToggle.addEventListener('click', function(){
+            isDark = !isDark;
+            applyTheme(isDark);
+          });
+        } else {
+          darkToggle.style.display = 'none';
+        }
+      }
+
+      // ── WCAG contrast matrix ────────────────────────────────────
+      function parseColor(s){
+        if (!s) return null;
+        s = String(s).trim();
+        var m;
+        if (m = s.match(/^#([0-9a-f]{3})$/i)) {
+          var c = m[1];
+          return [parseInt(c[0]+c[0],16), parseInt(c[1]+c[1],16), parseInt(c[2]+c[2],16)];
+        }
+        if (m = s.match(/^#([0-9a-f]{6})$/i)) {
+          return [parseInt(m[1].slice(0,2),16), parseInt(m[1].slice(2,4),16), parseInt(m[1].slice(4,6),16)];
+        }
+        if (m = s.match(/^#([0-9a-f]{8})$/i)) {
+          return [parseInt(m[1].slice(0,2),16), parseInt(m[1].slice(2,4),16), parseInt(m[1].slice(4,6),16)];
+        }
+        if (m = s.match(/^rgba?(([^)]+))$/i)) {
+          var parts = m[1].split(/[,s/]+/).map(parseFloat);
+          return [parts[0], parts[1], parts[2]];
+        }
+        return null;
+      }
+      function relLum(rgb){
+        var c = rgb.map(function(v){
+          v = v / 255;
+          return v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4);
+        });
+        return 0.2126*c[0] + 0.7152*c[1] + 0.0722*c[2];
+      }
+      function contrast(a, b){
+        var la = relLum(a), lb = relLum(b);
+        var L1 = Math.max(la, lb), L2 = Math.min(la, lb);
+        return (L1 + 0.05) / (L2 + 0.05);
+      }
+      function classify(r){
+        if (r >= 7) return 'cm-aaa';
+        if (r >= 4.5) return 'cm-aa';
+        return 'cm-fail';
+      }
+
+      function renderMatrix(){
+        var container = document.getElementById('contrast-matrix');
+        if (!COLORS || !COLORS.length) {
+          container.innerHTML = '<p class="empty" style="padding:16px">No colors to compare.</p>';
+          return;
+        }
+
+        // Heuristic split: rows = text candidates (text*, ink, primary-ish),
+        // cols = background candidates (neutral, surface, bg, primary)
+        var textKeys = COLORS.filter(function(c){
+          return /text|ink|primary|secondary|tertiary|fg|foreground/i.test(c.key);
+        });
+        var bgKeys = COLORS.filter(function(c){
+          return /neutral|surface|background|bg|canvas|paper|primary|secondary|accent/i.test(c.key);
+        });
+        if (!textKeys.length) textKeys = COLORS.slice(0, Math.min(8, COLORS.length));
+        if (!bgKeys.length) bgKeys = COLORS.slice(0, Math.min(8, COLORS.length));
+        // cap to 12 each side to keep matrix readable
+        textKeys = textKeys.slice(0, 12);
+        bgKeys = bgKeys.slice(0, 12);
+
+        var html = '<table class="matrix"><thead><tr><th>text \\ bg</th>';
+        bgKeys.forEach(function(b){
+          html += '<th title="' + b.value + '"><div style="width:18px;height:18px;background:' + b.value + ';border:1px solid #999;display:inline-block;vertical-align:middle"></div><br>' + b.key + '</th>';
+        });
+        html += '</tr></thead><tbody>';
+        textKeys.forEach(function(tx){
+          html += '<tr><th title="' + tx.value + '"><div style="width:18px;height:18px;background:' + tx.value + ';border:1px solid #999;display:inline-block;vertical-align:middle"></div> ' + tx.key + '</th>';
+          bgKeys.forEach(function(b){
+            var rgbT = parseColor(tx.value), rgbB = parseColor(b.value);
+            if (!rgbT || !rgbB) {
+              html += '<td class="cm-cell">—</td>';
+              return;
+            }
+            var ratio = contrast(rgbT, rgbB);
+            var cls = classify(ratio);
+            var label = cls === 'cm-aaa' ? 'AAA' : cls === 'cm-aa' ? 'AA' : 'fail';
+            html += '<td class="cm-cell ' + cls + '" title="' + ratio.toFixed(2) + ':1 — ' + label + '">' + ratio.toFixed(2) + '</td>';
+          });
+          html += '</tr>';
+        });
+        html += '</tbody></table>';
+        container.innerHTML = html;
+      }
+      renderMatrix();
+
+      // ── Token exports ───────────────────────────────────────────
+      function flatten(obj, prefix){
+        prefix = prefix || '';
+        var out = [];
+        if (!obj || typeof obj !== 'object') return out;
+        Object.keys(obj).forEach(function(k){
+          var key = prefix ? prefix + '-' + k : k;
+          var v = obj[k];
+          if (v && typeof v === 'object' && !Array.isArray(v)) {
+            out = out.concat(flatten(v, key));
+          } else if (typeof v === 'string' || typeof v === 'number') {
+            out.push({ name: key, value: String(v) });
+          }
+        });
+        return out;
+      }
+
+      function asTailwind(){
+        var c = TOKENS.colors || {};
+        var lines = ['/** @type {import("tailwindcss").Config} */', 'module.exports = {', '  theme: {', '    extend: {', '      colors: ' + JSON.stringify(c, null, 8).replace(/\n/g, '\n      ') + ','];
+        if (TOKENS.spacing) lines.push('      spacing: ' + JSON.stringify(TOKENS.spacing, null, 8).replace(/\n/g, '\n      ') + ',');
+        if (TOKENS.rounded) lines.push('      borderRadius: ' + JSON.stringify(TOKENS.rounded, null, 8).replace(/\n/g, '\n      ') + ',');
+        var fonts = {};
+        Object.keys(TOKENS.typography || {}).forEach(function(name){
+          var spec = TOKENS.typography[name];
+          if (spec && spec.fontFamily) {
+            var fam = String(spec.fontFamily).split(',').map(function(s){ return s.trim().replace(/['"]/g, ''); });
+            fonts[name] = fam;
+          }
+        });
+        if (Object.keys(fonts).length) lines.push('      fontFamily: ' + JSON.stringify(fonts, null, 8).replace(/\n/g, '\n      ') + ',');
+        lines.push('    },', '  },', '};');
+        return lines.join('\n');
+      }
+
+      function asCssVars(){
+        var lines = [':root {'];
+        flatten(TOKENS.colors, 'color').forEach(function(t){ lines.push('  --' + t.name + ': ' + t.value + ';'); });
+        flatten(TOKENS.spacing, 'space').forEach(function(t){ lines.push('  --' + t.name + ': ' + t.value + ';'); });
+        flatten(TOKENS.rounded, 'radius').forEach(function(t){ lines.push('  --' + t.name + ': ' + t.value + ';'); });
+        Object.keys(TOKENS.typography || {}).forEach(function(name){
+          var spec = TOKENS.typography[name] || {};
+          Object.keys(spec).forEach(function(prop){
+            lines.push('  --type-' + name + '-' + prop.replace(/[A-Z]/g, function(m){ return '-' + m.toLowerCase(); }) + ': ' + spec[prop] + ';');
+          });
+        });
+        lines.push('}');
+        return lines.join('\n');
+      }
+
+      function asDtcg(){
+        function bucket(obj, type){
+          var out = {};
+          if (!obj) return out;
+          Object.keys(obj).forEach(function(k){
+            var v = obj[k];
+            if (v && typeof v === 'object' && !Array.isArray(v) && !('value' in v)) {
+              out[k] = bucket(v, type);
+            } else {
+              out[k] = { '$value': v, '$type': type };
+            }
+          });
+          return out;
+        }
+        var dtcg = {};
+        if (TOKENS.colors) dtcg.color = bucket(TOKENS.colors, 'color');
+        if (TOKENS.spacing) dtcg.spacing = bucket(TOKENS.spacing, 'dimension');
+        if (TOKENS.rounded) dtcg.borderRadius = bucket(TOKENS.rounded, 'dimension');
+        if (TOKENS.typography) {
+          dtcg.typography = {};
+          Object.keys(TOKENS.typography).forEach(function(name){
+            dtcg.typography[name] = { '$value': TOKENS.typography[name], '$type': 'typography' };
+          });
+        }
+        return JSON.stringify(dtcg, null, 2);
+      }
+
+      function asStyleDictionary(){
+        function wrap(obj){
+          var out = {};
+          if (!obj) return out;
+          Object.keys(obj).forEach(function(k){
+            var v = obj[k];
+            if (v && typeof v === 'object' && !Array.isArray(v)) {
+              out[k] = wrap(v);
+            } else {
+              out[k] = { value: v };
+            }
+          });
+          return out;
+        }
+        var sd = { color: wrap(TOKENS.colors), size: { spacing: wrap(TOKENS.spacing), radius: wrap(TOKENS.rounded) }, font: wrap(TOKENS.typography) };
+        return JSON.stringify(sd, null, 2);
+      }
+
+      var EXPORTS = {
+        'design-md': function(){ return DESIGN_MD; },
+        'agent-prompt': function(){ return AGENT_PROMPT; },
+        'tailwind': asTailwind,
+        'css-vars': asCssVars,
+        'dtcg': asDtcg,
+        'style-dictionary': asStyleDictionary,
+        'raw-json': function(){ return JSON.stringify(TOKENS, null, 2); },
+      };
+      var EXPORT_LABELS = {
+        'design-md': 'DESIGN.md',
+        'agent-prompt': 'AI agent prompt',
+        'tailwind': 'Tailwind config',
+        'css-vars': 'CSS variables',
+        'dtcg': 'DTCG JSON',
+        'style-dictionary': 'Style Dictionary',
+        'raw-json': 'tokens.json',
+      };
+
+      document.querySelectorAll('[data-export]').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var fmt = btn.getAttribute('data-export');
+          var fn = EXPORTS[fmt];
+          if (!fn) return;
+          var text;
+          try { text = fn(); } catch(err){ showToast('Export failed: ' + err.message); return; }
+          navigator.clipboard.writeText(text).then(function(){
+            showToast('Copied as ' + (EXPORT_LABELS[fmt] || fmt));
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

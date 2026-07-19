@@ -1,0 +1,162 @@
+[
+  {
+    "family": "Archivo",
+    "weight": "500",
+    "style": "normal",
+    "display": "swap",
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "https://fonts.gstatic.com/s/archivo/v19/archivo-500.woff2"
+    ],
+    "src_formats": [
+      "woff2"
+    ],
+    "source_css_url": null,
+    "raw": "@font-face{font-family:'Archivo';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/archivo/v19/archivo-500.woff2) format('woff2')}"
+  },
+  {
+    "family": "Archivo",
+    "weight": "700",
+    "style": "normal",
+    "display": "swap",
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "https://fonts.gstatic.com/s/archivo/v19/archivo-700.woff2"
+    ],
+    "src_formats": [
+      "woff2"
+    ],
+    "source_css_url": null,
+    "raw": "@font-face{font-family:'Archivo';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/archivo/v19/archivo-700.woff2) format('woff2')}"
+  },
+  {
+    "family": "Archivo",
+    "weight": "800",
+    "style": "normal",
+    "display": "swap",
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "https://fonts.gstatic.com/s/archivo/v19/archivo-800.woff2"
+    ],
+    "src_formats": [
+      "woff2"
+    ],
+    "source_css_url": null,
+    "raw": "@font-face{font-family:'Archivo';font-style:normal;font-weight:800;font-display:swap;src:url(https://fonts.gstatic.com/s/archivo/v19/archivo-800.woff2) format('woff2')}"
+  },
+  {
+    "family": "Archivo",
+    "weight": "900",
+    "style": "normal",
+    "display": "swap",
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "https://fonts.gstatic.com/s/archivo/v19/archivo-900.woff2"
+    ],
+    "src_formats": [
+      "woff2"
+    ],
+    "source_css_url": null,
+    "raw": "@font-face{font-family:'Archivo';font-style:normal;font-weight:900;font-display:swap;src:url(https://fonts.gstatic.com/s/archivo/v19/archivo-900.woff2) format('woff2')}"
+  },
+  {
+    "family": "Inter",
+    "weight": "400",
+    "style": "normal",
+    "display": "swap",
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "https://fonts.gstatic.com/s/inter/v13/inter-400.woff2"
+    ],
+    "src_formats": [
+      "woff2"
+    ],
+    "source_css_url": null,
+    "raw": "@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v13/inter-400.woff2) format('woff2')}"
+  },
+  {
+    "family": "Inter",
+    "weight": "500",
+    "style": "normal",
+    "display": "swap",
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "https://fonts.gstatic.com/s/inter/v13/inter-500.woff2"
+    ],
+    "src_formats": [
+      "woff2"
+    ],
+    "source_css_url": null,
+    "raw": "@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v13/inter-500.woff2) format('woff2')}"
+  },
+  {
+    "family": "Inter",
+    "weight": "600",
+    "style": "normal",
+    "display": "swap",
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "https://fonts.gstatic.com/s/inter/v13/inter-600.woff2"
+    ],
+    "src_formats": [
+      "woff2"
+    ],
+    "source_css_url": null,
+    "raw": "@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v13/inter-600.woff2) format('woff2')}"
+  },
+  {
+    "family": "JetBrains Mono",
+    "weight": "400",
+    "style": "normal",
+    "display": "swap",
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "https://fonts.gstatic.com/s/jetbrainsmono/v18/jbm-400.woff2"
+    ],
+    "src_formats": [
+      "woff2"
+    ],
+    "source_css_url": null,
+    "raw": "@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/jetbrainsmono/v18/jbm-400.woff2) format('woff2')}"
+  },
+  {
+    "family": "JetBrains Mono",
+    "weight": "500",
+    "style": "normal",
+    "display": "swap",
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "https://fonts.gstatic.com/s/jetbrainsmono/v18/jbm-500.woff2"
+    ],
+    "src_formats": [
+      "woff2"
+    ],
+    "source_css_url": null,
+    "raw": "@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/jetbrainsmono/v18/jbm-500.woff2) format('woff2')}"
+  },
+  {
+    "family": "JetBrains Mono",
+    "weight": "600",
+    "style": "normal",
+    "display": "swap",
+    "stretch": null,
+    "unicode_range": null,
+    "src_urls": [
+      "https://fonts.gstatic.com/s/jetbrainsmono/v18/jbm-600.woff2"
+    ],
+    "src_formats": [
+      "woff2"
+    ],
+    "source_css_url": null,
+    "raw": "@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/jetbrainsmono/v18/jbm-600.woff2) format('woff2')}"
+  }
+]

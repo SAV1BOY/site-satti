@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#F7F8FA; }
+  body { font-family:'Inter',sans-serif; color:#15171B; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#FFE9DE; }
+  @keyframes marquee { to { transform:translateX(-50%); } }
+</style>
+</helmet>
+
+<div style="background:#F7F8FA; color:#15171B; min-height:100vh">
+
+  <div style="padding:48px 120px; display:flex; justify-content:space-between; align-items:baseline">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">S3 — ValuesStrip · Var B (circuit)</div>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Full-bleed · 280px · marquee 20s linear</div>
+  </div>
+
+  <section data-screen-label="S3 ValuesStrip Var B" style="border-top:1px solid #E3E6EB; border-bottom:1px solid #E3E6EB; height:280px; display:flex; align-items:center; overflow:hidden; background:#2F6BFF">
+    <div style="display:flex; white-space:nowrap; will-change:transform; animation:marquee 20s linear infinite; animation-play-state: {{ play }}">
+      <div style="display:flex; align-items:baseline; gap:56px; flex:none; padding-right:56px; font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; font-size:118px; line-height:1; letter-spacing:-0.015em; color:#F7F8FA">
+        <span>IA aplicada</span>
+        <span style="color:rgba(247,248,250,0.55)">·</span>
+        <span>automação real</span>
+        <span style="color:rgba(247,248,250,0.55)">·</span>
+        <span>resultado mensurável</span>
+        <span style="color:rgba(247,248,250,0.55)">·</span>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:56px; flex:none; padding-right:56px; font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; font-size:118px; line-height:1; letter-spacing:-0.015em; color:#F7F8FA">
+        <span>IA aplicada</span>
+        <span style="color:rgba(247,248,250,0.55)">·</span>
+        <span>automação real</span>
+        <span style="color:rgba(247,248,250,0.55)">·</span>
+        <span>resultado mensurável</span>
+        <span style="color:rgba(247,248,250,0.55)">·</span>
+      </div>
+    </div>
+  </section>
+
+  <div style="padding:40px 120px; display:flex; align-items:flex-start; gap:12px">
+    <span style="width:6px; height:6px; background:#15171B; display:inline-block; margin-top:5px"></span>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.8; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Marquee 20s linear · Reduced-motion: pausado, frase fixa. Fundo --c-circuit #2F6BFF, texto paper — exceção única literal da referência; sem blaze.</span>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { rm: false };
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._onMq = (ev) => this.setState({ rm: ev.matches });
+    this.setState({ rm: this._mq.matches });
+    this._mq.addEventListener('change', this._onMq);
+  }
+
+  componentWillUnmount() {
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
+  }
+
+  renderVals() {
+    return { play: this.state.rm ? 'paused' : 'running' };
+  }
+}
+</script>
+</body>
+</html>

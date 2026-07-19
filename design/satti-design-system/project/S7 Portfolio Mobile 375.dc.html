@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#F7F8FA; }
+  body { font-family:'Inter',sans-serif; color:#15171B; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#FFE9DE; }
+</style>
+</helmet>
+
+<div style="background:#F7F8FA; color:#15171B; max-width:375px; margin:0 auto; min-height:100vh">
+
+  <section data-screen-label="S7 Portfólio Mobile" style="padding:40px 20px 48px">
+
+    <!-- Eyebrow -->
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px">
+      <span style="width:8px; height:8px; background:#FF4D00; display:inline-block; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">03 — Portfólio</span>
+    </div>
+    <h2 style="margin:0 0 36px; font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; font-size:34px; line-height:1.04; letter-spacing:-0.01em; max-width:16ch">Cases que rodam em produção</h2>
+
+    <!-- Work-cards empilhados, 1 por linha, 520px -->
+    <div style="display:flex; flex-direction:column; gap:20px">
+      <sc-for list="{{ cards }}" as="c" hint-placeholder-count="6">
+        <div style="height:520px; border-radius:24px; border:1px solid #E3E6EB; background:#F7F8FA; padding:16px; box-sizing:border-box; display:flex; flex-direction:column; gap:0; position:relative; overflow:hidden">
+          <div style="flex:1; border-radius:16px; background:#ECEEF2; overflow:hidden; position:relative; display:flex; align-items:center; justify-content:center; background-image:linear-gradient(#E0E4EA 1px, transparent 1px), linear-gradient(90deg, #E0E4EA 1px, transparent 1px); background-size:32px 32px">
+            <span style="width:36px; height:36px; position:relative; display:block">
+              <span style="position:absolute; left:0; right:0; top:50%; height:1px; background:#9AA3B2"></span>
+              <span style="position:absolute; top:0; bottom:0; left:50%; width:1px; background:#9AA3B2"></span>
+            </span>
+            <span style="position:absolute; bottom:14px; left:16px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">{{ c.thumb }}</span>
+          </div>
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:14px; padding:18px 8px 8px">
+            <div style="display:flex; flex-direction:column; gap:8px">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">{{ c.tag }}</span>
+              <h3 style="margin:0; font-family:'Archivo',sans-serif; font-weight:700; text-transform:uppercase; font-size:21px; line-height:1.12; color: {{ c.titleColor }}">{{ c.title }}</h3>
+            </div>
+            <span style="width:40px; height:40px; flex:none; border-radius:999px; border:1px solid #E3E6EB; display:flex; align-items:center; justify-content:center; font-size:15px; color:#15171B">→</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- Âncora -->
+    <a style="display:flex; align-items:center; justify-content:center; gap:12px; margin-top:32px; border:1px solid #E3E6EB; background:transparent; color:#15171B; border-radius:999px; padding:16px 28px; font-family:'Inter',sans-serif; font-weight:500; font-size:15px; cursor:pointer; text-decoration:none">
+      Ver todos os cases
+      <span style="font-size:15px">→</span>
+    </a>
+
+  </section>
+
+  <!-- Specs -->
+  <section data-screen-label="Specs S7 Mobile" style="border-top:1px solid #E3E6EB; padding:28px 20px; display:flex; flex-direction:column; gap:20px">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">Specs — S7 Mobile</div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#FF4D00; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Motion: toque/hover do card = glow blaze blur 90px subindo + info-pill. No mobile o destaque é por toque.</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#15171B; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Reduced-motion: sem scale/glow. Cards estáticos empilhados.</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#15171B; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Blaze: reservado ao glow no toque (1 card por vez). Mobile: 720px → 520px, 1 card por linha. 6º case = [CONFIRMAR].</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px; margin-top:4px">
+      <span style="width:6px; height:6px; background: {{ rmDot }}; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Estado: {{ rmLabel }}</span>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 375, &quot;height&quot;: 1600}}">
+class Component extends DCLogic {
+  state = { rm: false };
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._onMq = (ev) => this.setState({ rm: ev.matches });
+    this.setState({ rm: this._mq.matches });
+    this._mq.addEventListener('change', this._onMq);
+  }
+
+  componentWillUnmount() {
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
+  }
+
+  renderVals() {
+    const cards = [
+      { title: 'CallAudit — auditoria de calls com IA', tag: 'IA · Voz', thumb: '[ WK-1 · 16:9 ]', titleColor: '#15171B' },
+      { title: 'Expediting Tracker — PCP em tempo real', tag: 'Dados · Produto', thumb: '[ WK-2 · 16:9 ]', titleColor: '#15171B' },
+      { title: 'Portal Comercial — System Digital', tag: 'Web · SaaS', thumb: '[ WK-3 · 16:9 ]', titleColor: '#15171B' },
+      { title: 'Funil quiz — proteção patrimonial', tag: 'Web · Conversão', thumb: '[ WK-4 · 16:9 ]', titleColor: '#15171B' },
+      { title: 'Pipeline de reels com IA — LS Interbank', tag: 'IA · Automação', thumb: '[ WK-5 · 16:9 ]', titleColor: '#15171B' },
+      { title: '[CONFIRMAR 6º projeto público]', tag: '[CONFIRMAR]', thumb: '[ WK-6 · 16:9 ]', titleColor: '#6E7480' }
+    ];
+    return {
+      cards,
+      rmDot: this.state.rm ? '#15171B' : '#FF4D00',
+      rmLabel: this.state.rm ? 'reduced-motion' : 'motion on'
+    };
+  }
+}
+</script>
+</body>
+</html>

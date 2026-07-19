@@ -1,0 +1,50 @@
+/* ============================================================
+   SATTI — animações base (L10: só transform/opacity, --ease)
+   Toda animação vive dentro de prefers-reduced-motion:
+   no-preference; o estado reduced = estado das comps (L5).
+   As 11 assinaturas completas entram no W2 a partir das comps.
+   ============================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Marquee CSS-only (cópia aria-hidden duplica o trilho) */
+  @keyframes satti-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* Float dos phones (S6): 6s, ±3px */
+  @keyframes satti-float {
+    0%, 100% { transform: translateY(-3px); }
+    50%      { transform: translateY(3px); }
+  }
+
+  /* Respiração de imagem (S4): scale 1 → 1.2, 4s alternate */
+  @keyframes satti-breathe {
+    from { transform: scale(1); }
+    to   { transform: scale(1.2); }
+  }
+
+  /* Pulso discreto dos anéis (PulseCircle): 2s alternate */
+  @keyframes satti-ring-pulse {
+    from { opacity: 0.4; transform: scale(1); }
+    to   { opacity: 1;   transform: scale(1.04); }
+  }
+
+  /* Caret do typewriter (blaze do viewport do hero) */
+  @keyframes satti-caret {
+    0%, 45%  { opacity: 1; }
+    50%, 95% { opacity: 0; }
+    100%     { opacity: 1; }
+  }
+
+  /* Fade-rise de entrada em viewport (IO adiciona .is-inview) */
+  .anim-rise {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  }
+  .anim-rise.is-inview {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#0F1115; }
+  body { font-family:'Inter',sans-serif; color:#F4F5F7; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#FF4D00; color:#15171B; }
+</style>
+</helmet>
+
+<div style="background:#0F1115; color:#F4F5F7; min-height:100vh; position:relative">
+
+  <section data-screen-label="S11 Footer" style="padding:96px 348px 56px 120px; position:relative; min-height:100vh; box-sizing:border-box; display:flex; flex-direction:column">
+
+    <!-- Eyebrow -->
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:48px">
+      <span style="width:8px; height:8px; background:#FF4D00; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">06 — Contato</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:96px; flex:1">
+
+      <!-- Esquerda: form nativo com 4 estados -->
+      <div style="display:flex; flex-direction:column; gap:32px">
+        <h2 style="margin:0; font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(2.5rem, 4.5vw, 4rem); line-height:1.02; letter-spacing:-0.01em; max-width:14ch">Vamos construir<br>a sua máquina</h2>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:760px">
+          <!-- Nome (default) -->
+          <div style="display:flex; flex-direction:column; gap:10px">
+            <label style="font-size:14px; font-weight:500; color:#F4F5F7">Nome</label>
+            <div style="height:54px; border-radius:12px; border:1px solid #E3E6EB; background:transparent; display:flex; align-items:center; padding:0 18px; box-sizing:border-box">
+              <span style="font-size:15px; color:#6E7480">Seu nome</span>
+            </div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Default · line #E3E6EB</div>
+          </div>
+          <!-- E-mail (focus) -->
+          <div style="display:flex; flex-direction:column; gap:10px">
+            <label style="font-size:14px; font-weight:500; color:#F4F5F7">E-mail</label>
+            <div style="height:54px; border-radius:12px; border:1px solid #2F6BFF; box-shadow:0 0 0 3px rgba(47,107,255,0.28); background:transparent; display:flex; align-items:center; padding:0 18px; box-sizing:border-box">
+              <span style="font-size:15px; color:#F4F5F7">ana</span>
+              <span style="width:1.5px; height:20px; background:#F4F5F7; margin-left:2px"></span>
+            </div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Focus · ring circuit #2F6BFF</div>
+          </div>
+          <!-- Mensagem (erro) -->
+          <div style="display:flex; flex-direction:column; gap:10px">
+            <label style="font-size:14px; font-weight:500; color:#F4F5F7">Mensagem</label>
+            <div style="height:54px; border-radius:12px; border:1px solid #B43A2F; background:transparent; display:flex; align-items:center; padding:0 18px; box-sizing:border-box">
+              <span style="font-size:15px; color:#F4F5F7">Conta um pouco</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; color:#B43A2F">
+              <span style="font-size:13px">⚠</span>
+              <span style="font-size:13px">[CONFIRMAR mensagem de erro]</span>
+            </div>
+          </div>
+          <!-- Mensagem (sucesso) -->
+          <div style="display:flex; flex-direction:column; gap:10px">
+            <label style="font-size:14px; font-weight:500; color:#F4F5F7">E-mail</label>
+            <div style="height:54px; border-radius:12px; border:1px solid #15794B; background:transparent; display:flex; align-items:center; justify-content:space-between; padding:0 18px; box-sizing:border-box">
+              <span style="font-size:15px; color:#F4F5F7"><span>ana</span><span>&#64;</span><span>estudio.com.br</span></span>
+              <span style="color:#15794B; font-size:16px">✓</span>
+            </div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Sucesso · success #15794B</div>
+          </div>
+        </div>
+
+        <button style="align-self:flex-start; border:0; background:#FF4D00; color:#15171B; border-radius:999px; padding:18px 40px; font-family:'Inter',sans-serif; font-weight:600; font-size:16px; cursor:pointer">Enviar</button>
+      </div>
+
+      <!-- Direita: nav, logo, sociais -->
+      <div style="display:flex; flex-direction:column; gap:48px; border-left:1px solid #1E2127; padding-left:64px">
+        <div style="font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; font-size:32px; letter-spacing:-0.01em; color:#F4F5F7">SATTI</div>
+
+        <div style="display:flex; gap:64px">
+          <div style="display:flex; flex-direction:column; gap:16px">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Navegação</span>
+            <a style="font-size:16px; color:#F4F5F7; text-decoration:none; cursor:pointer">Início</a>
+            <a style="font-size:16px; color:#F4F5F7; text-decoration:none; cursor:pointer">Serviços</a>
+            <a style="font-size:16px; color:#F4F5F7; text-decoration:none; cursor:pointer">Sobre</a>
+            <a style="font-size:16px; color:#F4F5F7; text-decoration:none; cursor:pointer">Automação</a>
+            <a style="font-size:16px; color:#F4F5F7; text-decoration:none; cursor:pointer">Portfólio</a>
+            <a style="font-size:16px; color:#F4F5F7; text-decoration:none; cursor:pointer">Contato</a>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:16px">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Social</span>
+            <a style="font-size:16px; color:#F4F5F7; text-decoration:none; cursor:pointer">[CONFIRMAR handle LinkedIn]</a>
+            <a style="font-size:16px; color:#F4F5F7; text-decoration:none; cursor:pointer">[CONFIRMAR handle Instagram]</a>
+          </div>
+        </div>
+
+        <div style="margin-top:auto; display:flex; flex-direction:column; gap:6px">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">SATTI · IA &amp; Automação</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Nova Lima — MG</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Linha de Automação separadora -->
+    <svg viewBox="0 0 1450 40" preserveAspectRatio="none" style="width:100%; height:40px; margin-top:48px; overflow:visible" role="img" aria-label="Linha de automação">
+      <path d="M0,20 L1450,20" style="fill:none; stroke:#1E2127; stroke-width:1.5"></path>
+      {{ pulse }}
+      <circle cx="200" cy="20" r="7" style="fill:#0F1115; stroke:#2E333B; stroke-width:1.5"></circle>
+      <circle cx="200" cy="20" r="2.5" style="fill:#6E7480"></circle>
+      <circle cx="725" cy="20" r="7" style="fill:#0F1115; stroke:#2E333B; stroke-width:1.5"></circle>
+      <circle cx="725" cy="20" r="2.5" style="fill:#6E7480"></circle>
+      <circle cx="1250" cy="20" r="7" style="fill:#0F1115; stroke:#2E333B; stroke-width:1.5"></circle>
+      <circle cx="1250" cy="20" r="2.5" style="fill:#6E7480"></circle>
+    </svg>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:28px">
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">© [CONFIRMAR ano] SATTI</span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Feito com engenharia</span>
+    </div>
+
+  </section>
+
+  <!-- Camada lateral de specs -->
+  <aside style="position:fixed; top:0; right:0; width:300px; height:100vh; border-left:1px solid #1E2127; background:rgba(15,17,21,0.86); backdrop-filter:blur(6px); padding:32px 28px; box-sizing:border-box; display:flex; flex-direction:column; gap:22px; z-index:20">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#F4F5F7">Specs — S11</div>
+    <div style="height:1px; background:#1E2127"></div>
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#FF4D00">Motion</div>
+      <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Pulso blaze atravessa a Linha de Automação separadora (6s). Inputs: transições de foco 0.2s.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#F4F5F7">Reduced-motion</div>
+      <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Linha 100% desenhada sem pulso. Estados de input estáticos lado a lado.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:6px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#F4F5F7">Blaze</div>
+      <p style="margin:0; font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Único destaque = botão Enviar (blaze, texto preto). Erro/sucesso usam error/success só em texto+borda+ícone. Circuit = foco.</p>
+    </div>
+    <div style="margin-top:auto; display:flex; align-items:center; gap:8px">
+      <span style="width:6px; height:6px; background: {{ rmDot }}; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Estado: {{ rmLabel }}</span>
+    </div>
+  </aside>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1920, &quot;height&quot;: 1080}}">
+class Component extends DCLogic {
+  state = { rm: false };
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._onMq = (ev) => this.setState({ rm: ev.matches });
+    this.setState({ rm: this._mq.matches });
+    this._mq.addEventListener('change', this._onMq);
+  }
+
+  componentWillUnmount() {
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
+  }
+
+  renderVals() {
+    const e = React.createElement;
+    const rm = this.state.rm;
+    let pulse = null;
+    if (!rm) {
+      const motion = () => e('animateMotion', {
+        dur: '6s', repeatCount: 'indefinite', path: 'M0,20 L1450,20',
+        keyTimes: '0;1', calcMode: 'spline', keySplines: '0.4 0 0.6 1'
+      });
+      pulse = e('g', null,
+        e('circle', { r: 9, fill: '#FF4D00', opacity: 0.16 }, motion()),
+        e('circle', { r: 4, fill: '#FF4D00' }, motion())
+      );
+    }
+    return {
+      pulse,
+      rmDot: rm ? '#F4F5F7' : '#FF4D00',
+      rmLabel: rm ? 'reduced-motion' : 'motion on'
+    };
+  }
+}
+</script>
+</body>
+</html>

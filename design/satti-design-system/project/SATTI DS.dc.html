@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#F7F8FA; }
+  body { font-family:'Inter',sans-serif; color:#15171B; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#FFE9DE; }
+</style>
+</helmet>
+
+<div style="background:#F7F8FA; color:#15171B; min-height:100vh">
+
+  <!-- ====================== 1 · CABEÇALHO DS ====================== -->
+  <section data-screen-label="Cabeçalho DS" style="padding:104px 120px 96px">
+    <div style="display:flex; align-items:center; gap:14px">
+      <span style="width:8px; height:8px; background:#FF4D00; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">SATTI · DESIGN SYSTEM v1</span>
+    </div>
+    <h1 style="margin:36px 0 0; font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; font-size:clamp(64px, 7.5vw, 140px); line-height:0.95; letter-spacing:-0.015em; color:#15171B">Fundação Visual</h1>
+    <p style="margin:28px 0 0; font-size:20px; line-height:1.5; color:#6E7480; max-width:560px">Precisão de engenharia que pulsa.</p>
+  </section>
+
+  <!-- ====================== 2 · PALETA ====================== -->
+  <section data-screen-label="Paleta" style="padding:88px 120px; border-top:1px solid #E3E6EB">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:56px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">01 — Paleta</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">9 tokens · 60/30/10</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 380px; gap:56px; align-items:start">
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px">
+
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <div style="height:112px; border-radius:12px; background:#F7F8FA; border:1px solid #E3E6EB"></div>
+          <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase"><span style="color:#15171B">--c-paper</span><span style="color:#6E7480">#F7F8FA</span></div>
+          <div style="font-size:13px; color:#6E7480">Fundo base</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <div style="height:112px; border-radius:12px; background:#15171B"></div>
+          <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase"><span style="color:#15171B">--c-iron</span><span style="color:#6E7480">#15171B</span></div>
+          <div style="font-size:13px; color:#6E7480">Texto / ink</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <div style="height:112px; border-radius:12px; background:#0F1115"></div>
+          <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase"><span style="color:#15171B">--c-graphite</span><span style="color:#6E7480">#0F1115</span></div>
+          <div style="font-size:13px; color:#6E7480">Seções dark</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <div style="height:112px; border-radius:12px; background:#6E7480"></div>
+          <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase"><span style="color:#15171B">--c-steel</span><span style="color:#6E7480">#6E7480</span></div>
+          <div style="font-size:13px; color:#6E7480">Texto secundário / eyebrows</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <div style="height:112px; border-radius:12px; background:#FF4D00"></div>
+          <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase"><span style="color:#15171B">--c-blaze</span><span style="color:#6E7480">#FF4D00</span></div>
+          <div style="font-size:13px; color:#6E7480">Acento primário — raro</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <div style="height:112px; border-radius:12px; background:#2F6BFF"></div>
+          <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase"><span style="color:#15171B">--c-circuit</span><span style="color:#6E7480">#2F6BFF</span></div>
+          <div style="font-size:13px; color:#6E7480">Só funcional: links · diagrama · focus</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <div style="height:112px; border-radius:12px; background:#FFE9DE; border:1px solid #E3E6EB"></div>
+          <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase"><span style="color:#15171B">--c-blaze-soft</span><span style="color:#6E7480">#FFE9DE</span></div>
+          <div style="font-size:13px; color:#6E7480">Tint do acento</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <div style="height:112px; border-radius:12px; background:#E3E6EB"></div>
+          <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase"><span style="color:#15171B">--c-line</span><span style="color:#6E7480">#E3E6EB</span></div>
+          <div style="font-size:13px; color:#6E7480">Hairlines</div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <div style="height:112px; border-radius:12px; background:#F4F5F7; border:1px solid #E3E6EB"></div>
+          <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase"><span style="color:#15171B">--c-ink-on-dark</span><span style="color:#6E7480">#F4F5F7</span></div>
+          <div style="font-size:13px; color:#6E7480">Texto sobre graphite</div>
+        </div>
+
+      </div>
+
+      <div style="border:1px solid #E3E6EB; border-radius:12px; padding:32px; display:flex; flex-direction:column; gap:24px">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Regra de uso</div>
+        <p style="margin:0; font-size:15px; line-height:1.6; color:#15171B">60% paper/neutros · 30% iron/graphite · 10% blaze. Blaze sempre com texto preto sobre ele.</p>
+        <div style="display:flex; flex-direction:column; gap:10px">
+          <div style="display:flex; height:14px; border-radius:999px; overflow:hidden; border:1px solid #E3E6EB">
+            <div style="width:60%; background:#F7F8FA; border-right:1px solid #E3E6EB"></div>
+            <div style="width:30%; background:#15171B"></div>
+            <div style="width:10%; background:#FF4D00"></div>
+          </div>
+          <div style="display:flex; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">
+            <span style="width:60%">60 paper</span>
+            <span style="width:30%">30 iron</span>
+            <span style="width:10%">10</span>
+          </div>
+        </div>
+        <div style="background:#FFE9DE; border-radius:8px; padding:14px 18px; display:flex; align-items:center; gap:12px">
+          <span style="width:6px; height:6px; background:#FF4D00; display:inline-block"></span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">Blaze é raro e caro</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== 3 · TIPOGRAFIA ====================== -->
+  <section data-screen-label="Tipografia" style="padding:88px 120px; border-top:1px solid #E3E6EB">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:24px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">02 — Tipografia / Type scale</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Archivo · Inter · JetBrains Mono</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:320px 1fr; gap:48px; align-items:end; padding:40px 0; border-top:1px solid #E3E6EB">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.8; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Display<br>Archivo 900 · caps<br>clamp(3rem, 13vw, 10.5rem) · LH 0.92</div>
+      <div style="font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; font-size:clamp(3rem, 13vw, 10.5rem); line-height:0.92; letter-spacing:-0.02em">SATTI</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:320px 1fr; gap:48px; align-items:end; padding:40px 0; border-top:1px solid #E3E6EB">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.8; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Statement<br>Archivo 800 · caps<br>clamp(2.5rem, 7.5vw, 5.25rem)</div>
+      <div style="font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; font-size:clamp(2.5rem, 7.5vw, 5.25rem); line-height:1.02; letter-spacing:-0.01em">Engenharia que se prova</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:320px 1fr; gap:48px; align-items:end; padding:40px 0; border-top:1px solid #E3E6EB">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.8; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">H2<br>Archivo 700 · caps · 2.5rem</div>
+      <div style="font-family:'Archivo',sans-serif; font-weight:700; text-transform:uppercase; font-size:2.5rem; line-height:1.1">Título de seção</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:320px 1fr; gap:48px; align-items:start; padding:40px 0; border-top:1px solid #E3E6EB">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.8; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Body<br>Inter 400 · 1rem · LH 1.6</div>
+      <p style="margin:0; font-size:1rem; line-height:1.6; max-width:640px; color:#15171B">Texto corrido em Inter para descrições, parágrafos e interface. Leitura confortável sobre paper, sempre em iron ou steel — nunca sobre blaze em longos trechos.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:320px 1fr; gap:48px; align-items:center; padding:40px 0 0; border-top:1px solid #E3E6EB">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.8; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Eyebrow<br>JetBrains Mono 500 · 0.875rem · caps · +0.08em</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-weight:500; font-size:0.875rem; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">01 — Serviços</div>
+    </div>
+  </section>
+
+  <!-- ====================== 4 · BOTÕES ====================== -->
+  <section data-screen-label="Botões" style="padding:88px 120px; border-top:1px solid #E3E6EB">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:56px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">03 — Botões</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Hover roll · focus ring · círculo+seta</div>
+    </div>
+
+    <div style="display:flex; gap:72px; align-items:flex-start; flex-wrap:wrap">
+
+      <div style="display:flex; flex-direction:column; gap:20px; align-items:flex-start">
+        <button onMouseEnter="{{ enterP }}" onMouseLeave="{{ leaveP }}" style="border:0; background:#FF4D00; color:#15171B; border-radius:999px; padding:18px 36px; font-family:'Inter',sans-serif; font-weight:600; font-size:16px; cursor:pointer">
+          <span style="display:block; overflow:hidden; height:24px">
+            <span style="display:block; transform: {{ rollP }}; transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1)">
+              <span style="display:block; height:24px; line-height:24px">Falar com a SATTI</span>
+              <span style="display:block; height:24px; line-height:24px">Falar com a SATTI</span>
+            </span>
+          </span>
+        </button>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Primário · blaze · texto preto</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:20px; align-items:flex-start">
+        <button onMouseEnter="{{ enterG }}" onMouseLeave="{{ leaveG }}" style="background:transparent; border:1px solid #E3E6EB; color:#15171B; border-radius:999px; padding:17px 36px; font-family:'Inter',sans-serif; font-weight:500; font-size:16px; cursor:pointer">
+          <span style="display:block; overflow:hidden; height:24px">
+            <span style="display:block; transform: {{ rollG }}; transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1)">
+              <span style="display:block; height:24px; line-height:24px">Ver portfólio</span>
+              <span style="display:block; height:24px; line-height:24px">Ver portfólio</span>
+            </span>
+          </span>
+        </button>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Ghost · hairline</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:20px; align-items:flex-start">
+        <button style="background:transparent; border:1px solid #E3E6EB; color:#15171B; border-radius:999px; padding:17px 36px; font-family:'Inter',sans-serif; font-weight:500; font-size:16px; box-shadow:0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF; cursor:pointer">
+          <span style="display:block; height:24px; line-height:24px">Ver portfólio</span>
+        </button>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Focus · ring 2px #2F6BFF</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:20px; align-items:flex-start">
+        <button onMouseEnter="{{ enterC }}" onMouseLeave="{{ leaveC }}" style="width:64px; height:64px; border-radius:999px; border:1px solid #E3E6EB; background: {{ circleBg }}; position:relative; overflow:hidden; cursor:pointer; transition: background 0.35s ease; padding:0">
+          <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:22px; color: {{ circleColor }}; transform: {{ arrA }}; transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1), color 0.35s ease">→</span>
+          <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:22px; color: {{ circleColor }}; transform: {{ arrB }}; transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1), color 0.35s ease">→</span>
+        </button>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Círculo + seta · hover</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:12px; max-width:280px; border-left:1px solid #E3E6EB; padding-left:32px">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#FF4D00">↑ Hover "roll"</div>
+        <p style="margin:0; font-size:13px; line-height:1.6; color:#6E7480">No hover, o texto duplicado sobe dentro da máscara do botão. Curva: cubic-bezier(0.76, 0, 0.24, 1) · 450ms.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================== 5 · TAGS MONO ====================== -->
+  <section data-screen-label="Tags mono" style="padding:88px 120px; border-top:1px solid #E3E6EB">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:48px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">04 — Tags mono</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Hairline · r999 · grafia oficial das marcas</div>
+    </div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap">
+      <span style="border:1px solid #E3E6EB; border-radius:999px; padding:10px 20px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">n8n</span>
+      <span style="border:1px solid #E3E6EB; border-radius:999px; padding:10px 20px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">Evolution API</span>
+      <span style="border:1px solid #E3E6EB; border-radius:999px; padding:10px 20px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">Claude / GPT</span>
+      <span style="border:1px solid #E3E6EB; border-radius:999px; padding:10px 20px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">Python</span>
+      <span style="border:1px solid #E3E6EB; border-radius:999px; padding:10px 20px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">Next.js</span>
+      <span style="border:1px solid #E3E6EB; border-radius:999px; padding:10px 20px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">Supabase</span>
+      <span style="border:1px solid #E3E6EB; border-radius:999px; padding:10px 20px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">PostgreSQL</span>
+      <span style="border:1px solid #E3E6EB; border-radius:999px; padding:10px 20px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#15171B">Vercel</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; margin-top:32px">
+      <span style="width:6px; height:6px; background:#FF4D00; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Exceção única: nomes de marca em grafia oficial, sem caps — caps + tracking +0.08em valem em todo o resto do mono</span>
+    </div>
+  </section>
+
+  <!-- ====================== 6 · CARDS ====================== -->
+  <section data-screen-label="Cards" style="padding:88px 120px; border-top:1px solid #E3E6EB">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:56px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">05 — Cards</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Radius 28 · profundidade por hairline + glow</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:24px">
+
+      <div style="display:flex; flex-direction:column; gap:20px">
+        <div style="border:1px solid #E3E6EB; border-radius:28px; background:#F7F8FA; padding:36px; min-height:380px; display:flex; flex-direction:column; gap:16px; box-sizing:border-box">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Eyebrow do card</div>
+          <div style="font-family:'Archivo',sans-serif; font-weight:700; text-transform:uppercase; font-size:26px; line-height:1.15">Título do card</div>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:#6E7480; max-width:36ch">Card base: fundo paper, hairline 1px, radius 28. Sem sombra — a profundidade vem da linha.</p>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Card base · R28 · hairline</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:20px">
+        <div style="border:1px solid #E3E6EB; border-radius:28px; background:#F7F8FA; padding:36px; min-height:380px; position:relative; display:flex; flex-direction:column; justify-content:flex-end; gap:8px; box-sizing:border-box">
+          <div style="position:absolute; top:28px; right:28px; width:96px; height:96px; background:#ECEEF2; border-radius:12px; display:flex; align-items:center; justify-content:center; background-image:linear-gradient(#E0E4EA 1px, transparent 1px), linear-gradient(90deg, #E0E4EA 1px, transparent 1px); background-size:24px 24px">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; color:#6E7480">[1:1]</span>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace; font-weight:500; font-size:88px; line-height:1; letter-spacing:-0.04em; color:#15171B">128</div>
+          <div style="font-size:15px; color:#6E7480">Label da métrica — Inter 15px</div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Stat-card · R28 · nº mono + slot 1:1</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:20px">
+        <div style="border-radius:28px; background:#0F1115; min-height:380px; position:relative; overflow:hidden; padding:16px; display:flex; flex-direction:column; box-sizing:border-box">
+          <div style="position:relative; z-index:1; aspect-ratio:16/9; border-radius:16px; background:rgba(244,245,247,0.05); border:1px solid rgba(244,245,247,0.1); display:flex; align-items:center; justify-content:center">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(244,245,247,0.45)">[ A1 · 16:9 ]</span>
+          </div>
+          <div style="position:absolute; bottom:-130px; left:12%; width:76%; height:190px; background:#FF4D00; filter:blur(90px); opacity:0.8"></div>
+          <div style="position:absolute; z-index:2; bottom:24px; left:24px; display:inline-flex; align-items:center; gap:12px; background:#F4F5F7; color:#15171B; border-radius:999px; padding:11px 20px">
+            <span style="font-size:14px; font-weight:600">Nome do projeto</span>
+            <span style="font-size:15px">→</span>
+          </div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Work-card · R28 · glow blaze blur 90 · info-pill</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================== 7 · INPUTS ====================== -->
+  <section data-screen-label="Inputs do form" style="padding:88px 120px; border-top:1px solid #E3E6EB">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:56px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">06 — Inputs do form</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">4 estados · tokens de feedback AA</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:24px; align-items:start">
+
+      <div style="display:flex; flex-direction:column; gap:10px">
+        <label style="font-size:14px; font-weight:500; color:#15171B">Nome</label>
+        <div style="height:54px; border-radius:12px; border:1px solid #E3E6EB; background:#F7F8FA; display:flex; align-items:center; padding:0 18px; box-sizing:border-box">
+          <span style="font-size:15px; color:#6E7480">Seu nome</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480; margin-top:8px">Default · #E3E6EB</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px">
+        <label style="font-size:14px; font-weight:500; color:#15171B">Nome</label>
+        <div style="height:54px; border-radius:12px; border:1px solid #2F6BFF; box-shadow:0 0 0 3px rgba(47,107,255,0.18); background:#F7F8FA; display:flex; align-items:center; padding:0 18px; box-sizing:border-box">
+          <span style="font-size:15px; color:#15171B">Ana</span>
+          <span style="width:1.5px; height:20px; background:#15171B; margin-left:2px"></span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480; margin-top:8px">Focus · ring #2F6BFF</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px">
+        <label style="font-size:14px; font-weight:500; color:#15171B">E-mail</label>
+        <div style="height:54px; border-radius:12px; border:1px solid #B43A2F; background:#F7F8FA; display:flex; align-items:center; padding:0 18px; box-sizing:border-box">
+          <span style="font-size:15px; color:#15171B">ana@</span>
+        </div>
+        <div style="font-size:13px; color:#B43A2F">Informe um e-mail válido.</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480; margin-top:2px">Erro · --c-error #B43A2F · 5.51:1 AA</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px">
+        <label style="font-size:14px; font-weight:500; color:#15171B">E-mail</label>
+        <div style="height:54px; border-radius:12px; border:1px solid #15794B; background:#F7F8FA; display:flex; align-items:center; justify-content:space-between; padding:0 18px; box-sizing:border-box">
+          <span style="font-size:15px; color:#15171B"><span>ana</span><span>&#64;</span><span>estudio.com.br</span></span>
+          <span style="color:#15794B; font-size:16px">✓</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480; margin-top:8px">Sucesso · --c-success #15794B · 5.11:1 AA</div>
+      </div>
+
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr 1.4fr; gap:24px; margin-top:56px; align-items:stretch">
+      <div style="border:1px solid #E3E6EB; border-radius:12px; padding:24px; display:flex; flex-direction:column; gap:14px">
+        <div style="height:56px; border-radius:8px; background:#B43A2F"></div>
+        <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase"><span style="color:#15171B">--c-error</span><span style="color:#6E7480">#B43A2F</span></div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">5.51:1 sobre paper · WCAG AA</div>
+      </div>
+      <div style="border:1px solid #E3E6EB; border-radius:12px; padding:24px; display:flex; flex-direction:column; gap:14px">
+        <div style="height:56px; border-radius:8px; background:#15794B"></div>
+        <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase"><span style="color:#15171B">--c-success</span><span style="color:#6E7480">#15794B</span></div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">5.11:1 sobre paper · WCAG AA</div>
+      </div>
+      <div style="border:1px solid #E3E6EB; border-radius:12px; padding:24px; display:flex; flex-direction:column; gap:14px; justify-content:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Regra de feedback</div>
+        <p style="margin:0; font-size:14px; line-height:1.6; color:#15171B">Feedback aparece como texto + borda + ícone do input — nunca como botão ou bloco cheio.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== 8 · HAIRLINES & GRADE ====================== -->
+  <section data-screen-label="Hairlines e grade" style="padding:88px 120px; border-top:1px solid #E3E6EB">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:56px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">07 — Hairlines &amp; grade</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Linguagem de desenho técnico</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start">
+      <div style="display:flex; flex-direction:column; gap:40px">
+        <div style="display:flex; flex-direction:column; gap:14px">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Hairline · 1px · #E3E6EB</div>
+          <div style="height:1px; background:#E3E6EB"></div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:14px">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Régua com ticks · 64px</div>
+          <div style="height:9px; border-bottom:1px solid #E3E6EB; background-image:linear-gradient(90deg, #E3E6EB 1px, transparent 1px); background-size:64px 9px"></div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:14px">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Colunas · hairlines verticais</div>
+          <div style="display:flex; height:72px">
+            <div style="flex:1; border-left:1px solid #E3E6EB"></div>
+            <div style="flex:1; border-left:1px solid #E3E6EB"></div>
+            <div style="flex:1; border-left:1px solid #E3E6EB"></div>
+            <div style="flex:1; border-left:1px solid #E3E6EB"></div>
+            <div style="flex:1; border-left:1px solid #E3E6EB; border-right:1px solid #E3E6EB"></div>
+          </div>
+        </div>
+        <p style="margin:0; font-size:13px; line-height:1.6; color:#6E7480; max-width:46ch">Sombras quase zero: profundidade = hairlines + tints + glow. A linha de 1px é a unidade de desenho de toda a interface.</p>
+      </div>
+
+      <div style="position:relative; height:340px; border:1px solid #E3E6EB; border-radius:12px; background-image:linear-gradient(#EEF0F3 1px, transparent 1px), linear-gradient(90deg, #EEF0F3 1px, transparent 1px), linear-gradient(#E3E6EB 1px, transparent 1px), linear-gradient(90deg, #E3E6EB 1px, transparent 1px); background-size:12px 12px, 12px 12px, 48px 48px, 48px 48px; overflow:hidden">
+        <div style="position:absolute; top:50%; left:0; right:0; height:1px; background:#E3E6EB"></div>
+        <div style="position:absolute; left:50%; top:0; bottom:0; width:1px; background:#E3E6EB"></div>
+        <div style="position:absolute; bottom:14px; right:18px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Grade técnica · 12 / 48px</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== 9 · LINHA DE AUTOMAÇÃO ====================== -->
+  <section data-screen-label="Linha de automação" style="padding:88px 0 96px; border-top:1px solid #E3E6EB">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:40px; padding:0 120px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">08 — Linha de automação</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Elemento-assinatura · pulso blaze · 6s loop</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; padding:0 120px; margin:-16px 0 40px">
+      <span style="width:6px; height:6px; background:#FF4D00; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Reduced-motion: pulso pausado · linha estática 100% desenhada</span>
+    </div>
+    <svg viewBox="0 0 1920 200" style="display:block; width:100%; height:auto" role="img" aria-label="Linha de automação com pulso">
+      <path d="M0,80 L1920,80" style="fill:none; stroke:#E3E6EB; stroke-width:1.5"></path>
+      {{ pulse }}
+      <circle cx="360" cy="80" r="10" style="fill:#F7F8FA; stroke:#15171B; stroke-width:1.5"></circle>
+      <circle cx="360" cy="80" r="3" style="fill:#15171B"></circle>
+      <circle cx="960" cy="80" r="10" style="fill:#F7F8FA; stroke:#15171B; stroke-width:1.5"></circle>
+      <circle cx="960" cy="80" r="3" style="fill:#15171B"></circle>
+      <circle cx="1560" cy="80" r="10" style="fill:#F7F8FA; stroke:#15171B; stroke-width:1.5"></circle>
+      <circle cx="1560" cy="80" r="3" style="fill:#15171B"></circle>
+      <text x="360" y="128" text-anchor="middle" style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; fill:#6E7480">DISCOVERY</text>
+      <text x="960" y="128" text-anchor="middle" style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; fill:#6E7480">AGENTES</text>
+      <text x="1560" y="128" text-anchor="middle" style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; fill:#6E7480">DEPLOY</text>
+    </svg>
+  </section>
+
+  <!-- ====================== 10 · PLACEHOLDER DE MÍDIA ====================== -->
+  <section data-screen-label="Placeholder de mídia" style="padding:88px 120px 120px; border-top:1px solid #E3E6EB">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:56px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#15171B">09 — Placeholder padrão de mídia</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">#ECEEF2 · grade blueprint · cruz central</div>
+    </div>
+
+    <div style="display:flex; gap:32px; align-items:flex-end">
+      <div style="display:flex; flex-direction:column; gap:16px; flex:2">
+        <div style="position:relative; aspect-ratio:16/9; border-radius:12px; background:#ECEEF2; background-image:linear-gradient(#E0E4EA 1px, transparent 1px), linear-gradient(90deg, #E0E4EA 1px, transparent 1px); background-size:40px 40px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px">
+          <span style="position:relative; width:32px; height:32px; display:block" style-before="content:''; position:absolute; left:0; right:0; top:50%; height:1px; background:#9AA3B2" style-after="content:''; position:absolute; top:0; bottom:0; left:50%; width:1px; background:#9AA3B2"></span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">[ A1 · 16:9 · ≤1,2MB ]</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">LG · largura plena</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:16px; flex:1">
+        <div style="position:relative; aspect-ratio:16/9; border-radius:12px; background:#ECEEF2; background-image:linear-gradient(#E0E4EA 1px, transparent 1px), linear-gradient(90deg, #E0E4EA 1px, transparent 1px); background-size:40px 40px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px">
+          <span style="position:relative; width:24px; height:24px; display:block" style-before="content:''; position:absolute; left:0; right:0; top:50%; height:1px; background:#9AA3B2" style-after="content:''; position:absolute; top:0; bottom:0; left:50%; width:1px; background:#9AA3B2"></span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">[ A2 · 16:9 · ≤1,2MB ]</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">SM · meia coluna</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== RODAPÉ ====================== -->
+  <footer style="border-top:1px solid #E3E6EB; padding:36px 120px; display:flex; justify-content:space-between; align-items:center">
+    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">SATTI · IA &amp; Automação</span>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Nova Lima — MG</span>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Design System v1</span>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { hp: false, hg: false, hc: false, rm: false };
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._onMq = (ev) => this.setState({ rm: ev.matches });
+    this.setState({ rm: this._mq.matches });
+    this._mq.addEventListener('change', this._onMq);
+  }
+
+  componentWillUnmount() {
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
+  }
+
+  renderVals() {
+    const e = React.createElement;
+    const motion = () => e('animateMotion', {
+      dur: '6s',
+      repeatCount: 'indefinite',
+      path: 'M0,80 L1920,80',
+      keyTimes: '0;1',
+      calcMode: 'spline',
+      keySplines: '0.4 0 0.6 1'
+    });
+    const pulse = this.state.rm
+      ? e('g', null,
+          e('circle', { cx: 960, cy: 80, r: 12, fill: '#FF4D00', opacity: 0.16 }),
+          e('circle', { cx: 960, cy: 80, r: 4.5, fill: '#FF4D00' })
+        )
+      : e('g', null,
+          e('circle', { r: 12, fill: '#FF4D00', opacity: 0.16 }, motion()),
+          e('circle', { r: 4.5, fill: '#FF4D00' }, motion())
+        );
+
+    return {
+      pulse,
+      rollP: this.state.hp ? 'translateY(-24px)' : 'translateY(0px)',
+      rollG: this.state.hg ? 'translateY(-24px)' : 'translateY(0px)',
+      arrA: this.state.hc ? 'translateX(40px)' : 'translateX(0px)',
+      arrB: this.state.hc ? 'translateX(0px)' : 'translateX(-40px)',
+      circleBg: this.state.hc ? '#15171B' : 'transparent',
+      circleColor: this.state.hc ? '#F4F5F7' : '#15171B',
+      enterP: () => this.setState({ hp: true }),
+      leaveP: () => this.setState({ hp: false }),
+      enterG: () => this.setState({ hg: true }),
+      leaveG: () => this.setState({ hg: false }),
+      enterC: () => this.setState({ hc: true }),
+      leaveC: () => this.setState({ hc: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+[
+  {
+    "name": "--c-line",
+    "declarations": 1,
+    "references": 9
+  },
+  {
+    "name": "--c-paper",
+    "declarations": 1,
+    "references": 4
+  },
+  {
+    "name": "--c-iron",
+    "declarations": 1,
+    "references": 4
+  },
+  {
+    "name": "--c-graphite",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--c-blaze",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--c-ink-on-dark",
+    "declarations": 1,
+    "references": 1
+  },
+  {
+    "name": "--c-steel",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--c-circuit",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--c-blaze-soft",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--c-error",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--c-success",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--tint-card1",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--tint-card2",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--tint-card3",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--radius-sm",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--radius-md",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--radius-lg",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--radius-xl",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--radius-full",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--space-2xs",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--space-xs",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--space-sm",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--space-md",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--space-lg",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--space-xl",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--space-xxl",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fs-display",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fs-display-hero",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fs-statement",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fs-section",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fs-card-title",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fs-body-lg",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fs-body",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fs-body-sm",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fs-label",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fs-eyebrow",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fs-tag",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fs-metric",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fs-caption",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--lh-tight",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--lh-display",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--lh-heading",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--lh-snug",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--lh-body",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--tracking-display",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--tracking-tight",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--tracking-mono",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--tracking-metric",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fw-display",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fw-statement",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fw-heading",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fw-semibold",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fw-medium",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--fw-body",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--case-caps",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--font-display",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--font-body",
+    "declarations": 1,
+    "references": 0
+  },
+  {
+    "name": "--font-mono",
+    "declarations": 1,
+    "references": 0
+  }
+]

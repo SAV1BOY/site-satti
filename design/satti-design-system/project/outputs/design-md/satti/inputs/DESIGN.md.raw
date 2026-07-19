@@ -1,0 +1,430 @@
+---
+name: SATTI
+colors:
+  primary: "#FF4D00"        # from --c-blaze (brand identity accent — raro e caro)
+  secondary: "#15171B"      # from --c-iron (ink / dark UI)
+  tertiary: "#2F6BFF"       # from --c-circuit (functional only)
+  neutral: "#6E7480"        # from --c-steel
+  surface: "#F7F8FA"        # from --c-paper
+  text: "#15171B"           # from --c-iron
+  text-muted: "#6E7480"     # from --c-steel
+  border: "#E3E6EB"         # from --c-line
+  error: "#B43A2F"          # from --c-error
+  success: "#15794B"        # from --c-success
+  graphite: "#0F1115"       # from --c-graphite (dark sections)
+  blaze-soft: "#FFE9DE"     # from --c-blaze-soft (accent tint)
+  ink-on-dark: "#F4F5F7"    # from --c-ink-on-dark (text over graphite)
+  tint-blue: "#E4EBFF"      # from --tint-card2 declaration
+  tint-slate: "#ECEEF2"     # from --tint-card3 declaration
+typography:
+  display:
+    fontFamily: "Archivo, sans-serif"     # from @font-face
+    fontSize: "10.5rem"  # from --fs (type scale)
+    fontWeight: "900"  # from --fw (type scale)
+    lineHeight: "0.92"  # from --lh (type scale)
+    letterSpacing: "-0.02em"  # from --tracking (type scale)
+    features: "caps"  # from --case-caps
+  display-hero:
+    fontFamily: "Archivo, sans-serif"     # from @font-face
+    fontSize: "8.75rem"  # from --fs (type scale)
+    fontWeight: "900"  # from --fw (type scale)
+    lineHeight: "0.95"  # from --lh (type scale)
+    letterSpacing: "-0.015em"  # from --tracking (type scale)
+    features: "caps"  # from --case-caps
+  statement:
+    fontFamily: "Archivo, sans-serif"     # from @font-face
+    fontSize: "5.25rem"  # from --fs (type scale)
+    fontWeight: "800"  # from --fw (type scale)
+    lineHeight: "1.02"  # from --lh (type scale)
+    letterSpacing: "-0.01em"  # from --tracking (type scale)
+    features: "caps"  # from --case-caps
+  section-heading:
+    fontFamily: "Archivo, sans-serif"     # from @font-face
+    fontSize: "2.5rem"  # from --fs (type scale)
+    fontWeight: "700"  # from --fw (type scale)
+    lineHeight: "1.1"  # from --lh (type scale)
+    features: "caps"  # from --case-caps
+  card-title:
+    fontFamily: "Archivo, sans-serif"     # from @font-face
+    fontSize: "1.625rem"  # from --fs (type scale)
+    fontWeight: "700"  # from --fw (type scale)
+    lineHeight: "1.15"  # from --lh (type scale)
+    features: "caps"  # from --case-caps
+  body-large:
+    fontFamily: "Inter, sans-serif"       # from @font-face
+    fontSize: "1.25rem"  # from --fs (type scale)
+    fontWeight: "400"  # from --fw (type scale)
+    lineHeight: "1.5"  # from --lh (type scale)
+  body:
+    fontFamily: "Inter, sans-serif"       # from @font-face
+    fontSize: "1rem"  # from --fs (type scale)
+    fontWeight: "400"  # from --fw (type scale)
+    lineHeight: "1.6"  # from --lh (type scale)
+  body-small:
+    fontFamily: "Inter, sans-serif"       # from @font-face
+    fontSize: "0.875rem"  # from --fs (type scale)
+    fontWeight: "400"  # from --fw (type scale)
+    lineHeight: "1.6"  # from --lh (type scale)
+  label:
+    fontFamily: "Inter, sans-serif"       # from @font-face
+    fontSize: "0.875rem"  # from --fs (type scale)
+    fontWeight: "500"  # from --fw (type scale)
+    lineHeight: "1.4"
+  eyebrow-mono:
+    fontFamily: "JetBrains Mono, monospace"  # from @font-face
+    fontSize: "0.875rem"  # from --fs (type scale)
+    fontWeight: "500"  # from --fw (type scale)
+    lineHeight: "1.4"
+    letterSpacing: "0.08em"  # from --tracking (type scale)
+    features: "caps"  # from --case-caps
+  tag-mono:
+    fontFamily: "JetBrains Mono, monospace"  # from @font-face
+    fontSize: "0.75rem"  # from --fs (type scale)
+    fontWeight: "400"  # from --fw (type scale)
+    lineHeight: "1.2"
+  metric-mono:
+    fontFamily: "JetBrains Mono, monospace"  # from @font-face
+    fontSize: "5.5rem"  # from --fs (type scale)
+    fontWeight: "500"  # from --fw (type scale)
+    lineHeight: "1"  # from --lh (type scale)
+    letterSpacing: "-0.04em"  # from --tracking (type scale)
+  caption-mono:
+    fontFamily: "JetBrains Mono, monospace"  # from @font-face
+    fontSize: "0.6875rem"  # from --fs (type scale)
+    fontWeight: "500"  # from --fw (type scale)
+    lineHeight: "1.4"
+    letterSpacing: "0.08em"  # from --tracking (type scale)
+    features: "caps"  # from --case-caps
+rounded:
+  sm: "8px"       # from --radius-sm
+  md: "12px"      # from --radius-md
+  lg: "16px"      # from --radius-lg
+  xl: "28px"      # from --radius-xl
+  full: "9999px"  # from --radius-full
+spacing:
+  2xs: "8px"      # from --space-2xs
+  xs: "12px"      # from --space-xs
+  sm: "16px"      # from --space-sm
+  md: "24px"      # from --space-md
+  lg: "48px"      # from --space-lg
+  xl: "88px"      # from --space-xl
+  xxl: "120px"    # from --space-xxl
+preview_tokens:
+  button_primary_bg: "#FF4D00"
+  button_primary_text: "#15171B"
+  button_primary_border: "#FF4D00"
+  button_secondary_bg: "transparent"
+  button_secondary_text: "#15171B"
+  button_secondary_border: "#E3E6EB"
+  button_tertiary_text: "#2F6BFF"
+  surface_bg: "#F7F8FA"
+  card_bg: "#F7F8FA"
+  text: "#15171B"
+  text_muted: "#6E7480"
+  border: "#E3E6EB"
+  accent: "#FF4D00"
+  button_radius: "9999px"
+  card_radius: "28px"
+  input_radius: "12px"
+components:
+  button-primary:
+    bg: "#FF4D00"
+    text: "#15171B"
+    border: "#FF4D00"
+    radius: "9999px"
+    padding: "18px 36px"
+    font: "16px Inter weight 600"
+    hover: "text roll-up, cubic-bezier(0.76,0,0.24,1) 450ms"
+  button-secondary:
+    bg: "transparent"
+    text: "#15171B"
+    border: "#E3E6EB"
+    radius: "9999px"
+    padding: "17px 36px"
+    font: "16px Inter weight 500"
+    hover: "text roll-up"
+  button-icon:
+    bg: "transparent"
+    text: "#15171B"
+    border: "#E3E6EB"
+    radius: "9999px"
+    padding: "0px"
+    hover_bg: "#15171B"
+    hover_text: "#F4F5F7"
+  card:
+    bg: "#F7F8FA"
+    border: "#E3E6EB"
+    radius: "28px"
+    padding: "36px"
+    shadow: "none"
+  card-dark:
+    bg: "#0F1115"
+    text: "#F4F5F7"
+    border: "transparent"
+    radius: "28px"
+    padding: "16px"
+    shadow: "0 0 90px #FF4D00 (glow, blur 90, opacity 0.8)"
+  input-text:
+    bg: "#F7F8FA"
+    text: "#15171B"
+    border: "#E3E6EB"
+    radius: "12px"
+    padding: "0px 18px"
+    focus_border: "#2F6BFF"
+    focus_ring: "0 0 0 3px rgba(47,107,255,0.18)"
+  badge-default:
+    bg: "transparent"
+    text: "#15171B"
+    border: "#E3E6EB"
+    radius: "9999px"
+    padding: "10px 20px"
+    font: "12px JetBrains Mono weight 400"
+  nav-marker:
+    bg: "#FF4D00"
+    text: "#15171B"
+    border: "transparent"
+    radius: "0px"
+    size: "8px"
+---
+
+# SATTI — Design System
+
+> Fundação visual da SATTI (IA & Automação). Sistema técnico, editorial e de alta precisão: hairlines de 1px, tipografia condensada em caixa-alta e um único acento de alto impacto (blaze) usado com rigor. Extraído da fonte-de-verdade `SATTI DS` que governa as 30 telas aprovadas (F2–F5, PT + EN espelho).
+
+## 1. Visual Theme & Atmosphere
+
+A SATTI se apresenta como **engenharia que pulsa**: uma linguagem de desenho técnico onde a profundidade nasce da linha, não da sombra. O sistema é construído sobre `paper` (#F7F8FA) — um branco levemente frio — pontuado por `iron` (#15171B) para texto e por seções `graphite` (#0F1115) quase-pretas. A atmosfera é a de um blueprint: grades de 12/48px, réguas com ticks e hairlines de 1px em `line` (#E3E6EB) que organizam cada superfície.
+
+O acento `blaze` (#FF4D00 — laranja-vermelho de alta cromas) é a assinatura da marca e o seu recurso mais controlado: **raro e caro**, no máximo um elemento blaze de destaque por dobra/viewport, e sempre com texto preto (`iron`) sobre ele — nunca branco. O marcador-eyebrow (quadrado 8×8 blaze) é a exceção e não conta para esse limite. Um segundo azul, `circuit` (#2F6BFF), existe apenas para funções: links, diagramas e o anel de foco — nunca como decoração.
+
+A personalidade tipográfica combina três vozes: **Archivo** em peso 900/800 e caixa-alta para displays com tracking negativo apertado (a voz condensada e industrial da marca), **Inter** para corpo e interface, e **JetBrains Mono** em caixa-alta com tracking +0.08em para eyebrows, tags e métricas — a voz de "instrumento técnico". A única quebra do mono-caps é a grafia oficial das marcas citadas (n8n, Next.js, Supabase…), que aparecem sem caps.
+
+O tratamento de superfície é deliberadamente plano. Sombras são quase-zero: a profundidade vem de hairline + tint + glow. O único brilho colorido do sistema é o *glow* blaze (filtro blur 90px, opacidade 0.8) sob os work-cards escuros — um respiro de energia num sistema, no restante, contido. O estado-base de captura é reduced-motion: a Linha de Automação (elemento-assinatura) é desenhada 100% estática, com o pulso pausado.
+
+**Key Characteristics:**
+- Paleta fria e neutra (paper/iron/steel) com um único acento quente de alto impacto (blaze).
+- Blaze é raro: máx. 1 destaque por viewport, sempre com texto preto sobre ele.
+- `circuit` (azul) é estritamente funcional — links, diagrama, focus ring — nunca decorativo.
+- Profundidade por hairline de 1px + tints + glow; sombras praticamente ausentes.
+- Archivo 900/800 caixa-alta com tracking negativo para displays condensados e industriais.
+- JetBrains Mono caixa-alta +0.08em como voz técnica (eyebrows, tags, métricas).
+- Raio bimodal: 12px funcional (inputs, mídia) e 28px editorial (cards); pills 9999px.
+- Régua/grade blueprint (12/48px) como motivo estrutural recorrente.
+- Estado-base reduced-motion; animações estáticas na captura.
+- 60/30/10 como lei de proporção de cor.
+
+## 2. Color Palette & Roles
+
+### Primary
+- **Blaze** (`#FF4D00`): `--c-blaze`. Acento de identidade. CTAs primários, marcador-eyebrow (8×8), glow. Sempre com texto `iron` (#15171B) sobre ele — nunca branco. Uso ≤ 10% da dobra.
+
+### Brand & Dark
+- **Iron** (`#15171B`): `--c-iron`. Texto principal e blocos de UI escura; a "tinta" do sistema.
+- **Graphite** (`#0F1115`): `--c-graphite`. Fundo das seções dark e work-cards; recebe texto `ink-on-dark`.
+- **Ink-on-dark** (`#F4F5F7`): `--c-ink-on-dark`. Texto/ícones sobre graphite.
+
+### Accent Colors
+- **Blaze-soft** (`#FFE9DE`): `--c-blaze-soft`. Tint do acento — chips e realces suaves; também a cor de `::selection`.
+- **Tint-blue** (`#E4EBFF`) e **Tint-slate** (`#ECEEF2`): tints de card (S4) e fundo dos placeholders de mídia blueprint.
+
+### Interactive
+- **Circuit** (`#2F6BFF`): `--c-circuit`. **Somente funcional**: links, linhas de diagrama e anel de foco (ring 2px, ou `rgba(47,107,255,0.18)` de 3px em inputs). Nunca decorativo, nunca CTA.
+
+### Neutral Scale
+- **Paper** (`#F7F8FA`): `--c-paper`. Fundo base / canvas.
+- **Steel** (`#6E7480`): `--c-steel`. Texto secundário, eyebrows, labels de métrica; também o cinza de *copy sugerida/provisória* ([CONFIRMAR]).
+
+### Surface & Borders
+- **Line** (`#E3E6EB`): `--c-line`. Hairline de 1px — a unidade de desenho de toda a interface (bordas de card, input, régua, colunas).
+
+### Feedback (texto/borda/ícone apenas)
+- **Error** (`#B43A2F`): `--c-error`. 5.51:1 sobre paper — WCAG AA.
+- **Success** (`#15794B`): `--c-success`. 5.11:1 sobre paper — WCAG AA.
+
+### Color Philosophy
+A regra 60/30/10 governa tudo: ~60% paper e neutros, ~30% iron/graphite, ~10% acento. O blaze não domina — ele *ancora*. Por isso é usado com parcimônia deliberada (logo/eyebrow + 1 CTA por dobra). O azul circuit foi separado do papel de marca para nunca competir com o blaze: azul = função, laranja = identidade. Feedback nunca é um bloco cheio — aparece só como texto + borda + ícone.
+
+## 3. Typography Rules
+
+### Font Family
+- **Display / títulos:** Archivo (500–900), sempre em `text-transform: uppercase`, com tracking negativo (−0.02em a −0.01em) em tamanhos grandes.
+- **Corpo / UI:** Inter (400–600).
+- **Técnica / mono:** JetBrains Mono (400–600), caixa-alta com `letter-spacing: 0.08em`. Exceção única: grafia oficial de marcas (sem caps).
+
+### Hierarchy
+
+| Role | Font | Size | Weight | Line Height | Letter Spacing | Features | Notes |
+|---|---|---|---|---|---|---|---|
+| display | Archivo | 10.5rem (clamp 3rem→) | 900 | 0.92 | −0.02em | caps | Wordmark / hero máximo |
+| display-hero | Archivo | 8.75rem (clamp 64px→140px) | 900 | 0.95 | −0.015em | caps | H1 de página |
+| statement | Archivo | 5.25rem (clamp 2.5rem→) | 800 | 1.02 | −0.01em | caps | Banners / afirmações |
+| section-heading | Archivo | 2.5rem | 700 | 1.1 | — | caps | Títulos de seção |
+| card-title | Archivo | 1.625rem | 700 | 1.15 | — | caps | Títulos de card |
+| body-large | Inter | 1.25rem | 400 | 1.5 | — | — | Lead / subtítulo do hero |
+| body | Inter | 1rem | 400 | 1.6 | — | — | Corpo padrão |
+| body-small | Inter | 0.875rem | 400 | 1.6 | — | — | Descrições de card |
+| label | Inter | 0.875rem | 500 | 1.4 | — | — | Rótulos de formulário |
+| eyebrow-mono | JetBrains Mono | 0.875rem | 500 | 1.4 | 0.08em | caps | Numeração de seção |
+| tag-mono | JetBrains Mono | 0.75rem | 400 | 1.2 | — | — | Tags de stack (grafia oficial) |
+| metric-mono | JetBrains Mono | 5.5rem | 500 | 1 | −0.04em | — | Número de stat-card |
+| caption-mono | JetBrains Mono | 0.6875rem | 500 | 1.4 | 0.08em | caps | Legendas técnicas / labels de slot |
+
+### Principles
+- Todo display é Archivo caixa-alta — nunca title-case; o peso 900 é a voz condensada da marca.
+- Tracking é sempre **negativo** em Archivo grande (−0.02em a −0.01em); nunca positivo em display.
+- Mono é sempre caixa-alta +0.08em, exceto na grafia oficial de marcas (n8n, Next.js, Supabase, Evolution API, Claude / GPT, Python, PostgreSQL, Vercel).
+- Corpo vive em iron ou steel sobre paper — nunca em blaze por trechos longos.
+- Números de métrica usam JetBrains Mono 500 com tracking −0.04em (tabular, técnico).
+
+## 4. Components
+
+### Buttons
+
+**Primário — Blaze** (`button-primary`)
+- Fundo: `#FF4D00` · Texto: `#15171B` · Borda: `#FF4D00`
+- Padding: 18px 36px · Raio: 9999px (pill) · Fonte: 16px Inter weight 600
+- Hover: "roll" — texto duplicado sobe dentro da máscara, `cubic-bezier(0.76,0,0.24,1)` 450ms
+- Uso: CTA primário ("Falar com a SATTI"). Sempre texto preto sobre blaze.
+
+**Secundário / Ghost** (`button-secondary`)
+- Fundo: `transparent` · Texto: `#15171B` · Borda: `#E3E6EB` (hairline)
+- Padding: 17px 36px · Raio: 9999px · Fonte: 16px Inter weight 500 · Hover: "roll"
+
+**Ícone — Círculo + Seta** (`button-icon`)
+- 64×64, `transparent` com hairline `#E3E6EB`, raio 9999px
+- Hover: fundo → `#15171B`, seta → `#F4F5F7`, seta desliza (translateX 40px)
+
+**Focus (todos):** ring de 2px `#2F6BFF` (`box-shadow: 0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF`).
+
+### Cards & Containers
+
+**Card base** (`card`)
+- Fundo: `#F7F8FA` · Borda: `#E3E6EB` · Raio: 28px · Padding: 36px · Sombra: nenhuma
+- Profundidade = hairline. Stat-card usa número `metric-mono` (88px) + slot 1:1.
+
+**Work-card / dark** (`card-dark`)
+- Fundo: `#0F1115` · Raio: 28px · Texto: `#F4F5F7`
+- Glow blaze: `filter: blur(90px)`, opacidade 0.8, ancorado no rodapé; info-pill `#F4F5F7` sobre ele.
+
+### Inputs & Forms
+
+**Input de texto** (`input-text`)
+- Fundo: `#F7F8FA` · Texto: `#15171B` · Borda: `#E3E6EB` · Raio: 12px · Altura: 54px · Padding: 0 18px
+- Focus: borda `#2F6BFF` + ring `0 0 0 3px rgba(47,107,255,0.18)`
+- Erro: borda `#B43A2F` + texto de erro `#B43A2F`. Sucesso: borda `#15794B` + ícone ✓.
+- Regra: feedback é texto + borda + ícone — nunca botão ou bloco cheio.
+
+### Badges / Tags / Pills
+
+**Tag mono** (`badge-default`)
+- Fundo: `transparent` · Texto: `#15171B` · Borda: `#E3E6EB` · Raio: 9999px · Padding: 10px 20px
+- Fonte: 12px JetBrains Mono weight 400. Nomes de marca em grafia oficial (sem caps).
+
+### Navigation
+- **Marcador-eyebrow** (`nav-marker`): quadrado 8×8 `#FF4D00` que precede eyebrows em mono/steel. Não conta para o limite de 1 blaze/viewport.
+
+### Decorative Elements
+- Grades blueprint (`linear-gradient` de linhas 1px, 12/48px e 24/40px) em placeholders de mídia e no painel de grade técnica — estruturais, não decorativas.
+- Régua com ticks (64px) e colunas com hairlines verticais.
+- Glow blaze (blur 90px) — o único brilho de cor do sistema.
+
+## 5. Layout Principles
+
+### Spacing System
+Base 4px. Escala usada: 8, 12, 16, 24, 48, 88, 120px. Padding de seção desktop = 88px (vertical) × 120px (horizontal). Gaps de grade tipicamente 24px (cards) e 48–56px (colunas de conteúdo).
+
+### Grid & Container
+Layout de página cheia (1920 desktop / 375 mobile). Seções separadas por hairline `border-top: 1px #E3E6EB`. Grids de 3 colunas para cards e paleta; grids assimétricos (ex.: `1fr 380px`, `320px 1fr`) para pares rótulo/conteúdo.
+
+### Whitespace Philosophy
+O respiro é generoso e intencional: displays enormes contra grandes áreas de paper. O vazio é parte do desenho técnico — a página respira como uma prancheta, com a informação ancorada por linhas, não empurrada por caixas.
+
+### Border Radius Scale
+- `sm` 8px — chips pequenos, réguas.
+- `md` 12px — inputs, swatches, placeholders de mídia (raio funcional).
+- `lg` 16px — slots internos de card dark.
+- `xl` 28px — cards (raio editorial).
+- `full` 9999px — botões, tags, info-pills.
+
+## 6. Depth & Elevation
+
+| Level | Treatment | Use |
+|---|---|---|
+| Flat | Sem borda, sem sombra | Fundo paper / seções |
+| Ambient | Hairline 1px `#E3E6EB` | Cards, inputs, divisórias — a profundidade padrão |
+| Standard | Hairline + tint (`#ECEEF2` / `#FFE9DE`) | Slots de mídia, chips, realces |
+| Elevated | Fundo graphite `#0F1115` | Work-cards, seções dark |
+| Deep | Glow blaze `blur(90px)` opac. 0.8 | Único brilho de cor — sob work-cards |
+| Ring (focus) | `0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF` (botões) · `0 0 0 3px rgba(47,107,255,0.18)` (inputs) | Foco de teclado |
+
+### Shadow Philosophy
+Sombras são quase-zero por decisão de marca: a profundidade é comunicada por hairline + tint + glow, não por drop-shadow. As únicas "sombras" reais são os anéis de foco funcionais (circuit) e o glow blaze — ambos com propósito, nunca ornamentais.
+
+## 7. Do's and Don'ts
+
+**Do's**
+- ✅ Use blaze `#FF4D00` no máximo 1× por dobra, sempre com texto `#15171B` (preto) sobre ele.
+- ✅ Reserve circuit `#2F6BFF` para função pura: links, diagrama, focus ring.
+- ✅ Componha profundidade com hairline de 1px `#E3E6EB` + tint, não com sombra.
+- ✅ Escreva displays em Archivo 900 caixa-alta com tracking negativo.
+- ✅ Grafe marcas na forma oficial (n8n, Next.js, Supabase) — a exceção ao mono-caps.
+
+**Don'ts**
+- ❌ Não use texto branco sobre blaze — o par correto é `iron` (#15171B) preto sobre blaze.
+- ❌ Não use blaze `#FF4D00` como cor de link ou de diagrama — isso é papel do circuit `#2F6BFF`.
+- ❌ Não use circuit `#2F6BFF` como CTA ou decoração — ele é estritamente funcional.
+- ❌ Não aplique tracking positivo nem title-case em displays Archivo — sempre caps + tracking negativo.
+- ❌ Não adicione drop-shadows em cards — a profundidade é hairline + tint; o único brilho é o glow blaze.
+- ❌ Não mostre feedback como bloco cheio/botão — só texto + borda + ícone do campo.
+- ❌ Não exiba mais de 1 elemento blaze de destaque por viewport (o marcador 8×8 não conta).
+
+## 8. Responsive Behavior
+
+### Breakpoints
+
+| Name | Width | Key Changes |
+|---|---|---|
+| Mobile | 375px | Coluna única; padding de seção reduzido; displays via clamp() menores |
+| Desktop | 1920px | Grades de 3 colunas; padding 88×120px; displays no topo do clamp |
+
+### Touch Targets
+Botões pill com padding 17–18px × 36px e ícone-círculo de 64×64 garantem alvos ≥ 44px. Inputs com 54px de altura.
+
+### Collapsing Strategy
+Do desktop para o mobile: grids de 3 colunas colapsam para 1; tipografia escala por `clamp()` (não por breakpoints rígidos); a numeração de seção mono permanece; a Linha de Automação vira faixa full-bleed. O overlay O2 (Contato) vira tela cheia no mobile.
+
+### Image Behavior
+Mídia usa placeholders blueprint `#ECEEF2` com grade e cruz central e rótulo mono (`[ A1 · 16:9 · ≤1,2MB ]`). Proporções fixas (16:9, 1:1) preservadas; largura plena no LG, meia-coluna no SM.
+
+## 9. Agent Prompt Guide
+
+### Quick Color Reference
+- CTA primário: SATTI Blaze (`#FF4D00`) com texto `#15171B`
+- Texto/ink: Iron (`#15171B`)
+- Texto secundário / eyebrows: Steel (`#6E7480`)
+- Fundo: Paper (`#F7F8FA`)
+- Seções dark: Graphite (`#0F1115`) com texto `#F4F5F7`
+- Hairline / bordas: Line (`#E3E6EB`)
+- Link / foco / diagrama: Circuit (`#2F6BFF`)
+- Erro: `#B43A2F` · Sucesso: `#15794B` (só texto/borda/ícone)
+
+### Example Component Prompts
+> "Hero em fundo paper `#F7F8FA`. H1 em Archivo weight 900, caixa-alta, clamp(64px,7.5vw,140px), line-height 0.95, letter-spacing −0.015em, cor `#15171B`. Subtítulo Inter 20px, line-height 1.5, cor `#6E7480`. CTA pill blaze `#FF4D00` (raio 9999px, padding 18px 36px, texto `#15171B` weight 600) com hover 'roll'."
+
+> "Card base: fundo `#F7F8FA`, borda 1px `#E3E6EB`, raio 28px, padding 36px, sem sombra. Eyebrow em JetBrains Mono 11px caixa-alta +0.08em cor `#6E7480`; título Archivo 26px caixa-alta; corpo Inter 14px `#6E7480`."
+
+> "Stat-card: mesmo card, número em JetBrains Mono 88px weight 500 letter-spacing −0.04em cor `#15171B`, label Inter 15px `#6E7480`, e um slot 1:1 blueprint `#ECEEF2` no canto superior direito."
+
+> "Tag de stack: pill transparente, borda 1px `#E3E6EB`, raio 9999px, padding 10px 20px, JetBrains Mono 12px weight 400. Use a grafia oficial da marca (ex.: Next.js) sem caixa-alta."
+
+> "Seção dark: fundo `#0F1115`, texto `#F4F5F7`; um único glow blaze `filter: blur(90px)` opacidade 0.8 ancorado embaixo; info-pill `#F4F5F7` com texto `#15171B`."
+
+### Iteration Guide
+1. Blaze é raro — só 1 destaque por dobra, sempre texto preto `#15171B` sobre ele; o marcador 8×8 não conta.
+2. Azul `#2F6BFF` só entra em link/diagrama/foco — se você usou azul como CTA, está errado.
+3. Displays: sempre Archivo 900/800, caixa-alta, tracking negativo. Nunca title-case.
+4. Mono sempre caixa-alta +0.08em; a única exceção é a grafia de marca.
+5. Profundidade = hairline 1px `#E3E6EB` + tint. Não adicione box-shadow em cards.
+6. Raio: 12px para elementos funcionais (input, mídia), 28px para cards, 9999px para pills.
+7. Estado-base é reduced-motion: entregue a versão estática primeiro; animação é progressiva.
+8. Copy nunca é inventada — texto oficial literal; sem versão final → [CONFIRMAR] em cinza `#6E7480`.

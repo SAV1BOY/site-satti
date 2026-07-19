@@ -1,0 +1,513 @@
+url: SATTI Design System — 30 telas (F2–F5 · PT + EN)
+extracted_at: "2026-07-14T13:04:01.669Z"
+sources:
+  external_css_files: 1
+  preload_css_files: 0
+  imports_resolved: 0
+  inline_style_blocks: 1
+  inline_style_attrs: 0
+  failed_fetches: 0
+detection:
+  css_vars_total: 58
+  css_vars_primitive: 58
+  css_vars_alias: 0
+  font_faces: 10
+  unique_tokens_in_graph: 58
+tokens:
+  colors:
+    primary:
+      value: "#FF4D00"
+      source: css_var
+      confidence: high
+      origin: "--c-blaze"
+    secondary:
+      value: "#15171B"
+      source: css_var
+      confidence: high
+      origin: "--c-iron"
+    tertiary:
+      value: "#2F6BFF"
+      source: css_var
+      confidence: high
+      origin: "--c-circuit"
+    neutral:
+      value: "#6E7480"
+      source: css_var
+      confidence: high
+      origin: "--c-steel"
+    surface:
+      value: "#F7F8FA"
+      source: css_var
+      confidence: high
+      origin: "--c-paper"
+    text:
+      value: "#15171B"
+      source: css_var
+      confidence: high
+      origin: "--c-iron"
+    text-muted:
+      value: "#6E7480"
+      source: css_var
+      confidence: high
+      origin: "--c-steel"
+    border:
+      value: "#E3E6EB"
+      source: css_var
+      confidence: high
+      origin: "--c-line"
+    error:
+      value: "#B43A2F"
+      source: css_var
+      confidence: high
+      origin: "--c-error"
+    success:
+      value: "#15794B"
+      source: css_var
+      confidence: high
+      origin: "--c-success"
+    graphite:
+      value: "#0F1115"
+      source: css_var
+      confidence: high
+      origin: "--c-graphite"
+    blaze-soft:
+      value: "#FFE9DE"
+      source: css_var
+      confidence: high
+      origin: "--c-blaze-soft"
+    ink-on-dark:
+      value: "#F4F5F7"
+      source: css_var
+      confidence: high
+      origin: "--c-ink-on-dark"
+    tint-blue:
+      value: "#E4EBFF"
+      source: css_var
+      confidence: high
+      origin: "--tint-card2"
+    tint-slate:
+      value: "#ECEEF2"
+      source: css_var
+      confidence: high
+      origin: "--tint-card3"
+  typography:
+    display:
+      properties:
+        fontFamily:
+          value: "Archivo, sans-serif"
+          source: font_face
+          confidence: high
+          origin: "@font-face"
+        fontSize:
+          value: 10.5rem
+          source: css_var
+          confidence: high
+          origin: "--fs"
+        fontWeight:
+          value: 900
+          source: css_var
+          confidence: high
+          origin: "--fw"
+        lineHeight:
+          value: 0.92
+          source: css_var
+          confidence: high
+          origin: "--lh"
+        letterSpacing:
+          value: "-0.02em"
+          source: css_var
+          confidence: high
+          origin: "--tracking"
+        features:
+          value: caps
+          source: css_var
+          confidence: high
+          origin: "--case-caps"
+    display-hero:
+      properties:
+        fontFamily:
+          value: "Archivo, sans-serif"
+          source: font_face
+          confidence: high
+          origin: "@font-face"
+        fontSize:
+          value: 8.75rem
+          source: css_var
+          confidence: high
+          origin: "--fs"
+        fontWeight:
+          value: 900
+          source: css_var
+          confidence: high
+          origin: "--fw"
+        lineHeight:
+          value: 0.95
+          source: css_var
+          confidence: high
+          origin: "--lh"
+        letterSpacing:
+          value: "-0.015em"
+          source: css_var
+          confidence: high
+          origin: "--tracking"
+        features:
+          value: caps
+          source: css_var
+          confidence: high
+          origin: "--case-caps"
+    statement:
+      properties:
+        fontFamily:
+          value: "Archivo, sans-serif"
+          source: font_face
+          confidence: high
+          origin: "@font-face"
+        fontSize:
+          value: 5.25rem
+          source: css_var
+          confidence: high
+          origin: "--fs"
+        fontWeight:
+          value: 800
+          source: css_var
+          confidence: high
+          origin: "--fw"
+        lineHeight:
+          value: 1.02
+          source: css_var
+          confidence: high
+          origin: "--lh"
+        letterSpacing:
+          value: "-0.01em"
+          source: css_var
+          confidence: high
+          origin: "--tracking"
+        features:
+          value: caps
+          source: css_var
+          confidence: high
+          origin: "--case-caps"
+    section-heading:
+      properties:
+        fontFamily:
+          value: "Archivo, sans-serif"
+          source: font_face
+          confidence: high
+          origin: "@font-face"
+        fontSize:
+          value: 2.5rem
+          source: css_var
+          confidence: high
+          origin: "--fs"
+        fontWeight:
+          value: 700
+          source: css_var
+          confidence: high
+          origin: "--fw"
+        lineHeight:
+          value: 1.1
+          source: css_var
+          confidence: high
+          origin: "--lh"
+        features:
+          value: caps
+          source: css_var
+          confidence: high
+          origin: "--case-caps"
+    card-title:
+      properties:
+        fontFamily:
+          value: "Archivo, sans-serif"
+          source: font_face
+          confidence: high
+          origin: "@font-face"
+        fontSize:
+          value: 1.625rem
+          source: css_var
+          confidence: high
+          origin: "--fs"
+        fontWeight:
+          value: 700
+          source: css_var
+          confidence: high
+          origin: "--fw"
+        lineHeight:
+          value: 1.15
+          source: css_var
+          confidence: high
+          origin: "--lh"
+        features:
+          value: caps
+          source: css_var
+          confidence: high
+          origin: "--case-caps"
+    body-large:
+      properties:
+        fontFamily:
+          value: "Inter, sans-serif"
+          source: font_face
+          confidence: high
+          origin: "@font-face"
+        fontSize:
+          value: 1.25rem
+          source: css_var
+          confidence: high
+          origin: "--fs"
+        fontWeight:
+          value: 400
+          source: css_var
+          confidence: high
+          origin: "--fw"
+        lineHeight:
+          value: 1.5
+          source: css_var
+          confidence: high
+          origin: "--lh"
+    body:
+      properties:
+        fontFamily:
+          value: "Inter, sans-serif"
+          source: font_face
+          confidence: high
+          origin: "@font-face"
+        fontSize:
+          value: 1rem
+          source: css_var
+          confidence: high
+          origin: "--fs"
+        fontWeight:
+          value: 400
+          source: css_var
+          confidence: high
+          origin: "--fw"
+        lineHeight:
+          value: 1.6
+          source: css_var
+          confidence: high
+          origin: "--lh"
+    body-small:
+      properties:
+        fontFamily:
+          value: "Inter, sans-serif"
+          source: font_face
+          confidence: high
+          origin: "@font-face"
+        fontSize:
+          value: 0.875rem
+          source: css_var
+          confidence: high
+          origin: "--fs"
+        fontWeight:
+          value: 400
+          source: css_var
+          confidence: high
+          origin: "--fw"
+        lineHeight:
+          value: 1.6
+          source: css_var
+          confidence: high
+          origin: "--lh"
+    label:
+      properties:
+        fontFamily:
+          value: "Inter, sans-serif"
+          source: font_face
+          confidence: high
+          origin: "@font-face"
+        fontSize:
+          value: 0.875rem
+          source: css_var
+          confidence: high
+          origin: "--fs"
+        fontWeight:
+          value: 500
+          source: css_var
+          confidence: high
+          origin: "--fw"
+        lineHeight:
+          value: 1.4
+          source: unknown
+          confidence: low
+          origin: null
+    eyebrow-mono:
+      properties:
+        fontFamily:
+          value: "JetBrains Mono, monospace"
+          source: font_face
+          confidence: high
+          origin: "@font-face"
+        fontSize:
+          value: 0.875rem
+          source: css_var
+          confidence: high
+          origin: "--fs"
+        fontWeight:
+          value: 500
+          source: css_var
+          confidence: high
+          origin: "--fw"
+        lineHeight:
+          value: 1.4
+          source: unknown
+          confidence: low
+          origin: null
+        letterSpacing:
+          value: 0.08em
+          source: css_var
+          confidence: high
+          origin: "--tracking"
+        features:
+          value: caps
+          source: css_var
+          confidence: high
+          origin: "--case-caps"
+    tag-mono:
+      properties:
+        fontFamily:
+          value: "JetBrains Mono, monospace"
+          source: font_face
+          confidence: high
+          origin: "@font-face"
+        fontSize:
+          value: 0.75rem
+          source: css_var
+          confidence: high
+          origin: "--fs"
+        fontWeight:
+          value: 400
+          source: css_var
+          confidence: high
+          origin: "--fw"
+        lineHeight:
+          value: 1.2
+          source: unknown
+          confidence: low
+          origin: null
+    metric-mono:
+      properties:
+        fontFamily:
+          value: "JetBrains Mono, monospace"
+          source: font_face
+          confidence: high
+          origin: "@font-face"
+        fontSize:
+          value: 5.5rem
+          source: css_var
+          confidence: high
+          origin: "--fs"
+        fontWeight:
+          value: 500
+          source: css_var
+          confidence: high
+          origin: "--fw"
+        lineHeight:
+          value: 1
+          source: css_var
+          confidence: high
+          origin: "--lh"
+        letterSpacing:
+          value: "-0.04em"
+          source: css_var
+          confidence: high
+          origin: "--tracking"
+    caption-mono:
+      properties:
+        fontFamily:
+          value: "JetBrains Mono, monospace"
+          source: font_face
+          confidence: high
+          origin: "@font-face"
+        fontSize:
+          value: 0.6875rem
+          source: css_var
+          confidence: high
+          origin: "--fs"
+        fontWeight:
+          value: 500
+          source: css_var
+          confidence: high
+          origin: "--fw"
+        lineHeight:
+          value: 1.4
+          source: unknown
+          confidence: low
+          origin: null
+        letterSpacing:
+          value: 0.08em
+          source: css_var
+          confidence: high
+          origin: "--tracking"
+        features:
+          value: caps
+          source: css_var
+          confidence: high
+          origin: "--case-caps"
+  rounded:
+    sm:
+      value: 8px
+      source: css_var
+      confidence: high
+      origin: "--radius-sm"
+    md:
+      value: 12px
+      source: css_var
+      confidence: high
+      origin: "--radius-md"
+    lg:
+      value: 16px
+      source: css_var
+      confidence: high
+      origin: "--radius-lg"
+    xl:
+      value: 28px
+      source: css_var
+      confidence: high
+      origin: "--radius-xl"
+    full:
+      value: 9999px
+      source: css_var
+      confidence: high
+      origin: "--radius-full"
+  spacing:
+    2xs:
+      value: 8px
+      source: css_var
+      confidence: high
+      origin: "--space-2xs"
+    xs:
+      value: 12px
+      source: css_var
+      confidence: high
+      origin: "--space-xs"
+    sm:
+      value: 16px
+      source: css_var
+      confidence: high
+      origin: "--space-sm"
+    md:
+      value: 24px
+      source: css_var
+      confidence: high
+      origin: "--space-md"
+    lg:
+      value: 48px
+      source: css_var
+      confidence: high
+      origin: "--space-lg"
+    xl:
+      value: 88px
+      source: css_var
+      confidence: high
+      origin: "--space-xl"
+    xxl:
+      value: 120px
+      source: css_var
+      confidence: high
+      origin: "--space-xxl"
+confidence_summary:
+  high: 88
+  medium: 0
+  low: 4
+lint:
+  ran: false
+  error: "@google/design.md lint unavailable in this environment (needs npx). lint_compliance scored as skipped."

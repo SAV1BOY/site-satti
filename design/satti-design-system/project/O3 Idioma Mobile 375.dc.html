@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#F7F8FA; }
+  body { font-family:'Inter',sans-serif; color:#15171B; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#FFE9DE; }
+</style>
+</helmet>
+
+<div style="background:#0F1115; max-width:375px; margin:0 auto; min-height:100vh; position:relative; overflow:hidden">
+
+  <!-- Conteúdo atrás borrado -->
+  <div style="position:absolute; inset:0; filter:blur(6px); opacity:0.4; pointer-events:none">
+    <div style="padding:40px 20px">
+      <div style="font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; font-size:64px; line-height:0.92; letter-spacing:-0.02em; color:#F4F5F7">Construímos máquinas</div>
+    </div>
+  </div>
+  <div style="position:absolute; inset:0; background:rgba(15,17,21,0.6)"></div>
+
+  <!-- Header pill mock com seletor PT -->
+  <header style="position:absolute; top:12px; left:12px; right:12px; height:56px; background:#F7F8FA; border:1px solid #E3E6EB; border-radius:999px; display:flex; align-items:center; justify-content:space-between; padding:0 16px 0 22px; box-sizing:border-box; z-index:5">
+    <span style="font-family:'Archivo',sans-serif; font-weight:800; text-transform:uppercase; font-size:18px; letter-spacing:-0.01em; color:#15171B">SATTI</span>
+    <div style="display:flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; border:1px solid #2F6BFF; border-radius:999px; padding:7px 14px">
+      <span style="color:#15171B">PT</span>
+      <span style="color:#2F6BFF">▾</span>
+    </div>
+  </header>
+
+  <section data-screen-label="O3 Idioma Mobile" style="position:absolute; inset:0; display:flex; align-items:flex-start; justify-content:center; padding:84px 16px 0">
+
+    <!-- Dropdown -->
+    <div style="width:100%; background:#F7F8FA; border:1px solid #E3E6EB; border-radius:16px; box-shadow:0 24px 60px rgba(15,17,21,0.32); padding:14px; box-sizing:border-box; display:flex; flex-direction:column; gap:6px">
+
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 10px 12px">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Idioma</span>
+        <button aria-label="Fechar" style="width:32px; height:32px; border-radius:999px; border:1px solid #E3E6EB; background:transparent; color:#15171B; font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center">✕</button>
+      </div>
+
+      <!-- Item ativo -->
+      <button style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:#EDF2FF; border:1px solid #2F6BFF; border-radius:12px; padding:15px 16px; cursor:pointer; text-align:left">
+        <div style="display:flex; align-items:center; gap:12px">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#2F6BFF; border:1px solid #2F6BFF; border-radius:8px; padding:3px 7px">PT</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.04em; text-transform:uppercase; color:#15171B">Português (BR)</span>
+        </div>
+        <span style="color:#2F6BFF; font-size:15px">✓</span>
+      </button>
+
+      <!-- Item inativo -->
+      <button style="display:flex; align-items:center; justify-content:space-between; gap:12px; background:transparent; border:1px solid #E3E6EB; border-radius:12px; padding:15px 16px; cursor:pointer; text-align:left">
+        <div style="display:flex; align-items:center; gap:12px">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480; border:1px solid #E3E6EB; border-radius:8px; padding:3px 7px">EN</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">English</span>
+        </div>
+        <span style="color:#C7CCD4; font-size:13px">→</span>
+      </button>
+
+      <div style="border-top:1px solid #E3E6EB; margin-top:6px; padding:12px 10px 6px">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:#6E7480">/en — espelho em inglês (Fase 5)</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Specs -->
+  <section data-screen-label="Specs O3 Mobile" style="position:absolute; left:0; right:0; bottom:0; border-top:1px solid #1E2127; background:#0F1115; padding:24px 20px; display:flex; flex-direction:column; gap:16px; z-index:6">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#F4F5F7">Specs — O3 Mobile</div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#FF4D00; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.7; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Motion: dropdown desce do header com fade+scale 0.98→1, 0.22s. Hover dos itens: borda 0.2s.</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#F4F5F7; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.7; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Reduced-motion: aparece estático e aberto. Backdrop sem transição.</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#F4F5F7; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.7; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Blaze: nenhum neste viewport — item ativo é circuit #2F6BFF (funcional). Só 2 rótulos, sem copy traduzida.</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px; margin-top:2px">
+      <span style="width:6px; height:6px; background: {{ rmDot }}; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Estado: {{ rmLabel }}</span>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 375, &quot;height&quot;: 812}}">
+class Component extends DCLogic {
+  state = { rm: false };
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._onMq = (ev) => this.setState({ rm: ev.matches });
+    this.setState({ rm: this._mq.matches });
+    this._mq.addEventListener('change', this._onMq);
+  }
+
+  componentWillUnmount() {
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
+  }
+
+  renderVals() {
+    return {
+      rmDot: this.state.rm ? '#F4F5F7' : '#FF4D00',
+      rmLabel: this.state.rm ? 'reduced-motion' : 'motion on'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#0F1115; }
+  body { font-family:'Inter',sans-serif; color:#F4F5F7; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#FF4D00; color:#15171B; }
+  @keyframes floatL { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-14px); } }
+  @keyframes floatR { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-14px); } }
+</style>
+</helmet>
+
+<div style="background:#0F1115; color:#F4F5F7; max-width:375px; margin:0 auto; min-height:100vh">
+
+  <section data-screen-label="S6 Automação Mobile" style="padding:40px 20px 48px; position:relative; overflow:hidden">
+
+    <!-- Eyebrow -->
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px">
+      <span style="width:8px; height:8px; background:#FF4D00; display:inline-block; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Automação</span>
+    </div>
+
+    <!-- Título -->
+    <h2 style="margin:0 0 14px; font-family:'Archivo',sans-serif; font-weight:900; text-transform:uppercase; font-size:44px; line-height:0.96; letter-spacing:-0.02em; color:#F4F5F7">
+      <span style="color:#6E7480">{</span>Automação<span style="color:#6E7480">}</span><br>Inteligente<span style="color:#FF4D00"> **</span>
+    </h2>
+    <p style="margin:0 0 28px; font-size:15px; line-height:1.6; color:#9AA0AA; max-width:36ch">Sistemas que rodam sozinhos, conectados às suas ferramentas — e medidos de ponta a ponta.</p>
+
+    <!-- CTAs -->
+    <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:36px">
+      <a style="border:0; background:#FF4D00; color:#15171B; border-radius:999px; padding:15px 28px; text-align:center; font-family:'Inter',sans-serif; font-weight:600; font-size:15px; cursor:pointer; text-decoration:none">Ver portfólio</a>
+      <a style="border:1px solid #2E333B; background:transparent; color:#F4F5F7; border-radius:999px; padding:14px 28px; text-align:center; font-family:'Inter',sans-serif; font-weight:500; font-size:15px; cursor:pointer; text-decoration:none">Falar com a gente</a>
+    </div>
+
+    <!-- Phones reposicionados (lado a lado, acima do mosaico, sem cobrir texto) -->
+    <div style="display:flex; gap:14px; justify-content:center; margin-bottom:32px">
+      <div style="width:128px; height:264px; border-radius:28px; border:1px solid #2E333B; background:#15171B; padding:8px; box-sizing:border-box; animation: {{ floatLAnim }}">
+        <div style="height:100%; border-radius:16px; background:#0F1115; border:1px solid #1E2127; display:flex; align-items:center; justify-content:center; background-image:linear-gradient(rgba(244,245,247,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(244,245,247,0.04) 1px, transparent 1px); background-size:20px 20px">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">[ PH-L ]</span>
+        </div>
+      </div>
+      <div style="width:128px; height:264px; border-radius:28px; border:1px solid #2E333B; background:#15171B; padding:8px; box-sizing:border-box; margin-top:24px; animation: {{ floatRAnim }}">
+        <div style="height:100%; border-radius:16px; background:#0F1115; border:1px solid #1E2127; display:flex; align-items:center; justify-content:center; background-image:linear-gradient(rgba(244,245,247,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(244,245,247,0.04) 1px, transparent 1px); background-size:20px 20px">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">[ PH-R ]</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mosaico 2 colunas: SC1-SC10 + vídeos A6/A9 -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:36px">
+      <sc-for list="{{ cells }}" as="c" hint-placeholder-count="12">
+        <div style="aspect-ratio:1/1; border-radius:12px; border:1px solid {{ c.border }}; background: {{ c.bg }}; display:flex; align-items:center; justify-content:center; background-image:linear-gradient(rgba(244,245,247,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(244,245,247,0.04) 1px, transparent 1px); background-size:24px 24px">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color: {{ c.color }}">{{ c.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- Linha de Automação horizontal -->
+    <svg viewBox="0 0 335 40" preserveAspectRatio="none" style="width:100%; height:36px; overflow:visible" role="img" aria-label="Linha de automação">
+      <path d="M0,20 L335,20" style="fill:none; stroke:#1E2127; stroke-width:1.5"></path>
+      {{ pulse }}
+      <circle cx="60" cy="20" r="6" style="fill:#0F1115; stroke:#2E333B; stroke-width:1.5"></circle>
+      <circle cx="60" cy="20" r="2.5" style="fill:#6E7480"></circle>
+      <circle cx="167" cy="20" r="6" style="fill:#0F1115; stroke:#2E333B; stroke-width:1.5"></circle>
+      <circle cx="167" cy="20" r="2.5" style="fill:#6E7480"></circle>
+      <circle cx="275" cy="20" r="6" style="fill:#0F1115; stroke:#2E333B; stroke-width:1.5"></circle>
+      <circle cx="275" cy="20" r="2.5" style="fill:#6E7480"></circle>
+    </svg>
+
+  </section>
+
+  <!-- Specs -->
+  <section data-screen-label="Specs S6 Mobile" style="border-top:1px solid #1E2127; padding:28px 20px; display:flex; flex-direction:column; gap:20px">
+    <div style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:#F4F5F7">Specs — S6 Mobile</div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#FF4D00; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Motion: phones flutuam 6s · fases ±3s. Pulso blaze na Linha de Automação. Mosaico estático.</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#F4F5F7; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Reduced-motion: phones parados. Linha 100% desenhada sem pulso.</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; gap:10px">
+      <span style="width:6px; height:6px; background:#F4F5F7; display:inline-block; margin-top:5px; flex:none"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; line-height:1.8; letter-spacing:0.04em; text-transform:uppercase; color:#6E7480">Blaze: único destaque = CTA "Ver portfólio" (texto preto). Mobile: mosaico 3×4 → 2 colunas; phones acima do texto.</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px; margin-top:4px">
+      <span style="width:6px; height:6px; background: {{ rmDot }}; display:inline-block"></span>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:#6E7480">Estado: {{ rmLabel }}</span>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 375, &quot;height&quot;: 1500}}">
+class Component extends DCLogic {
+  state = { rm: false };
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._onMq = (ev) => this.setState({ rm: ev.matches });
+    this.setState({ rm: this._mq.matches });
+    this._mq.addEventListener('change', this._onMq);
+  }
+
+  componentWillUnmount() {
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
+  }
+
+  renderVals() {
+    const e = React.createElement;
+    const rm = this.state.rm;
+    let pulse = null;
+    if (!rm) {
+      const motion = () => e('animateMotion', {
+        dur: '6s', repeatCount: 'indefinite', path: 'M0,20 L335,20',
+        keyTimes: '0;1', calcMode: 'spline', keySplines: '0.4 0 0.6 1'
+      });
+      pulse = e('g', null,
+        e('circle', { r: 8, fill: '#FF4D00', opacity: 0.16 }, motion()),
+        e('circle', { r: 3.5, fill: '#FF4D00' }, motion())
+      );
+    }
+    // 12-cell mosaic: A6 and A9 are the two central video slots
+    const cells = [];
+    let sc = 1;
+    for (let i = 0; i < 12; i++) {
+      if (i === 4) {
+        cells.push({ label: '[ A6 · VÍDEO ]', bg: '#15171B', border: '#3A3F47', color: '#F4F5F7' });
+      } else if (i === 7) {
+        cells.push({ label: '[ A9 · VÍDEO ]', bg: '#15171B', border: '#3A3F47', color: '#F4F5F7' });
+      } else {
+        cells.push({ label: '[ SC' + sc + ' ]', bg: 'rgba(244,245,247,0.03)', border: '#1E2127', color: '#6E7480' });
+        sc++;
+      }
+    }
+    return {
+      pulse,
+      cells,
+      floatLAnim: rm ? 'none' : 'floatL 6s ease-in-out infinite',
+      floatRAnim: rm ? 'none' : 'floatR 6s ease-in-out -3s infinite',
+      rmDot: rm ? '#F4F5F7' : '#FF4D00',
+      rmLabel: rm ? 'reduced-motion' : 'motion on'
+    };
+  }
+}
+</script>
+</body>
+</html>

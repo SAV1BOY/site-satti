@@ -1,0 +1,19 @@
+{
+  "durations": [
+    {
+      "value": "0.45s",
+      "count": 2
+    },
+    {
+      "value": "0.35s",
+      "count": 2
+    }
+  ],
+  "easings": [
+    {
+      "value": "cubic-bezier(0.76,0,0.24,1)",
+      "count": 2
+    }
+  ],
+  "keyframes": []
+}

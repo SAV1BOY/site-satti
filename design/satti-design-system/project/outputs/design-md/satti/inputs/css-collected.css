@@ -1,0 +1,64 @@
+:root{
+  --c-paper:#F7F8FA; --c-iron:#15171B; --c-graphite:#0F1115; --c-steel:#6E7480;
+  --c-blaze:#FF4D00; --c-circuit:#2F6BFF; --c-blaze-soft:#FFE9DE; --c-line:#E3E6EB;
+  --c-ink-on-dark:#F4F5F7; --c-error:#B43A2F; --c-success:#15794B;
+  --tint-card1:#FFE9DE; --tint-card2:#E4EBFF; --tint-card3:#ECEEF2;
+  --radius-sm:8px; --radius-md:12px; --radius-lg:16px; --radius-xl:28px; --radius-full:9999px;
+  --space-2xs:8px; --space-xs:12px; --space-sm:16px; --space-md:24px; --space-lg:48px; --space-xl:88px; --space-xxl:120px;
+  --fs-display:10.5rem; --fs-display-hero:8.75rem; --fs-statement:5.25rem; --fs-section:2.5rem; --fs-card-title:1.625rem;
+  --fs-body-lg:1.25rem; --fs-body:1rem; --fs-body-sm:0.875rem; --fs-label:0.875rem; --fs-eyebrow:0.875rem; --fs-tag:0.75rem; --fs-metric:5.5rem; --fs-caption:0.6875rem;
+  --lh-tight:0.92; --lh-display:0.95; --lh-heading:1.1; --lh-snug:1.15; --lh-body:1.6;
+  --tracking-display:-0.02em; --tracking-tight:-0.015em; --tracking-mono:0.08em; --tracking-metric:-0.04em;
+  --fw-display:900; --fw-statement:800; --fw-heading:700; --fw-semibold:600; --fw-medium:500; --fw-body:400;
+  --case-caps:uppercase;
+  --font-display:'Archivo'; --font-body:'Inter'; --font-mono:'JetBrains Mono';
+}
+@font-face{font-family:'Archivo';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/archivo/v19/archivo-500.woff2) format('woff2')}
+@font-face{font-family:'Archivo';font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/archivo/v19/archivo-700.woff2) format('woff2')}
+@font-face{font-family:'Archivo';font-style:normal;font-weight:800;font-display:swap;src:url(https://fonts.gstatic.com/s/archivo/v19/archivo-800.woff2) format('woff2')}
+@font-face{font-family:'Archivo';font-style:normal;font-weight:900;font-display:swap;src:url(https://fonts.gstatic.com/s/archivo/v19/archivo-900.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v13/inter-400.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v13/inter-500.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v13/inter-600.woff2) format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/jetbrainsmono/v18/jbm-400.woff2) format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/jetbrainsmono/v18/jbm-500.woff2) format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/jetbrainsmono/v18/jbm-600.woff2) format('woff2')}
+html,body{margin:0;padding:0}
+body{background:var(--c-paper);color:var(--c-iron);font-family:'Inter',sans-serif;line-height:1.6;font-size:16px}
+::selection{background:#FFE9DE}
+h1{font-family:'Archivo',sans-serif;font-weight:900;text-transform:uppercase;font-size:8.75rem;line-height:0.95;letter-spacing:-0.015em;color:#15171B}
+.display{font-family:'Archivo',sans-serif;font-weight:900;text-transform:uppercase;font-size:10.5rem;line-height:0.92;letter-spacing:-0.02em;color:#15171B}
+.statement{font-family:'Archivo',sans-serif;font-weight:800;text-transform:uppercase;font-size:5.25rem;line-height:1.02;letter-spacing:-0.01em;color:#15171B}
+h2{font-family:'Archivo',sans-serif;font-weight:700;text-transform:uppercase;font-size:2.5rem;line-height:1.1;color:#15171B}
+.card-title{font-family:'Archivo',sans-serif;font-weight:700;text-transform:uppercase;font-size:1.625rem;line-height:1.15;color:#15171B}
+.lead{font-family:'Inter',sans-serif;font-weight:400;font-size:1.25rem;line-height:1.5;color:#6E7480}
+p{font-family:'Inter',sans-serif;font-weight:400;font-size:1rem;line-height:1.6;color:#15171B}
+.body-sm{font-family:'Inter',sans-serif;font-weight:400;font-size:0.875rem;line-height:1.6;color:#6E7480}
+label{font-family:'Inter',sans-serif;font-weight:500;font-size:0.875rem;line-height:1.4;color:#15171B}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:0.875rem;letter-spacing:0.08em;text-transform:uppercase;color:#6E7480}
+.metric{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:5.5rem;line-height:1;letter-spacing:-0.04em;color:#15171B}
+.caption{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:0.6875rem;letter-spacing:0.08em;text-transform:uppercase;color:#6E7480}
+.btn-primary{background:var(--c-blaze);color:var(--c-iron);border:0;border-radius:999px;padding:18px 36px;font-family:'Inter',sans-serif;font-weight:600;font-size:16px;cursor:pointer;transition:transform 0.45s cubic-bezier(0.76,0,0.24,1)}
+.btn-secondary{background:transparent;color:var(--c-iron);border:1px solid var(--c-line);border-radius:999px;padding:17px 36px;font-family:'Inter',sans-serif;font-weight:500;font-size:16px;cursor:pointer;transition:transform 0.45s cubic-bezier(0.76,0,0.24,1)}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-primary:focus-visible,.btn-secondary:focus-visible{outline:none;box-shadow:0 0 0 2px #F7F8FA, 0 0 0 4px #2F6BFF}
+.btn-icon{width:64px;height:64px;border-radius:999px;border:1px solid var(--c-line);background:transparent;color:#15171B;cursor:pointer;transition:background 0.35s ease, color 0.35s ease}
+.btn-icon:hover{background:#15171B;color:#F4F5F7}
+.card{background:var(--c-paper);border:1px solid var(--c-line);border-radius:28px;padding:36px;box-shadow:none}
+.card-dark{background:var(--c-graphite);color:var(--c-ink-on-dark);border-radius:28px;padding:16px}
+.card-dark .glow{background:#FF4D00;filter:blur(90px);opacity:0.8}
+.stat-slot{background:#ECEEF2;border-radius:12px;background-image:linear-gradient(#E0E4EA 1px, transparent 1px), linear-gradient(90deg, #E0E4EA 1px, transparent 1px);background-size:24px 24px}
+.input{height:54px;border-radius:12px;border:1px solid var(--c-line);background:var(--c-paper);color:var(--c-iron);padding:0 18px;font-family:'Inter',sans-serif;font-size:15px}
+.input:focus-visible{outline:none;border:1px solid #2F6BFF;box-shadow:0 0 0 3px rgba(47,107,255,0.18)}
+.input.is-error{border:1px solid #B43A2F}
+.input.is-success{border:1px solid #15794B}
+.field-error{color:#B43A2F;font-size:13px}
+.badge{border:1px solid var(--c-line);border-radius:999px;padding:10px 20px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:12px;color:#15171B;background:transparent}
+.tag{border:1px solid var(--c-line);border-radius:999px;padding:10px 20px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#15171B}
+.marker{width:8px;height:8px;background:#FF4D00;display:inline-block}
+nav{border-bottom:1px solid var(--c-line);background:var(--c-paper)}
+.media-placeholder{aspect-ratio:16/9;border-radius:12px;background:#ECEEF2;background-image:linear-gradient(#E0E4EA 1px, transparent 1px), linear-gradient(90deg, #E0E4EA 1px, transparent 1px);background-size:40px 40px}
+.grid-panel{border:1px solid var(--c-line);border-radius:12px;background-image:linear-gradient(#EEF0F3 1px, transparent 1px), linear-gradient(90deg, #EEF0F3 1px, transparent 1px), linear-gradient(#E3E6EB 1px, transparent 1px), linear-gradient(90deg, #E3E6EB 1px, transparent 1px);background-size:12px 12px, 12px 12px, 48px 48px, 48px 48px}
+section{padding:88px 120px;border-top:1px solid var(--c-line)}
+@media (max-width:640px){ section{padding:48px 20px} .display{font-size:3rem} h1{font-size:64px} }
+@media (min-width:768px){ .cards{grid-template-columns:repeat(3,1fr);gap:24px} }

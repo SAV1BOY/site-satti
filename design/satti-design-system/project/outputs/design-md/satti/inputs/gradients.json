@@ -1,0 +1,31 @@
+{
+  "primary": "linear-gradient(#E0E4EA 1px, transparent 1px)",
+  "secondary": "linear-gradient(90deg, #E0E4EA 1px, transparent 1px)",
+  "total_unique": 6,
+  "top": [
+    {
+      "value": "linear-gradient(#E0E4EA 1px, transparent 1px)",
+      "count": 2
+    },
+    {
+      "value": "linear-gradient(90deg, #E0E4EA 1px, transparent 1px)",
+      "count": 2
+    },
+    {
+      "value": "linear-gradient(#EEF0F3 1px, transparent 1px)",
+      "count": 1
+    },
+    {
+      "value": "linear-gradient(90deg, #EEF0F3 1px, transparent 1px)",
+      "count": 1
+    },
+    {
+      "value": "linear-gradient(#E3E6EB 1px, transparent 1px)",
+      "count": 1
+    },
+    {
+      "value": "linear-gradient(90deg, #E3E6EB 1px, transparent 1px)",
+      "count": 1
+    }
+  ]
+}
