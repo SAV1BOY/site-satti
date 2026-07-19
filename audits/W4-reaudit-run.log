@@ -1,0 +1,1118 @@
+Reading additional input from stdin...
+2026-07-19T17:00:15.720252Z ERROR codex_models_manager::cache: failed to load models cache: missing field `supports_reasoning_summaries` at line 86 column 5
+OpenAI Codex v0.144.3
+--------
+workdir: C:\Users\migue\Desktop\Projetos\SITE SATTI
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: danger-full-access
+reasoning effort: none
+reasoning summaries: none
+session id: 019f7b52-41a0-70c1-9c1a-92f55a356c29
+--------
+user
+RE-AUDIT W4 — SOMENTE itens 3, 4 e 5 (FAILs do primeiro passe). Execução curta; grave audits/W4-reaudit-verdict.md após cada item.
+
+Papel: auditor de gate. Auditoria ESTÁTICA. NÃO rode npm/build/git.
+
+Contexto: audits/W4-verdict.md deu FAIL nos itens 3 (ARIA triggers), 4 (L2 no O1) e 5 (close→âncora). Correções no commit 0884b8a:
+- Item 3: aria-haspopup='dialog' + aria-expanded no CTA de contato e no hambúrguer (components/sections/header/HeaderClient.tsx) e aria-expanded no MenuLanguage (components/overlays/menu/MenuLanguage.tsx).
+- Item 4: MenuOverlay.module.css — regra .root:has(.item:hover)/.root:has(.item:focus-visible) esconde .pulse enquanto um item é o blaze.
+- Item 5: OverlayProvider.close() remove data-overlay SINCRONAMENTE no handler (antes do default da âncora) e o focus-restore usa focus({preventScroll:true}) (components/overlays/OverlayProvider.tsx).
+
+Julgue APENAS esses 3 itens contra as correções. Formato: tabela item→PASS/FAIL→evidência arquivo:linha + veredito final (2 PASS anteriores + estes 3). Se FAIL, correção proposta.
+warning: Skill descriptions were shortened to fit the 2% skills context budget. Codex can still see every skill, but some descriptions are shorter. Disable unused skills or plugins to leave more room for the rest.
+codex
+Vou reavaliar exclusivamente os itens 3, 4 e 5 por inspeção estática, sem executar npm, build ou git. Após concluir cada item, atualizarei `audits/W4-reaudit-verdict.md` imediatamente, preservando os 2 PASS anteriores no veredito agregado.
+exec
+"C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$files = @('"'audits/W4-verdict.md','components/sections/header/HeaderClient.tsx','components/overlays/menu/MenuLanguage.tsx','components/overlays/menu/MenuOverlay.module.css','components/overlays/OverlayProvider.tsx'); foreach ("'$f in $files) { Write-Output "FILE: $f"; $n=0; Get-Content -LiteralPath $f | ForEach-Object { $n++; '"'{0,4}: {1}' -f "'$n, $_ } }' in C:\Users\migue\Desktop\Projetos\SITE SATTI
+ succeeded in 1302ms:
+FILE: audits/W4-verdict.md
+   1: # AUDIT W4 â€” Overlays + Form + Triggers
+   2: 
+   3: Auditoria exclusivamente estÃ¡tica; nenhum `npm`, build ou Git foi executado.
+   4: 
+   5: | # | Gate | Veredito | EvidÃªncia estÃ¡tica |
+   6: |---|---|---|---|
+   7: | 1 | Fidelidade Ã s comps O1/O2/O3 | **PASS** | O1 implementa fullscreen graphite, medidas desktop/mobile e entrada documentadas em `components/overlays/menu/MenuOverlay.module.css:1-20`, `:23-34`, `:301-358`; O2 reproduz painel desktop de 620 px e, no mobile, painel 100% sem backdrop em `components/overlays/contact/ContactOverlay.module.css:42-59`, `:302-344`; O3 registra e implementa card desktop 340 px e mobile full-width em `components/overlays/language/LanguageOverlay.module.css:1-21`, `:24-53`, `:195-215`. As adaptaÃ§Ãµes de scaffold/sombra estÃ£o declaradas nos cabeÃ§alhos CSS, portanto aceitas pelo enunciado. |
+   8: | 2 | Form D6 completo | **PASS** | Os cinco campos estÃ£o ligados Ã  action em `components/sections/footer/FooterForm.tsx:69-168`; os estados default/focus/erro/sucesso usam somente borda, texto e Ã­cone em `components/sections/footer/Footer.module.css:117-228`; a mensagem oficial chega do JSON por `components/sections/footer/Footer.tsx:112-124` (literal PT em `content/home.pt-BR.json:306-314`). Honeypot em `FooterForm.tsx:170-180` e `app/actions/submit-brief.ts:53-56`; rate-limit por IP em `submit-brief.ts:35-63`; schema Zod dos cinco campos em `submit-brief.ts:27-33`, validado em `:65-82`; ausÃªncia/falha de Resend e n8n degrada com logs claros em `:87-121`, `:124-158`. Wiring React 19 correto em `FooterForm.tsx:51-54` e assinatura `(prevState, FormData)` em `submit-brief.ts:49-52`. |
+   9: | 3 | Overlays pixel-fiÃ©is e acessÃ­veis | **FAIL** | O chrome comum fornece `role="dialog"`, `aria-modal`, foco inicial, Esc, trap de Tab e restauraÃ§Ã£o em `components/overlays/OverlayProvider.tsx:94-136`, `:146-158`; alvos mÃ­nimos sÃ£o evidenciados em `components/overlays/menu/MenuOverlay.module.css:97-112`, `:186-197`, `components/overlays/contact/ContactOverlay.module.css:92-106`, `components/overlays/language/LanguageOverlay.module.css:73-96`, `:103-115`. PorÃ©m os triggers nÃ£o cumprem integralmente `aria-expanded` + `aria-haspopup`: o CTA de contato nÃ£o tem nenhum dos dois e o menu nÃ£o tem `aria-haspopup` (`components/sections/header/HeaderClient.tsx:102-127`); o trigger O1â†’O3 tem `aria-haspopup`, mas nÃ£o `aria-expanded` (`components/overlays/menu/MenuLanguage.tsx:24-29`). |
+  10: | 4 | Leis nas superfÃ­cies novas | **FAIL** | As declaraÃ§Ãµes usam tokens (os hex encontrados estÃ£o apenas em comentÃ¡rios de rastreabilidade); focus rings/links circuit sÃ£o funcionais, a copy vem de `next-intl`, e `[CONFIRMAR]` recebe steel + `data-confirm` (`components/overlays/menu/MenuOverlay.tsx:55-64`, `:118-147`; `components/overlays/contact/ContactOverlay.tsx:40-45`, `:90-98`, `:118-131`). Entradas estÃ£o gated e usam transform/opacity (`components/overlays/menu/MenuOverlay.module.css:248-299`; `components/overlays/contact/ContactOverlay.module.css:264-300`; `components/overlays/language/LanguageOverlay.module.css:218-252`), com tipografia tokenizada. Mas O1 pode exibir simultaneamente o pulso blaze (`MenuOverlay.module.css:64-77`, `:271-275`) e um item de navegaÃ§Ã£o blaze em hover/foco (`:167-173`), excedendo L2 (mÃ¡ximo de um destaque blaze por viewport). |
+  11: | 5 | CÃ³digo L11 + action + scroll-lock | **FAIL** | A montagem do provider envolve header, pÃ¡gina e footer em `app/[locale]/page.tsx:33-54`; islands sÃ£o pequenas, refs tÃªm inicializaÃ§Ã£o React 19 correta (`components/overlays/OverlayProvider.tsx:68-71`), nÃ£o hÃ¡ `any` no escopo e o wiring de `useActionState` estÃ¡ correto (`components/sections/footer/FooterForm.tsx:51-54`; `app/actions/submit-brief.ts:49-52`). O scroll-lock Ã© aplicado por `app/globals.css:69-75`, mas o requisito â€œclose antes do scrollâ€ nÃ£o Ã© garantido: `close()` apenas agenda `setActive(null)` (`OverlayProvider.tsx:90-92`), enquanto a remoÃ§Ã£o de `data-overlay` ocorre depois, em effect (`:94-103`); as Ã¢ncoras deixam o default nativo correr no mesmo clique (`components/overlays/menu/MenuNavLink.tsx:29-35`; `components/overlays/contact/ContactCta.tsx:24-29`). O comentÃ¡rio de globals afirma uma ordem que o cÃ³digo nÃ£o implementa sincronicamente. |
+  12: 
+  13: ## Veredito
+  14: 
+  15: **2/5 PASS â€” GATE W4: FAIL.**
+  16: 
+  17: ## FAILs acionÃ¡veis
+  18: 
+  19: - **ALTA â€” contratos ARIA incompletos nos triggers.** Expor `aria-haspopup="dialog"` e `aria-expanded={overlay.active === "â€¦"}` em todos os controles que abrem O1/O2/O3: menu e CTA no header, alÃ©m de `MenuLanguage`. Preservar o fallback `href="#contato"` do CTA.
+  20: - **ALTA â€” O1 viola L2 durante hover/foco.** HÃ¡ pulso blaze animado e o item interagido tambÃ©m vira blaze. Manter apenas um: por exemplo, suspender/ocultar o pulso enquanto um item estiver em hover/focus-within, ou retirar blaze do estado de item conforme arbitragem visual.
+  21: - **ALTA â€” ordem closeâ†’Ã¢ncora nÃ£o Ã© determinÃ­stica.** Remover o scroll-lock de forma sÃ­ncrona antes de permitir/navegar ao fragmento e sÃ³ entÃ£o concluir o fechamento; centralizar isso em uma operaÃ§Ã£o do provider evita duplicaÃ§Ã£o em `MenuNavLink` e `ContactCta`. Validar tambÃ©m que a restauraÃ§Ã£o de foco nÃ£o desfaz a posiÃ§Ã£o final da Ã¢ncora.
+  22: 
+  23: ## DivergÃªncias aceitas
+  24: 
+  25: - O1 remove os 348 px reservados Ã  aside de especificaÃ§Ã£o da comp (`components/overlays/menu/MenuOverlay.module.css:5-6`).
+  26: - O3 substitui a sombra da comp por hairline + scrim para cumprir L9 (`components/overlays/language/LanguageOverlay.module.css:10-15`).
+  27: - O2 mobile Ã© deliberadamente tela cheia, sem half-blur (`components/overlays/contact/ContactOverlay.module.css:302-312`), conforme ULTRAGOAL Â§4.
+FILE: components/sections/header/HeaderClient.tsx
+   1: "use client";
+   2: 
+   3: import { useEffect, useState } from "react";
+   4: import { useOverlay } from "@/components/overlays/OverlayProvider";
+   5: import styles from "./StickyHeader.module.css";
+   6: 
+   7: /**
+   8:  * HeaderClient â€” comportamento do pill (comp S1+S2 + decisÃ£o F0-F5):
+   9:  * - Estado base (sobre o hero): CTA "Falar com a SATTI" ghost/hairline.
+  10:  * - Aos ~80% da altura da viewport (fim do hero) o header ativa e o CTA
+  11:  *   preenche blaze â€” transiÃ§Ã£o .4s var(--ease), texto iron sobre blaze (L2).
+  12:  * - Scroll: listener passive + rAF-throttle (padrÃ£o sancionado pela L10).
+  13:  * - CTA com roll de texto (duas camadas, --ease-roll â€” comp: 0.35s).
+  14:  * - Menu hambÃºrguer: abre O1 no W4; por ora aria-expanded=false + handler.
+  15:  * - Reduced-motion: sem transiÃ§Ã£o de preenchimento nem roll (sÃ³ troca).
+  16:  */
+  17: 
+  18: interface NavItem {
+  19:   label: string;
+  20:   href: string;
+  21: }
+  22: 
+  23: interface HeaderClientProps {
+  24:   brand: string;
+  25:   nav: NavItem[];
+  26:   cta: string;
+  27:   menuLabel: string;
+  28:   localePt: string;
+  29:   localeSeparator: string;
+  30:   localeEn: string;
+  31:   currentLocale: string;
+  32: }
+  33: 
+  34: export default function HeaderClient({
+  35:   brand,
+  36:   nav,
+  37:   cta,
+  38:   menuLabel,
+  39:   localePt,
+  40:   localeSeparator,
+  41:   localeEn,
+  42:   currentLocale,
+  43: }: HeaderClientProps) {
+  44:   const [active, setActive] = useState(false);
+  45:   // W4 (DEC-011): hambÃºrguer abre o O1 via OverlayProvider.
+  46:   const overlay = useOverlay();
+  47: 
+  48:   useEffect(() => {
+  49:     let raf = 0;
+  50:     const update = () => {
+  51:       setActive(window.scrollY >= window.innerHeight * 0.8);
+  52:       raf = 0;
+  53:     };
+  54:     const onScroll = () => {
+  55:       if (raf === 0) raf = requestAnimationFrame(update);
+  56:     };
+  57:     update();
+  58:     window.addEventListener("scroll", onScroll, { passive: true });
+  59:     window.addEventListener("resize", onScroll, { passive: true });
+  60:     return () => {
+  61:       window.removeEventListener("scroll", onScroll);
+  62:       window.removeEventListener("resize", onScroll);
+  63:       cancelAnimationFrame(raf);
+  64:     };
+  65:   }, []);
+  66: 
+  67:   const isPt = currentLocale !== "en";
+  68: 
+  69:   return (
+  70:     <header className={styles.header} data-active={active ? "true" : "false"}>
+  71:       <a className={styles.brand} href="#top">
+  72:         {brand}
+  73:       </a>
+  74: 
+  75:       <nav className={styles.nav}>
+  76:         {nav.map((item) => (
+  77:           <a key={item.href} className={styles.navLink} href={item.href}>
+  78:             {item.label}
+  79:           </a>
+  80:         ))}
+  81:       </nav>
+  82: 
+  83:       <div className={styles.actions}>
+  84:         {/* Seletor de idioma â†’ abre o O3 (DEC-011); os <Link> reais de
+  85:             troca vivem no overlay. */}
+  86:         <button
+  87:           type="button"
+  88:           className={styles.locale}
+  89:           aria-haspopup="dialog"
+  90:           aria-expanded={overlay.active === "language"}
+  91:           onClick={() => overlay.open("language")}
+  92:         >
+  93:           <span className={isPt ? styles.localeActive : styles.localeLink}>
+  94:             {localePt}
+  95:           </span>
+  96:           <span aria-hidden="true">{localeSeparator}</span>
+  97:           <span className={!isPt ? styles.localeActive : styles.localeLink}>
+  98:             {localeEn}
+  99:           </span>
+ 100:         </button>
+ 101: 
+ 102:         {/* CTA â†’ abre o O2 (DEC-011); sem JS degrada para a Ã¢ncora do
+ 103:             form canÃ´nico (#contato). */}
+ 104:         <a
+ 105:           className={styles.cta}
+ 106:           href="#contato"
+ 107:           data-cursor="hover"
+ 108:           aria-haspopup="dialog"
+ 109:           aria-expanded={overlay.active === "contact"}
+ 110:           onClick={(e) => {
+ 111:             e.preventDefault();
+ 112:             overlay.open("contact");
+ 113:           }}
+ 114:         >
+ 115:           <span className={styles.ctaMask}>
+ 116:             <span className={styles.ctaLabel}>{cta}</span>
+ 117:             <span className={styles.ctaLabel} aria-hidden="true">
+ 118:               {cta}
+ 119:             </span>
+ 120:           </span>
+ 121:         </a>
+ 122: 
+ 123:         <button
+ 124:           className={styles.menu}
+ 125:           type="button"
+ 126:           aria-label={menuLabel}
+ 127:           aria-haspopup="dialog"
+ 128:           aria-expanded={overlay.active === "menu"}
+ 129:           onClick={() => overlay.open("menu")}
+ 130:         >
+ 131:           <span />
+ 132:           <span />
+ 133:         </button>
+ 134:       </div>
+ 135:     </header>
+ 136:   );
+ 137: }
+FILE: components/overlays/menu/MenuLanguage.tsx
+   1: "use client";
+   2: 
+   3: import type { ReactNode } from "react";
+   4: import { useOverlay } from "@/components/overlays/OverlayProvider";
+   5: 
+   6: /**
+   7:  * MenuLanguage â€” island mÃ­nima do O1: linha de idioma que abre o
+   8:  * O3 via useOverlay().open("language") (DEC-011). O conteÃºdo
+   9:  * visÃ­vel (PT / EN + label sr-only "Idioma") vem do server via
+  10:  * children â€” copy 100% do JSON (language.*, L1).
+  11:  */
+  12: 
+  13: interface MenuLanguageProps {
+  14:   className: string;
+  15:   children: ReactNode;
+  16: }
+  17: 
+  18: export default function MenuLanguage({
+  19:   className,
+  20:   children,
+  21: }: MenuLanguageProps) {
+  22:   const { open } = useOverlay();
+  23:   return (
+  24:     <button
+  25:       type="button"
+  26:       className={className}
+  27:       aria-haspopup="dialog"
+  28:       aria-expanded={false}
+  29:       onClick={() => open("language")}
+  30:     >
+  31:       {children}
+  32:     </button>
+  33:   );
+  34: }
+FILE: components/overlays/menu/MenuOverlay.module.css
+   1: /* ============================================================
+   2:    MenuOverlay (O1) â€” fullscreen graphite (W4)
+   3:    Comps: "O1 Menu Overlay Desktop 1920.dc.html" Â· "O1 Menu Mobile 375.dc.html"
+   4: 
+   5:    Padding comp 48/348/64/120 â†’ 48 clamp(20,6.25vw,120) 64 (o
+   6:    348px direito era scaffold da aside de specs â€” descartado, Â§4).
+   7:    Topbar: brand Archivo 800 caps 24 + fechar 56px cÃ­rculo
+   8:    hairline-dark. Nav: itens 18px 0, border-bottom line-dark, num
+   9:    mono 14 steel 48px, label Archivo 800 caps clamp(2.5â€“4.5rem).
+  10:    Hover/focus: num+label blaze + shift 16px (12 mobile) â€” shift
+  11:    sÃ³ com motion ok (comp: "hover de cor mantido" no reduced).
+  12:    Linha vertical decorativa: stroke line-dark 1.5, nodes
+  13:    hairline-dark (D1 â€” aposenta os cinzas ad hoc da comp), pulso
+  14:    blaze halo r9 + dot r4 via transform (comp usa SMIL sÃ³ como
+  15:    preview â€” Â§4); some no reduced (linha 100% desenhada, L5).
+  16:    Entrada: fade+slide 0.4s var(--ease) + stagger 40ms/item,
+  17:    gated (L10/L5 â€” reduced aparece sem transiÃ§Ã£o).
+  18:    Meta: mono 12 steel caps +0.08em (L12), alvos â‰¥44px,
+  19:    [CONFIRMAR] steel (L1). Foco: circuit (L3). Sem drop-shadow
+  20:    (L9). Mobile 375: padding 24/20/40 Â· label 38px Â· meta coluna.
+  21:    ============================================================ */
+  22: 
+  23: .root {
+  24:   position: fixed;
+  25:   inset: 0;
+  26:   z-index: 100; /* acima do header pill (z-index 50) */
+  27:   display: flex;
+  28:   flex-direction: column;
+  29:   background: var(--c-graphite);
+  30:   color: var(--c-ink-on-dark);
+  31:   padding: 48px clamp(20px, 6.25vw, 120px) 64px;
+  32:   overflow-y: auto;
+  33:   overflow-x: hidden;
+  34: }
+  35: 
+  36: /* --- Linha de AutomaÃ§Ã£o vertical decorativa ------------------- */
+  37: 
+  38: .line {
+  39:   position: absolute;
+  40:   top: 0;
+  41:   right: clamp(24px, 4.3vw, 82px); /* comp: 430 âˆ’ 348 de scaffold = 82 */
+  42:   height: 100%;
+  43:   width: 40px;
+  44:   overflow: visible;
+  45:   pointer-events: none;
+  46: }
+  47: 
+  48: .linePath {
+  49:   fill: none;
+  50:   stroke: var(--c-line-dark);
+  51:   stroke-width: 1.5;
+  52: }
+  53: 
+  54: .nodeOuter {
+  55:   fill: var(--c-graphite);
+  56:   stroke: var(--c-hairline-dark);
+  57:   stroke-width: 1.5;
+  58: }
+  59: 
+  60: .nodeInner {
+  61:   fill: var(--c-steel);
+  62: }
+  63: 
+  64: /* Pulso: sÃ³ existe com motion ok (L5) â€” reduced = linha 100%
+  65:    desenhada sem pulso, como na comp. */
+  66: .pulse {
+  67:   display: none;
+  68: }
+  69: 
+  70: .pulseHalo {
+  71:   fill: var(--c-blaze);
+  72:   opacity: 0.16;
+  73: }
+  74: 
+  75: .pulseDot {
+  76:   fill: var(--c-blaze);
+  77: }
+  78: 
+  79: /* --- Topbar --------------------------------------------------- */
+  80: 
+  81: .topbar {
+  82:   display: flex;
+  83:   align-items: center;
+  84:   justify-content: space-between;
+  85:   margin-bottom: 72px;
+  86: }
+  87: 
+  88: .brand {
+  89:   font-family: var(--ff-display);
+  90:   font-weight: 800;
+  91:   text-transform: uppercase;
+  92:   font-size: 24px;
+  93:   letter-spacing: -0.01em;
+  94:   color: var(--c-ink-on-dark);
+  95: }
+  96: 
+  97: .close {
+  98:   width: 56px; /* â‰¥44px (a11y) */
+  99:   height: 56px;
+ 100:   flex: none;
+ 101:   border-radius: var(--r-pill);
+ 102:   border: 1px solid var(--c-hairline-dark);
+ 103:   background: transparent;
+ 104:   color: var(--c-ink-on-dark);
+ 105:   font-size: 20px;
+ 106:   line-height: 1;
+ 107:   cursor: pointer;
+ 108:   display: flex;
+ 109:   align-items: center;
+ 110:   justify-content: center;
+ 111:   transition: border-color 0.3s ease; /* cor â€” mantida no reduced */
+ 112: }
+ 113: 
+ 114: .close:hover {
+ 115:   border-color: var(--c-steel);
+ 116: }
+ 117: 
+ 118: .close:focus-visible {
+ 119:   outline: 2px solid var(--c-circuit); /* L3: circuit sÃ³ funcional */
+ 120:   outline-offset: 3px;
+ 121: }
+ 122: 
+ 123: /* --- NavegaÃ§Ã£o numerada --------------------------------------- */
+ 124: 
+ 125: .nav {
+ 126:   display: flex;
+ 127:   flex-direction: column;
+ 128: }
+ 129: 
+ 130: .item {
+ 131:   --shift: 16px;
+ 132:   display: flex;
+ 133:   align-items: baseline;
+ 134:   gap: 32px;
+ 135:   padding: 18px 0;
+ 136:   border-bottom: 1px solid var(--c-line-dark);
+ 137:   text-decoration: none;
+ 138:   cursor: pointer;
+ 139: }
+ 140: 
+ 141: .item:focus-visible {
+ 142:   outline: 2px solid var(--c-circuit); /* L3 */
+ 143:   outline-offset: -2px;
+ 144: }
+ 145: 
+ 146: .itemNum {
+ 147:   font-family: var(--ff-mono);
+ 148:   font-size: 14px;
+ 149:   letter-spacing: 0.08em;
+ 150:   color: var(--c-steel);
+ 151:   width: 48px;
+ 152:   flex: none;
+ 153:   transition: color 0.3s ease; /* cor â€” mantida no reduced (comp) */
+ 154: }
+ 155: 
+ 156: .itemLabel {
+ 157:   font-family: var(--ff-display);
+ 158:   font-weight: 800;
+ 159:   text-transform: uppercase;
+ 160:   font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+ 161:   line-height: 1;
+ 162:   letter-spacing: -0.01em;
+ 163:   color: var(--c-ink-on-dark);
+ 164:   transition: color 0.3s ease;
+ 165: }
+ 166: 
+ 167: /* Ãšnico destaque blaze do O1 = item ativo/hover (comp). */
+ 168: .item:hover .itemNum,
+ 169: .item:focus-visible .itemNum,
+ 170: .item:hover .itemLabel,
+ 171: .item:focus-visible .itemLabel {
+ 172:   color: var(--c-blaze);
+ 173: }
+ 174: 
+ 175: /* L2 (audit W4): enquanto um item estÃ¡ em hover/foco ELE Ã© o blaze do
+ 176:    viewport â€” o pulso da linha decorativa cede a vez. */
+ 177: .root:has(.item:hover) .pulse,
+ 178: .root:has(.item:focus-visible) .pulse {
+ 179:   display: none;
+ 180: }
+ 181: 
+ 182: /* --- RodapÃ© do overlay ---------------------------------------- */
+ 183: 
+ 184: .meta {
+ 185:   display: flex;
+ 186:   flex-wrap: wrap;
+ 187:   align-items: center;
+ 188:   column-gap: 40px;
+ 189:   margin-top: auto; /* ancora na base em telas altasâ€¦ */
+ 190:   padding-top: 64px; /* â€¦mantendo o respiro mÃ­nimo da comp */
+ 191: }
+ 192: 
+ 193: .metaItem,
+ 194: .metaLink,
+ 195: .language {
+ 196:   display: inline-flex;
+ 197:   align-items: center;
+ 198:   min-height: 44px; /* alvo a11y (comp Ã© mais densa â€” a lei vence) */
+ 199:   font-family: var(--ff-mono);
+ 200:   font-size: 12px;
+ 201:   letter-spacing: 0.08em;
+ 202:   text-transform: uppercase;
+ 203:   color: var(--c-steel);
+ 204: }
+ 205: 
+ 206: .metaLink {
+ 207:   text-decoration: none;
+ 208:   transition: color 0.3s ease;
+ 209: }
+ 210: 
+ 211: /* E-mail: endereÃ§o mantÃ©m grafia minÃºscula (nÃ£o Ã© eyebrow/tag). */
+ 212: .metaLink[href^="mailto:"] {
+ 213:   text-transform: none;
+ 214: }
+ 215: 
+ 216: .metaLink:hover {
+ 217:   color: var(--c-ink-on-dark);
+ 218: }
+ 219: 
+ 220: .language {
+ 221:   border: 0;
+ 222:   padding: 0;
+ 223:   background: transparent;
+ 224:   cursor: pointer;
+ 225:   transition: color 0.3s ease;
+ 226: }
+ 227: 
+ 228: .language:hover {
+ 229:   color: var(--c-ink-on-dark);
+ 230: }
+ 231: 
+ 232: .metaLink:focus-visible,
+ 233: .language:focus-visible {
+ 234:   outline: 2px solid var(--c-circuit); /* L3 */
+ 235:   outline-offset: 3px;
+ 236:   border-radius: var(--r-sm);
+ 237: }
+ 238: 
+ 239: /* L1: copy nÃ£o confirmada SEMPRE em steel (hook do modo final W6). */
+ 240: .metaItem[data-confirm="true"] {
+ 241:   color: var(--c-steel);
+ 242: }
+ 243: 
+ 244: .srOnly {
+ 245:   position: absolute;
+ 246:   width: 1px;
+ 247:   height: 1px;
+ 248:   padding: 0;
+ 249:   margin: -1px;
+ 250:   overflow: hidden;
+ 251:   clip-path: inset(50%);
+ 252:   white-space: nowrap;
+ 253: }
+ 254: 
+ 255: /* --- Motion (L10/L5): entrada + shift + pulso â€” tudo gated ----- */
+ 256: 
+ 257: @media (prefers-reduced-motion: no-preference) {
+ 258:   .root {
+ 259:     animation: overlay-in 0.4s var(--ease) both;
+ 260:   }
+ 261: 
+ 262:   .item {
+ 263:     /* stagger 40ms/item via animation-delay inline (server) */
+ 264:     animation: item-in 0.4s var(--ease) both;
+ 265:   }
+ 266: 
+ 267:   .item:hover .itemLabel,
+ 268:   .item:focus-visible .itemLabel {
+ 269:     transform: translateX(var(--shift));
+ 270:   }
+ 271: 
+ 272:   .itemLabel {
+ 273:     transition:
+ 274:       color 0.3s ease,
+ 275:       transform 0.35s var(--ease-roll); /* comp: cubic-bezier(0.76,0,0.24,1) */
+ 276:   }
+ 277: 
+ 278:   .pulse {
+ 279:     display: initial;
+ 280:     /* comp keySplines 0.4 0 0.6 1 Â· 6s Â· loop â€” transform-only (L10) */
+ 281:     animation: pulse-travel 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+ 282:   }
+ 283: 
+ 284:   @keyframes overlay-in {
+ 285:     from {
+ 286:       opacity: 0;
+ 287:       transform: translateY(24px);
+ 288:     }
+ 289:   }
+ 290: 
+ 291:   @keyframes item-in {
+ 292:     from {
+ 293:       opacity: 0;
+ 294:       transform: translateY(18px);
+ 295:     }
+ 296:   }
+ 297: 
+ 298:   @keyframes pulse-travel {
+ 299:     from {
+ 300:       transform: translateY(0);
+ 301:     }
+ 302:     to {
+ 303:       transform: translateY(1000px); /* unidades do viewBox (0â€“1000) */
+ 304:     }
+ 305:   }
+ 306: }
+ 307: 
+ 308: /* --- Mobile 375 (comp O1 Mobile) ------------------------------ */
+ 309: 
+ 310: @media (max-width: 767px) {
+ 311:   .root {
+ 312:     padding: 24px 20px 40px;
+ 313:   }
+ 314: 
+ 315:   .line {
+ 316:     right: 24px;
+ 317:     width: 32px;
+ 318:   }
+ 319: 
+ 320:   .nodeOuter {
+ 321:     r: 6px; /* geometry property â€” fallback inofensivo (fica 7) */
+ 322:   }
+ 323: 
+ 324:   .pulseHalo {
+ 325:     r: 8px;
+ 326:   }
+ 327: 
+ 328:   .pulseDot {
+ 329:     r: 3.5px;
+ 330:   }
+ 331: 
+ 332:   .topbar {
+ 333:     margin-bottom: 48px;
+ 334:   }
+ 335: 
+ 336:   .brand {
+ 337:     font-size: 20px;
+ 338:   }
+ 339: 
+ 340:   .close {
+ 341:     width: 48px;
+ 342:     height: 48px;
+ 343:     font-size: 18px;
+ 344:   }
+ 345: 
+ 346:   .item {
+ 347:     --shift: 12px;
+ 348:     gap: 20px;
+ 349:     padding: 16px 0;
+ 350:   }
+ 351: 
+ 352:   .itemNum {
+ 353:     font-size: 12px;
+ 354:     width: 32px;
+ 355:   }
+ 356: 
+ 357:   .itemLabel {
+ 358:     font-size: 38px;
+ 359:   }
+ 360: 
+ 361:   .meta {
+ 362:     flex-direction: column;
+ 363:     align-items: flex-start;
+ 364:     row-gap: 4px; /* comp: 12 â€” rows jÃ¡ ganham altura pelos 44px */
+ 365:     padding-top: 40px;
+ 366:   }
+ 367: 
+ 368:   .metaItem,
+ 369:   .metaLink,
+ 370:   .language {
+ 371:     font-size: 11px;
+ 372:   }
+ 373: }
+FILE: components/overlays/OverlayProvider.tsx
+   1: "use client";
+   2: 
+   3: import {
+   4:   createContext,
+   5:   useCallback,
+   6:   useContext,
+   7:   useEffect,
+   8:   useMemo,
+   9:   useRef,
+  10:   useState,
+  11:   type ReactNode,
+  12: } from "react";
+  13: 
+  14: /**
+  15:  * OverlayProvider â€” estado e chrome comum dos overlays O1/O2/O3 (W4).
+  16:  *
+  17:  * ComposiÃ§Ã£o: os overlays sÃ£o SERVER components (copy via getTranslations)
+  18:  * passados como slots; este provider (client) sÃ³ decide QUAL slot estÃ¡
+  19:  * visÃ­vel e cuida do chrome de acessibilidade:
+  20:  * - Esc fecha Â· foco vai para o painel ao abrir e VOLTA ao trigger ao fechar
+  21:  * - trap de Tab dentro do painel ativo
+  22:  * - scroll da pÃ¡gina travado enquanto houver overlay (html[data-overlay])
+  23:  * - histÃ³rico de triggers via ref (nÃ£o estado â€” sem re-render extra)
+  24:  *
+  25:  * Triggers (DEC-011): hambÃºrguer do header â†’ O1; item de contato do O1 â†’
+  26:  * O2; linha de idioma do O1 (e o seletor do header, opcional) â†’ O3.
+  27:  * Fora de um provider, useOverlay() Ã© inerte (dev/ui, testes).
+  28:  */
+  29: 
+  30: export type OverlayId = "menu" | "contact" | "language";
+  31: 
+  32: interface OverlayContextValue {
+  33:   active: OverlayId | null;
+  34:   open: (id: OverlayId) => void;
+  35:   close: () => void;
+  36: }
+  37: 
+  38: const OverlayContext = createContext<OverlayContextValue | null>(null);
+  39: 
+  40: const FOCUSABLE =
+  41:   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  42: 
+  43: export function useOverlay(): OverlayContextValue {
+  44:   const ctx = useContext(OverlayContext);
+  45:   const inert = useMemo<OverlayContextValue>(
+  46:     () => ({ active: null, open: () => undefined, close: () => undefined }),
+  47:     [],
+  48:   );
+  49:   return ctx ?? inert;
+  50: }
+  51: 
+  52: interface OverlayProviderProps {
+  53:   children: ReactNode;
+  54:   /** O1 â€” menu fullscreen graphite (server-rendered). */
+  55:   menu: ReactNode;
+  56:   /** O2 â€” painel de contato lateral direito (server-rendered). */
+  57:   contact: ReactNode;
+  58:   /** O3 â€” seletor de idioma (server-rendered). */
+  59:   language: ReactNode;
+  60: }
+  61: 
+  62: export default function OverlayProvider({
+  63:   children,
+  64:   menu,
+  65:   contact,
+  66:   language,
+  67: }: OverlayProviderProps) {
+  68:   const [active, setActive] = useState<OverlayId | null>(null);
+  69:   const activeRef = useRef<OverlayId | null>(null);
+  70:   const panelRef = useRef<HTMLDivElement | null>(null);
+  71:   const triggerRef = useRef<HTMLElement | null>(null);
+  72: 
+  73:   useEffect(() => {
+  74:     activeRef.current = active;
+  75:   }, [active]);
+  76: 
+  77:   const open = useCallback((id: OverlayId) => {
+  78:     // SÃ³ grava o trigger ao abrir a partir da PÃGINA: em transiÃ§Ãµes
+  79:     // overlayâ†’overlay (O1â†’O3) o botÃ£o de origem desmonta com o slot â€”
+  80:     // o foco deve voltar ao trigger ORIGINAL (ex.: hambÃºrguer) no close.
+  81:     if (activeRef.current === null) {
+  82:       triggerRef.current =
+  83:         document.activeElement instanceof HTMLElement
+  84:           ? document.activeElement
+  85:           : null;
+  86:     }
+  87:     setActive(id);
+  88:   }, []);
+  89: 
+  90:   const close = useCallback(() => {
+  91:     // SÃNCRONO (audit W4): destrava o scroll AINDA NESTE handler â€” o
+  92:     // default nativo de uma Ã¢ncora clicada roda logo apÃ³s o handler,
+  93:     // antes de qualquer effect; com overflow:hidden ativo o salto de
+  94:     // fragmento falharia. O effect abaixo cuida do resto (foco).
+  95:     document.documentElement.removeAttribute("data-overlay");
+  96:     setActive(null);
+  97:   }, []);
+  98: 
+  99:   // Esc fecha Â· trap de Tab Â· foco inicial Â· scroll lock Â· foco de volta.
+ 100:   useEffect(() => {
+ 101:     if (active === null) {
+ 102:       document.documentElement.removeAttribute("data-overlay");
+ 103:       const trigger = triggerRef.current;
+ 104:       if (trigger !== null) {
+ 105:         triggerRef.current = null;
+ 106:         // preventScroll: a restauraÃ§Ã£o de foco nÃ£o pode desfazer a
+ 107:         // posiÃ§Ã£o de uma Ã¢ncora recÃ©m-navegada (audit W4).
+ 108:         trigger.focus({ preventScroll: true });
+ 109:       }
+ 110:       return;
+ 111:     }
+ 112: 
+ 113:     document.documentElement.setAttribute("data-overlay", active);
+ 114:     const panel = panelRef.current;
+ 115:     const first = panel?.querySelector<HTMLElement>(FOCUSABLE);
+ 116:     (first ?? panel)?.focus();
+ 117: 
+ 118:     const onKeyDown = (e: KeyboardEvent) => {
+ 119:       if (e.key === "Escape") {
+ 120:         e.preventDefault();
+ 121:         setActive(null);
+ 122:         return;
+ 123:       }
+ 124:       if (e.key !== "Tab" || panel === null) return;
+ 125:       const nodes = Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE));
+ 126:       if (nodes.length === 0) return;
+ 127:       const firstNode = nodes[0];
+ 128:       const lastNode = nodes[nodes.length - 1];
+ 129:       const current = document.activeElement;
+ 130:       if (e.shiftKey && (current === firstNode || current === panel)) {
+ 131:         e.preventDefault();
+ 132:         lastNode.focus();
+ 133:       } else if (!e.shiftKey && current === lastNode) {
+ 134:         e.preventDefault();
+ 135:         firstNode.focus();
+ 136:       }
+ 137:     };
+ 138: 
+ 139:     document.addEventListener("keydown", onKeyDown);
+ 140:     return () => {
+ 141:       document.removeEventListener("keydown", onKeyDown);
+ 142:     };
+ 143:   }, [active]);
+ 144: 
+ 145:   const value = useMemo<OverlayContextValue>(
+ 146:     () => ({ active, open, close }),
+ 147:     [active, open, close],
+ 148:   );
+ 149: 
+ 150:   return (
+ 151:     <OverlayContext.Provider value={value}>
+ 152:       {children}
+ 153:       {active !== null ? (
+ 154:         <div
+ 155:           ref={panelRef}
+ 156:           role="dialog"
+ 157:           aria-modal="true"
+ 158:           tabIndex={-1}
+ 159:           data-overlay-panel={active}
+ 160:           data-lenis-prevent
+ 161:         >
+ 162:           {active === "menu" ? menu : null}
+ 163:           {active === "contact" ? contact : null}
+ 164:           {active === "language" ? language : null}
+ 165:         </div>
+ 166:       ) : null}
+ 167:     </OverlayContext.Provider>
+ 168:   );
+ 169: }
+
+2026-07-19T17:00:37.872030Z ERROR codex_models_manager::manager: failed to renew cache TTL: missing field `supports_reasoning_summaries` at line 86 column 5
+codex
+Item 3 está resolvido estaticamente: os três triggers do header agora expõem `aria-haspopup="dialog"` e estado de expansão; o trigger O1→O3 também recebeu `aria-expanded`. Vou registrar esse PASS antes de seguir para L2.
+apply patch
+patch: completed
+C:\Users\migue\Desktop\Projetos\SITE SATTI\audits\W4-reaudit-verdict.md
+diff --git a/audits/W4-reaudit-verdict.md b/audits/W4-reaudit-verdict.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..cb834cd33b08e5b24bd7b4940b1be65dc2dbffc8
+--- /dev/null
++++ b/audits/W4-reaudit-verdict.md
+@@ -0,0 +1,11 @@
++# RE-AUDIT W4 — Itens 3, 4 e 5
++
++Auditoria exclusivamente estática; nenhum `npm`, build ou Git foi executado.
++
++| Item | Veredito | Evidência estática |
++|---|---|---|
++| 3 — ARIA dos triggers | **PASS** | O CTA de contato expõe `aria-haspopup="dialog"` e `aria-expanded={overlay.active === "contact"}` em `components/sections/header/HeaderClient.tsx:104-113`; o hambúrguer expõe os mesmos atributos com estado ligado a `"menu"` em `components/sections/header/HeaderClient.tsx:123-130`; o seletor de idioma do header já cobre O3 em `components/sections/header/HeaderClient.tsx:86-92`; e o trigger O1→O3 agora declara `aria-haspopup="dialog"` e `aria-expanded` em `components/overlays/menu/MenuLanguage.tsx:24-29`. |
++
++## Veredito final
++
++Pendente da conclusão dos itens 4 e 5. Os itens 1 e 2 permanecem **PASS** conforme `audits/W4-verdict.md:7-8`.
+
+diff --git a/audits/W4-reaudit-verdict.md b/audits/W4-reaudit-verdict.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..cb834cd33b08e5b24bd7b4940b1be65dc2dbffc8
+--- /dev/null
++++ b/audits/W4-reaudit-verdict.md
+@@ -0,0 +1,11 @@
++# RE-AUDIT W4 — Itens 3, 4 e 5
++
++Auditoria exclusivamente estática; nenhum `npm`, build ou Git foi executado.
++
++| Item | Veredito | Evidência estática |
++|---|---|---|
++| 3 — ARIA dos triggers | **PASS** | O CTA de contato expõe `aria-haspopup="dialog"` e `aria-expanded={overlay.active === "contact"}` em `components/sections/header/HeaderClient.tsx:104-113`; o hambúrguer expõe os mesmos atributos com estado ligado a `"menu"` em `components/sections/header/HeaderClient.tsx:123-130`; o seletor de idioma do header já cobre O3 em `components/sections/header/HeaderClient.tsx:86-92`; e o trigger O1→O3 agora declara `aria-haspopup="dialog"` e `aria-expanded` em `components/overlays/menu/MenuLanguage.tsx:24-29`. |
++
++## Veredito final
++
++Pendente da conclusão dos itens 4 e 5. Os itens 1 e 2 permanecem **PASS** conforme `audits/W4-verdict.md:7-8`.
+
+2026-07-19T17:01:00.268860Z ERROR codex_models_manager::manager: failed to renew cache TTL: missing field `supports_reasoning_summaries` at line 86 column 5
+codex
+Item 4 também passa: a regra com `:has()` tem especificidade suficiente para manter `.pulse` oculto mesmo contra o `display: initial` posterior dentro do media query. Assim, hover/foco transfere o único blaze do pulso para o item. Registrando agora.
+apply patch
+patch: completed
+C:\Users\migue\Desktop\Projetos\SITE SATTI\audits\W4-reaudit-verdict.md
+diff --git a/audits/W4-reaudit-verdict.md b/audits/W4-reaudit-verdict.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..9135af7a0b9ade81b6648cba5215605043fc4f00
+--- /dev/null
++++ b/audits/W4-reaudit-verdict.md
+@@ -0,0 +1,12 @@
++# RE-AUDIT W4 — Itens 3, 4 e 5
++
++Auditoria exclusivamente estática; nenhum `npm`, build ou Git foi executado.
++
++| Item | Veredito | Evidência estática |
++|---|---|---|
++| 3 — ARIA dos triggers | **PASS** | O CTA de contato expõe `aria-haspopup="dialog"` e `aria-expanded={overlay.active === "contact"}` em `components/sections/header/HeaderClient.tsx:104-113`; o hambúrguer expõe os mesmos atributos com estado ligado a `"menu"` em `components/sections/header/HeaderClient.tsx:123-130`; o seletor de idioma do header já cobre O3 em `components/sections/header/HeaderClient.tsx:86-92`; e o trigger O1→O3 agora declara `aria-haspopup="dialog"` e `aria-expanded` em `components/overlays/menu/MenuLanguage.tsx:24-29`. |
++| 4 — L2 no O1 | **PASS** | O item em hover/foco assume blaze em `components/overlays/menu/MenuOverlay.module.css:167-173`; simultaneamente, `.root:has(.item:hover) .pulse` e `.root:has(.item:focus-visible) .pulse` ocultam o pulso em `components/overlays/menu/MenuOverlay.module.css:175-180`. A maior especificidade dessa regra prevalece sobre o `display: initial` do pulso animado em `components/overlays/menu/MenuOverlay.module.css:257-282`, mantendo no máximo um destaque blaze. |
++
++## Veredito final
++
++Pendente da conclusão do item 5. Os itens 1 e 2 permanecem **PASS** conforme `audits/W4-verdict.md:7-8`.
+
+diff --git a/audits/W4-reaudit-verdict.md b/audits/W4-reaudit-verdict.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..9135af7a0b9ade81b6648cba5215605043fc4f00
+--- /dev/null
++++ b/audits/W4-reaudit-verdict.md
+@@ -0,0 +1,12 @@
++# RE-AUDIT W4 — Itens 3, 4 e 5
++
++Auditoria exclusivamente estática; nenhum `npm`, build ou Git foi executado.
++
++| Item | Veredito | Evidência estática |
++|---|---|---|
++| 3 — ARIA dos triggers | **PASS** | O CTA de contato expõe `aria-haspopup="dialog"` e `aria-expanded={overlay.active === "contact"}` em `components/sections/header/HeaderClient.tsx:104-113`; o hambúrguer expõe os mesmos atributos com estado ligado a `"menu"` em `components/sections/header/HeaderClient.tsx:123-130`; o seletor de idioma do header já cobre O3 em `components/sections/header/HeaderClient.tsx:86-92`; e o trigger O1→O3 agora declara `aria-haspopup="dialog"` e `aria-expanded` em `components/overlays/menu/MenuLanguage.tsx:24-29`. |
++| 4 — L2 no O1 | **PASS** | O item em hover/foco assume blaze em `components/overlays/menu/MenuOverlay.module.css:167-173`; simultaneamente, `.root:has(.item:hover) .pulse` e `.root:has(.item:focus-visible) .pulse` ocultam o pulso em `components/overlays/menu/MenuOverlay.module.css:175-180`. A maior especificidade dessa regra prevalece sobre o `display: initial` do pulso animado em `components/overlays/menu/MenuOverlay.module.css:257-282`, mantendo no máximo um destaque blaze. |
++
++## Veredito final
++
++Pendente da conclusão do item 5. Os itens 1 e 2 permanecem **PASS** conforme `audits/W4-verdict.md:7-8`.
+
+2026-07-19T17:01:15.483649Z ERROR codex_models_manager::manager: failed to renew cache TTL: missing field `supports_reasoning_summaries` at line 86 column 5
+exec
+"C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$files = @('"'components/overlays/menu/MenuNavLink.tsx','components/overlays/contact/ContactCta.tsx','app/globals.css'); foreach ("'$f in $files) { Write-Output "FILE: $f"; $n=0; Get-Content -LiteralPath $f | ForEach-Object { $n++; if (($f -ne '"'app/globals.css') -or ("'$n -ge 60 -and $n -le 82)) { '"'{0,4}: {1}' -f "'$n, $_ } } }' in C:\Users\migue\Desktop\Projetos\SITE SATTI
+ succeeded in 908ms:
+FILE: components/overlays/menu/MenuNavLink.tsx
+   1: "use client";
+   2: 
+   3: import type { CSSProperties, ReactNode } from "react";
+   4: import { useOverlay } from "@/components/overlays/OverlayProvider";
+   5: 
+   6: /**
+   7:  * MenuNavLink â€” island mÃ­nima do O1: Ã¢ncora interna (#servicosâ€¦)
+   8:  * que fecha o overlay no clique e DEIXA a navegaÃ§Ã£o nativa agir
+   9:  * (sem preventDefault â€” o scroll atÃ© a seÃ§Ã£o Ã© o default do <a>).
+  10:  * Ã‚ncora de fragmento na MESMA rota â†’ <a> nativo (a regra de lint
+  11:  * de <Link> vale para rotas/locales, nÃ£o para fragmentos).
+  12:  */
+  13: 
+  14: interface MenuNavLinkProps {
+  15:   href: string;
+  16:   className: string;
+  17:   style?: CSSProperties;
+  18:   children: ReactNode;
+  19: }
+  20: 
+  21: export default function MenuNavLink({
+  22:   href,
+  23:   className,
+  24:   style,
+  25:   children,
+  26: }: MenuNavLinkProps) {
+  27:   const { close } = useOverlay();
+  28:   return (
+  29:     <a
+  30:       href={href}
+  31:       className={className}
+  32:       style={style}
+  33:       data-cursor="hover"
+  34:       onClick={() => close()}
+  35:     >
+  36:       {children}
+  37:     </a>
+  38:   );
+  39: }
+FILE: components/overlays/contact/ContactCta.tsx
+   1: "use client";
+   2: 
+   3: import { useOverlay } from "@/components/overlays/OverlayProvider";
+   4: 
+   5: /**
+   6:  * ContactCta â€” island mÃ­nima: CTA principal do O2.
+   7:  * Ã‚ncora nativa para o form canÃ´nico (#contato, S11) que fecha o
+   8:  * overlay no clique â€” o close() desmonta o dialog e deixa o scroll
+   9:  * nativo da Ã¢ncora agir (padrÃ£o navegar-e-fechar do W4). Ã‚ncora de
+  10:  * hash usa <a> puro (o lint sÃ³ proÃ­be <a> para ROTAS â€” precedente
+  11:  * do HeaderClient/Hero).
+  12:  */
+  13: 
+  14: interface ContactCtaProps {
+  15:   className: string;
+  16:   href: string;
+  17:   label: string;
+  18: }
+  19: 
+  20: export default function ContactCta({ className, href, label }: ContactCtaProps) {
+  21:   const { close } = useOverlay();
+  22: 
+  23:   return (
+  24:     <a
+  25:       className={className}
+  26:       href={href}
+  27:       data-cursor="hover"
+  28:       onClick={() => close()}
+  29:     >
+  30:       {label}
+  31:     </a>
+  32:   );
+  33: }
+FILE: app/globals.css
+  60:   flex-shrink: 0;
+  61: }
+  62: 
+  63: /* --- SeÃ§Ãµes escuras (graphite) --- */
+  64: .section-dark {
+  65:   background: var(--c-graphite);
+  66:   color: var(--c-ink-on-dark);
+  67: }
+  68: 
+  69: /* --- Overlays (W4): scroll travado enquanto houver overlay aberto.
+  70:        O OverlayProvider seta/remove html[data-overlay]; o close() remove
+  71:        o atributo antes da navegaÃ§Ã£o por Ã¢ncora, entÃ£o o scroll nativo
+  72:        das Ã¢ncoras continua funcionando. --- */
+  73: html[data-overlay] {
+  74:   overflow: hidden;
+  75: }
+  76: 
+  77: /* --- Cursor custom (CursorProvider) â€” sÃ³ quando ativo (pointer fine + motion ok) --- */
+  78: .cursor-dot,
+  79: .cursor-ring {
+  80:   position: fixed;
+  81:   top: 0;
+  82:   left: 0;
+
+diff --git a/audits/W4-reaudit-verdict.md b/audits/W4-reaudit-verdict.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..9135af7a0b9ade81b6648cba5215605043fc4f00
+--- /dev/null
++++ b/audits/W4-reaudit-verdict.md
+@@ -0,0 +1,12 @@
++# RE-AUDIT W4 — Itens 3, 4 e 5
++
++Auditoria exclusivamente estática; nenhum `npm`, build ou Git foi executado.
++
++| Item | Veredito | Evidência estática |
++|---|---|---|
++| 3 — ARIA dos triggers | **PASS** | O CTA de contato expõe `aria-haspopup="dialog"` e `aria-expanded={overlay.active === "contact"}` em `components/sections/header/HeaderClient.tsx:104-113`; o hambúrguer expõe os mesmos atributos com estado ligado a `"menu"` em `components/sections/header/HeaderClient.tsx:123-130`; o seletor de idioma do header já cobre O3 em `components/sections/header/HeaderClient.tsx:86-92`; e o trigger O1→O3 agora declara `aria-haspopup="dialog"` e `aria-expanded` em `components/overlays/menu/MenuLanguage.tsx:24-29`. |
++| 4 — L2 no O1 | **PASS** | O item em hover/foco assume blaze em `components/overlays/menu/MenuOverlay.module.css:167-173`; simultaneamente, `.root:has(.item:hover) .pulse` e `.root:has(.item:focus-visible) .pulse` ocultam o pulso em `components/overlays/menu/MenuOverlay.module.css:175-180`. A maior especificidade dessa regra prevalece sobre o `display: initial` do pulso animado em `components/overlays/menu/MenuOverlay.module.css:257-282`, mantendo no máximo um destaque blaze. |
++
++## Veredito final
++
++Pendente da conclusão do item 5. Os itens 1 e 2 permanecem **PASS** conforme `audits/W4-verdict.md:7-8`.
+
+2026-07-19T17:01:21.860795Z ERROR codex_models_manager::manager: failed to renew cache TTL: missing field `supports_reasoning_summaries` at line 86 column 5
+codex
+Item 5 passa: ambas as âncoras chamam `close()` sem cancelar o comportamento nativo; `close()` remove o atributo de scroll-lock de forma síncrona antes do default da âncora, e a restauração de foco usa `preventScroll`. Vou fechar o arquivo com o gate agregado em 5/5.
+apply patch
+patch: completed
+C:\Users\migue\Desktop\Projetos\SITE SATTI\audits\W4-reaudit-verdict.md
+diff --git a/audits/W4-reaudit-verdict.md b/audits/W4-reaudit-verdict.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..dcd5dc74c5ebd69e8027ecf7f1c1eb16f3d35f80
+--- /dev/null
++++ b/audits/W4-reaudit-verdict.md
+@@ -0,0 +1,15 @@
++# RE-AUDIT W4 — Itens 3, 4 e 5
++
++Auditoria exclusivamente estática; nenhum `npm`, build ou Git foi executado.
++
++| Item | Veredito | Evidência estática |
++|---|---|---|
++| 3 — ARIA dos triggers | **PASS** | O CTA de contato expõe `aria-haspopup="dialog"` e `aria-expanded={overlay.active === "contact"}` em `components/sections/header/HeaderClient.tsx:104-113`; o hambúrguer expõe os mesmos atributos com estado ligado a `"menu"` em `components/sections/header/HeaderClient.tsx:123-130`; o seletor de idioma do header já cobre O3 em `components/sections/header/HeaderClient.tsx:86-92`; e o trigger O1→O3 agora declara `aria-haspopup="dialog"` e `aria-expanded` em `components/overlays/menu/MenuLanguage.tsx:24-29`. |
++| 4 — L2 no O1 | **PASS** | O item em hover/foco assume blaze em `components/overlays/menu/MenuOverlay.module.css:167-173`; simultaneamente, `.root:has(.item:hover) .pulse` e `.root:has(.item:focus-visible) .pulse` ocultam o pulso em `components/overlays/menu/MenuOverlay.module.css:175-180`. A maior especificidade dessa regra prevalece sobre o `display: initial` do pulso animado em `components/overlays/menu/MenuOverlay.module.css:257-282`, mantendo no máximo um destaque blaze. |
++| 5 — close→âncora | **PASS** | As âncoras chamam `close()` sem `preventDefault`, preservando o default nativo em `components/overlays/menu/MenuNavLink.tsx:29-35` e `components/overlays/contact/ContactCta.tsx:24-29`. No mesmo handler, `close()` remove `data-overlay` sincronamente antes de agendar o fechamento em `components/overlays/OverlayProvider.tsx:90-97`; portanto o `overflow: hidden` de `app/globals.css:69-75` já não vigora quando o default da âncora ocorre. A restauração posterior usa `focus({ preventScroll: true })` em `components/overlays/OverlayProvider.tsx:101-109`, sem desfazer a posição do fragmento. |
++
++## Veredito final
++
++**5/5 PASS — GATE W4: PASS.**
++
++Os itens 1 e 2 permanecem **PASS** conforme `audits/W4-verdict.md:7-8`; os itens 3, 4 e 5 passam nesta reauditoria. Não há correção adicional proposta.
+
+diff --git a/audits/W4-reaudit-verdict.md b/audits/W4-reaudit-verdict.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..dcd5dc74c5ebd69e8027ecf7f1c1eb16f3d35f80
+--- /dev/null
++++ b/audits/W4-reaudit-verdict.md
+@@ -0,0 +1,15 @@
++# RE-AUDIT W4 — Itens 3, 4 e 5
++
++Auditoria exclusivamente estática; nenhum `npm`, build ou Git foi executado.
++
++| Item | Veredito | Evidência estática |
++|---|---|---|
++| 3 — ARIA dos triggers | **PASS** | O CTA de contato expõe `aria-haspopup="dialog"` e `aria-expanded={overlay.active === "contact"}` em `components/sections/header/HeaderClient.tsx:104-113`; o hambúrguer expõe os mesmos atributos com estado ligado a `"menu"` em `components/sections/header/HeaderClient.tsx:123-130`; o seletor de idioma do header já cobre O3 em `components/sections/header/HeaderClient.tsx:86-92`; e o trigger O1→O3 agora declara `aria-haspopup="dialog"` e `aria-expanded` em `components/overlays/menu/MenuLanguage.tsx:24-29`. |
++| 4 — L2 no O1 | **PASS** | O item em hover/foco assume blaze em `components/overlays/menu/MenuOverlay.module.css:167-173`; simultaneamente, `.root:has(.item:hover) .pulse` e `.root:has(.item:focus-visible) .pulse` ocultam o pulso em `components/overlays/menu/MenuOverlay.module.css:175-180`. A maior especificidade dessa regra prevalece sobre o `display: initial` do pulso animado em `components/overlays/menu/MenuOverlay.module.css:257-282`, mantendo no máximo um destaque blaze. |
++| 5 — close→âncora | **PASS** | As âncoras chamam `close()` sem `preventDefault`, preservando o default nativo em `components/overlays/menu/MenuNavLink.tsx:29-35` e `components/overlays/contact/ContactCta.tsx:24-29`. No mesmo handler, `close()` remove `data-overlay` sincronamente antes de agendar o fechamento em `components/overlays/OverlayProvider.tsx:90-97`; portanto o `overflow: hidden` de `app/globals.css:69-75` já não vigora quando o default da âncora ocorre. A restauração posterior usa `focus({ preventScroll: true })` em `components/overlays/OverlayProvider.tsx:101-109`, sem desfazer a posição do fragmento. |
++
++## Veredito final
++
++**5/5 PASS — GATE W4: PASS.**
++
++Os itens 1 e 2 permanecem **PASS** conforme `audits/W4-verdict.md:7-8`; os itens 3, 4 e 5 passam nesta reauditoria. Não há correção adicional proposta.
+
+2026-07-19T17:01:41.023254Z ERROR codex_models_manager::manager: failed to renew cache TTL: missing field `supports_reasoning_summaries` at line 86 column 5
+exec
+"C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" -Command '$n=0; Get-Content -LiteralPath '"'audits/W4-reaudit-verdict.md' -Encoding utf8 | ForEach-Object { "'$n++; '"'{0,3}: {1}' -f "'$n, $_ }' in C:\Users\migue\Desktop\Projetos\SITE SATTI
+ succeeded in 888ms:
+  1: # RE-AUDIT W4 — Itens 3, 4 e 5
+  2: 
+  3: Auditoria exclusivamente estática; nenhum `npm`, build ou Git foi executado.
+  4: 
+  5: | Item | Veredito | Evidência estática |
+  6: |---|---|---|
+  7: | 3 — ARIA dos triggers | **PASS** | O CTA de contato expõe `aria-haspopup="dialog"` e `aria-expanded={overlay.active === "contact"}` em `components/sections/header/HeaderClient.tsx:104-113`; o hambúrguer expõe os mesmos atributos com estado ligado a `"menu"` em `components/sections/header/HeaderClient.tsx:123-130`; o seletor de idioma do header já cobre O3 em `components/sections/header/HeaderClient.tsx:86-92`; e o trigger O1→O3 agora declara `aria-haspopup="dialog"` e `aria-expanded` em `components/overlays/menu/MenuLanguage.tsx:24-29`. |
+  8: | 4 — L2 no O1 | **PASS** | O item em hover/foco assume blaze em `components/overlays/menu/MenuOverlay.module.css:167-173`; simultaneamente, `.root:has(.item:hover) .pulse` e `.root:has(.item:focus-visible) .pulse` ocultam o pulso em `components/overlays/menu/MenuOverlay.module.css:175-180`. A maior especificidade dessa regra prevalece sobre o `display: initial` do pulso animado em `components/overlays/menu/MenuOverlay.module.css:257-282`, mantendo no máximo um destaque blaze. |
+  9: | 5 — close→âncora | **PASS** | As âncoras chamam `close()` sem `preventDefault`, preservando o default nativo em `components/overlays/menu/MenuNavLink.tsx:29-35` e `components/overlays/contact/ContactCta.tsx:24-29`. No mesmo handler, `close()` remove `data-overlay` sincronamente antes de agendar o fechamento em `components/overlays/OverlayProvider.tsx:90-97`; portanto o `overflow: hidden` de `app/globals.css:69-75` já não vigora quando o default da âncora ocorre. A restauração posterior usa `focus({ preventScroll: true })` em `components/overlays/OverlayProvider.tsx:101-109`, sem desfazer a posição do fragmento. |
+ 10: 
+ 11: ## Veredito final
+ 12: 
+ 13: **5/5 PASS — GATE W4: PASS.**
+ 14: 
+ 15: Os itens 1 e 2 permanecem **PASS** conforme `audits/W4-verdict.md:7-8`; os itens 3, 4 e 5 passam nesta reauditoria. Não há correção adicional proposta.
+
+diff --git a/audits/W4-reaudit-verdict.md b/audits/W4-reaudit-verdict.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..dcd5dc74c5ebd69e8027ecf7f1c1eb16f3d35f80
+--- /dev/null
++++ b/audits/W4-reaudit-verdict.md
+@@ -0,0 +1,15 @@
++# RE-AUDIT W4 — Itens 3, 4 e 5
++
++Auditoria exclusivamente estática; nenhum `npm`, build ou Git foi executado.
++
++| Item | Veredito | Evidência estática |
++|---|---|---|
++| 3 — ARIA dos triggers | **PASS** | O CTA de contato expõe `aria-haspopup="dialog"` e `aria-expanded={overlay.active === "contact"}` em `components/sections/header/HeaderClient.tsx:104-113`; o hambúrguer expõe os mesmos atributos com estado ligado a `"menu"` em `components/sections/header/HeaderClient.tsx:123-130`; o seletor de idioma do header já cobre O3 em `components/sections/header/HeaderClient.tsx:86-92`; e o trigger O1→O3 agora declara `aria-haspopup="dialog"` e `aria-expanded` em `components/overlays/menu/MenuLanguage.tsx:24-29`. |
++| 4 — L2 no O1 | **PASS** | O item em hover/foco assume blaze em `components/overlays/menu/MenuOverlay.module.css:167-173`; simultaneamente, `.root:has(.item:hover) .pulse` e `.root:has(.item:focus-visible) .pulse` ocultam o pulso em `components/overlays/menu/MenuOverlay.module.css:175-180`. A maior especificidade dessa regra prevalece sobre o `display: initial` do pulso animado em `components/overlays/menu/MenuOverlay.module.css:257-282`, mantendo no máximo um destaque blaze. |
++| 5 — close→âncora | **PASS** | As âncoras chamam `close()` sem `preventDefault`, preservando o default nativo em `components/overlays/menu/MenuNavLink.tsx:29-35` e `components/overlays/contact/ContactCta.tsx:24-29`. No mesmo handler, `close()` remove `data-overlay` sincronamente antes de agendar o fechamento em `components/overlays/OverlayProvider.tsx:90-97`; portanto o `overflow: hidden` de `app/globals.css:69-75` já não vigora quando o default da âncora ocorre. A restauração posterior usa `focus({ preventScroll: true })` em `components/overlays/OverlayProvider.tsx:101-109`, sem desfazer a posição do fragmento. |
++
++## Veredito final
++
++**5/5 PASS — GATE W4: PASS.**
++
++Os itens 1 e 2 permanecem **PASS** conforme `audits/W4-verdict.md:7-8`; os itens 3, 4 e 5 passam nesta reauditoria. Não há correção adicional proposta.
+
+2026-07-19T17:01:45.615804Z ERROR codex_models_manager::manager: failed to renew cache TTL: missing field `supports_reasoning_summaries` at line 86 column 5
+codex
+Reauditoria estática concluída e gravada em [audits/W4-reaudit-verdict.md](C:\Users\migue\Desktop\Projetos\SITE SATTI\audits\W4-reaudit-verdict.md).
+
+- Item 3: **PASS**
+- Item 4: **PASS**
+- Item 5: **PASS**
+- Veredito final: **5/5 PASS — GATE W4: PASS**
+
+Nenhum `npm`, build ou Git foi executado.
+diff --git a/audits/W4-reaudit-verdict.md b/audits/W4-reaudit-verdict.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..dcd5dc74c5ebd69e8027ecf7f1c1eb16f3d35f80
+--- /dev/null
++++ b/audits/W4-reaudit-verdict.md
+@@ -0,0 +1,15 @@
++# RE-AUDIT W4 — Itens 3, 4 e 5
++
++Auditoria exclusivamente estática; nenhum `npm`, build ou Git foi executado.
++
++| Item | Veredito | Evidência estática |
++|---|---|---|
++| 3 — ARIA dos triggers | **PASS** | O CTA de contato expõe `aria-haspopup="dialog"` e `aria-expanded={overlay.active === "contact"}` em `components/sections/header/HeaderClient.tsx:104-113`; o hambúrguer expõe os mesmos atributos com estado ligado a `"menu"` em `components/sections/header/HeaderClient.tsx:123-130`; o seletor de idioma do header já cobre O3 em `components/sections/header/HeaderClient.tsx:86-92`; e o trigger O1→O3 agora declara `aria-haspopup="dialog"` e `aria-expanded` em `components/overlays/menu/MenuLanguage.tsx:24-29`. |
++| 4 — L2 no O1 | **PASS** | O item em hover/foco assume blaze em `components/overlays/menu/MenuOverlay.module.css:167-173`; simultaneamente, `.root:has(.item:hover) .pulse` e `.root:has(.item:focus-visible) .pulse` ocultam o pulso em `components/overlays/menu/MenuOverlay.module.css:175-180`. A maior especificidade dessa regra prevalece sobre o `display: initial` do pulso animado em `components/overlays/menu/MenuOverlay.module.css:257-282`, mantendo no máximo um destaque blaze. |
++| 5 — close→âncora | **PASS** | As âncoras chamam `close()` sem `preventDefault`, preservando o default nativo em `components/overlays/menu/MenuNavLink.tsx:29-35` e `components/overlays/contact/ContactCta.tsx:24-29`. No mesmo handler, `close()` remove `data-overlay` sincronamente antes de agendar o fechamento em `components/overlays/OverlayProvider.tsx:90-97`; portanto o `overflow: hidden` de `app/globals.css:69-75` já não vigora quando o default da âncora ocorre. A restauração posterior usa `focus({ preventScroll: true })` em `components/overlays/OverlayProvider.tsx:101-109`, sem desfazer a posição do fragmento. |
++
++## Veredito final
++
++**5/5 PASS — GATE W4: PASS.**
++
++Os itens 1 e 2 permanecem **PASS** conforme `audits/W4-verdict.md:7-8`; os itens 3, 4 e 5 passam nesta reauditoria. Não há correção adicional proposta.
+
+tokens used
+32.777
+Reauditoria estática concluída e gravada em [audits/W4-reaudit-verdict.md](C:\Users\migue\Desktop\Projetos\SITE SATTI\audits\W4-reaudit-verdict.md).
+
+- Item 3: **PASS**
+- Item 4: **PASS**
+- Item 5: **PASS**
+- Veredito final: **5/5 PASS — GATE W4: PASS**
+
+Nenhum `npm`, build ou Git foi executado.
