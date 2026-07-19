@@ -1,0 +1,107 @@
+/* ============================================================
+   AutomationLine — segmento do fio contínuo (D3)
+   Stroke 1.5px: --c-line no claro · --c-line-dark no escuro (D1).
+   Nodes: círculo hairline + label mono caps +0.08em (L12).
+   Pulso: ÚNICO dot blaze do site, offset-path/offset-distance
+   (nada de SMIL) — só existe com motion ok (L5) e em browsers
+   com suporte (@supports); fallback = linha sem pulso.
+   L9: sem glow — o único brilho de cor do sistema é o dos
+   work-cards. L10: só transform/opacity/stroke-offset animam.
+   ============================================================ */
+
+.root {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.svg[data-ready="true"] {
+  opacity: 1;
+}
+
+/* --- Tons (a seção escolhe; D1 mapeia os cinzas do escuro) --- */
+.light {
+  --al-stroke: var(--c-line);
+  --al-node-fill: var(--c-paper);
+  --al-node-stroke: var(--c-line);
+  --al-label: var(--c-steel);
+}
+
+.dark {
+  --al-stroke: var(--c-line-dark);
+  --al-node-fill: var(--c-graphite);
+  --al-node-stroke: var(--c-hairline-dark);
+  --al-label: var(--c-steel);
+}
+
+.path {
+  fill: none;
+  stroke: var(--al-stroke);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+/* Estado base (reduced-motion / sem JS extra): tudo visível. */
+.nodeGroup {
+  opacity: 1;
+}
+
+.node {
+  fill: var(--al-node-fill);
+  stroke: var(--al-node-stroke);
+  stroke-width: 1.5;
+}
+
+.nodeLabel {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--al-label);
+}
+
+/* Pulso: escondido por padrão — só entra com suporte + motion ok. */
+.pulse {
+  display: none;
+  fill: var(--c-blaze);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .svg {
+    transition: opacity 0.4s var(--ease);
+  }
+
+  /* Reveal dos nodes conforme o tip passa (JS escreve opacity). */
+  .nodeGroup {
+    transition: opacity 0.3s var(--ease);
+  }
+
+  @supports (offset-distance: 100%) {
+    .pulse {
+      display: block;
+      offset-rotate: 0deg;
+    }
+
+    .pulseRun {
+      animation: pulse-travel var(--pulse-duration, 6s) linear forwards;
+    }
+
+    @keyframes pulse-travel {
+      from {
+        offset-distance: 0%;
+      }
+      to {
+        offset-distance: 100%;
+      }
+    }
+  }
+}

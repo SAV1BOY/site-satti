@@ -1,0 +1,196 @@
+/* ============================================================
+   WorkCard — S7 Portfólio
+   Fonte visual: S7 Portfolio Desktop 1920.dc.html / Mobile 375.dc.html
+   Leis: L2 (texto iron sobre superfícies claras), L5 (motion só em
+   no-preference; estado base = fallback estático), L9 (hairline +
+   glow blaze blur(90px) op 0.8 — ÚNICO glow do sistema; sem
+   drop-shadow), L10 (só transform/opacity, easing var(--ease)).
+   ============================================================ */
+
+.card {
+  position: relative;
+  isolation: isolate; /* garante glow ::before (z -1) acima do bg graphite */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: clamp(520px, 30vw + 240px, 720px); /* ~520 mobile → ~720 desktop */
+  padding: var(--sp-sm); /* 16px, fiel à comp */
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-xl); /* 28px editorial */
+  background: var(--c-graphite);
+  color: var(--c-ink-on-dark);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--c-circuit); /* L3: circuit só focus-ring */
+  outline-offset: 3px;
+}
+
+/* --- GLOW assinatura (L9: único glow do sistema) ---
+   Estado base (inclui reduced-motion): opacity 0, sem transição. */
+.card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 12%;
+  bottom: -130px;
+  width: 76%;
+  height: 190px;
+  background: var(--c-blaze);
+  filter: blur(90px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --- Mídia cobrindo o topo --- */
+.media {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--r-lg); /* 16px, fiel à comp */
+  border: 1px solid var(--c-hairline-dark); /* D1: borda de célula no escuro */
+  background: var(--c-iron);
+}
+
+.poster {
+  object-fit: cover;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0; /* aparece só quando de fato está tocando */
+}
+
+.videoPlaying {
+  opacity: 1;
+}
+
+/* --- Meta: tags mono + título Archivo caps + pill --- */
+.meta {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-sm);
+  padding: 20px var(--sp-xs) var(--sp-2xs); /* fiel à comp (20/12/8) */
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2xs);
+  min-width: 0;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem; /* 11px */
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+.tags li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2xs);
+}
+
+.tags li + li::before {
+  content: "·";
+}
+
+.title {
+  margin: 0;
+  font-family: var(--ff-display);
+  font-size: clamp(1.3125rem, 1vw + 0.75rem, 1.5rem); /* 21px → 24px */
+  font-weight: 700;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--c-ink-on-dark);
+}
+
+/* Info-pill "Ver case" — estado base VISÍVEL e estático
+   (fallback L5: reduced-motion e touch veem a pill parada). */
+.pill {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  padding: 10px 18px;
+  border-radius: var(--r-pill);
+  background: var(--c-ink-on-dark);
+  color: var(--c-iron); /* L2: texto iron sobre superfície clara */
+  font-family: var(--ff-body);
+  font-size: 0.8125rem; /* 13px */
+  font-weight: 600;
+}
+
+.pillArrow {
+  font-size: 0.875rem;
+}
+
+/* ============================================================
+   MOTION — tudo dentro de no-preference (L5); só transform/opacity
+   com easing var(--ease) (L10).
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .card::before {
+    transition: opacity 0.4s var(--ease);
+  }
+
+  .video {
+    transition: opacity 0.4s var(--ease);
+  }
+
+  /* Touch: glow acompanha o card ativo in-view (vídeo tocando) */
+  .card[data-active="true"]::before {
+    opacity: 0.8;
+  }
+}
+
+/* Hover fino (desktop): scale + glow + pill deslizando */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .card {
+    transition: transform 0.4s var(--ease);
+  }
+
+  .card:hover,
+  .card:focus-visible {
+    transform: scale(1.05);
+  }
+
+  .card:hover::before,
+  .card:focus-visible::before {
+    opacity: 0.8;
+  }
+
+  .pill {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.4s var(--ease),
+      transform 0.4s var(--ease);
+  }
+
+  .card:hover .pill,
+  .card:focus-visible .pill {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,138 @@
+/* ============================================================
+   Button — pill "roll" do SATTI DS (folha 03 — Botões)
+   Leis aplicadas:
+   L2  — primary: texto iron sobre blaze (nunca branco)
+   L3  — focus ring circuit (único uso funcional do azul)
+   L5  — roll SÓ em prefers-reduced-motion: no-preference;
+         fallback estático (translateY(-1px) sem transição)
+   L9  — profundidade por hairline 1px; sem drop-shadow
+         (box-shadow do focus-visible é o ring L3, não sombra)
+   L10 — anima apenas transform; easing var(--ease-roll) 450ms
+   ============================================================ */
+
+.root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  border: 0;
+  border-radius: var(--r-pill);
+  background: transparent;
+  font-family: var(--ff-body);
+  font-size: 16px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  min-height: 44px; /* alvo a11y; altura real 60px */
+}
+
+.root:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--c-paper),
+    0 0 0 4px var(--c-circuit);
+}
+
+.root:disabled {
+  opacity: 0.45;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* --- Variantes ------------------------------------------------ */
+
+.primary {
+  background: var(--c-blaze);
+  color: var(--c-iron); /* L2: nunca texto branco sobre blaze */
+  padding: 18px 36px;
+  font-weight: 600;
+}
+
+.secondary {
+  border: 1px solid var(--c-line);
+  color: var(--c-iron);
+  padding: 17px 36px;
+  font-weight: 500;
+}
+
+.darkGhost {
+  border: 1px solid var(--c-hairline-dark);
+  color: var(--c-ink-on-dark);
+  padding: 17px 36px;
+  font-weight: 500;
+}
+
+/* --- Máscara + texto duplicado (roll) ------------------------- */
+
+.mask {
+  display: block;
+  overflow: hidden;
+  height: 24px;
+}
+
+.label {
+  display: block;
+  height: 24px;
+  line-height: 24px;
+}
+
+/* --- Círculo + seta (prop arrow) ------------------------------ */
+
+.circle {
+  position: relative;
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  margin-right: -12px; /* encosta o círculo na borda óptica do pill */
+  border: 1px solid currentColor;
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+
+.arrowIcon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* estado base (também é o estado estático de reduced-motion) */
+.arrowA {
+  transform: translateX(0);
+}
+
+.arrowB {
+  transform: translateX(-150%);
+}
+
+/* --- Motion (L5: tudo dentro de no-preference) ---------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .label,
+  .arrowIcon {
+    transition: transform var(--dur-roll) var(--ease-roll);
+  }
+
+  .root:hover .label {
+    transform: translateY(-100%); /* camada de cima sai, a de baixo entra */
+  }
+
+  .root:hover .arrowA {
+    transform: translateX(150%); /* seta rola junto: sai pela direita */
+  }
+
+  .root:hover .arrowB {
+    transform: translateX(0); /* ...e a segunda entra pela esquerda */
+  }
+}
+
+/* --- Fallback estático (L5): sem roll, sem transição ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .root:hover {
+    transform: translateY(-1px);
+  }
+}

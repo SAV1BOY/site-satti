@@ -1,0 +1,59 @@
+/* ============================================================
+   FillText — assinatura fill-text da S5 Sobre (statements)
+   Fonte visual: S5 Sobre Desktop 1920.dc.html / Mobile 375.dc.html
+   Duas camadas do MESMO texto:
+     .base — no fluxo, apagada (var(--c-line))
+     .fill — absoluta por cima, iron, revelada por clip-path
+   L10 (exceção documentada): clip-path é o mecanismo da própria
+   assinatura fill-text — muda só clip-path/transform/opacity,
+   nunca layout. O valor é escrito via style pelo frame loop.
+   ============================================================ */
+
+.root {
+  position: relative;
+  display: block;
+  margin: 0;
+  /* Tipografia do statement (comp S5): Archivo 700 caps.
+     Desktop 1920: clamp(1.75rem, 3.4vw, 3rem) · Mobile 375: 24px.
+     clamp unificado: piso 1.5rem cobre o mobile, teto 3rem o desktop. */
+  font-family: var(--ff-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(1.5rem, 3.4vw, 3rem);
+  line-height: 1.08;
+}
+
+/* Camada base — texto "apagado", sempre visível, define o layout.
+   É a camada lida por screen readers (a .fill é aria-hidden). */
+.base {
+  display: block;
+  color: var(--c-line);
+}
+
+/* Camada de preenchimento — iron, sobreposta 1:1 à base.
+   Estado padrão (sem JS / antes do efeito): 100% preenchida,
+   texto legível. Com motion ok, o frame loop assume via
+   style.clipPath = inset(0 X% 0 0) conforme o progresso de scroll. */
+.fill {
+  position: absolute;
+  inset: 0;
+  display: block;
+  color: var(--c-iron);
+  clip-path: none;
+}
+
+/* Mobile (comp 375): line-height 1.1 */
+@media (max-width: 640px) {
+  .root {
+    line-height: 1.1;
+  }
+}
+
+/* L5 — fallback estático explícito: em reduced-motion o statement
+   fica 100% preenchido. O !important vence o style inline escrito
+   pelo frame loop (defesa em profundidade além do guard em JS). */
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    clip-path: none !important;
+  }
+}

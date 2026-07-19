@@ -1,0 +1,71 @@
+/* ============================================================
+   PulseCircle — diagrama circular do método SATTI (S5 Sobre)
+   Ref: S5 Sobre Desktop 1920.dc.html (_diagram)
+
+   L3  — circuit somente em linhas/hub (diagrama = uso funcional)
+   L5  — pulso APENAS dentro de prefers-reduced-motion: no-preference;
+         fallback estático = nodes opacos, diagrama 100% desenhado
+   L10 — animação só opacity/transform (scale), 2s alternate,
+         delay 0.15s × índice via --pulse-delay
+   ============================================================ */
+
+.diagram {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 1;
+}
+
+/* Anéis concêntricos (100% / 68% / 42%) */
+.ring {
+  fill: none;
+  stroke: var(--c-line);
+  stroke-width: 1;
+}
+
+/* Linhas de conexão centro → node (circuit funcional, L3) */
+.spoke {
+  stroke: var(--c-circuit);
+  stroke-width: 1;
+  stroke-opacity: 0.22;
+}
+
+/* Hub central */
+.hub {
+  fill: var(--c-circuit);
+}
+
+/* Nodes — estado base = fallback estático (L5): opacos, sem animação */
+.node {
+  fill: var(--c-iron);
+}
+
+/* Labels mono caption */
+.label {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--c-steel);
+}
+
+/* Pulso discreto — declarado somente com motion permitido (L5) */
+@media (prefers-reduced-motion: no-preference) {
+  .node {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: pulse 2s ease-in-out var(--pulse-delay, 0s) infinite alternate;
+  }
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}

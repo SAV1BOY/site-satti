@@ -1,0 +1,51 @@
+/* ============================================================
+   Marquee — trilho CSS-only (ref: S3 ValuesStrip Var A · S5 logos)
+   Loop: translateX 0 → -50%. Cada cópia leva padding-right igual
+   ao gap, então -50% do trilho = exatamente 1 cópia (sem salto).
+   L5: animação SÓ dentro de prefers-reduced-motion: no-preference;
+   fallback estático = trilho parado, primeira cópia visível.
+   L10: só transform/opacity · timing linear (loop contínuo).
+   ============================================================ */
+
+.marquee {
+  --marquee-duration: 20s;
+  --marquee-gap: var(--sp-lg);
+
+  width: 100%;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+}
+
+/* Cada cópia: itens espaçados pelo gap; padding-right fecha o loop */
+.copy {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--marquee-gap);
+  padding-right: var(--marquee-gap);
+}
+
+/* Estado base (reduced-motion incluso): parado em translateX(0),
+   primeira cópia visível — a duplicata aria-hidden fica clipada. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .track {
+    will-change: transform;
+    animation: marquee var(--marquee-duration) linear infinite;
+  }
+
+  .reverse {
+    animation-direction: reverse;
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
