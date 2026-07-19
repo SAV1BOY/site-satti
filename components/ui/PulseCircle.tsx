@@ -107,13 +107,14 @@ type NodeStyle = CSSProperties & {
 interface PulseCircleProps {
   /** Classe extra no svg (dimensão/posição ficam por conta da seção). */
   className?: string;
-  /** Rótulo acessível. Default: grafia da comp S5. */
-  ariaLabel?: string;
+  /** Rótulo acessível — OBRIGATÓRIO e vindo do JSON (copy-law L1:
+      nenhum literal editorial default no componente). */
+  ariaLabel: string;
 }
 
 export default function PulseCircle({
   className,
-  ariaLabel = "Diagrama do método",
+  ariaLabel,
 }: PulseCircleProps) {
   return (
     <svg

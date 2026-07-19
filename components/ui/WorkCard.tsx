@@ -34,6 +34,24 @@ export interface WorkCardProps {
 const POSTER_SIZES =
   "(max-width: 767px) calc(100vw - 40px), (max-width: 1500px) 46vw, 645px";
 
+/* Coordenação de touch (L2): em telas touch vários cards podem estar
+   in-view ao mesmo tempo; só UM pode tocar/brilhar (o glow é blaze).
+   Último a entrar leva — o anterior é liberado e pausa. */
+let activeTouchRelease: (() => void) | null = null;
+
+function claimTouchPlayback(release: () => void) {
+  if (activeTouchRelease !== null && activeTouchRelease !== release) {
+    activeTouchRelease();
+  }
+  activeTouchRelease = release;
+}
+
+function releaseTouchPlayback(release: () => void) {
+  if (activeTouchRelease === release) {
+    activeTouchRelease = null;
+  }
+}
+
 export default function WorkCard({
   title,
   tags,
@@ -51,6 +69,8 @@ export default function WorkCard({
   const hoverRef = useRef(false);
   const motionOkRef = useRef(false);
   const touchRef = useRef(false);
+  /** Em touch: este card detém o claim único de playback/glow (L2). */
+  const claimedRef = useRef(false);
 
   const [motionOk, setMotionOk] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
@@ -64,8 +84,11 @@ export default function WorkCard({
   const syncPlayback = useCallback(() => {
     const video = videoRef.current;
     if (video === null || !motionOkRef.current) return;
+    // Touch: além de in-view, precisa deter o claim único (L2 — um glow
+    // por vez). Pointer fino: hover decide (um hover por vez por natureza).
     const wantsPlay =
-      inViewRef.current && (touchRef.current || hoverRef.current);
+      inViewRef.current &&
+      (touchRef.current ? claimedRef.current : hoverRef.current);
     if (wantsPlay) {
       if (video.src === "") {
         const asset = video.dataset.asset;
@@ -108,20 +131,41 @@ export default function WorkCard({
     };
   }, [scheduleSync]);
 
-  /* In-view via IntersectionObserver (L10). */
+  /** Libera o claim de touch deste card (chamado quando outro card entra). */
+  const releaseClaim = useCallback(() => {
+    claimedRef.current = false;
+    scheduleSync();
+  }, [scheduleSync]);
+
+  /* In-view via IntersectionObserver (L10) + claim único em touch (L2). */
   useEffect(() => {
     const root = rootRef.current;
     if (root === null || typeof IntersectionObserver === "undefined") return;
     const io = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) inViewRef.current = entry.isIntersecting;
+        for (const entry of entries) {
+          inViewRef.current = entry.isIntersecting;
+          if (touchRef.current) {
+            if (entry.isIntersecting) {
+              claimedRef.current = true;
+              claimTouchPlayback(releaseClaim);
+            } else if (claimedRef.current) {
+              claimedRef.current = false;
+              releaseTouchPlayback(releaseClaim);
+            }
+          }
+        }
         scheduleSync();
       },
       { threshold: 0.45 },
     );
     io.observe(root);
-    return () => io.disconnect();
-  }, [scheduleSync]);
+    return () => {
+      io.disconnect();
+      claimedRef.current = false;
+      releaseTouchPlayback(releaseClaim);
+    };
+  }, [scheduleSync, releaseClaim]);
 
   /* Pausa e cancela rAF quando o vídeo desmonta (troca p/ reduced-motion) ou no unmount. */
   useEffect(() => {

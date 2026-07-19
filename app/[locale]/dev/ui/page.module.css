@@ -7,10 +7,16 @@
   min-height: 100vh;
 }
 
+/* Cada demo em dobra própria (100vh, conteúdo centrado): blaze-law L2 —
+   duas demos com elemento blaze nunca coexistem num viewport. */
 .section {
   position: relative;
   border-top: 1px solid var(--c-line);
   padding-block: var(--sp-xl);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .sectionTitle {

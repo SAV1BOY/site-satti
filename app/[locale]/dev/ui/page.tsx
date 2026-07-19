@@ -37,12 +37,12 @@ export default async function DevUiPage({
   return (
     <main className={styles.main}>
       <header className={`container-s ${styles.section}`}>
-        <span className="eyebrow">DEV / UI — PLAYGROUND W2</span>
+        <span className="eyebrow">[ DEV · UI · W2 ]</span>
       </header>
 
-      {/* Button — 3 variantes do DS (roll 100% CSS) */}
+      {/* Button — variantes do DS (roll 100% CSS) */}
       <section className={`container-s ${styles.section}`}>
-        <p className={`eyebrow ${styles.sectionTitle}`}>BUTTON / ROLL</p>
+        <p className={`eyebrow ${styles.sectionTitle}`}>[ BUTTON · ROLL ]</p>
         <div className={styles.row}>
           <Button href="#" arrow>
             {tPortfolio("allCta")}
@@ -55,13 +55,15 @@ export default async function DevUiPage({
 
       {/* Typewriter — palavras oficiais do hero */}
       <section className={`container-s ${styles.section}`}>
-        <p className={`eyebrow ${styles.sectionTitle}`}>USE-TYPEWRITER</p>
+        <p className={`eyebrow ${styles.sectionTitle}`}>[ USE-TYPEWRITER ]</p>
         <TypewriterDemo words={words} />
       </section>
 
       {/* Marquee — itens da S3 ValuesStrip (Var A) */}
       <section className={styles.section}>
-        <p className={`container-s eyebrow ${styles.sectionTitle}`}>MARQUEE</p>
+        <p className={`container-s eyebrow ${styles.sectionTitle}`}>
+          [ MARQUEE ]
+        </p>
         <Marquee speed={20}>
           {valueItems.map((item) => (
             <span key={item} className={styles.marqueeItem}>
@@ -73,7 +75,7 @@ export default async function DevUiPage({
 
       {/* FillText — statements oficiais da S5 */}
       <section className={`container-s ${styles.section}`}>
-        <p className={`eyebrow ${styles.sectionTitle}`}>FILL-TEXT</p>
+        <p className={`eyebrow ${styles.sectionTitle}`}>[ FILL-TEXT ]</p>
         {aboutParagraphs.map((statement) => (
           <FillText key={statement} className={styles.fillStatement}>
             {statement}
@@ -83,17 +85,18 @@ export default async function DevUiPage({
 
       {/* PulseCircle — diagrama do método (S5) */}
       <section className={`container-s ${styles.section}`}>
-        <p className={`eyebrow ${styles.sectionTitle}`}>PULSE-CIRCLE</p>
+        <p className={`eyebrow ${styles.sectionTitle}`}>[ PULSE-CIRCLE ]</p>
         <div className={styles.diagramBox}>
-          <PulseCircle />
+          <PulseCircle ariaLabel={tAbout("methodTitle")} />
         </div>
       </section>
 
-      {/* WorkCard — 2 projetos reais da S7 (posters placeholder até W5) */}
+      {/* WorkCard — 1 projeto real da S7 (L2: um glow por dobra; o grid
+          completo vive na própria S7). Poster placeholder até W5. */}
       <section className={`container-s ${styles.section}`}>
-        <p className={`eyebrow ${styles.sectionTitle}`}>WORK-CARD</p>
+        <p className={`eyebrow ${styles.sectionTitle}`}>[ WORK-CARD ]</p>
         <div className={styles.workGrid}>
-          {projects.slice(0, 2).map((project) => (
+          {projects.slice(0, 1).map((project) => (
             <WorkCard
               key={project.title}
               title={project.title}
@@ -114,7 +117,7 @@ export default async function DevUiPage({
             nodeLabels={{ n1: "[ N1 ]", n2: "[ N2 ]" }}
           />
           <div className={`container-s ${styles.zoneContent}`}>
-            <p className="eyebrow">AUTOMATION-LINE / SEGMENTO CLARO</p>
+            <p className="eyebrow">[ AUTOMATION-LINE · CLARO ]</p>
             <p className={styles.hint}>
               [ D3 · fio contínuo · desenho no scroll · handshake x ]
             </p>
@@ -127,7 +130,7 @@ export default async function DevUiPage({
             nodeLabels={{ n1: "[ N3 ]", n2: "[ N4 ]" }}
           />
           <div className={`container-s ${styles.zoneContent}`}>
-            <p className="eyebrow">AUTOMATION-LINE / SEGMENTO ESCURO</p>
+            <p className="eyebrow">[ AUTOMATION-LINE · ESCURO ]</p>
             <p className={styles.hint}>
               [ D3 · pulso único cruza a fronteira · reduced-motion = linha
               100% ]
