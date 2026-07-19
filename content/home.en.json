@@ -1,0 +1,159 @@
+{
+  "hero": {
+    "eyebrow": { "value": "[CONFIRMAR]", "confirm": true, "draft": null },
+    "line1": "We build",
+    "line2": "machines that",
+    "words": ["sell", "support", "operate", "grow"],
+    "scroll": "↓"
+  },
+  "header": {
+    "brand": "SATTI",
+    "nav": ["Services", "About", "Work", "Contact"],
+    "localePt": "PT",
+    "localeSeparator": "/",
+    "localeEn": "EN",
+    "cta": "Talk to SATTI",
+    "menuAriaLabel": "Menu"
+  },
+  "values": {
+    "items": ["applied AI", "·", "real automation", "·", "measurable results", "·"]
+  },
+  "services": {
+    "sectionLabel": "01 — Services",
+    "title": "A tight engineering team that designs, builds and operates AI agents, automations and digital products end to end.",
+    "items": [
+      { "number": "Service 01", "title": "AI Agents & Automations", "description": "Agents that answer, qualify and execute — wired into your WhatsApp and your tools.", "tags": ["n8n", "Evolution API", "Claude / GPT", "Python"], "arrow": "→" },
+      { "number": "Service 02", "title": "Web Products & SaaS", "description": "From zero to deploy: fast, beautiful, measurable products on an architecture built to scale.", "tags": ["Next.js", "Supabase", "PostgreSQL", "Vercel"], "arrow": "→" },
+      { "number": "Service 03", "title": "Data & Integrations", "description": "Spreadsheets become systems. Systems talk to each other. Decisions start from data.", "tags": ["Dashboards", "ETL", "APIs", "Spreadsheet automation"], "arrow": "→" }
+    ]
+  },
+  "about": {
+    "sectionLabel": "02 — About",
+    "title": "Engineering that proves itself",
+    "paragraphs": [
+      "Solid strategy aligned with the business and trustworthy data are the ingredients of any automation that lasts.",
+      "An agile process backed by measurement: every delivery ships with a before and an after number.",
+      "A good idea is a tested idea. Continuous experiments are our engine."
+    ],
+    "metricsTitle": "Some numbers",
+    "metrics": [
+      { "value": { "value": "[CONFIRMAR]", "confirm": true, "draft": null }, "label": { "value": "projects delivered", "confirm": true, "draft": null } },
+      { "value": { "value": "[CONFIRMAR]", "confirm": true, "draft": null }, "label": { "value": "automations in production", "confirm": true, "draft": null } },
+      { "value": { "value": "[CONFIRMAR]", "confirm": true, "draft": null }, "label": { "value": "client hours saved / month", "confirm": true, "draft": null } },
+      { "value": { "value": "[CONFIRMAR]", "confirm": true, "draft": null }, "label": { "value": "messages processed", "confirm": true, "draft": null } }
+    ],
+    "methodTitle": "SATTI method · 10 touchpoints",
+    "methodDescription": "A circular method: discovery, design, agents, integration and assisted operation — each node connected by functional circuit lines.",
+    "methodNodes": ["Discovery", "Data", "Agents", "Automation", "Product", "Integrations", "Metrics", "Iteration", "Deploy", "Support"],
+    "cta": "Talk to SATTI",
+    "logosNotice": "[Only logos with written permission]"
+  },
+  "automation": {
+    "eyebrow": "Automation",
+    "title": "{ Smart } Automation",
+    "description": "Making your operation unbeatable is engineering. We take it (a) seriously and (b) creatively.",
+    "portfolioCta": "See our work",
+    "contactCta": "Get in touch",
+    "steps": ["CAPTURE", "AGENTS", "DELIVERY"],
+    "lineAriaLabel": "Automation line"
+  },
+  "portfolio": {
+    "sectionLabel": "03 — Work",
+    "title": "Good product shortens the path: fewer clicks, more results.",
+    "supportingText": "No cookie-cutter solutions",
+    "cardCta": "Book a call",
+    "allCta": "Book a call",
+    "items": [
+      { "title": "CallAudit — AI call auditing", "tag": "AI · Voice" },
+      { "title": "Expediting Tracker — real-time PCP", "tag": "Data · Product" },
+      { "title": "Sales Portal — System Digital", "tag": "Web · SaaS" },
+      { "title": "Quiz funnel — asset protection", "tag": "Web · Conversion" },
+      { "title": "AI reels pipeline — LS Interbank", "tag": "AI · Automation" },
+      { "title": { "value": "[CONFIRMAR 6th public project]", "confirm": true, "draft": null }, "tag": { "value": "[CONFIRMAR]", "confirm": true, "draft": null } }
+    ]
+  },
+  "banner": {
+    "eyebrow": "No cookie-cutter solutions",
+    "copy": { "value": "[CONFIRMAR — banner copy TBD]", "confirm": true, "draft": "Good numbers don't lie:\ndata + AI = growth with method." },
+    "draftLines": ["Good numbers", "don't lie:", "data + AI =", "growth", "with method."],
+    "draftNotice": "Suggested text (PRD draft) · provisional in steel · not final copy",
+    "cta": "Talk to SATTI"
+  },
+  "cases": {
+    "sectionLabel": "04 — Cases",
+    "title": "Featured cases",
+    "previousAriaLabel": "Previous",
+    "nextAriaLabel": "Next",
+    "beforeLabel": "Before",
+    "afterLabel": "After",
+    "beforeValue": { "value": "[CONFIRMAR]", "confirm": true, "draft": null },
+    "afterValue": { "value": "[CONFIRMAR]", "confirm": true, "draft": null },
+    "items": [
+      { "title": "CallAudit — AI call auditing", "tag": "AI · Voice" },
+      { "title": "Expediting Tracker — real-time PCP", "tag": "Data · Product" },
+      { "title": "Sales Portal — System Digital", "tag": "Web · SaaS" },
+      { "title": "Quiz funnel — asset protection", "tag": "Web · Conversion" },
+      { "title": "AI reels pipeline — LS Interbank", "tag": "AI · Automation" }
+    ]
+  },
+  "reviews": {
+    "sectionLabel": "05 — What clients say",
+    "title": "In the words of those who used it",
+    "notice": "Reviews to confirm with Miguel",
+    "quoteMark": "“",
+    "quote": { "value": "[CONFIRMAR quote]", "confirm": true, "draft": null },
+    "name": { "value": "[CONFIRMAR name]", "confirm": true, "draft": null },
+    "role": { "value": "[CONFIRMAR role · company]", "confirm": true, "draft": null }
+  },
+  "footer": {
+    "sectionLabel": "06 — Contact",
+    "eyebrow": "Contact",
+    "titleLines": ["Shall we build your machine?", "Tell us what slows your operation down. The first call already ends with a plan."],
+    "form": {
+      "nameLabel": "Your name", "namePlaceholder": "Your name",
+      "emailLabel": "Your email", "emailExample": "ana",
+      "messageLabel": "What do you want to automate?", "messagePlaceholder": "Tell us a bit",
+      "error": { "value": "Couldn't send. Try again or write to contato@sattiai.com.", "confirm": true, "draft": null },
+      "returnEmailLabel": "Budget range (optional)", "returnEmailExample": "Company",
+      "success": "Brief sent. We reply within 24h.", "submit": "Send brief",
+      "budgetLabel": "Budget range (optional)", "companyLabel": "Company (optional)", "companyPlaceholder": "Company"
+    },
+    "brand": "SATTI",
+    "navigationTitle": "Navigation",
+    "navigation": ["Home", "Services", "About", "Automation", "Work", "Contact"],
+    "socialTitle": "Social",
+    "linkedin": { "value": "LinkedIn [CONFIRMAR]", "confirm": true, "draft": null },
+    "instagram": { "value": "Instagram [CONFIRMAR]", "confirm": true, "draft": null },
+    "descriptor": "Prefer email?",
+    "preferEmail": "Prefer email?",
+    "contactEmail": "contato@sattiai.com",
+    "location": "Nova Lima — MG",
+    "copyright": { "value": "© SATTI 2026. All rights reserved.", "confirm": true, "draft": null },
+    "signature": "contato@sattiai.com"
+  },
+  "menu": {
+    "machine_translated": true,
+    "brand": "SATTI", "closeAriaLabel": "Close",
+    "items": ["01 — Services", "02 — About", "03 — Work", "04 — Cases", "05 — What clients say", "06 — Contact"],
+    "linkedin": { "value": "[CONFIRMAR LinkedIn handle]", "confirm": true, "draft": null },
+    "instagram": { "value": "[CONFIRMAR Instagram handle]", "confirm": true, "draft": null },
+    "location": "Nova Lima — MG", "lineAriaLabel": "Vertical automation line"
+  },
+  "contact": {
+    "machine_translated": true,
+    "backdropLines": ["We build", "machines that", "sell"],
+    "eyebrow": "Contact", "closeAriaLabel": "Close", "title": "Talk to SATTI",
+    "nameLabel": "Name", "namePlaceholder": "Your name", "emailLabel": "Email", "emailExample": "ana",
+    "messageLabel": "Message", "messagePlaceholder": "Tell us a bit about the project",
+    "error": { "value": "[CONFIRMAR error message]", "confirm": true, "draft": null },
+    "returnEmailLabel": "Reply email", "returnEmailExample": "ana@estudio.com.br", "success": "Success", "submit": "Send",
+    "linkedin": { "value": "[CONFIRMAR LinkedIn handle]", "confirm": true, "draft": null },
+    "instagram": { "value": "[CONFIRMAR Instagram handle]", "confirm": true, "draft": null }
+  },
+  "language": {
+    "machine_translated": true,
+    "backdropLines": ["We build", "machines that", "sell"],
+    "brand": "SATTI", "selector": "EN", "title": "Language", "closeAriaLabel": "Close",
+    "ptCode": "PT", "ptLabel": "Português (BR)", "enCode": "EN", "enLabel": "English", "enRoute": "/en — English mirror (Phase 5)"
+  }
+}
