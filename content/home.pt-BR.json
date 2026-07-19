@@ -315,7 +315,7 @@
       "submit": "Enviar",
       "budgetLabel": "Faixa de investimento",
       "companyLabel": "Empresa",
-      "companyPlaceholder": null
+      "companyPlaceholder": ""
     },
     "brand": "SATTI",
     "navigationTitle": "Navegação",
