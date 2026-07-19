@@ -88,6 +88,11 @@ export default function OverlayProvider({
   }, []);
 
   const close = useCallback(() => {
+    // SÍNCRONO (audit W4): destrava o scroll AINDA NESTE handler — o
+    // default nativo de uma âncora clicada roda logo após o handler,
+    // antes de qualquer effect; com overflow:hidden ativo o salto de
+    // fragmento falharia. O effect abaixo cuida do resto (foco).
+    document.documentElement.removeAttribute("data-overlay");
     setActive(null);
   }, []);
 
@@ -98,7 +103,9 @@ export default function OverlayProvider({
       const trigger = triggerRef.current;
       if (trigger !== null) {
         triggerRef.current = null;
-        trigger.focus();
+        // preventScroll: a restauração de foco não pode desfazer a
+        // posição de uma âncora recém-navegada (audit W4).
+        trigger.focus({ preventScroll: true });
       }
       return;
     }

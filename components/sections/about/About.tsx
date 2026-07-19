@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 
 import Button from "@/components/ui/Button";
 import FillText from "@/components/ui/FillText";
@@ -108,12 +109,16 @@ export default async function About() {
         </div>
 
         {/* 4 stat-cards — valores/labels [CONFIRMAR] (L1/L8) +
-            slot de vídeo A2–A5 no canto inferior direito (§8). */}
+            slot de vídeo A2–A5 no canto inferior direito (§8).
+            W6 modo final: só cards com valor CONFIRMADO renderizam. */}
         <ul className={styles.stats}>
-          {metrics.slice(0, STAT_MEDIA.length).map((metric, index) => {
+          {metrics.slice(0, STAT_MEDIA.length).flatMap((metric, index) => {
             const media = STAT_MEDIA[index]; // index < length (slice acima)
             const value = readField(metric.value);
             const label = readField(metric.label);
+            if (OMIT_UNCONFIRMED && (value.confirm || label.confirm)) {
+              return [];
+            }
             return (
               <li
                 key={`stat-${index}`}

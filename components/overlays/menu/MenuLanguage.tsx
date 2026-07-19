@@ -25,6 +25,7 @@ export default function MenuLanguage({
       type="button"
       className={className}
       aria-haspopup="dialog"
+      aria-expanded={false}
       onClick={() => open("language")}
     >
       {children}

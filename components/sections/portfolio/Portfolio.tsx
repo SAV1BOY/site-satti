@@ -14,6 +14,7 @@
 
 import { getTranslations } from "next-intl/server";
 import AutomationLine from "@/components/ui/AutomationLine";
+import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import WorkCard from "@/components/ui/WorkCard";
 import styles from "./Portfolio.module.css";
 
@@ -71,10 +72,14 @@ export default async function Portfolio() {
         <h2 className={styles.title}>{t("title")}</h2>
 
         <ul className={styles.grid}>
-          {items.slice(0, CARD_MEDIA.length).map((item, index) => {
+          {items.slice(0, CARD_MEDIA.length).flatMap((item, index) => {
             const media = CARD_MEDIA[index]; // index < length (slice acima)
             const title = readField(item.title);
             const tag = readField(item.tag);
+            // W6 modo final: card sem projeto confirmado (6º) é omitido.
+            if (OMIT_UNCONFIRMED && (title.confirm || tag.confirm)) {
+              return [];
+            }
             return (
               <li
                 key={title.text}

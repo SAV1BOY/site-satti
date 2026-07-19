@@ -105,6 +105,8 @@ export default function HeaderClient({
           className={styles.cta}
           href="#contato"
           data-cursor="hover"
+          aria-haspopup="dialog"
+          aria-expanded={overlay.active === "contact"}
           onClick={(e) => {
             e.preventDefault();
             overlay.open("contact");
@@ -122,6 +124,7 @@ export default function HeaderClient({
           className={styles.menu}
           type="button"
           aria-label={menuLabel}
+          aria-haspopup="dialog"
           aria-expanded={overlay.active === "menu"}
           onClick={() => overlay.open("menu")}
         >

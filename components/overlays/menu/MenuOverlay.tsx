@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import MenuClose from "./MenuClose";
 import MenuNavLink from "./MenuNavLink";
 import MenuLanguage from "./MenuLanguage";
@@ -128,18 +129,23 @@ export default async function MenuOverlay() {
         >
           {github.text}
         </a>
-        <span
-          className={styles.metaItem}
-          data-confirm={linkedin.confirm ? "true" : undefined}
-        >
-          {linkedin.text}
-        </span>
-        <span
-          className={styles.metaItem}
-          data-confirm={instagram.confirm ? "true" : undefined}
-        >
-          {instagram.text}
-        </span>
+        {/* W6 modo final: sociais sem handle oficial são omitidos. */}
+        {!(OMIT_UNCONFIRMED && linkedin.confirm) ? (
+          <span
+            className={styles.metaItem}
+            data-confirm={linkedin.confirm ? "true" : undefined}
+          >
+            {linkedin.text}
+          </span>
+        ) : null}
+        {!(OMIT_UNCONFIRMED && instagram.confirm) ? (
+          <span
+            className={styles.metaItem}
+            data-confirm={instagram.confirm ? "true" : undefined}
+          >
+            {instagram.text}
+          </span>
+        ) : null}
         <span className={styles.metaItem}>{t("location")}</span>
         <MenuLanguage className={styles.language}>
           <span className={styles.srOnly}>{tLanguage("title")} — </span>

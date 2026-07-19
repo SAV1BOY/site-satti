@@ -25,6 +25,7 @@
  */
 
 import { getTranslations } from "next-intl/server";
+import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import CasesClient, { type CaseSlideData } from "./CasesClient";
 import styles from "./CasesSlider.module.css";
 
@@ -61,6 +62,9 @@ export default async function CasesSlider() {
   );
   const beforeValue = readField(t.raw("beforeValue") as CopyField);
   const afterValue = readField(t.raw("afterValue") as CopyField);
+  // W6 modo final: métrica só com número cravado (L8).
+  const omitMetrics =
+    OMIT_UNCONFIRMED && (beforeValue.confirm || afterValue.confirm);
 
   const slides: CaseSlideData[] = items.map((item, index) => {
     const title = readField(item.title);
@@ -85,8 +89,9 @@ export default async function CasesSlider() {
           slides={slides}
           beforeLabel={t("beforeLabel")}
           afterLabel={t("afterLabel")}
-          beforeValue={beforeValue}
-          afterValue={afterValue}
+          // W6 modo final: métrica sem número confirmado é omitida (L8).
+          beforeValue={omitMetrics ? undefined : beforeValue}
+          afterValue={omitMetrics ? undefined : afterValue}
           prevLabel={t("previousAriaLabel")}
           nextLabel={t("nextAriaLabel")}
         />

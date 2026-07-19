@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import ContactBackdrop from "./ContactBackdrop";
 import ContactClose from "./ContactClose";
 import ContactCta from "./ContactCta";
@@ -115,21 +116,28 @@ export default async function ContactOverlay() {
           label={t("submit")}
         />
 
-        {/* Handles [CONFIRMAR] → steel, sem href (nada a navegar) */}
-        <div className={styles.socials}>
-          <span
-            className={styles.social}
-            data-confirm={linkedin.confirm ? "true" : undefined}
-          >
-            {linkedin.value}
-          </span>
-          <span
-            className={styles.social}
-            data-confirm={instagram.confirm ? "true" : undefined}
-          >
-            {instagram.value}
-          </span>
-        </div>
+        {/* Handles [CONFIRMAR] → steel, sem href (nada a navegar).
+            W6 modo final: sem handle oficial, o bloco some. */}
+        {!(OMIT_UNCONFIRMED && linkedin.confirm && instagram.confirm) ? (
+          <div className={styles.socials}>
+            {!(OMIT_UNCONFIRMED && linkedin.confirm) ? (
+              <span
+                className={styles.social}
+                data-confirm={linkedin.confirm ? "true" : undefined}
+              >
+                {linkedin.value}
+              </span>
+            ) : null}
+            {!(OMIT_UNCONFIRMED && instagram.confirm) ? (
+              <span
+                className={styles.social}
+                data-confirm={instagram.confirm ? "true" : undefined}
+              >
+                {instagram.value}
+              </span>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </div>
   );

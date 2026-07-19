@@ -172,6 +172,13 @@
   color: var(--c-blaze);
 }
 
+/* L2 (audit W4): enquanto um item está em hover/foco ELE é o blaze do
+   viewport — o pulso da linha decorativa cede a vez. */
+.root:has(.item:hover) .pulse,
+.root:has(.item:focus-visible) .pulse {
+  display: none;
+}
+
 /* --- Rodapé do overlay ---------------------------------------- */
 
 .meta {

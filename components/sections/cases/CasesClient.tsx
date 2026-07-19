@@ -53,8 +53,10 @@ interface CasesClientProps {
   slides: CaseSlideData[];
   beforeLabel: string;
   afterLabel: string;
-  beforeValue: MetricValue;
-  afterValue: MetricValue;
+  /** Ausentes no modo final quando [CONFIRMAR] (W6): a linha de
+      métrica é omitida com elegância (L8). */
+  beforeValue?: MetricValue;
+  afterValue?: MetricValue;
   prevLabel: string;
   nextLabel: string;
 }
@@ -148,30 +150,33 @@ export default function CasesClient({
                   </h3>
                 </div>
 
-                {/* Métrica antes→depois — L8: [CONFIRMAR] steel até nº real */}
-                <dl className={styles.metrics}>
-                  <div className={styles.metric}>
-                    <dt className={styles.metricLabel}>{beforeLabel}</dt>
-                    <dd
-                      className={`${styles.metricValue} ${styles.metricBefore}`}
-                      data-confirm={beforeValue.confirm ? "true" : undefined}
-                    >
-                      {beforeValue.text}
-                    </dd>
-                  </div>
-                  <div className={styles.metricArrow} aria-hidden="true">
-                    →
-                  </div>
-                  <div className={styles.metric}>
-                    <dt className={styles.metricLabel}>{afterLabel}</dt>
-                    <dd
-                      className={styles.metricValue}
-                      data-confirm={afterValue.confirm ? "true" : undefined}
-                    >
-                      {afterValue.text}
-                    </dd>
-                  </div>
-                </dl>
+                {/* Métrica antes→depois — L8: [CONFIRMAR] steel até nº
+                    real; modo final sem número confirmado = sem linha. */}
+                {beforeValue !== undefined && afterValue !== undefined ? (
+                  <dl className={styles.metrics}>
+                    <div className={styles.metric}>
+                      <dt className={styles.metricLabel}>{beforeLabel}</dt>
+                      <dd
+                        className={`${styles.metricValue} ${styles.metricBefore}`}
+                        data-confirm={beforeValue.confirm ? "true" : undefined}
+                      >
+                        {beforeValue.text}
+                      </dd>
+                    </div>
+                    <div className={styles.metricArrow} aria-hidden="true">
+                      →
+                    </div>
+                    <div className={styles.metric}>
+                      <dt className={styles.metricLabel}>{afterLabel}</dt>
+                      <dd
+                        className={styles.metricValue}
+                        data-confirm={afterValue.confirm ? "true" : undefined}
+                      >
+                        {afterValue.text}
+                      </dd>
+                    </div>
+                  </dl>
+                ) : null}
               </div>
             </article>
           </SwiperSlide>

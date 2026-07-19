@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import AutomationLine from "@/components/ui/AutomationLine";
+import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import FooterForm from "./FooterForm";
 import FooterHat from "./FooterHat";
 import styles from "./Footer.module.css";
@@ -162,18 +163,23 @@ export default async function Footer() {
                 >
                   {github.text}
                 </a>
-                <span
-                  className={styles.social}
-                  data-confirm={linkedin.confirm ? "true" : undefined}
-                >
-                  {linkedin.text}
-                </span>
-                <span
-                  className={styles.social}
-                  data-confirm={instagram.confirm ? "true" : undefined}
-                >
-                  {instagram.text}
-                </span>
+                {/* W6 modo final: sociais sem handle oficial somem. */}
+                {!(OMIT_UNCONFIRMED && linkedin.confirm) ? (
+                  <span
+                    className={styles.social}
+                    data-confirm={linkedin.confirm ? "true" : undefined}
+                  >
+                    {linkedin.text}
+                  </span>
+                ) : null}
+                {!(OMIT_UNCONFIRMED && instagram.confirm) ? (
+                  <span
+                    className={styles.social}
+                    data-confirm={instagram.confirm ? "true" : undefined}
+                  >
+                    {instagram.text}
+                  </span>
+                ) : null}
               </div>
             </div>
 

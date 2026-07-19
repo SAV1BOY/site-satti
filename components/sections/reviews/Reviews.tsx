@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import styles from "./Reviews.module.css";
 
 /**
@@ -26,6 +27,11 @@ export default async function Reviews() {
   const quote = t.raw("quote") as CopyField;
   const name = t.raw("name") as CopyField;
   const role = t.raw("role") as CopyField;
+
+  // W6 modo final: sem depoimento REAL a seção inteira é omitida (§6-W6).
+  if (OMIT_UNCONFIRMED && (quote.confirm || name.confirm || role.confirm)) {
+    return null;
+  }
 
   return (
     <section id="depoimentos" className={styles.root}>

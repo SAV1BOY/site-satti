@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import Button from "@/components/ui/Button";
+import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import styles from "./Banner.module.css";
 
 /**
@@ -72,7 +73,10 @@ export default async function Banner() {
       <p className={`eyebrow ${styles.eyebrow}`}>{t("eyebrow")}</p>
 
       <div className={styles.statementBlock}>
-        {confirm ? (
+        {/* W6 modo final: chrome de rascunho ([CONFIRMAR] + aviso) some;
+            as linhas do rascunho permanecem em steel até a copy oficial
+            (DEC-012 — nada de "[CONFIRMAR]" público). */}
+        {confirm && !OMIT_UNCONFIRMED ? (
           <p className={styles.confirmTag} data-confirm="true">
             {copy.value}
           </p>
@@ -95,7 +99,7 @@ export default async function Banner() {
           <span className={styles.line}>{lineE}</span>
         </h2>
 
-        {confirm ? (
+        {confirm && !OMIT_UNCONFIRMED ? (
           <p className={styles.draftNotice}>{t("draftNotice")}</p>
         ) : null}
       </div>

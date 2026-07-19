@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import AutomationLine from "@/components/ui/AutomationLine";
+import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import HeroMedia from "./HeroMedia";
 import HeroTypewriter from "./HeroTypewriter";
 import styles from "./Hero.module.css";
@@ -59,12 +60,15 @@ export default async function Hero() {
       <HeroMedia videoSrc={HERO_VIDEO} posterSrc={HERO_POSTER} />
 
       <div className={styles.content}>
-        <span
-          className={styles.badge}
-          data-confirm={eyebrow.confirm ? "true" : undefined}
-        >
-          {eyebrow.value}
-        </span>
+        {/* W6: badge só com prova real — modo final omite o [CONFIRMAR]. */}
+        {!(OMIT_UNCONFIRMED && eyebrow.confirm) ? (
+          <span
+            className={styles.badge}
+            data-confirm={eyebrow.confirm ? "true" : undefined}
+          >
+            {eyebrow.value}
+          </span>
+        ) : null}
 
         <h1 className={styles.title}>
           <span className={styles.titleLine}>{t("line1")}</span>
