@@ -1,59 +1,178 @@
-﻿.root {
-  padding: var(--sp-2xl) var(--gutter);
-  background: var(--c-graphite);
-  color: var(--c-ink-on-dark);
-}
-.root h2 {
-  font: 800 clamp(48px, 6vw, 96px)/1 var(--ff-display);
-  text-transform: uppercase;
-}
-.card {
-  min-height: 520px;
-  border-top: 1px solid var(--c-line-dark);
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  padding-top: 48px;
-}
-.card svg {
-  width: 90px;
-  color: var(--c-hairline-dark);
-}
-.card blockquote {
-  font: 500 clamp(34px, 4vw, 66px)/1.1 var(--ff-display);
-  text-transform: uppercase;
-  color: var(--c-steel);
-}
-.card p {
-  grid-column: 2;
-  color: var(--c-steel);
-}
-.card div {
-  grid-column: 2;
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-}
-.card button {
-  width: 52px;
-  height: 52px;
-  border: 1px solid var(--c-hairline-dark);
-  border-radius: 50%;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
+/* ============================================================
+   Reviews (S10 · Depoimentos) — grade estática 3 cards / paper
+   Comp: padding 96/…/120 (348px direito = scaffold, descartado §4)
+   · eyebrow 8×8 · h2 800 clamp(2.5-4rem) 1.02 −0.01em max 18ch ·
+   aviso mono 11 steel com dot 6px · grid 3×1fr gap 24 · card
+   hairline radius 28 padding 40 min-h 420 · aspas 900 64px blaze
+   (1/card, conforme comp) · avatar 52px blueprint · nome 15/600
+   iron · cargo mono 11 steel. Mobile 375: padding 40/20/48 ·
+   título 32px · 1 col gap 18 · card radius 24 padding 28.
+   Seção 100% estática — nenhum motion próprio (L5 por construção).
+   ============================================================ */
+
+.root {
+  position: relative;
+  background: var(--c-paper);
+  color: var(--c-iron);
+  padding: 96px clamp(20px, 6.25vw, 120px) 120px;
 }
 
-/* L3: focus ring circuit (funcional) */
-.card button:focus-visible {
-  outline: 2px solid var(--c-circuit);
-  outline-offset: 2px;
+.eyebrow {
+  margin-bottom: 18px;
 }
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  margin-bottom: 56px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--ff-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  max-width: 18ch;
+}
+
+.notice {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+.notice::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: var(--c-steel);
+  flex: none;
+}
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-xl);
+  background: var(--c-paper);
+  padding: 40px;
+  min-height: 420px;
+}
+
+/* Aspas blaze — 1 por card, conforme a comp aprovada */
+.quoteMark {
+  display: block;
+  font-family: var(--ff-display);
+  font-weight: 900;
+  font-size: 64px;
+  line-height: 0.6;
+  height: 32px;
+  color: var(--c-blaze);
+}
+
+.quote {
+  margin: 0;
+  flex: 1;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--c-iron);
+}
+
+/* Placeholder [CONFIRMAR]: steel, como na comp (L1/draft) */
+.quote[data-confirm="true"] {
+  color: var(--c-steel);
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid var(--c-line);
+  padding-top: 24px;
+}
+
+/* Avatar blueprint 52px (grade 13px hairline — sem foto até W6/L1) */
+.avatar {
+  width: 52px;
+  height: 52px;
+  flex: none;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--c-line);
+  background-color: var(--tint-slate);
+  background-image:
+    linear-gradient(var(--c-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--c-line) 1px, transparent 1px);
+  background-size: 13px 13px;
+}
+
+.personMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--c-iron);
+}
+
+.role {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
 @media (max-width: 767px) {
-  .card {
-    display: flex;
-    flex-direction: column;
+  .root {
+    padding: 40px 20px 48px;
   }
-  .card blockquote {
-    font-size: 38px;
+
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .card {
+    border-radius: 24px;
+    padding: 28px;
+    min-height: 0;
   }
 }
