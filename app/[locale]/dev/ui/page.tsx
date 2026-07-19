@@ -87,7 +87,10 @@ export default async function DevUiPage({
       <section className={`container-s ${styles.section}`}>
         <p className={`eyebrow ${styles.sectionTitle}`}>[ PULSE-CIRCLE ]</p>
         <div className={styles.diagramBox}>
-          <PulseCircle ariaLabel={tAbout("methodTitle")} />
+          <PulseCircle
+            ariaLabel={tAbout("methodTitle")}
+            labels={tAbout.raw("methodNodes") as string[]}
+          />
         </div>
       </section>
 

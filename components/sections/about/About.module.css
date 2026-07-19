@@ -1,0 +1,370 @@
+/* ============================================================
+   About (S5) — "02 — Sobre" · seção clara (paper)
+   Fonte visual: S5 Sobre Desktop 1920.dc.html / Mobile 375.dc.html
+   Leis: L1 (copy via next-intl; [CONFIRMAR] → steel via
+   data-confirm), L2 (blaze da S5 = CTA "Falar com a SATTI",
+   confirmado no aside de specs da comp; tints dos cards não
+   contam), L3 (circuit só no diagrama — funcional), L9
+   (profundidade = hairline 1px var(--c-line) + tint; zero
+   drop-shadow), L5/L10 (nenhuma animação própria aqui — motion
+   vive nos children FillText/PulseCircle/Marquee/StatVideo, todos
+   gated), L12 (Archivo display · Inter body · Mono caps +0.08em).
+   §4 lei de tradução: padding-right 348px e margin-right 300px do
+   protótipo (andaime da aside de specs) descartados — gutter real
+   via .container-s; min-height 100vh não se aplica (S5 flui);
+   placeholders [ A2 ]…[ A5 ] viram slots de vídeo reais (§8).
+   D1: zero hex literal — só var(--c-*)/var(--tint-*); os cinzas
+   ad hoc de label da comp (#5C4A40/#445377/#5A606B) mapeiam para
+   var(--c-steel) (labels são [CONFIRMAR] → steel por L1).
+   ============================================================ */
+
+.section {
+  position: relative;
+  background: var(--c-paper);
+  color: var(--c-iron);
+}
+
+/* Comp mobile: padding 40px 20px 48px (inline via .container-s). */
+.inner {
+  padding-block: 40px 48px;
+}
+
+/* --- Eyebrow (base .eyebrow do globals) —
+       comp: 11px/gap 12/mb 14 mobile · 13px/gap 14/mb 18 desktop --- */
+p.sectionEyebrow {
+  margin: 0 0 14px;
+  font-size: 11px;
+}
+
+/* --- Título — Archivo 800 caps, comp: 40px/12ch mobile ·
+       clamp(2.5rem, 6vw, 5.25rem)/16ch desktop --- */
+.title {
+  margin: 0 0 36px;
+  font-family: var(--ff-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(2.5rem, 6vw, 5.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  max-width: 12ch;
+}
+
+/* --- Statements fill-text (tipografia mora no FillText.module) —
+       comp: coluna gap 22/mb 48 mobile · gap 28/mb 96 desktop --- */
+.statements {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin: 0 0 48px;
+}
+
+.statement {
+  /* max-width entra só no desktop (comp mobile é fluida) */
+  max-width: none;
+}
+
+/* --- Stat-cards — comp: grade 2×2 gap 14/mb 56 mobile ·
+       4 colunas gap 24/mb 120 desktop --- */
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 0 0 56px;
+  padding: 0;
+  list-style: none;
+}
+
+/* Card: hairline + tint + radius editorial (L9 — sem drop-shadow).
+   Comp mobile: radius 24 / padding 22 / min-height 188. */
+.statCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 188px;
+  padding: 22px;
+  border: 1px solid var(--c-line);
+  border-radius: 24px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Tints por card (comp: blaze-soft → blue → slate → paper).
+   São tints, não acento — não contam na blaze-law (L2/§4). */
+.statBlaze {
+  background: var(--tint-blaze);
+}
+
+.statBlue {
+  background: var(--tint-blue);
+}
+
+.statSlate {
+  background: var(--tint-slate);
+}
+
+.statPaper {
+  background: var(--c-paper);
+}
+
+/* Valor mono GIGANTE — comp: 34px/ls -0.03em mobile ·
+   76px/ls -0.04em desktop. Iron quando oficial; [CONFIRMAR] →
+   steel via data-confirm (L1/L8 — modo draft). */
+.statValue {
+  font-family: var(--ff-mono);
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--c-iron);
+}
+
+.statValue[data-confirm="true"] {
+  color: var(--c-steel);
+}
+
+/* Label — comp: 12px mobile · 15px/18ch desktop. Steel por padrão
+   (cinzas ad hoc da comp mapeados pro token — cabeçalho). */
+.statLabel {
+  font-family: var(--ff-body);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--c-steel);
+  max-width: 18ch;
+}
+
+/* --- Slot de vídeo A2–A5 (§8) — canto inferior direito do card,
+       comp: 84×84 translate(18%,20%) radius 0 0 24 mobile ·
+       150×150 radius 0 0 28 desktop. Sob o poster, textura
+       blueprint (grade 1px iron 6% sobre tint) = estado antes do
+       asset — mesma linguagem dos placeholders do DS. --- */
+.statSlot {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 84px;
+  height: 84px;
+  transform: translate(18%, 20%);
+  border-radius: 0 0 24px 0;
+  overflow: hidden;
+  background-color: var(--tint-slate);
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--c-iron) 6%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--c-iron) 6%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 16px 16px;
+}
+
+.statPoster {
+  object-fit: cover;
+}
+
+.statVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- Método (diagrama + copy + CTA) —
+       comp mobile: coluna centrada gap 24/mb 48, kicker à esquerda;
+       comp desktop: grid 560px+1fr gap 80, colunas centradas
+       verticalmente entre si --- */
+.method {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0 0 48px;
+}
+
+/* Kicker mono — comp: 10px mobile · 11px desktop, steel, caps. */
+.methodKicker {
+  margin: 0;
+  align-self: flex-start;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+.methodDiagram {
+  display: flex;
+  justify-content: center;
+}
+
+/* PulseCircle: svg 335px mobile (comp) · 480px desktop (comp). */
+.diagram {
+  inline-size: min(335px, 100%);
+}
+
+.methodCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* Descrição — comp: 15px mobile · 17px/42ch desktop, lh 1.6. */
+.methodDescription {
+  margin: 0;
+  font-family: var(--ff-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--c-iron);
+  max-width: 42ch;
+}
+
+/* CTA — Button primary (pill blaze, texto iron): O blaze da S5
+   (L2; aside da comp: "Blaze único do viewport = CTA").
+   Comp mobile: largura total. */
+.methodCta {
+  width: 100%;
+}
+
+/* --- Marquee de logos — banda full-bleed com hairlines,
+       comp: célula 150×110 mobile · 240×160 desktop · 24s linear.
+       L6: sem logos inventados — cada célula renderiza o aviso
+       about.logosNotice em mono steel (placeholder autorizado). --- */
+.logosBand {
+  border-top: 1px solid var(--c-line);
+  border-bottom: 1px solid var(--c-line);
+}
+
+.logoCell {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 110px;
+  padding: 0 14px;
+  border-right: 1px solid var(--c-line);
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+  text-align: center;
+  white-space: normal;
+}
+
+/* ------------------------------------------------------------
+   Desktop (comp 1920): padding-top 96 (bottom 0 — a banda de
+   logos fecha a seção), eyebrow 13/14/18, título mb 64,
+   statements 24ch, stats 4 col, método em grid 560+1fr.
+   ------------------------------------------------------------ */
+@media (min-width: 768px) {
+  .inner {
+    padding-block: 96px 0;
+  }
+
+  p.sectionEyebrow {
+    gap: 14px;
+    margin-bottom: 18px;
+    font-size: 13px;
+  }
+
+  .title {
+    margin-bottom: 64px;
+    max-width: 16ch;
+  }
+
+  .statements {
+    gap: 28px;
+    margin-bottom: 96px;
+  }
+
+  /* Comp: max-width 24ch — aplicado ao statement (ch da própria
+     fonte display do FillText), não ao container 16px do andaime. */
+  .statement {
+    max-width: 24ch;
+  }
+
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-md); /* 24px */
+    margin-bottom: var(--sp-2xl); /* 120px */
+  }
+
+  .statCard {
+    gap: 10px;
+    min-height: 300px;
+    padding: 32px;
+    border-radius: var(--r-xl); /* 28px */
+  }
+
+  /* 76px na tela da comp (1920); escala fluida entre 768–1920. */
+  .statValue {
+    font-size: clamp(2.75rem, 3.96vw, 4.75rem);
+    letter-spacing: -0.04em;
+  }
+
+  .statLabel {
+    font-size: 15px;
+  }
+
+  .statSlot {
+    width: 150px;
+    height: 150px;
+    border-radius: 0 0 var(--r-xl) 0;
+    background-size: 24px 24px;
+  }
+
+  /* Método: diagrama à esquerda (atravessa as 4 linhas), kicker +
+     copy à direita, centrados verticalmente pelas linhas 1fr —
+     mesma composição da comp (grid 560px 1fr, gap 80, centrado). */
+  .method {
+    display: grid;
+    grid-template-columns: minmax(0, 560px) 1fr;
+    grid-template-areas:
+      "diagram ."
+      "diagram kicker"
+      "diagram copy"
+      "diagram .";
+    grid-template-rows: 1fr auto auto 1fr;
+    column-gap: clamp(40px, 4.2vw, 80px);
+    row-gap: 28px;
+    margin-bottom: var(--sp-2xl); /* 120px */
+  }
+
+  .methodKicker {
+    grid-area: kicker;
+    align-self: end;
+    font-size: 11px;
+  }
+
+  .methodDiagram {
+    grid-area: diagram;
+  }
+
+  .diagram {
+    inline-size: min(480px, 100%);
+  }
+
+  .methodCopy {
+    grid-area: copy;
+    gap: 28px;
+  }
+
+  .methodDescription {
+    font-size: 17px;
+  }
+
+  .methodCta {
+    width: auto;
+  }
+
+  .logoCell {
+    width: 240px;
+    height: 160px;
+    font-size: 13px;
+  }
+}

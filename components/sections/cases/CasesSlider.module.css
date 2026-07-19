@@ -1,0 +1,354 @@
+/* ============================================================
+   CasesSlider (S9) — Swiper 1 coluna · 3 cases com métrica (D4)
+   Fonte visual: S9 CasesSlider Desktop 1920.dc.html / Mobile 375.dc.html
+   Leis: L1 ([CONFIRMAR] em steel via data-confirm), L2 (blaze da
+   dobra = dot ativo da paginação — decisão F0–F5: dots S9 = blaze
+   no ativo), L3 (setas prev/next em circuit = controle funcional,
+   como na comp; focus ring circuit), L8 (métricas [CONFIRMAR] até
+   o Miguel cravar), L9 (profundidade = hairline 1px + tint, sem
+   drop-shadow), L5/L10 (track do Swiper anima só transform; duração
+   550ms via prop `speed` zerada em reduced-motion; transições dos
+   dots gated por media query), L12 (var(--ff-display/body/mono)).
+
+   ERRO DO 1º PASSE corrigido: tema do Swiper 100% via tokens — a lib
+   define --swiper-theme-color: #007aff em :root; o escopo .slider
+   sobrescreve --swiper-theme-color / --swiper-pagination-* para
+   steel (inativo) e blaze (ativo). Zero azul default da lib.
+
+   §4 lei de tradução comp→código: padding-right 348px do protótipo
+   descartado (gutter real via .container-s); seção flui (sem 100vh);
+   aside "Specs", placeholders "[ S9-IMG-n ]", data-screen-label e
+   badges motion on/off descartados. Atlas/D4: Swiper de 1 coluna
+   (1 slide por vez, sem busca) — no 375 o card mantém o peek do
+   próximo (comp: card 295 num viewport 375); no desktop o case abre
+   "em detalhe" em 2 colunas (mídia + conteúdo) dentro do card, já
+   que a curadoria é de 3 cases e o slider é de coluna única.
+   ============================================================ */
+
+.section {
+  position: relative;
+  background: var(--c-paper); /* tela clara após o dark do S8 Banner */
+  color: var(--c-iron);
+  padding-block: 40px 48px; /* comp mobile: 40 / 48 */
+}
+
+.inner {
+  position: relative;
+}
+
+/* Eyebrow — base .eyebrow (globals); comp: mb 14px mobile / 18px desktop,
+   gap marcador→texto 12px mobile / 14px desktop. */
+p.sectionEyebrow {
+  margin: 0 0 14px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--ff-display);
+  font-size: 2rem; /* comp mobile: 32px */
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  max-width: 16ch;
+}
+
+/* Linha título + setas (comp desktop: flex between align-end, mb 48).
+   Mobile: só o título (comp 375 não tem setas — swipe + dots). */
+.headRow {
+  margin-bottom: 28px; /* comp mobile: h2 mb 28 */
+}
+
+.controls {
+  display: none; /* mobile sem setas (comp) */
+}
+
+/* Setas — círculo 56px, borda/cor circuit (funcional, comp). ≥44px (§7.9). */
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 1px solid var(--c-circuit);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--c-circuit);
+  font-size: 1.25rem; /* comp: 20px */
+  cursor: pointer;
+}
+
+.navBtn:disabled {
+  opacity: 0.35; /* pontas sem loop ("setas avançam 1", comp) */
+  cursor: default;
+}
+
+.navBtn:focus-visible {
+  outline: 2px solid var(--c-circuit); /* L3: circuit funcional */
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------
+   Swiper — tema via tokens (escopo .slider vence o :root da lib)
+   ------------------------------------------------------------ */
+.slider {
+  --swiper-theme-color: var(--c-steel);
+  --swiper-pagination-color: var(--c-blaze); /* dot ativo = blaze (L2) */
+  --swiper-pagination-bullet-inactive-color: var(--c-steel);
+  --swiper-pagination-bullet-inactive-opacity: 1;
+  --swiper-pagination-bullet-size: 8px; /* comp: dots 8px */
+  --swiper-pagination-bullet-border-radius: var(--r-pill);
+  --swiper-pagination-bullet-horizontal-gap: 4px; /* comp mobile: gap 8 */
+}
+
+/* Track: easing da comp (0.55s cubic-bezier(.76,0,.24,1) = --ease-roll);
+   a DURAÇÃO vem da prop speed (550 → 0 em reduced-motion, L5). */
+.slider :global(.swiper-wrapper) {
+  transition-timing-function: var(--ease-roll);
+}
+
+/* Slide 1 coluna: no 375 o card ocupa ~86% do viewport, deixando o
+   peek do próximo (comp: 295/375 + gap 14). Escopo .slider para
+   vencer o width:100% de .swiper-slide da lib. */
+.slider .slide {
+  width: 86%;
+  height: auto;
+  display: flex;
+}
+
+/* ------------------------------------------------------------
+   Card do case (comp: hairline + radius editorial + mídia 16:9)
+   ------------------------------------------------------------ */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* comp mobile */
+  width: 100%;
+  padding: var(--sp-sm); /* comp mobile: 16 */
+  border: 1px solid var(--c-line); /* L9: hairline, sem sombra */
+  border-radius: var(--r-xl); /* comp: 24 mobile / 28 desktop → token 28 */
+  background: var(--c-paper);
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 16 / 9; /* comp */
+  border-radius: var(--r-lg); /* comp: 16 */
+  overflow: hidden;
+  background: var(--tint-slate); /* L9: tint sob a imagem */
+}
+
+.mediaImg {
+  object-fit: cover;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 4px; /* comp mobile */
+}
+
+.tag {
+  font-family: var(--ff-mono);
+  font-size: 0.625rem; /* comp mobile: 10px */
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: var(--ff-display);
+  font-size: 1.25rem; /* comp mobile: 20px */
+  font-weight: 700;
+  line-height: 1.12;
+  text-transform: uppercase;
+  min-height: 2.24em; /* comp: alinha títulos de 1 e 2 linhas */
+}
+
+/* Case sem título oficial (L1): steel, nunca ink final. */
+.cardTitle[data-confirm="true"] {
+  color: var(--c-steel);
+}
+
+/* ------------------------------------------------------------
+   Métrica antes→depois (L8: [CONFIRMAR] até números reais)
+   ------------------------------------------------------------ */
+.metrics {
+  display: flex;
+  align-items: stretch;
+  margin: 0 4px 4px; /* comp mobile */
+  border-top: 1px solid var(--c-line);
+  padding-top: var(--sp-sm); /* comp mobile: 16 */
+}
+
+.metric {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metricLabel {
+  font-family: var(--ff-mono);
+  font-size: 0.625rem; /* comp: 10px */
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+.metricValue {
+  margin: 0;
+  font-family: var(--ff-mono);
+  font-size: 1.125rem; /* comp mobile: 18px */
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--c-iron); /* "Depois" confirmado = iron (comp) */
+}
+
+/* "Antes" sempre de-enfatizado (comp) e todo [CONFIRMAR] em steel (L1). */
+.metricBefore,
+.metricValue[data-confirm="true"] {
+  color: var(--c-steel);
+}
+
+.metricArrow {
+  display: flex;
+  align-items: center;
+  padding: 0 14px; /* comp mobile */
+  color: var(--c-iron);
+  font-size: 1rem; /* comp mobile: 16px */
+}
+
+/* ------------------------------------------------------------
+   Dots — el externo (data-cases-dots) preenchido pelo Pagination.
+   div.dots (0,2,1) vence o position:absolute/bottom da lib.
+   ------------------------------------------------------------ */
+.slider div.dots {
+  position: static;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* comp mobile: dots centrados */
+  width: 100%;
+  margin-top: 28px; /* comp mobile */
+  line-height: 0;
+}
+
+/* Expansão do dot ativo (comp: 8 → 28px). Transição de width fora do
+   par transform/opacity de L10, mas é a assinatura da comp num dot de
+   8px isolado (sem reflow de layout ao redor) — e gated por L5. */
+.slider :global(.swiper-pagination-bullet-active) {
+  width: 28px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .slider :global(.swiper-pagination-bullet) {
+    transition:
+      width 0.4s var(--ease),
+      background-color 0.4s var(--ease);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider div.dots {
+    transition: none; /* zera o "300ms opacity" da lib */
+  }
+}
+
+/* ------------------------------------------------------------
+   Desktop (comp 1920): padding 96/120, título clamp(2.5rem,5vw,4rem),
+   linha título+setas, card em 2 colunas (mídia 16:9 + detalhe),
+   tipos 11/24/22px, dots à esquerda mt 48 gap 10.
+   ------------------------------------------------------------ */
+@media (min-width: 768px) {
+  .section {
+    padding-block: 96px var(--sp-2xl); /* 96 / 120 */
+  }
+
+  p.sectionEyebrow {
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.02;
+    max-width: 18ch;
+  }
+
+  .headRow {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px; /* comp */
+    margin-bottom: var(--sp-lg); /* comp: 48 */
+  }
+
+  .controls {
+    display: flex;
+    gap: var(--sp-xs); /* comp: 12 */
+    flex: none;
+  }
+
+  /* 1 slide por vez em coluna única (Atlas/D4) */
+  .slider .slide {
+    width: 100%;
+  }
+
+  /* Case "em detalhe": mídia à esquerda, conteúdo à direita */
+  .card {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 32px; /* comp: gap do track/cards */
+    align-items: stretch;
+    padding: 20px; /* comp desktop */
+  }
+
+  .content {
+    gap: 22px; /* comp desktop: card gap 22 */
+  }
+
+  .body {
+    padding: 0 8px; /* comp desktop */
+  }
+
+  .tag {
+    font-size: 0.6875rem; /* comp desktop: 11px */
+  }
+
+  .cardTitle {
+    font-size: 1.5rem; /* comp desktop: 24px */
+  }
+
+  .metrics {
+    margin: auto 8px 8px; /* comp desktop + métrica ancorada na base */
+    padding-top: 18px; /* comp desktop */
+  }
+
+  .metricValue {
+    font-size: 1.375rem; /* comp desktop: 22px */
+  }
+
+  .metricArrow {
+    padding: 0 18px; /* comp desktop */
+    font-size: 1.125rem; /* comp desktop: 18px */
+  }
+
+  .slider div.dots {
+    justify-content: flex-start; /* comp desktop: dots à esquerda */
+    margin-top: var(--sp-lg); /* comp: 48 */
+  }
+
+  .slider {
+    --swiper-pagination-bullet-horizontal-gap: 5px; /* comp desktop: gap 10 */
+  }
+}

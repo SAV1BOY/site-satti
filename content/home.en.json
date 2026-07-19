@@ -159,7 +159,7 @@
   },
   "automation": {
     "eyebrow": "Automation",
-    "title": "{ Smart } Automation",
+    "title": "{Smart} Automation",
     "description": "Making your operation unbeatable is engineering. We take it (a) seriously and (b) creatively.",
     "portfolioCta": "See our work",
     "contactCta": "Get in touch",
@@ -313,8 +313,8 @@
       "returnEmailExample": "Company",
       "success": "Brief sent. We reply within 24h.",
       "submit": "Send brief",
-      "budgetLabel": "Budget range (optional)",
-      "companyLabel": "Company (optional)",
+      "budgetLabel": "Investment range",
+      "companyLabel": "Company",
       "companyPlaceholder": "Company"
     },
     "brand": "SATTI",
@@ -328,6 +328,12 @@
       "Contact"
     ],
     "socialTitle": "Social",
+    "github": {
+      "value": "GitHub · SAV1BOY",
+      "confirm": false,
+      "draft": null
+    },
+    "githubUrl": "https://github.com/SAV1BOY",
     "linkedin": {
       "value": "LinkedIn [CONFIRMAR]",
       "confirm": true,

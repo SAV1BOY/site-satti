@@ -1,0 +1,204 @@
+/* ============================================================
+   Banner (S8) — comps: "S8 Banner Desktop 1920.dc.html" e
+   "S8 Banner Mobile 375.dc.html" (verdade visual).
+   Full-viewport DARK: uma das 3 únicas seções 100vh (§4). Lei de
+   tradução comp→código: o padding-right 348px do protótipo era
+   andaime da aside de specs → aqui os DOIS lados usam o mesmo
+   eixo do hero, clamp(20px, 6.25vw, 120px) (= 120px @1920,
+   20px @375, os valores das comps).
+   L1 · statement é rascunho [CONFIRMAR]: steel via data-confirm,
+        nunca ink final (se um dia confirm cair, o default volta
+        a ink-on-dark sem tocar neste arquivo).
+   L2 · único blaze de destaque da dobra = CTA primary (Button);
+        marcador 8×8 do eyebrow/confirmTag não conta.
+   L9 · profundidade = hairline 1px var(--c-hairline-dark) (D1)
+        no chip de textura + fundo iron; sem drop-shadow.
+   L5/L10 · seção ESTÁTICA por desenho (spec da comp: "Banner
+        estático por desenho"; reduced-motion = idêntico ao base)
+        — zero animação própria; o roll do CTA mora no Button,
+        já gated por no-preference.
+   L12 · Archivo display caps tracking neg · Mono caps +0.08em.
+   Zero hex literal — só var(--c-*) (D1/§4).
+   ============================================================ */
+
+/* Base mobile (comp 375): padding 48/20, coluna gap 28, 88svh
+   centrado. Desktop assume 100svh (full-viewport §4). */
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 28px;
+  min-height: 88vh;
+  min-height: 88svh;
+  padding: 48px clamp(20px, 6.25vw, 120px);
+}
+
+/* Eyebrow "Pronto para construir" — base global .eyebrow (marcador
+   8×8 blaze; não conta na L2). Comp desktop: 13px, gap 14px. A comp
+   MOBILE não mostra este eyebrow (a linha com marcador vira o rótulo
+   [CONFIRMAR] do statement) → none no mobile. */
+p.eyebrow {
+  display: none;
+  margin: 0;
+}
+
+/* Bloco do statement (comp desktop: label ↔ h2 ↔ notice, gap 24;
+   mobile segue o ritmo 28 da seção). */
+.statementBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+/* Rótulo [CONFIRMAR] (L1) — mono caps steel. Mobile (comp): assume o
+   posto do eyebrow, com marcador 8×8 blaze via ::before. */
+.confirmTag {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+.confirmTag::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--c-blaze);
+  flex-shrink: 0;
+}
+
+/* Statement display — Archivo 800 caps (L12). Comp mobile: 40px @375,
+   lh 1.0; desktop: clamp(3rem, 7vw, 6.5rem), lh 0.98, ls −0.015em.
+   Cor default = ink-on-dark (copy oficial futura, W6). */
+.statement {
+  margin: 0;
+  font-family: var(--ff-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: min(10.7vw, 40px);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  color: var(--c-ink-on-dark);
+}
+
+/* L1: rascunho [CONFIRMAR] fica em steel — nunca branco/final. */
+.statement[data-confirm="true"] {
+  color: var(--c-steel);
+}
+
+/* Linha com textura inline. flex-wrap: no mobile "não mente:" quebra
+   sozinho para a linha seguinte (exatamente o arranjo da comp 375). */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.28em;
+  flex-wrap: wrap;
+}
+
+.line {
+  display: block;
+}
+
+/* Chip de textura A8 — proporções da comp (1.5em × 0.78em do corpo do
+   statement), radius 12 funcional, hairline D1 + fundo iron (L9);
+   a imagem 1:1 cobre o chip (crop ao formato da comp). */
+.texture {
+  position: relative;
+  display: inline-flex;
+  width: 1.5em;
+  height: 0.78em;
+  flex: none;
+  border: 1px solid var(--c-hairline-dark);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--c-iron);
+}
+
+.textureImg {
+  object-fit: cover;
+}
+
+/* Aviso de rascunho (comp: mono 10px mobile / 11px desktop, steel). */
+.draftNotice {
+  margin: 0;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+/* CTA — o blaze da dobra (L2), texto iron via Button primary.
+   Mobile (comp): pill de largura total com +4px de respiro. */
+.ctaRow {
+  display: flex;
+  margin-top: 4px;
+}
+
+.ctaRow .cta {
+  flex: 1;
+  justify-content: center;
+}
+
+/* ------------------------------------------------------------
+   Desktop (comp 1920): 100svh, padding-block 120, gap 56,
+   eyebrow visível 13px, confirmTag 12px sem marcador, statement
+   clamp 7vw, notice 11px, CTA inline.
+   ------------------------------------------------------------ */
+@media (min-width: 768px) {
+  .section {
+    gap: 56px;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-block: var(--sp-2xl); /* 120px */
+  }
+
+  p.eyebrow {
+    display: inline-flex;
+    gap: 14px;
+    font-size: 13px;
+  }
+
+  .statementBlock {
+    gap: var(--sp-md); /* 24px */
+  }
+
+  .confirmTag {
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .confirmTag::before {
+    display: none; /* comp desktop: rótulo sem marcador */
+  }
+
+  .statement {
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 0.98;
+  }
+
+  .row {
+    gap: 0.3em;
+  }
+
+  .draftNotice {
+    font-size: 11px;
+  }
+
+  .ctaRow {
+    display: block;
+    margin-top: 0;
+  }
+
+  .ctaRow .cta {
+    flex: none;
+    justify-content: flex-start;
+  }
+}

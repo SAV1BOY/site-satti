@@ -1,0 +1,506 @@
+/* ============================================================
+   Footer/Contato (S11) — D6 + fim da Linha de Automação (D3)
+   Fonte visual: S11 Footer Desktop 1920.dc.html / Mobile 375.dc.html
+   Leis: L1 ([CONFIRMAR] em steel via data-confirm) · L2 (blaze da
+   dobra = botão Enviar/Button primary; o pulso da Linha conta na
+   dobra em que estiver) · L3 (circuit SÓ focus ring; ring de input =
+   circuit a 28% via color-mix — sem hex/rgba literal) · L5 (toda
+   transição dentro de no-preference; o parallax do hat é gated por
+   useMotionOk no FooterHat) · L9 (profundidade = hairline + tint,
+   zero drop-shadow — o box-shadow do focus é ring funcional) ·
+   L10 (só transform/opacity + var(--ease)) · L12 (Archivo display
+   caps tracking neg · Inter body · Mono caps +0.08em) · D1 (dark:
+   --c-line-dark separadores · --c-hairline-dark bordas de célula —
+   default dos 4 estados de input sobre graphite).
+   §4 lei de tradução: padding-right 348px, aside Specs,
+   data-screen-label e SMIL da comp descartados; full-viewport
+   MANTIDO (S11 é uma das 3 seções 100vh); a "linha separadora" da
+   comp é o próprio fio D3 (AutomationLine zone="contact").
+   4 estados de input: default (hairline-dark) → :focus-visible
+   (borda circuit + ring) → .isError (--c-error) → .isSuccess
+   (--c-success + ✓). .isError/.isSuccess prontos p/ o W4 ligar.
+   ============================================================ */
+
+.root {
+  position: relative; /* âncora do AutomationLine (D3) */
+  display: flex;
+  overflow: hidden; /* contém o hat gigante */
+  min-height: 100vh;
+  min-height: 100svh;
+  background: var(--c-graphite);
+  color: var(--c-ink-on-dark);
+}
+
+/* Conteúdo acima do fio (z-index 1 vs z-index 0 do AutomationLine). */
+.inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-block: 40px; /* comp mobile: 40 / 40 */
+}
+
+/* Eyebrow — base .eyebrow (globals); comp: mb 24 mobile / 48 desktop. */
+p.sectionEyebrow {
+  margin: 0 0 24px;
+}
+
+/* Duas colunas do miolo; flex:1 empurra hat+meta para a base (100svh). */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 44px;
+  flex: 1;
+}
+
+/* --- Coluna esquerda: título + form ------------------------------ */
+
+.formCol {
+  display: flex;
+  flex-direction: column;
+  gap: 32px; /* comp desktop: gap 32 entre h2/form/botão */
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--ff-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 2.375rem; /* comp mobile: 38px */
+  line-height: 1;
+  letter-spacing: -0.01em;
+  max-width: 14ch;
+}
+
+.titleLine {
+  display: block;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Campos: 1 col mobile (gap 20) · 2 cols desktop (gap 24, máx 760). */
+.fieldGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.fieldWide {
+  grid-column: 1 / -1; /* mensagem ocupa a linha inteira (comp) */
+}
+
+.label {
+  font-family: var(--ff-body);
+  font-size: 0.8125rem; /* comp mobile: 13px */
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--c-ink-on-dark);
+}
+
+.control {
+  position: relative;
+}
+
+/* Estado DEFAULT — hairline-dark sobre graphite (D1). */
+.input,
+.textarea {
+  width: 100%;
+  border: 1px solid var(--c-hairline-dark);
+  border-radius: var(--r-md); /* 12px funcional (DS) */
+  background: transparent;
+  color: var(--c-ink-on-dark);
+  font-family: var(--ff-body);
+  font-size: 0.875rem; /* comp mobile: 14px */
+  line-height: 1.5;
+}
+
+.input {
+  height: 52px; /* comp mobile: 52 (≥44 a11y) */
+  padding: 0 16px;
+}
+
+.textarea {
+  min-height: 150px;
+  padding: 14px 16px;
+  resize: vertical;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--c-steel);
+}
+
+/* Estado FOCUS — borda circuit + ring (L3: único uso funcional). */
+.input:focus-visible,
+.textarea:focus-visible {
+  outline: none;
+  border-color: var(--c-circuit);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--c-circuit) 28%, transparent);
+}
+
+/* Estado ERRO — borda + (texto/ícone fora do campo). .isError é ligado
+   pelo W4. */
+.isError .input,
+.isError .textarea {
+  border-color: var(--c-error);
+}
+
+/* Validação nativa dá o mesmo feedback antes do W4 ligar .isError.
+   (Regra separada de propósito: browser sem :user-invalid descarta
+   só esta, não a de cima.) */
+.input:user-invalid,
+.textarea:user-invalid {
+  border-color: var(--c-error);
+}
+
+/* Estado SUCESSO — borda + ✓ (feedback só texto+borda+ícone, D6). */
+.isSuccess .input,
+.isSuccess .textarea {
+  border-color: var(--c-success);
+}
+
+.check {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  font-size: 0.9375rem;
+  line-height: 1;
+  color: var(--c-success);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.isSuccess .check {
+  opacity: 1;
+}
+
+/* No textarea o ✓ ancora no topo, não no centro. */
+.fieldWide .check {
+  top: 18px;
+  transform: none;
+}
+
+/* Erro de envio (copy oficial) — invisível até o W4 ligar .isError
+   no <form>. Feedback = texto + ícone em --c-error (nunca bloco). */
+.formError {
+  display: none;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  font-family: var(--ff-body);
+  font-size: 0.8125rem;
+  color: var(--c-error);
+}
+
+.form.isError .formError {
+  display: flex;
+}
+
+/* Enviar — Button primary (blaze pill, texto iron): O blaze da dobra. */
+.submit {
+  width: 100%; /* comp mobile: full-width */
+  justify-content: center;
+}
+
+/* --- Coluna direita: marca, e-mail, nav, sociais, meta ----------- */
+
+.sideCol {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.brand {
+  margin: 0;
+  font-family: var(--ff-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 1.75rem; /* comp mobile: 28px */
+  letter-spacing: -0.01em;
+  color: var(--c-ink-on-dark);
+}
+
+.email {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 44px; /* alvo a11y */
+  color: var(--c-ink-on-dark);
+  font-size: 1rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.linkCols {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.linkCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.colTitle {
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem; /* 11px */
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+  margin-bottom: 4px;
+}
+
+/* Mobile: links de nav em linha com wrap (comp); desktop: coluna. */
+.navList {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 28px;
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* alvo a11y (comp: pitch 16+14 ≈ 30 → 44) */
+  color: var(--c-ink-on-dark);
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.email:focus-visible,
+.navLink:focus-visible {
+  outline: 2px solid var(--c-circuit); /* L3 */
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+/* Sociais [CONFIRMAR] — spans (sem URL confirmada não há link). */
+.socialCol {
+  border-top: 1px solid var(--c-line-dark); /* comp mobile */
+  padding-top: 20px;
+}
+
+.social {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 0.9375rem; /* comp mobile: 15px */
+  color: var(--c-ink-on-dark);
+}
+
+/* L1: copy não confirmada SEMPRE em steel. */
+.social[data-confirm="true"] {
+  color: var(--c-steel);
+}
+
+.sideMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+/* --- Parallax hat (FooterHat) ------------------------------------ */
+
+/* Wordmark gigante dark-on-dark (--c-line-dark): presença, não brilho
+   (L9 — nenhum glow/sombra). O transform vive no .hatInner (JS). */
+.hat {
+  overflow: hidden;
+  margin-top: 40px;
+  text-align: center;
+  line-height: 0.75;
+}
+
+.hatInner {
+  display: block;
+  font-family: var(--ff-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: min(28vw, 400px);
+  letter-spacing: -0.02em;
+  color: var(--c-line-dark);
+}
+
+/* --- Meta final (copyright + assinatura) ------------------------- */
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 24px;
+  border-top: 1px solid var(--c-line-dark); /* comp mobile */
+  padding-top: 24px;
+}
+
+.metaItem {
+  font-family: var(--ff-mono);
+  font-size: 0.625rem; /* comp mobile: 10px */
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+/* --- Motion (L5: transições só em no-preference) ----------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .input,
+  .textarea {
+    /* comp: "Inputs: transições de foco 0.2s" */
+    transition:
+      border-color 0.2s var(--ease),
+      box-shadow 0.2s var(--ease);
+  }
+
+  .check {
+    transition: opacity 0.2s var(--ease);
+  }
+
+  .hatInner {
+    will-change: transform;
+  }
+}
+
+/* ------------------------------------------------------------
+   Desktop (comp 1920): padding 96/—/56, grid 1.3fr/1fr gap 96,
+   título clamp(2.5rem,4.5vw,4rem), campos 2 cols máx 760,
+   inputs 54px, coluna direita com border-left + padding 64,
+   meta em linha única justificada.
+   ------------------------------------------------------------ */
+@media (min-width: 768px) {
+  .inner {
+    padding-block: 96px 56px;
+  }
+
+  p.sectionEyebrow {
+    gap: 14px;
+    margin-bottom: 48px;
+  }
+
+  .grid {
+    grid-template-columns: 1.3fr 1fr;
+    gap: clamp(48px, 6vw, 96px);
+  }
+
+  .title {
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    line-height: 1.02;
+  }
+
+  .form {
+    gap: 24px;
+  }
+
+  .fieldGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-md); /* 24px */
+    max-width: 760px;
+  }
+
+  .field {
+    gap: 10px;
+  }
+
+  .label {
+    font-size: 0.875rem; /* 14px */
+  }
+
+  .input {
+    height: 54px; /* comp desktop: 54 */
+    padding: 0 18px;
+  }
+
+  .textarea {
+    padding: 16px 18px;
+  }
+
+  .input,
+  .textarea {
+    font-size: 0.9375rem; /* 15px */
+  }
+
+  .check {
+    right: 18px;
+  }
+
+  .submit {
+    width: auto;
+    align-self: flex-start;
+  }
+
+  .sideCol {
+    gap: 48px;
+    border-left: 1px solid var(--c-line-dark); /* comp: divisória D1 */
+    padding-left: clamp(32px, 3.3vw, 64px);
+  }
+
+  .brand {
+    font-size: 2rem; /* comp desktop: 32px */
+  }
+
+  .linkCols {
+    flex-direction: row;
+    gap: 64px;
+  }
+
+  .navList {
+    flex-direction: column;
+    column-gap: 0;
+  }
+
+  .socialCol {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .social {
+    font-size: 1rem; /* comp desktop: 16px */
+  }
+
+  .sideMeta {
+    margin-top: auto; /* comp: meta ancorada na base da coluna */
+  }
+
+  .hat {
+    margin-top: 48px;
+  }
+
+  .meta {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-top: 28px; /* comp: 28px após a Linha */
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .metaItem {
+    font-size: 0.6875rem; /* comp desktop: 11px */
+  }
+}

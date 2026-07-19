@@ -65,8 +65,9 @@ export const THREAD_PLAN: ReadonlyArray<ThreadSegmentPlan> = [
     order: 2,
     waypoints: [
       { x: 0.46, y: 0 },
-      { x: 0.24, y: 0.35, slot: "n1" },
-      { x: 0.76, y: 0.72, slot: "n2" },
+      { x: 0.24, y: 0.3, slot: "n1" },
+      { x: 0.76, y: 0.62, slot: "n2" },
+      { x: 0.52, y: 0.86, slot: "n3" },
       { x: 0.6, y: 1 },
     ],
   },

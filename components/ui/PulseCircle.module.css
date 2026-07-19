@@ -16,11 +16,12 @@
   aspect-ratio: 1;
 }
 
-/* Anéis concêntricos (100% / 68% / 42%) */
+/* Anéis concêntricos (100% / 68% / 42%) — comp: circuit 0.35 (L3 ok) */
 .ring {
   fill: none;
-  stroke: var(--c-line);
+  stroke: var(--c-circuit);
   stroke-width: 1;
+  stroke-opacity: 0.35;
 }
 
 /* Linhas de conexão centro → node (circuit funcional, L3) */
@@ -35,9 +36,10 @@
   fill: var(--c-circuit);
 }
 
-/* Nodes — estado base = fallback estático (L5): opacos, sem animação */
+/* Nodes — comp: fill circuit (diagrama funcional, L3).
+   Estado base = fallback estático (L5): opacos, sem animação */
 .node {
-  fill: var(--c-iron);
+  fill: var(--c-circuit);
 }
 
 /* Labels mono caption */

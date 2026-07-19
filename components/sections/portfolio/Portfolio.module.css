@@ -1,0 +1,123 @@
+/* ============================================================
+   Portfolio (S7) — grid de 6 work-cards (D4)
+   Fonte visual: S7 Portfolio Desktop 1920.dc.html / Mobile 375.dc.html
+   Leis: L1 (copy via next-intl; [CONFIRMAR] em steel), L2 (blaze da
+   dobra = glow do WorkCard em hover ou o pulso da Linha ao passar),
+   L9 (profundidade só hairline + tint; o glow mora no WorkCard),
+   L5/L10 (esta seção não anima nada por conta própria — motion vive
+   nos children WorkCard/AutomationLine), D3 (zona "portfolio" do fio).
+   §4 lei de tradução: padding-right 348px do protótipo descartado
+   (gutter real via .container-s); min-height 100vh não se aplica
+   (S7 flui); aside "Specs" e data-screen-label descartados.
+   ============================================================ */
+
+.section {
+  position: relative; /* âncora do AutomationLine (D3) */
+  background: var(
+    --c-paper
+  ); /* tela clara entre os dois darks (S6 → S7 → S8) */
+  color: var(--c-iron);
+  padding-block: 40px 48px; /* comp mobile: 40 / 48 */
+}
+
+.inner {
+  position: relative;
+  z-index: 1; /* conteúdo acima do fio */
+}
+
+/* Eyebrow — base .eyebrow (globals); comp: mb 14px mobile / 18px desktop,
+   gap marcador→texto 12px mobile / 14px desktop. */
+p.sectionEyebrow {
+  margin: 0 0 14px;
+}
+
+.title {
+  margin: 0 0 36px;
+  font-family: var(--ff-display);
+  font-size: 2.125rem; /* comp mobile: 34px */
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  max-width: 16ch;
+}
+
+/* Grid de cards: 1 coluna mobile (gap 20) · 2 colunas desktop (gap 24). */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin: 0 0 32px; /* comp mobile: CTA a 32px do grid */
+  padding: 0;
+  list-style: none;
+}
+
+.gridItem {
+  min-width: 0;
+}
+
+/* 6º case [CONFIRMAR] (L1): título do card em steel, nunca ink final. */
+.gridItem[data-confirm="true"] h3 {
+  color: var(--c-steel);
+}
+
+/* CTA final — ghost/hairline pill (o blaze da dobra fica com o glow
+   do card em hover / pulso da Linha; CTA nunca é blaze aqui). */
+.allCta {
+  display: flex; /* comp mobile: âncora larga centrada */
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-xs);
+  padding: 16px 28px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--c-iron);
+  font-family: var(--ff-body);
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.allCta:focus-visible {
+  outline: 2px solid var(--c-circuit); /* L3: circuit só funcional */
+  outline-offset: 3px;
+}
+
+.allCtaArrow {
+  font-size: 0.9375rem; /* comp: 15px nos dois breakpoints */
+}
+
+/* ------------------------------------------------------------
+   Desktop (comp 1920): padding 96/120, título clamp(2.5rem,5vw,4rem),
+   grid 2 colunas gap 24 mb 64, CTA inline 17×34/16px.
+   ------------------------------------------------------------ */
+@media (min-width: 768px) {
+  .section {
+    padding-block: 96px var(--sp-2xl); /* 96 / 120 */
+  }
+
+  p.sectionEyebrow {
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .title {
+    margin-bottom: 56px;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.02;
+    max-width: 18ch;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-md); /* 24px */
+    margin-bottom: 64px;
+  }
+
+  .allCta {
+    display: inline-flex;
+    padding: 17px 34px;
+    font-size: 1rem;
+  }
+}

@@ -159,8 +159,8 @@
   },
   "automation": {
     "eyebrow": "Automação inteligente",
-    "title": "{AUTOMACAO} INTELIGENTE **",
-    "description": null,
+    "title": "{AUTOMAÇÃO} INTELIGENTE **",
+    "description": "Sistemas que rodam sozinhos, conectados às suas ferramentas — e medidos de ponta a ponta.",
     "portfolioCta": "Ver portfólio",
     "contactCta": "Falar com a gente",
     "steps": [
@@ -313,8 +313,8 @@
       "returnEmailExample": "ana@estudio.com.br",
       "success": "Sucesso",
       "submit": "Enviar",
-      "budgetLabel": null,
-      "companyLabel": null,
+      "budgetLabel": "Faixa de investimento",
+      "companyLabel": "Empresa",
       "companyPlaceholder": null
     },
     "brand": "SATTI",
@@ -328,6 +328,12 @@
       "Contato"
     ],
     "socialTitle": "Social",
+    "github": {
+      "value": "GitHub · SAV1BOY",
+      "confirm": false,
+      "draft": null
+    },
+    "githubUrl": "https://github.com/SAV1BOY",
     "linkedin": {
       "value": "[CONFIRMAR handle LinkedIn]",
       "confirm": true,
@@ -340,7 +346,7 @@
     },
     "descriptor": "SATTI · IA & Automação",
     "preferEmail": null,
-    "contactEmail": null,
+    "contactEmail": "contato@sattiai.com",
     "location": "Nova Lima — MG",
     "copyright": {
       "value": "© SATTI {year}. Todos os direitos reservados.",

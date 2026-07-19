@@ -45,13 +45,24 @@ interface ThreadContextValue {
 
 const ThreadContext = createContext<ThreadContextValue | null>(null);
 
-/** Ordem canônica do fio (para escolher dono inicial e avanço). */
+/** Ordem canônica do fio (para o avanço do pulso). */
 const ZONE_ORDER: ReadonlyArray<ThreadZoneId> = [
   "hero",
   "services",
   "automation",
   "portfolio",
   "contact",
+];
+
+/** Preferência para o DONO INICIAL do pulso: começa após o hero — na
+    dobra do hero o blaze é o caret do typewriter (F0-F5/L2); o pulso
+    só passa por lá em trânsito, no wrap do ciclo (D3). */
+const INITIAL_OWNER_ORDER: ReadonlyArray<ThreadZoneId> = [
+  "services",
+  "automation",
+  "portfolio",
+  "contact",
+  "hero",
 ];
 
 export default function AutomationThread({
@@ -72,9 +83,9 @@ export default function AutomationThread({
     }
   }, []);
 
-  /** Primeiro segmento registrado na ordem canônica do fio. */
+  /** Primeiro segmento registrado na ordem de preferência inicial. */
   const firstRegistered = useCallback((): ThreadZoneId | null => {
-    for (const zone of ZONE_ORDER) {
+    for (const zone of INITIAL_OWNER_ORDER) {
       if (registeredRef.current.has(zone)) return zone;
     }
     return null;

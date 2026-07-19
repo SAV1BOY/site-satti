@@ -43,34 +43,18 @@ const LAYOUT: ReadonlyArray<{ ring: 0 | 1 | 2; count: number }> = [
   { ring: 2, count: 2 },
 ];
 
-/** Labels EXATOS da comp S5 (array `labels` da função _diagram). */
-const LABELS: ReadonlyArray<string> = [
-  "DISCOVERY",
-  "DADOS",
-  "AGENTES",
-  "AUTOMAÇÃO",
-  "PRODUTO",
-  "INTEGRAÇÕES",
-  "MÉTRICAS",
-  "ITERAÇÃO",
-  "DEPLOY",
-  "SUPORTE",
-];
-
 interface DiagramNode {
   x: number;
   y: number;
   labelX: number;
   labelY: number;
   anchor: "start" | "middle" | "end";
-  label: string;
 }
 
 const round = (n: number): number => Math.round(n * 100) / 100;
 
 function buildNodes(): ReadonlyArray<DiagramNode> {
   const nodes: DiagramNode[] = [];
-  let index = 0;
 
   for (const group of LAYOUT) {
     const radius = RINGS[group.ring];
@@ -89,9 +73,7 @@ function buildNodes(): ReadonlyArray<DiagramNode> {
         labelX: round(CENTER + (radius + LABEL_OFFSET) * cos),
         labelY: round(CENTER + (radius + LABEL_OFFSET) * sin + 4),
         anchor,
-        label: LABELS[index] ?? "",
       });
-      index++;
     }
   }
 
@@ -110,11 +92,15 @@ interface PulseCircleProps {
   /** Rótulo acessível — OBRIGATÓRIO e vindo do JSON (copy-law L1:
       nenhum literal editorial default no componente). */
   ariaLabel: string;
+  /** Labels dos 10 nodes na ordem da comp — OBRIGATÓRIO e vindo do JSON
+      (about.methodNodes), garantindo o espelho /en 1:1 (D5/§7.12). */
+  labels: ReadonlyArray<string>;
 }
 
 export default function PulseCircle({
   className,
   ariaLabel,
+  labels,
 }: PulseCircleProps) {
   return (
     <svg
@@ -133,9 +119,9 @@ export default function PulseCircle({
         />
       ))}
 
-      {NODES.map((node) => (
+      {NODES.map((node, index) => (
         <line
-          key={`spoke-${node.label}`}
+          key={`spoke-${index}`}
           x1={CENTER}
           y1={CENTER}
           x2={node.x}
@@ -150,7 +136,7 @@ export default function PulseCircle({
         const style: NodeStyle = { "--pulse-delay": `${round(index * 0.15)}s` };
         return (
           <circle
-            key={`node-${node.label}`}
+            key={`node-${index}`}
             cx={node.x}
             cy={node.y}
             r={NODE_RADIUS}
@@ -160,15 +146,15 @@ export default function PulseCircle({
         );
       })}
 
-      {NODES.map((node) => (
+      {NODES.map((node, index) => (
         <text
-          key={`label-${node.label}`}
+          key={`label-${index}`}
           x={node.labelX}
           y={node.labelY}
           textAnchor={node.anchor}
           className={styles.label}
         >
-          {node.label}
+          {labels[index] ?? ""}
         </text>
       ))}
     </svg>

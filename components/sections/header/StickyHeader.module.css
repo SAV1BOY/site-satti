@@ -1,0 +1,184 @@
+/* ============================================================
+   StickyHeader — pill fixo (comp S1+S2: top 20 · laterais 31 ·
+   h 66 · paper + hairline + --sh-header · radius pill ·
+   padding 0 11px 0 32px · brand Archivo 800 21px −0.01em ·
+   nav 15px gap 36 · CTA roll --ease-roll · menu 44px).
+   Estados (F0-F5): base = CTA ghost hairline; data-active = CTA
+   preenche blaze (.4s var(--ease), texto iron — L2).
+   L3: focus rings circuit. L5: transições/roll só com motion ok.
+   ============================================================ */
+
+.header {
+  position: fixed;
+  z-index: 50;
+  top: 20px;
+  left: 31px;
+  right: 31px;
+  height: 66px;
+  padding: 0 11px 0 32px;
+  background: var(--c-paper);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  box-shadow: var(--sh-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.brand {
+  font-family: var(--ff-display);
+  font-weight: 800;
+  font-size: 21px;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--c-iron);
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.navLink {
+  font-family: var(--ff-body);
+  font-size: 15px;
+  color: var(--c-iron);
+  text-decoration: none;
+}
+
+.navLink:hover {
+  color: var(--c-steel);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.locale {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+.localeLink,
+.localeActive {
+  color: inherit;
+  text-decoration: none;
+}
+
+.localeActive {
+  color: var(--c-iron);
+}
+
+/* --- CTA pill: ghost hairline → blaze no estado ativo (F0-F5) --- */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 12px 24px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--c-iron);
+  font-family: var(--ff-body);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.header[data-active="true"] .cta {
+  background: var(--c-blaze);
+  border-color: var(--c-blaze);
+  color: var(--c-iron); /* L2: nunca branco sobre blaze */
+}
+
+/* Roll de texto do CTA (comp: duas camadas, --ease-roll) */
+.ctaMask {
+  display: block;
+  overflow: hidden;
+  height: 20px;
+}
+
+.ctaLabel {
+  display: block;
+  height: 20px;
+  line-height: 20px;
+}
+
+/* --- Menu hambúrguer 44px (alvo mínimo) --- */
+.menu {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  background: transparent;
+  display: grid;
+  place-content: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.menu span {
+  width: 17px;
+  height: 1px;
+  background: var(--c-iron);
+}
+
+/* --- Focus rings (L3: circuit é funcional) --- */
+.brand:focus-visible,
+.navLink:focus-visible,
+.localeLink:focus-visible,
+.localeActive:focus-visible,
+.cta:focus-visible,
+.menu:focus-visible {
+  outline: 2px solid var(--c-circuit);
+  outline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+  .header {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    height: 56px;
+    padding: 0 8px 0 20px;
+  }
+
+  .nav,
+  .locale {
+    display: none; /* comp mobile: nav vive no O1 (menu) */
+  }
+
+  .cta {
+    padding: 10px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .header,
+  .cta {
+    transition:
+      background-color 0.4s var(--ease),
+      border-color 0.4s var(--ease);
+  }
+
+  .ctaMask .ctaLabel {
+    transition: transform 0.35s var(--ease-roll);
+  }
+
+  .cta:hover .ctaLabel,
+  .cta:focus-visible .ctaLabel {
+    transform: translateY(-100%);
+  }
+}

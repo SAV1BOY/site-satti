@@ -1,0 +1,344 @@
+/* ============================================================
+   Services — S4 Serviços
+   Fonte visual: S4 Servicos Desktop 1920.dc.html / Mobile 375.dc.html
+   Lei de tradução (§4): scaffold descartado — padding-right 348px,
+   aside "Specs", placeholders rotulados [ S4-IMG-* ], data-screen-label,
+   badge motion, SMIL animateMotion (a AutomationLine resolve o fio);
+   min-height:100vh não se aplica (S4 flui). O SVG interno da comp era
+   aproximação de preview da Linha — substituído por <AutomationLine
+   zone="services">.
+   Leis: L2 (NENHUM blaze estático na S4 — o blaze da dobra é o pulso
+   da Linha passando; tints ≠ acento), L5 (toda animação em
+   no-preference; reduced = estado estático da comp), L9 (profundidade
+   = hairline 1px + tint, sem drop-shadow), L10 (só transform/opacity,
+   easing var(--ease)), L12 (Archivo display caps tracking negativo ·
+   Inter body · JetBrains Mono tags — exceção do mono-caps: grafia
+   oficial de marcas nas tags, sem uppercase).
+   Cores derivadas dos tints (número/descrição/borda de tag/fundo de
+   mídia por card): a comp usa derivações disciplinadas dos tints
+   (card1: 9A6F58/5C4A40/D9B7A6 · card2: 6079B5/445377/B9C7EC ·
+   card3: 6E7480/5A606B/CBD0D9 — valores sem "#" de propósito: gate
+   §7.2 exige zero hex literal). Reproduzidas via color-mix() só com
+   tokens — fórmulas conferidas canal a canal contra os alvos da
+   comp (Δ ≤ ~5%).
+   Coreografia (spec §6-W3 + Atlas 03 "cards sobrepostos no scroll"):
+   desktop = stack com offset 40px que se "distribui" em fila com
+   sobreposição -40px durante o pin (stage sticky; transforms via
+   IO + rAF no ServicesDeck). Mobile = pilha vertical sem sticky
+   (comp mobile). Reduced-motion/SSR = fila final estática (comp).
+   ============================================================ */
+
+/* --- Seção (paper) --- */
+.section {
+  position: relative;
+  background: var(--c-paper);
+  color: var(--c-iron);
+  /* Comp 1920: 96px topo · 120px base · 120px de gutter real
+     (o 348px da direita era scaffold da aside — descartado). */
+  padding: 96px clamp(20px, 6.25vw, 120px) 120px;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Eyebrow "01 — Serviços" (classe base .eyebrow do globals) --- */
+.kicker {
+  display: flex;
+  margin-bottom: 18px; /* comp desktop */
+}
+
+/* --- Título da seção --- */
+.title {
+  margin: 0 0 64px;
+  font-family: var(--ff-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(2.125rem, 5vw, 4rem); /* 34px mobile → 64px desktop */
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  max-width: 18ch;
+}
+
+/* ============================================================
+   Deck — trilho da coreografia (ServicesDeck, client)
+   Estado base (SSR / reduced / mobile): fluxo normal, fila final.
+   [data-active] (motion ok + ≥1024px): trilho 220vh + stage sticky.
+   ============================================================ */
+.deck[data-active="true"] {
+  height: 220vh;
+}
+
+.deck[data-active="true"] .stage {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.deck[data-active="true"] .card {
+  will-change: transform;
+}
+
+/* --- Fila de cards (comp: 3 × flex, sobreposição -40px) --- */
+.row {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+/* --- Card (tint editorial 28px + hairline — L9) --- */
+.card {
+  flex: 1 1 0;
+  min-width: 0;
+  box-sizing: border-box;
+  aspect-ratio: 510 / 552; /* proporção da comp (~604×653 em 1920 real) */
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 28px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-xl);
+  background: var(--card-tint);
+}
+
+.card + .card {
+  margin-left: -40px; /* sobreposição da comp/Atlas */
+}
+
+/* Tints por card (F0–F5: tints, NÃO acento) + derivações da comp.
+   --card-seed é só insumo de mistura — nunca pinta nada puro. */
+.card:nth-of-type(1) {
+  --card-tint: var(--tint-blaze);
+  --card-seed: color-mix(in srgb, var(--c-blaze) 30%, var(--c-iron) 70%);
+  --card-label: color-mix(in srgb, var(--card-seed) 62%, var(--card-tint) 38%); /* ≈ comp 9A6F58 */
+  --card-body: color-mix(in srgb, var(--card-seed) 50%, var(--c-steel) 50%); /* ≈ comp 5C4A40 */
+  --card-tag-line: color-mix(in srgb, var(--card-seed) 26%, var(--card-tint) 74%); /* ≈ comp D9B7A6 */
+}
+
+.card:nth-of-type(2) {
+  --card-tint: var(--tint-blue);
+  /* Circuit entra SÓ como insumo do color-mix para reproduzir os
+     azuis derivados aprovados da comp — nunca aparece puro (L3). */
+  --card-seed: color-mix(in srgb, var(--c-circuit) 55%, var(--c-iron) 45%);
+  --card-label: color-mix(in srgb, var(--card-seed) 70%, var(--card-tint) 30%); /* ≈ comp 6079B5 */
+  --card-body: color-mix(in srgb, var(--card-seed) 55%, var(--c-steel) 45%); /* ≈ comp 445377 */
+  --card-tag-line: color-mix(in srgb, var(--card-tint) 80%, var(--card-seed) 20%); /* ≈ comp B9C7EC */
+}
+
+.card:nth-of-type(3) {
+  --card-tint: var(--tint-slate);
+  --card-seed: var(--c-steel);
+  --card-label: var(--c-steel); /* comp usa steel exato */
+  --card-body: color-mix(in srgb, var(--c-steel) 80%, var(--c-iron) 20%); /* ≈ comp 5A606B */
+  --card-tag-line: color-mix(in srgb, var(--card-tint) 75%, var(--c-steel) 25%); /* ≈ comp CBD0D9 */
+}
+
+/* --- Mídia do card (placeholder rotulado da comp → imagem real A7) --- */
+.media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  aspect-ratio: 454 / 196; /* janela da comp (card 510 − 2×28 de padding) */
+  background: color-mix(in srgb, var(--card-tint) 92%, var(--card-seed) 8%);
+}
+
+.mediaImg {
+  object-fit: cover;
+  transform-origin: center;
+}
+
+/* --- Número mono + título Archivo + seta de hover --- */
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.number {
+  margin: 0;
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem; /* 11px */
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--card-label);
+}
+
+.titleRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cardTitle {
+  position: relative;
+  margin: 0;
+  font-family: var(--ff-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(1.4375rem, 1.5vw + 0.6rem, 1.875rem); /* 23px → 30px */
+  line-height: 1.1;
+  padding-bottom: 3px;
+}
+
+/* Sublinha hairline do hover — ::after com opacity (L10: nada de
+   transição de border-color). Estado revelado também existe em
+   reduced-motion (instantâneo, sem animação — "sem sublinha ANIMADA"). */
+.cardTitle::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--c-iron);
+  opacity: 0;
+}
+
+.arrow {
+  font-size: 1.125rem; /* 18px */
+  opacity: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover .cardTitle::after,
+  .card:hover .arrow {
+    opacity: 1;
+  }
+}
+
+/* --- Descrição --- */
+.desc {
+  margin: 0;
+  font-size: 0.9375rem; /* 15px */
+  line-height: 1.6;
+  color: var(--card-body);
+  max-width: 42ch;
+}
+
+/* --- Tags de stack (grafia oficial de marcas — sem caps, L12) --- */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  margin-top: auto; /* comp: tags ancoradas na base do card */
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  border: 1px solid var(--card-tag-line);
+  border-radius: var(--r-pill);
+  padding: 8px 16px;
+  font-family: var(--ff-mono);
+  font-size: 0.75rem; /* 12px */
+  color: var(--c-iron);
+}
+
+/* ============================================================
+   MOTION — tudo dentro de no-preference (L5); só transform/opacity
+   com easing var(--ease) (L10). Reduced = comp estática: imagem em
+   scale 1, fila final, sem transições.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  /* Respiração da imagem: scale 1 → 1.2 · 4s · infinite alternate
+     (comp "s4-zoom"; declarada local para escopo garantido do módulo). */
+  @keyframes s4-breathe {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.2);
+    }
+  }
+
+  .mediaImg {
+    animation: s4-breathe 4s var(--ease) infinite alternate;
+  }
+
+  .cardTitle::after,
+  .arrow {
+    transition: opacity 0.3s var(--ease);
+  }
+}
+
+/* ============================================================
+   MOBILE (< 1024px) — comp S4 Mobile 375: pilha vertical, sem
+   sticky e sem sobreposição; o fio da Linha é a AutomationLine
+   (o indent de 36px da comp era scaffold da linha de preview).
+   ============================================================ */
+@media (max-width: 1023px) {
+  .section {
+    padding: 40px 20px 56px;
+  }
+
+  .kicker {
+    margin-bottom: 14px;
+  }
+
+  .title {
+    margin-bottom: 36px;
+    line-height: 1.04;
+    max-width: 16ch;
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  .card {
+    aspect-ratio: auto;
+    gap: 18px;
+    padding: 20px;
+    border-radius: 24px; /* comp mobile */
+  }
+
+  .card + .card {
+    margin-left: 0;
+  }
+
+  .media {
+    aspect-ratio: auto;
+    height: 172px; /* comp mobile */
+    border-radius: var(--r-md);
+  }
+
+  .heading {
+    gap: 5px;
+  }
+
+  .number {
+    font-size: 0.625rem; /* 10px */
+  }
+
+  .cardTitle {
+    line-height: 1.12;
+    padding-bottom: 0;
+  }
+
+  .cardTitle::after,
+  .arrow {
+    display: none; /* comp mobile não tem seta/sublinha de hover */
+  }
+
+  .desc {
+    font-size: 0.875rem; /* 14px */
+    max-width: none;
+  }
+
+  .tags {
+    gap: 8px;
+    margin-top: 0; /* comp mobile: tags seguem o fluxo */
+  }
+
+  .tag {
+    padding: 7px 14px;
+    font-size: 0.6875rem; /* 11px */
+  }
+}
