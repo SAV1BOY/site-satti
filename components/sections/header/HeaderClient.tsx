@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useOverlay } from "@/components/overlays/OverlayProvider";
 import styles from "./StickyHeader.module.css";
 
 /**
@@ -29,7 +29,6 @@ interface HeaderClientProps {
   localeSeparator: string;
   localeEn: string;
   currentLocale: string;
-  onMenuOpen?: () => void;
 }
 
 export default function HeaderClient({
@@ -41,9 +40,10 @@ export default function HeaderClient({
   localeSeparator,
   localeEn,
   currentLocale,
-  onMenuOpen,
 }: HeaderClientProps) {
   const [active, setActive] = useState(false);
+  // W4 (DEC-011): hambúrguer abre o O1 via OverlayProvider.
+  const overlay = useOverlay();
 
   useEffect(() => {
     let raf = 0;
@@ -81,25 +81,35 @@ export default function HeaderClient({
       </nav>
 
       <div className={styles.actions}>
-        <span className={styles.locale}>
-          <Link
-            href="/"
-            className={isPt ? styles.localeActive : styles.localeLink}
-            aria-current={isPt ? "true" : undefined}
-          >
+        {/* Seletor de idioma → abre o O3 (DEC-011); os <Link> reais de
+            troca vivem no overlay. */}
+        <button
+          type="button"
+          className={styles.locale}
+          aria-haspopup="dialog"
+          aria-expanded={overlay.active === "language"}
+          onClick={() => overlay.open("language")}
+        >
+          <span className={isPt ? styles.localeActive : styles.localeLink}>
             {localePt}
-          </Link>
+          </span>
           <span aria-hidden="true">{localeSeparator}</span>
-          <Link
-            href="/en"
-            className={!isPt ? styles.localeActive : styles.localeLink}
-            aria-current={!isPt ? "true" : undefined}
-          >
+          <span className={!isPt ? styles.localeActive : styles.localeLink}>
             {localeEn}
-          </Link>
-        </span>
+          </span>
+        </button>
 
-        <a className={styles.cta} href="#contato" data-cursor="hover">
+        {/* CTA → abre o O2 (DEC-011); sem JS degrada para a âncora do
+            form canônico (#contato). */}
+        <a
+          className={styles.cta}
+          href="#contato"
+          data-cursor="hover"
+          onClick={(e) => {
+            e.preventDefault();
+            overlay.open("contact");
+          }}
+        >
           <span className={styles.ctaMask}>
             <span className={styles.ctaLabel}>{cta}</span>
             <span className={styles.ctaLabel} aria-hidden="true">
@@ -112,8 +122,8 @@ export default function HeaderClient({
           className={styles.menu}
           type="button"
           aria-label={menuLabel}
-          aria-expanded={false}
-          onClick={() => onMenuOpen?.()}
+          aria-expanded={overlay.active === "menu"}
+          onClick={() => overlay.open("menu")}
         >
           <span />
           <span />

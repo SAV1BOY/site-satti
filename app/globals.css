@@ -66,6 +66,14 @@ body {
   color: var(--c-ink-on-dark);
 }
 
+/* --- Overlays (W4): scroll travado enquanto houver overlay aberto.
+       O OverlayProvider seta/remove html[data-overlay]; o close() remove
+       o atributo antes da navegação por âncora, então o scroll nativo
+       das âncoras continua funcionando. --- */
+html[data-overlay] {
+  overflow: hidden;
+}
+
 /* --- Cursor custom (CursorProvider) — só quando ativo (pointer fine + motion ok) --- */
 .cursor-dot,
 .cursor-ring {

@@ -6,6 +6,10 @@
 
 import { setRequestLocale } from "next-intl/server";
 import AutomationThread from "@/components/ui/AutomationThread";
+import OverlayProvider from "@/components/overlays/OverlayProvider";
+import MenuOverlay from "@/components/overlays/menu/MenuOverlay";
+import ContactOverlay from "@/components/overlays/contact/ContactOverlay";
+import LanguageOverlay from "@/components/overlays/language/LanguageOverlay";
 import StickyHeader from "@/components/sections/header/StickyHeader";
 import Hero from "@/components/sections/hero/Hero";
 import ValuesStrip from "@/components/sections/values/ValuesStrip";
@@ -27,7 +31,11 @@ export default async function Home({
   setRequestLocale(locale);
 
   return (
-    <>
+    <OverlayProvider
+      menu={<MenuOverlay />}
+      contact={<ContactOverlay />}
+      language={<LanguageOverlay />}
+    >
       <StickyHeader />
       <AutomationThread>
         <main id="top">
@@ -43,6 +51,6 @@ export default async function Home({
         </main>
         <Footer />
       </AutomationThread>
-    </>
+    </OverlayProvider>
   );
 }

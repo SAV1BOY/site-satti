@@ -1,0 +1,252 @@
+/* ============================================================
+   O3 Idioma — dropdown ancorado sob o seletor de idioma do header
+   Comps: "O3 Idioma Overlay Desktop 1920.dc.html" + "O3 Idioma
+   Mobile 375.dc.html".
+   Desktop: card 340px top-right — top 104 (header 20+66+18) /
+   right 31. Mobile: full-width central — top 84 (12+56+16) /
+   sides 16.
+   Backdrop: scrim graphite 55% + blur 7px (mobile: 60% / 6px) —
+   rgba ad hoc da comp → color-mix sobre tokens (zero hex, D1).
+   Ativo = circuit FUNCIONAL (L3: estado selecionado); bg #EDF2FF
+   da comp → token oficial --tint-blue; cinza #C7CCD4 da seta →
+   color-mix steel/paper. Zero blaze neste viewport (nota da comp).
+   L9: sem drop-shadow — a sombra 24/60 da comp é descartada
+   (--sh-header é a única sombra do sistema); separação = hairline
+   + scrim.
+   Motion (comp): dropdown fade + scale 0.98→1 + shift -6px, 0.22s
+   var(--ease), origem no seletor; hover dos itens: borda escurece
+   0.2s. Reduced (L5): aparece estático e aberto, backdrop sem
+   transição — tudo dentro de no-preference.
+   Alvos ≥44px: opções ~53px; fechar 32px visual + hit-area 44px
+   via ::before.
+   ============================================================ */
+
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 100; /* acima do header pill (z 50) */
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 104px 31px 0;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--c-graphite) 55%, transparent);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+}
+
+.panel {
+  position: relative; /* acima do scrim absoluto */
+  width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--c-paper);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  padding: 14px;
+  transform-origin: top right; /* origem no seletor (comp) */
+}
+
+/* --- Topo: rótulo + fechar --- */
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px 12px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+.close {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--c-iron);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Hit-area 44×44 (alvo mínimo) sem alterar o visual 32px da comp */
+.close::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+}
+
+.close:hover {
+  border-color: color-mix(in srgb, var(--c-steel) 40%, var(--c-line));
+}
+
+/* --- Opções de idioma --- */
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: transparent;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.option:hover {
+  border-color: color-mix(in srgb, var(--c-steel) 40%, var(--c-line));
+}
+
+.optionActive {
+  background: var(--tint-blue); /* comp #EDF2FF → token oficial */
+  border-color: var(--c-circuit);
+}
+
+.optionActive:hover {
+  border-color: var(--c-circuit);
+}
+
+.optionMain {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.code {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-sm);
+  padding: 3px 7px;
+}
+
+.optionActive .code {
+  color: var(--c-circuit);
+  border-color: var(--c-circuit);
+}
+
+.label {
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+.optionActive .label {
+  color: var(--c-iron);
+}
+
+.check {
+  color: var(--c-circuit);
+  font-size: 15px;
+  line-height: 1;
+}
+
+.arrow {
+  color: color-mix(in srgb, var(--c-steel) 40%, var(--c-paper)); /* ≈ #C7CCD4 */
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* --- Nota /en --- */
+.note {
+  margin: 6px 0 0;
+  padding: 12px 10px 6px;
+  border-top: 1px solid var(--c-line);
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+/* --- Focus rings (L3: circuit só funcional) --- */
+.close:focus-visible,
+.option:focus-visible {
+  outline: 2px solid var(--c-circuit);
+  outline-offset: 2px;
+}
+
+/* --- Mobile 375 --- */
+@media (max-width: 767px) {
+  .root {
+    justify-content: center;
+    padding: 84px 16px 0;
+  }
+
+  .scrim {
+    background: color-mix(in srgb, var(--c-graphite) 60%, transparent);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+
+  .panel {
+    width: 100%;
+    transform-origin: top center; /* dropdown desce do header (comp) */
+  }
+
+  .option {
+    padding: 15px 16px;
+  }
+}
+
+/* --- Motion (L10: só transform/opacity, var(--ease); L5: gated) --- */
+@media (prefers-reduced-motion: no-preference) {
+  .scrim {
+    animation: scrim-in 0.22s var(--ease) both;
+  }
+
+  .panel {
+    animation: panel-in 0.22s var(--ease) both;
+  }
+
+  .close,
+  .option {
+    transition: border-color 0.2s var(--ease);
+  }
+
+  @keyframes scrim-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

@@ -1,0 +1,366 @@
+/* ============================================================
+   MenuOverlay (O1) — fullscreen graphite (W4)
+   Comps: "O1 Menu Overlay Desktop 1920.dc.html" · "O1 Menu Mobile 375.dc.html"
+
+   Padding comp 48/348/64/120 → 48 clamp(20,6.25vw,120) 64 (o
+   348px direito era scaffold da aside de specs — descartado, §4).
+   Topbar: brand Archivo 800 caps 24 + fechar 56px círculo
+   hairline-dark. Nav: itens 18px 0, border-bottom line-dark, num
+   mono 14 steel 48px, label Archivo 800 caps clamp(2.5–4.5rem).
+   Hover/focus: num+label blaze + shift 16px (12 mobile) — shift
+   só com motion ok (comp: "hover de cor mantido" no reduced).
+   Linha vertical decorativa: stroke line-dark 1.5, nodes
+   hairline-dark (D1 — aposenta os cinzas ad hoc da comp), pulso
+   blaze halo r9 + dot r4 via transform (comp usa SMIL só como
+   preview — §4); some no reduced (linha 100% desenhada, L5).
+   Entrada: fade+slide 0.4s var(--ease) + stagger 40ms/item,
+   gated (L10/L5 — reduced aparece sem transição).
+   Meta: mono 12 steel caps +0.08em (L12), alvos ≥44px,
+   [CONFIRMAR] steel (L1). Foco: circuit (L3). Sem drop-shadow
+   (L9). Mobile 375: padding 24/20/40 · label 38px · meta coluna.
+   ============================================================ */
+
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 100; /* acima do header pill (z-index 50) */
+  display: flex;
+  flex-direction: column;
+  background: var(--c-graphite);
+  color: var(--c-ink-on-dark);
+  padding: 48px clamp(20px, 6.25vw, 120px) 64px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* --- Linha de Automação vertical decorativa ------------------- */
+
+.line {
+  position: absolute;
+  top: 0;
+  right: clamp(24px, 4.3vw, 82px); /* comp: 430 − 348 de scaffold = 82 */
+  height: 100%;
+  width: 40px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.linePath {
+  fill: none;
+  stroke: var(--c-line-dark);
+  stroke-width: 1.5;
+}
+
+.nodeOuter {
+  fill: var(--c-graphite);
+  stroke: var(--c-hairline-dark);
+  stroke-width: 1.5;
+}
+
+.nodeInner {
+  fill: var(--c-steel);
+}
+
+/* Pulso: só existe com motion ok (L5) — reduced = linha 100%
+   desenhada sem pulso, como na comp. */
+.pulse {
+  display: none;
+}
+
+.pulseHalo {
+  fill: var(--c-blaze);
+  opacity: 0.16;
+}
+
+.pulseDot {
+  fill: var(--c-blaze);
+}
+
+/* --- Topbar --------------------------------------------------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 72px;
+}
+
+.brand {
+  font-family: var(--ff-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  color: var(--c-ink-on-dark);
+}
+
+.close {
+  width: 56px; /* ≥44px (a11y) */
+  height: 56px;
+  flex: none;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--c-hairline-dark);
+  background: transparent;
+  color: var(--c-ink-on-dark);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s ease; /* cor — mantida no reduced */
+}
+
+.close:hover {
+  border-color: var(--c-steel);
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--c-circuit); /* L3: circuit só funcional */
+  outline-offset: 3px;
+}
+
+/* --- Navegação numerada --------------------------------------- */
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  --shift: 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 32px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--c-line-dark);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--c-circuit); /* L3 */
+  outline-offset: -2px;
+}
+
+.itemNum {
+  font-family: var(--ff-mono);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--c-steel);
+  width: 48px;
+  flex: none;
+  transition: color 0.3s ease; /* cor — mantida no reduced (comp) */
+}
+
+.itemLabel {
+  font-family: var(--ff-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--c-ink-on-dark);
+  transition: color 0.3s ease;
+}
+
+/* Único destaque blaze do O1 = item ativo/hover (comp). */
+.item:hover .itemNum,
+.item:focus-visible .itemNum,
+.item:hover .itemLabel,
+.item:focus-visible .itemLabel {
+  color: var(--c-blaze);
+}
+
+/* --- Rodapé do overlay ---------------------------------------- */
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 40px;
+  margin-top: auto; /* ancora na base em telas altas… */
+  padding-top: 64px; /* …mantendo o respiro mínimo da comp */
+}
+
+.metaItem,
+.metaLink,
+.language {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* alvo a11y (comp é mais densa — a lei vence) */
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+.metaLink {
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* E-mail: endereço mantém grafia minúscula (não é eyebrow/tag). */
+.metaLink[href^="mailto:"] {
+  text-transform: none;
+}
+
+.metaLink:hover {
+  color: var(--c-ink-on-dark);
+}
+
+.language {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.language:hover {
+  color: var(--c-ink-on-dark);
+}
+
+.metaLink:focus-visible,
+.language:focus-visible {
+  outline: 2px solid var(--c-circuit); /* L3 */
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+/* L1: copy não confirmada SEMPRE em steel (hook do modo final W6). */
+.metaItem[data-confirm="true"] {
+  color: var(--c-steel);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Motion (L10/L5): entrada + shift + pulso — tudo gated ----- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .root {
+    animation: overlay-in 0.4s var(--ease) both;
+  }
+
+  .item {
+    /* stagger 40ms/item via animation-delay inline (server) */
+    animation: item-in 0.4s var(--ease) both;
+  }
+
+  .item:hover .itemLabel,
+  .item:focus-visible .itemLabel {
+    transform: translateX(var(--shift));
+  }
+
+  .itemLabel {
+    transition:
+      color 0.3s ease,
+      transform 0.35s var(--ease-roll); /* comp: cubic-bezier(0.76,0,0.24,1) */
+  }
+
+  .pulse {
+    display: initial;
+    /* comp keySplines 0.4 0 0.6 1 · 6s · loop — transform-only (L10) */
+    animation: pulse-travel 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes overlay-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+
+  @keyframes item-in {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+  }
+
+  @keyframes pulse-travel {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(1000px); /* unidades do viewBox (0–1000) */
+    }
+  }
+}
+
+/* --- Mobile 375 (comp O1 Mobile) ------------------------------ */
+
+@media (max-width: 767px) {
+  .root {
+    padding: 24px 20px 40px;
+  }
+
+  .line {
+    right: 24px;
+    width: 32px;
+  }
+
+  .nodeOuter {
+    r: 6px; /* geometry property — fallback inofensivo (fica 7) */
+  }
+
+  .pulseHalo {
+    r: 8px;
+  }
+
+  .pulseDot {
+    r: 3.5px;
+  }
+
+  .topbar {
+    margin-bottom: 48px;
+  }
+
+  .brand {
+    font-size: 20px;
+  }
+
+  .close {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+
+  .item {
+    --shift: 12px;
+    gap: 20px;
+    padding: 16px 0;
+  }
+
+  .itemNum {
+    font-size: 12px;
+    width: 32px;
+  }
+
+  .itemLabel {
+    font-size: 38px;
+  }
+
+  .meta {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 4px; /* comp: 12 — rows já ganham altura pelos 44px */
+    padding-top: 40px;
+  }
+
+  .metaItem,
+  .metaLink,
+  .language {
+    font-size: 11px;
+  }
+}

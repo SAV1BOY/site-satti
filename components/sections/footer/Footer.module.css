@@ -207,8 +207,35 @@ p.sectionEyebrow {
   color: var(--c-error);
 }
 
-.form.isError .formError {
+.form.isError .formError,
+.form.hasSubmitError .formError {
   display: flex;
+}
+
+/* Sucesso de envio — mesma anatomia do formError, em --c-success (D6). */
+.formSuccess {
+  display: none;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  font-family: var(--ff-body);
+  font-size: 0.8125rem;
+  color: var(--c-success);
+}
+
+.form.isSuccess .formSuccess {
+  display: flex;
+}
+
+/* Honeypot (W4): fora do fluxo visual e da ordem de tabulação — bots
+   preenchem, humanos nunca veem. */
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* Enviar — Button primary (blaze pill, texto iron): O blaze da dobra. */

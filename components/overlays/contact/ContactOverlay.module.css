@@ -1,0 +1,352 @@
+/* ============================================================
+   O2 · Contato — comps: "O2 Contato Overlay Desktop 1920.dc.html"
+   e "O2 Contato Mobile 375.dc.html" (verdade visual).
+   Slot do OverlayProvider: o wrapper já é o dialog (foco/Esc/
+   trap/data-lenis-prevent) — este módulo estiliza o CONTEÚDO:
+   backdrop blur(7px) + tinta graphite 55% e painel lateral
+   direito 620px paper no desktop; MOBILE = TELA CHEIA (§4,
+   decisão travada — sem half-blur, backdrop oculto).
+   L2 · único blaze de destaque do viewport = CTA (texto iron);
+        marcador 8×8 do eyebrow não conta.
+   L3 · circuit só funcional: focus rings + o mock do estado
+        focus do input (o próprio DS dos 4 estados).
+   L9 · hairlines var(--c-line); a sombra da borda do painel é
+        explícita da comp (painel modal ≠ card) via color-mix
+        de token — zero hex literal.
+   L5/L10 · entrada só transform/opacity 0.4s: desktop desliza
+        da direita, mobile sobe de baixo (specs das comps,
+        easing 0.76,0,0.24,1 = var(--ease-roll)); backdrop faz
+        fade com var(--ease). Reduced = aparece sem transição
+        (estado base das comps).
+   L12 · Archivo display caps · Inter body · Mono caps +0.08em.
+   ============================================================ */
+
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 100; /* acima do StickyHeader (50) */
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Backdrop — comp: conteúdo atrás com blur(7px) + rgba(15,17,21,.55).
+   Aqui o "conteúdo atrás" é a própria página real → backdrop-filter. */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--c-graphite) 55%, transparent);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+}
+
+/* Painel lateral direito (comp: 620px paper, hairline à esquerda,
+   sombra -40px 0 80px 25% graphite, padding 48/56, gap 36) */
+.panel {
+  position: relative;
+  width: 620px;
+  max-width: 100%;
+  height: 100%;
+  background: var(--c-paper);
+  color: var(--c-iron);
+  border-left: 1px solid var(--c-line);
+  box-shadow: -40px 0 80px color-mix(in srgb, var(--c-graphite) 25%, transparent);
+  padding: 48px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* --- Topo: eyebrow + fechar --- */
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex: none;
+}
+
+/* Eyebrow local (comp: gap 14, 12px — difere do .eyebrow global 14px) */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 48px; /* alinha opticamente com o botão fechar */
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--c-blaze); /* marcador 8×8 — não conta na L2 */
+  flex: none;
+}
+
+.close {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--c-line);
+  background: transparent;
+  color: var(--c-iron);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  padding: 0;
+}
+
+.close:hover {
+  border-color: var(--c-steel);
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--c-circuit); /* L3: circuit funcional */
+  outline-offset: 2px;
+}
+
+/* --- Título (comp: Archivo 800 caps 44/1.0 −0.01em) --- */
+.title {
+  margin: 0;
+  flex: none;
+  font-family: var(--ff-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+/* --- Form-mock · 4 estados do DS empilhados (decorativo,
+       aria-hidden — o form real com Server Action é o do footer) --- */
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: none;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--c-iron);
+}
+
+.input {
+  min-height: 50px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-line);
+  background: var(--c-paper);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 14px;
+}
+
+.placeholder {
+  color: var(--c-steel);
+}
+
+.value {
+  color: var(--c-iron);
+}
+
+/* Estado focus — ring circuit (DS; L3: é o único uso não-link) */
+.inputFocus {
+  border-color: var(--c-circuit);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-circuit) 18%, transparent);
+}
+
+.caret {
+  width: 1.5px;
+  height: 18px;
+  background: var(--c-iron);
+  margin-left: 2px;
+  flex: none;
+}
+
+/* Estado erro — só texto+borda+ícone (D6/feedback) */
+.inputError {
+  border-color: var(--c-error);
+}
+
+.errorNote {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--c-error);
+}
+
+/* Copy [CONFIRMAR] sempre em steel (L1), mesmo na linha de erro */
+.confirmText {
+  color: var(--c-steel);
+}
+
+/* Estado sucesso */
+.inputSuccess {
+  border-color: var(--c-success);
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.check {
+  color: var(--c-success);
+  font-size: 15px;
+  flex: none;
+}
+
+.stateNote {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+/* --- CTA — âncora #contato (form canônico), pill blaze, texto
+       iron (L2). Único blaze de destaque do overlay. --- */
+.cta {
+  flex: none;
+  display: block;
+  width: 100%;
+  border: 0;
+  background: var(--c-blaze);
+  color: var(--c-iron);
+  border-radius: var(--r-pill);
+  padding: 16px 32px;
+  font-family: var(--ff-body);
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--c-circuit);
+  outline-offset: 3px;
+}
+
+/* --- Sociais (handles [CONFIRMAR] → steel, não navegáveis) --- */
+.socials {
+  display: flex;
+  gap: 24px;
+  border-top: 1px solid var(--c-line);
+  padding-top: 28px;
+  margin-top: auto;
+  flex: none;
+}
+
+.social {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+/* --- Motion (L5/L10): só com no-preference; reduced = estático --- */
+@media (prefers-reduced-motion: no-preference) {
+  .backdrop {
+    animation: o2-fade 0.4s var(--ease) both;
+  }
+
+  .panel {
+    animation: o2-slide-right 0.4s var(--ease-roll) both;
+  }
+
+  @keyframes o2-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes o2-slide-right {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes o2-slide-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+}
+
+/* --- Mobile 375 = TELA CHEIA (decisão §4; comp mobile) --- */
+@media (max-width: 767px) {
+  .backdrop {
+    display: none; /* comp: "sem half-blur" — painel cobre tudo */
+  }
+
+  .panel {
+    width: 100%;
+    border-left: 0;
+    box-shadow: none;
+    padding: 24px 20px 40px;
+    gap: 28px;
+  }
+
+  .eyebrow {
+    gap: 12px;
+    min-height: 44px;
+    font-size: 11px;
+  }
+
+  .close {
+    width: 44px; /* alvo mínimo 44px */
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .title {
+    font-size: 38px;
+  }
+
+  .fields {
+    gap: 18px;
+  }
+
+  .cta {
+    padding: 16px 28px;
+  }
+
+  .socials {
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 24px;
+  }
+}
+
+/* Mobile entra de baixo (spec da comp mobile) */
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .panel {
+    animation-name: o2-slide-up;
+  }
+}

@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import AutomationLine from "@/components/ui/AutomationLine";
-import Button from "@/components/ui/Button";
+import FooterForm from "./FooterForm";
 import FooterHat from "./FooterHat";
 import styles from "./Footer.module.css";
 
@@ -19,18 +19,16 @@ import styles from "./Footer.module.css";
  *   mensagem, faixa de investimento (OPCIONAL) — e os 4 estados de
  *   input do DS via CSS: default hairline-dark → focus ring circuit
  *   (:focus-visible, L3) → erro --c-error → sucesso --c-success.
- *   Feedback SÓ texto+borda+ícone. Classes .isError/.isSuccess prontas
- *   para o W4 ligar; SEM Server Action ainda (W4). Mensagem de erro =
- *   a oficial footer.form.error (L1). Placeholders: só os que existem
- *   no JSON (namePlaceholder, messagePlaceholder; companyPlaceholder é
- *   null no PT → omitido).
+ *   Feedback SÓ texto+borda+ícone. O form vive na island FooterForm
+ *   (W4): useActionState + submitBrief (honeypot, rate-limit, Zod,
+ *   Resend, n8n; env ausente degrada). Mensagem de erro = a oficial
+ *   footer.form.error (L1).
  * - L2 · blaze da dobra = botão Enviar (Button primary, texto iron);
  *   o pulso da Linha conta na dobra em que estiver (D3). O marcador
  *   8×8 do eyebrow não conta.
  * - Copy 100% via next-intl (L1). LinkedIn/Instagram são {value,
  *   confirm:true} → steel + data-confirm (modo draft; W6 final omite).
- *   GitHub NÃO renderizado: não existe chave footer.github (nem o
- *   handle no JSON) e hardcode de copy é proibido — pendência W6.
+ *   GitHub oficial (D6) via footer.github/githubUrl do JSON.
  * - E-mail: mailto com footer.contactEmail (nunca hardcoded).
  * - Copyright dinâmico: footer.copyright.value com {year} →
  *   new Date().getFullYear() (D6 resolve o [CONFIRMAR ano] da comp).
@@ -109,117 +107,21 @@ export default async function Footer() {
               ))}
             </h2>
 
-            <form className={styles.form}>
-              <div className={styles.fieldGrid}>
-                <div className={styles.field}>
-                  <label className={styles.label} htmlFor="footer-name">
-                    {t("form.nameLabel")}
-                  </label>
-                  <div className={styles.control}>
-                    <input
-                      className={styles.input}
-                      id="footer-name"
-                      name="name"
-                      type="text"
-                      autoComplete="name"
-                      placeholder={t("form.namePlaceholder")}
-                      required
-                    />
-                    <span className={styles.check} aria-hidden="true">
-                      ✓
-                    </span>
-                  </div>
-                </div>
-
-                <div className={styles.field}>
-                  <label className={styles.label} htmlFor="footer-email">
-                    {t("form.emailLabel")}
-                  </label>
-                  <div className={styles.control}>
-                    <input
-                      className={styles.input}
-                      id="footer-email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      required
-                    />
-                    <span className={styles.check} aria-hidden="true">
-                      ✓
-                    </span>
-                  </div>
-                </div>
-
-                {/* Empresa — OPCIONAL (D6): sem required. */}
-                <div className={styles.field}>
-                  <label className={styles.label} htmlFor="footer-company">
-                    {t("form.companyLabel")}
-                  </label>
-                  <div className={styles.control}>
-                    <input
-                      className={styles.input}
-                      id="footer-company"
-                      name="company"
-                      type="text"
-                      autoComplete="organization"
-                      placeholder={companyPlaceholder}
-                    />
-                    <span className={styles.check} aria-hidden="true">
-                      ✓
-                    </span>
-                  </div>
-                </div>
-
-                {/* Faixa de investimento — OPCIONAL (D6). */}
-                <div className={styles.field}>
-                  <label className={styles.label} htmlFor="footer-budget">
-                    {t("form.budgetLabel")}
-                  </label>
-                  <div className={styles.control}>
-                    <input
-                      className={styles.input}
-                      id="footer-budget"
-                      name="budget"
-                      type="text"
-                      autoComplete="off"
-                    />
-                    <span className={styles.check} aria-hidden="true">
-                      ✓
-                    </span>
-                  </div>
-                </div>
-
-                <div className={`${styles.field} ${styles.fieldWide}`}>
-                  <label className={styles.label} htmlFor="footer-message">
-                    {t("form.messageLabel")}
-                  </label>
-                  <div className={styles.control}>
-                    <textarea
-                      className={styles.textarea}
-                      id="footer-message"
-                      name="message"
-                      rows={5}
-                      placeholder={t("form.messagePlaceholder")}
-                      required
-                    />
-                    <span className={styles.check} aria-hidden="true">
-                      ✓
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Erro de envio (copy oficial) — só aparece quando o W4
-                  ligar .isError no <form>. Feedback = texto+ícone (D6). */}
-              <p className={styles.formError} role="status">
-                <span aria-hidden="true">⚠</span>
-                {t("form.error.value")}
-              </p>
-
-              <Button type="submit" className={styles.submit}>
-                {t("form.submit")}
-              </Button>
-            </form>
+            {/* Form D6 ligado à Server Action submitBrief (W4) — island
+                client; copy 100% via props (L1). */}
+            <FooterForm
+              nameLabel={t("form.nameLabel")}
+              namePlaceholder={t("form.namePlaceholder")}
+              emailLabel={t("form.emailLabel")}
+              companyLabel={t("form.companyLabel")}
+              companyPlaceholder={companyPlaceholder}
+              budgetLabel={t("form.budgetLabel")}
+              messageLabel={t("form.messageLabel")}
+              messagePlaceholder={t("form.messagePlaceholder")}
+              submitLabel={t("form.submit")}
+              errorMessage={t("form.error.value")}
+              successMessage={t("form.success")}
+            />
           </div>
 
           {/* --- Coluna direita: marca, e-mail, nav, sociais, meta ----- */}
