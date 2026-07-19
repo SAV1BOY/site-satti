@@ -1,0 +1,24 @@
+Implementação concluída nos seis arquivos autorizados:
+
+- [home.pt-BR.json](C:/Users/migue/Desktop/Projetos/SITE-SATTI-codex-w1/content/home.pt-BR.json)
+- [home.en.json](C:/Users/migue/Desktop/Projetos/SITE-SATTI-codex-w1/content/home.en.json)
+- [routing.ts](C:/Users/migue/Desktop/Projetos/SITE-SATTI-codex-w1/i18n/routing.ts)
+- [request.ts](C:/Users/migue/Desktop/Projetos/SITE-SATTI-codex-w1/i18n/request.ts)
+- [middleware.ts](C:/Users/migue/Desktop/Projetos/SITE-SATTI-codex-w1/middleware.ts)
+- [W1-codex-report.md](C:/Users/migue/Desktop/Projetos/SITE-SATTI-codex-w1/audits/W1-codex-report.md)
+
+Validações:
+
+- JSONs válidos.
+- 271 caminhos-folha espelhados em cada idioma.
+- D5 `01—06` presente nos dois idiomas e no menu.
+- `[CONFIRMAR]` e drafts preservados.
+- Nenhum arquivo proibido alterado.
+- Build/dev/npm install não executados.
+
+O commit não pôde ser criado: o sandbox não permite escrever no Git dir externo da worktree e bloqueou a criação de `index.lock`. Em um shell com acesso, conclua com:
+
+```powershell
+git add -- content/home.pt-BR.json content/home.en.json i18n/routing.ts i18n/request.ts middleware.ts audits/W1-codex-report.md
+git commit -m "feat(i18n): extrair copy das comps e configurar next-intl"
+```

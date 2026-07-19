@@ -1,0 +1,52 @@
+{
+ "TEv01": {
+  "iou_struct": 1.0,
+  "blaze": 0.0509,
+  "title": "Split integral \u00b7 off-white"
+ },
+ "TEv02": {
+  "iou_struct": 1.0,
+  "blaze": 0.0511,
+  "title": "Split integral \u00b7 grafite"
+ },
+ "TEv03": {
+  "iou_struct": 1.0,
+  "blaze": 0.0167,
+  "title": "Acento \u00fanico \u00b7 mono grafite"
+ },
+ "TEv04": {
+  "iou_struct": 1.0,
+  "blaze": 0.0169,
+  "title": "Acento \u00fanico \u00b7 mono off-white"
+ },
+ "TEv05": {
+  "iou_struct": 1.0,
+  "blaze": 0.0341,
+  "title": "S\u00f3 pontas blaze \u00b7 n\u00f3 grafite"
+ },
+ "TEv06": {
+  "iou_struct": 1.0,
+  "blaze": 0.0341,
+  "title": "S\u00f3 pontas blaze \u00b7 n\u00f3 off-white"
+ },
+ "TEv07": {
+  "iou_struct": 1.0,
+  "blaze": 0.0509,
+  "title": "Split \u00b7 l\u00e2mina estendida"
+ },
+ "TEv08": {
+  "iou_struct": 0.9993,
+  "blaze": 0.0302,
+  "title": "Avatar app-icon (padding)"
+ },
+ "TEv09": {
+  "iou_struct": 1.0,
+  "blaze": 0.0,
+  "title": "1-cor grafite \u00b7 hex vazado"
+ },
+ "TEv10": {
+  "iou_struct": 0.9998,
+  "blaze": 0.0516,
+  "title": "Hero split \u00b7 hex maior"
+ }
+}

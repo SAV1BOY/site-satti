@@ -1,4 +1,6 @@
-/* W0 · página de prova dos tokens — substituída pelas seções em W1–W3 */
+/* W1 · página de prova — tokens + copy vinda do JSON (substituída pelas seções em W3) */
+
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 const CORE_TOKENS = [
   ["paper", "--c-paper"],
@@ -16,7 +18,16 @@ const CORE_TOKENS = [
   ["success", "--c-success"],
 ] as const;
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("menu");
+  const items = t.raw("items") as string[];
+
   return (
     <main
       style={{
@@ -24,26 +35,9 @@ export default function Home() {
         color: "var(--c-iron)",
         minHeight: "100vh",
         padding: "var(--sp-2xl) var(--gutter)",
-        fontFamily: "var(--ff-body)",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-sm)" }}>
-        <span
-          aria-hidden
-          style={{ width: 8, height: 8, background: "var(--c-blaze)", display: "inline-block" }}
-        />
-        <span
-          style={{
-            fontFamily: "var(--ff-mono)",
-            fontSize: "0.875rem",
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            color: "var(--c-steel)",
-          }}
-        >
-          W0 · Bootstrap
-        </span>
-      </div>
+      <span className="eyebrow">W1 · Fundação</span>
 
       <h1
         style={{
@@ -56,8 +50,25 @@ export default function Home() {
           margin: "var(--sp-lg) 0",
         }}
       >
-        SATTI
+        {t("brand")}
       </h1>
+
+      <nav
+        aria-label="seções"
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "var(--sp-md)",
+          borderTop: "1px solid var(--c-line)",
+          padding: "var(--sp-md) 0",
+        }}
+      >
+        {items.map((item) => (
+          <span key={item} className="eyebrow">
+            {item}
+          </span>
+        ))}
+      </nav>
 
       <div
         style={{

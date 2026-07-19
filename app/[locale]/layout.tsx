@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Archivo, Inter, JetBrains_Mono } from "next/font/google";
-import "./styles/tokens.css";
-import "./globals.css";
-import "./styles/animations.css";
+import { notFound } from "next/navigation";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+import { routing } from "@/i18n/routing";
+import "../styles/tokens.css";
+import "../globals.css";
+import "../styles/animations.css";
 import LenisProvider from "@/components/providers/LenisProvider";
 import CursorProvider from "@/components/providers/CursorProvider";
 
@@ -26,20 +30,32 @@ export const metadata: Metadata = {
   description: "SATTI — sattiai.com",
 };
 
-export default function RootLayout({
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export default async function LocaleLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
+
   return (
     <html
-      lang="pt-BR"
+      lang={locale}
       className={`${archivo.variable} ${inter.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <LenisProvider>
-          <CursorProvider>{children}</CursorProvider>
-        </LenisProvider>
+        <NextIntlClientProvider>
+          <LenisProvider>
+            <CursorProvider>{children}</CursorProvider>
+          </LenisProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
