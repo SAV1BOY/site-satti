@@ -10,7 +10,10 @@
   --c-paper: #F7F8FA;
   --c-iron: #15171B;
   --c-graphite: #0F1115;
-  --c-steel: #6E7480;
+  /* Steel: comp usava 6E7480 (4.41:1 no paper — reprova AA p/ texto
+     pequeno). Escurecido no MÍNIMO p/ AA em paper E tints (5.11/≥4.56)
+     — desvio de −10/canal, imperceptível (DEC-014; a11y §7.9 vence). */
+  --c-steel: #646A76;
   --c-blaze: #FF4D00;
   --c-circuit: #2F6BFF;
   --c-blaze-soft: #FFE9DE;
