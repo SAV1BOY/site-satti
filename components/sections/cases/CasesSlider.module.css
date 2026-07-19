@@ -221,10 +221,19 @@ p.sectionEyebrow {
   color: var(--c-steel);
 }
 
-.metricArrow {
-  display: flex;
-  align-items: center;
-  padding: 0 14px; /* comp mobile */
+/* Seta entre os grupos — PSEUDO-elemento (audit LH: dentro de <dl> só
+   entram grupos dt/dd; a seta decorativa sai do DOM). */
+.metric + .metric {
+  position: relative;
+  padding-left: 44px; /* 14px + seta + 14px (comp mobile) */
+}
+
+.metric + .metric::before {
+  content: "→";
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--c-iron);
   font-size: 1rem; /* comp mobile: 16px */
 }
@@ -338,8 +347,12 @@ p.sectionEyebrow {
     font-size: 1.375rem; /* comp desktop: 22px */
   }
 
-  .metricArrow {
-    padding: 0 18px; /* comp desktop */
+  .metric + .metric {
+    padding-left: 54px; /* 18px + seta + 18px (comp desktop) */
+  }
+
+  .metric + .metric::before {
+    left: 18px;
     font-size: 1.125rem; /* comp desktop: 18px */
   }
 

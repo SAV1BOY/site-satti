@@ -163,9 +163,8 @@ export default function CasesClient({
                         {beforeValue.text}
                       </dd>
                     </div>
-                    <div className={styles.metricArrow} aria-hidden="true">
-                      →
-                    </div>
+                    {/* seta decorativa = ::before do 2º grupo (DOM de
+                        <dl> válido — audit LH) */}
                     <div className={styles.metric}>
                       <dt className={styles.metricLabel}>{afterLabel}</dt>
                       <dd

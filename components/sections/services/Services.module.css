@@ -114,9 +114,11 @@
 .card:nth-of-type(1) {
   --card-tint: var(--tint-blaze);
   --card-seed: color-mix(in srgb, var(--c-blaze) 30%, var(--c-iron) 70%);
-  --card-label: color-mix(in srgb, var(--card-seed) 62%, var(--card-tint) 38%); /* ≈ comp 9A6F58 */
-  --card-body: color-mix(in srgb, var(--card-seed) 50%, var(--c-steel) 50%); /* ≈ comp 5C4A40 */
-  --card-tag-line: color-mix(in srgb, var(--card-seed) 26%, var(--card-tint) 74%); /* ≈ comp D9B7A6 */
+  /* seed 85% (vs 62% da comp): AA 6.87:1 sobre a tint — a11y vence a
+     derivação exata da comp (gate LH §7.9); matiz preservado. */
+  --card-label: color-mix(in srgb, var(--card-seed) 85%, var(--card-tint) 15%);
+  --card-body: color-mix(in srgb, var(--card-seed) 50%, var(--c-steel) 50%); /* ≈ comp 5C4A40 · 6.58:1 */
+  --card-tag-line: color-mix(in srgb, var(--card-seed) 26%, var(--card-tint) 74%); /* ≈ comp D9B7A6 (decorativa) */
 }
 
 .card:nth-of-type(2) {
@@ -124,15 +126,18 @@
   /* Circuit entra SÓ como insumo do color-mix para reproduzir os
      azuis derivados aprovados da comp — nunca aparece puro (L3). */
   --card-seed: color-mix(in srgb, var(--c-circuit) 55%, var(--c-iron) 45%);
-  --card-label: color-mix(in srgb, var(--card-seed) 70%, var(--card-tint) 30%); /* ≈ comp 6079B5 */
-  --card-body: color-mix(in srgb, var(--card-seed) 55%, var(--c-steel) 45%); /* ≈ comp 445377 */
+  /* seed 85% (vs 70% da comp): AA 5.22:1 sobre a tint (gate LH §7.9). */
+  --card-label: color-mix(in srgb, var(--card-seed) 85%, var(--card-tint) 15%);
+  --card-body: color-mix(in srgb, var(--card-seed) 55%, var(--c-steel) 45%); /* ≈ comp 445377 · 5.53:1 */
   --card-tag-line: color-mix(in srgb, var(--card-tint) 80%, var(--card-seed) 20%); /* ≈ comp B9C7EC */
 }
 
 .card:nth-of-type(3) {
   --card-tint: var(--tint-slate);
   --card-seed: var(--c-steel);
-  --card-label: var(--c-steel); /* comp usa steel exato */
+  /* steel puro da comp dá 4.04:1 sobre a slate — escurecido p/ AA
+     6.15:1 (gate LH §7.9), matiz steel preservado. */
+  --card-label: color-mix(in srgb, var(--c-steel) 70%, var(--c-iron) 30%);
   --card-body: color-mix(in srgb, var(--c-steel) 80%, var(--c-iron) 20%); /* ≈ comp 5A606B */
   --card-tag-line: color-mix(in srgb, var(--card-tint) 75%, var(--c-steel) 25%); /* ≈ comp CBD0D9 */
 }

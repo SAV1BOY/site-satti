@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site-url";
 
 /** Sitemap (§6-W7): home nos 2 idiomas com alternates hreflang. */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://sattiai.com";
+  const base = SITE_URL;
   const languages = {
     "pt-BR": base,
     en: `${base}/en`,

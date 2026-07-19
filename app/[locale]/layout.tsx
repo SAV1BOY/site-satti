@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Archivo, Inter, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
-import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Analytics } from "@vercel/analytics/next";
 import { routing } from "@/i18n/routing";
+import { SITE_URL } from "@/lib/site-url";
 import "../styles/tokens.css";
 import "../globals.css";
 import "../styles/animations.css";
@@ -25,8 +26,6 @@ const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
 });
-
-const SITE_URL = "https://sattiai.com";
 
 /**
  * Metadata por locale (§6-W7): hreflang pt-BR/en + canonical + OG.
@@ -108,11 +107,13 @@ export default async function LocaleLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
         />
-        <NextIntlClientProvider>
-          <LenisProvider>
-            <CursorProvider>{children}</CursorProvider>
-          </LenisProvider>
-        </NextIntlClientProvider>
+        {/* Sem NextIntlClientProvider (W7): NENHUMA client island usa
+            hooks de i18n — as copies chegam via props dos Server
+            Components. Remover o provider corta o JSON de mensagens
+            inteiro do payload RSC (Script Eval + peso do HTML). */}
+        <LenisProvider>
+          <CursorProvider>{children}</CursorProvider>
+        </LenisProvider>
         <Analytics />
       </body>
     </html>
