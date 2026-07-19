@@ -24,7 +24,7 @@ export default function Home() {
         color: "var(--c-iron)",
         minHeight: "100vh",
         padding: "var(--sp-2xl) var(--gutter)",
-        fontFamily: "var(--font-body)",
+        fontFamily: "var(--ff-body)",
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: "var(--sp-sm)" }}>
@@ -34,7 +34,7 @@ export default function Home() {
         />
         <span
           style={{
-            fontFamily: "var(--font-mono)",
+            fontFamily: "var(--ff-mono)",
             fontSize: "0.875rem",
             letterSpacing: "0.08em",
             textTransform: "uppercase",
@@ -47,7 +47,7 @@ export default function Home() {
 
       <h1
         style={{
-          fontFamily: "var(--font-display)",
+          fontFamily: "var(--ff-display)",
           fontWeight: 900,
           textTransform: "uppercase",
           fontSize: "clamp(4rem, 12vw, 10.5rem)",
@@ -80,7 +80,7 @@ export default function Home() {
             <div style={{ height: 64, background: `var(${cssVar})` }} />
             <div
               style={{
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--ff-mono)",
                 fontSize: "0.6875rem",
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",

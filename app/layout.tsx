@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Archivo, Inter, JetBrains_Mono } from "next/font/google";
-import "./globals.css";
 import "./styles/tokens.css";
+import "./globals.css";
 import "./styles/animations.css";
+import LenisProvider from "@/components/providers/LenisProvider";
+import CursorProvider from "@/components/providers/CursorProvider";
 
 const archivo = Archivo({
   variable: "--font-archivo",
@@ -34,7 +36,11 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${archivo.variable} ${inter.variable} ${jetbrains.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <LenisProvider>
+          <CursorProvider>{children}</CursorProvider>
+        </LenisProvider>
+      </body>
     </html>
   );
 }

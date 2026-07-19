@@ -55,8 +55,9 @@
   --ease-roll: cubic-bezier(0.76, 0, 0.24, 1);  /* button roll (DS) */
   --dur-roll: 450ms;
 
-  /* --- Fontes (conectadas via next/font no layout; fallbacks reais) --- */
-  --font-display: var(--font-archivo, "Archivo"), "Arial Narrow", sans-serif;
-  --font-body: var(--font-inter, "Inter"), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains, "JetBrains Mono"), ui-monospace, monospace;
+  /* --- Fontes (conectadas via next/font no layout; --ff-* para não
+         colidir com o namespace --font-* do Tailwind v4) --- */
+  --ff-display: var(--font-archivo, "Archivo"), "Arial Narrow", sans-serif;
+  --ff-body: var(--font-inter, "Inter"), system-ui, sans-serif;
+  --ff-mono: var(--font-jetbrains, "JetBrains Mono"), ui-monospace, monospace;
 }

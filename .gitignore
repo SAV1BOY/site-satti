@@ -42,3 +42,6 @@ next-env.d.ts
 
 # SATTI: zip original do handoff (extraido em design/)
 design/*.zip
+
+.vercel
+.env*
