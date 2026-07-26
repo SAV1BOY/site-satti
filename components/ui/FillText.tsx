@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, type ElementType, type JSX } from "react";
+import { type ElementType, type JSX } from "react";
 import styles from "./FillText.module.css";
+import { useScrollTimeline } from "@/hooks/useScrollTimeline";
 
 /**
  * FillText — assinatura da S5 Sobre: statement em duas camadas
@@ -11,16 +12,21 @@ import styles from "./FillText.module.css";
  * viewport: começa a preencher quando o topo do elemento cruza ~85%
  * da altura da viewport e completa em ~40%.
  *
- * Mecanismo de scroll (L10): IntersectionObserver liga/desliga um
- * loop de requestAnimationFrame que lê getBoundingClientRect() no
- * frame — sem scroll listener. Só clip-path muda (nada de layout);
- * clip-path é aceitável aqui pois é o próprio mecanismo da
- * assinatura fill-text, documentado como exceção ao par
- * transform/opacity.
+ * MECANISMO: o clip-path scrub NÃO muda (DEC-021 §4 revoga o
+ * DEC-019(3)). O reveal span-por-span do modelo é código morto — o
+ * efeito que eles realmente renderizam é um `::after` estático sobre um
+ * parágrafo a 38 % de opacidade. O scrub daqui é uma melhoria real.
+ * O que mudou na W11-F é só o MOTOR: o rAF próprio saiu, entrou um
+ * track do loop compartilhado (useScrollTimeline). Mesma matemática,
+ * mesmos limites, mesmo arredondamento — refatoração, não redesenho.
  *
- * L5: o loop só roda com (prefers-reduced-motion: no-preference).
- * Em reduced-motion (e sem JS) o fallback estático do CSS Module
- * mantém o texto 100% preenchido.
+ * L10 (exceção documentada): clip-path é o próprio mecanismo da
+ * assinatura fill-text; nada de layout é escrito por frame.
+ *
+ * L5: o ScrollProvider não monta o loop sob
+ * (prefers-reduced-motion: reduce), então nenhum clip-path é escrito —
+ * vale o fallback estático do CSS Module (texto 100% preenchido), que
+ * ainda tem um `!important` como defesa em profundidade.
  *
  * A11y: a camada .base carrega o texto real; a .fill duplicada é
  * aria-hidden para não ser lida duas vezes.
@@ -45,68 +51,37 @@ export default function FillText({
   as = "p",
   className,
 }: FillTextProps) {
-  const rootRef = useRef<HTMLElement | null>(null);
-  const fillRef = useRef<HTMLSpanElement | null>(null);
-
-  useEffect(() => {
-    const root = rootRef.current;
-    const fill = fillRef.current;
-    if (!root || !fill) return;
-
-    // L5: anima apenas com motion ok. Em reduced-motion não escreve
-    // clip-path nenhum — vale o estado estático 100% preenchido do CSS.
-    const motionOk = window.matchMedia(
-      "(prefers-reduced-motion: no-preference)",
-    ).matches;
-    if (!motionOk) return;
-
-    let raf = 0;
-    let lastRight = -1;
-
-    const frame = () => {
-      // Leitura no frame (L10): getBoundingClientRect + innerHeight,
-      // escrita única de clip-path. Passo de 0.1% evita writes inúteis.
-      const rect = root.getBoundingClientRect();
-      const vh = window.innerHeight;
+  /* O elemento inscrito é a camada .fill, não a raiz: assim o
+     ScrollProvider devolve o clip-path que escreveu quando o loop é
+     desmontado (flip de reduced-motion, StrictMode) sem precisar de
+     limpeza manual aqui. O rect medido é o do PAI — a .fill é
+     `position: absolute; inset: 0` e herdaria qualquer erro de si mesma. */
+  const attachFill = useScrollTimeline<number>({
+    read: (el, { vh }) => {
+      const host = el.parentElement;
+      if (!host) return -1;
+      const rect = host.getBoundingClientRect();
       const start = vh * START_VH;
       const end = vh * END_VH;
-      const progress = Math.min(1, Math.max(0, (start - rect.top) / (start - end)));
-      const right = Math.round((1 - progress) * 1000) / 10;
-      if (right !== lastRight) {
-        lastRight = right;
-        fill.style.clipPath = `inset(0 ${right}% 0 0)`;
-      }
-      raf = requestAnimationFrame(frame);
-    };
-
-    // IO ativa/desativa o loop: o rAF só roda enquanto o elemento
-    // está na viewport (fora dela o estado congela onde parou).
-    const io = new IntersectionObserver((entries) => {
-      const entry = entries[entries.length - 1];
-      if (!entry) return;
-      cancelAnimationFrame(raf);
-      if (entry.isIntersecting) {
-        raf = requestAnimationFrame(frame);
-      }
-    });
-    io.observe(root);
-
-    return () => {
-      io.disconnect();
-      cancelAnimationFrame(raf);
-      fill.style.clipPath = "";
-    };
-  }, []);
+      const progress = Math.min(
+        1,
+        Math.max(0, (start - rect.top) / (start - end)),
+      );
+      // Passo de 0.1% — o eq do loop descarta writes iguais.
+      return Math.round((1 - progress) * 1000) / 10;
+    },
+    write: (el, right) => {
+      if (right < 0) return;
+      (el as HTMLElement).style.clipPath = `inset(0 ${right}% 0 0)`;
+    },
+  });
 
   const Tag = as as ElementType;
 
   return (
-    <Tag
-      ref={rootRef}
-      className={className ? `${styles.root} ${className}` : styles.root}
-    >
+    <Tag className={className ? `${styles.root} ${className}` : styles.root}>
       <span className={styles.base}>{children}</span>
-      <span className={styles.fill} aria-hidden="true">
+      <span ref={attachFill} className={styles.fill} aria-hidden="true">
         {children}
       </span>
     </Tag>

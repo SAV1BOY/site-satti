@@ -8,6 +8,13 @@
    L9  — profundidade por hairline 1px; sem drop-shadow
          (box-shadow do focus-visible é o ring L3, não sombra)
    L10 — anima apenas transform; easing var(--ease-roll) 450ms
+
+   V2 (W12-E) · GEOMETRIA recalibrada por awsmd-geometry.json → button:
+   padding 12/29, raio 21 (--r-btn), 500 16px/1.2, tracking −.03em,
+   máscara do roll 1.2em, disabled .4. O DS da SATTI mantém o
+   --ease-roll/--dur-roll (450ms cubic-bezier(.76,0,.24,1)) — o modelo
+   usa .3s ease-in-out e ADOTAMOS SÓ A GEOMETRIA, como manda o
+   $comment do spec pack.
    ============================================================ */
 
 .root {
@@ -16,14 +23,20 @@
   align-items: center;
   gap: var(--sp-xs);
   border: 0;
-  border-radius: var(--r-pill);
+  border-radius: var(--r-btn); /* 21px medido (era --r-pill) */
   background: transparent;
   font-family: var(--ff-body);
   font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
-  min-height: 44px; /* alvo a11y; altura real 60px */
+  /* 12 + 1.2em(19.2) + 12 = 43.2px de caixa. O min-height sobe para 44
+     porque §7.9 exige alvo ≥44px: 0,8px de desvio da medida, invisível,
+     e a alternativa seria um alvo reprovado no axe. */
+  min-height: 44px;
 }
 
 .root:focus-visible {
@@ -33,47 +46,50 @@
     0 0 0 4px var(--c-circuit);
 }
 
+/* Disabled: .4 + pointer-events none (medido). */
 .root:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: default;
   pointer-events: none;
 }
 
-/* --- Variantes ------------------------------------------------ */
+/* --- Variantes ------------------------------------------------
+   Padding único 12/29 (medido); a borda de 1px das variantes ghost
+   compensa por dentro para que as três tenham a MESMA caixa. */
 
 .primary {
   background: var(--c-blaze);
   color: var(--c-iron); /* L2: nunca texto branco sobre blaze */
-  padding: 18px 36px;
-  font-weight: 600;
+  padding: 12px 29px;
 }
 
 .secondary {
   border: 1px solid var(--c-line);
   color: var(--c-iron);
-  padding: 17px 36px;
-  font-weight: 500;
+  padding: 11px 28px;
 }
 
 .darkGhost {
   border: 1px solid var(--c-hairline-dark);
   color: var(--c-ink-on-dark);
-  padding: 17px 36px;
-  font-weight: 500;
+  padding: 11px 28px;
 }
 
-/* --- Máscara + texto duplicado (roll) ------------------------- */
+/* --- Máscara + texto duplicado (roll) -------------------------
+   1.2em = a própria line-height do botão: a máscara tem exatamente a
+   altura de UMA linha, então translateY(-100%) troca as camadas sem
+   folga (com os 24px fixos anteriores sobrava 4,8px e o roll "pulava"). */
 
 .mask {
   display: block;
   overflow: hidden;
-  height: 24px;
+  height: 1.2em;
 }
 
 .label {
   display: block;
-  height: 24px;
-  line-height: 24px;
+  height: 1.2em;
+  line-height: 1.2;
 }
 
 /* --- Círculo + seta (prop arrow) ------------------------------ */

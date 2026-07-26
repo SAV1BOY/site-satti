@@ -1,7 +1,16 @@
 /**
  * CasesSlider (S9) — "04 — Cases em detalhe" · 3 cases curados com
  * métrica antes→depois num Swiper de 1 coluna (D4: S9 ≠ S7).
- * Fonte visual: S9 CasesSlider Desktop 1920.dc.html / Mobile 375.dc.html
+ * Geometria: awsmd-geometry.json → cases (section 130/120 · tom ESCURO ·
+ * overflow hidden · container 1306 · círculos 423 · busca 246).
+ * Copy e paleta: comps S9 Desktop 1920 / Mobile 375.
+ *
+ * V2 (W12-E): a seção passou a ser ESCURA de fato. O `data-tone="dark"`
+ * já estava aqui desde a W11 (é o ritmo claro/escuro do modelo, e o
+ * parity-timeline conta por atributo), mas o fundo era `--c-paper` — o
+ * atributo e o pixel discordavam. Agora é graphite, e todo texto pequeno
+ * saiu do steel: steel sobre graphite dá 3,49:1 e reprova AA (§7.9), então
+ * a de-ênfase no escuro é `--c-dim-on-dark` (9,2:1) — ver module.css.
  *
  * Server Component (L11): copy 100% via next-intl (L1); o Swiper, os
  * controles prev/next e os dots moram na client island CasesClient
@@ -26,8 +35,10 @@
 
 import { getTranslations } from "next-intl/server";
 import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
-import CasesClient, { type CaseSlideData } from "./CasesClient";
+import CasesClient from "./CasesClientLazy";
+import { type CaseSlideData } from "./CasesClient";
 import styles from "./CasesSlider.module.css";
+import { resolveAsset } from "@/lib/third-party";
 
 /** Campo de copy L1: string oficial OU { value, confirm } ([CONFIRMAR] → steel). */
 type CopyField =
@@ -44,13 +55,18 @@ function readField(field: CopyField): { text: string; confirm: boolean } {
 }
 
 /**
- * Screenshots REAIS (MANIFEST, nunca gerados — L6), na ordem dos 3
+ * Screenshots REAIS (MANIFEST v2, nunca gerados — L6), na ordem dos 3
  * primeiros cases.items do JSON (curadoria D4: slice 3).
+ *
+ * v2: passou de `/img/portfolio/shot-{1..3}` para `/img/cases/thumb-{1..3}`.
+ * O MANIFEST v2 declara os thumbs de case como slot próprio a 744×480 (razão
+ * 1,55, o render de 372×240 do modelo); o `shot-*` é 1400×1440, quase quadrado
+ * — reusá-lo aqui perdia ~44 % da altura no crop da mídia do slider.
  */
 const CASE_IMAGES: readonly string[] = [
-  "/img/portfolio/shot-1.webp",
-  "/img/portfolio/shot-2.webp",
-  "/img/portfolio/shot-3.webp",
+  "/img/cases/thumb-1.webp",
+  "/img/cases/thumb-2.webp",
+  "/img/cases/thumb-3.webp",
 ];
 
 export default async function CasesSlider() {
@@ -73,12 +89,26 @@ export default async function CasesSlider() {
       title: title.text,
       titleConfirm: title.confirm,
       tag: tag.text,
-      imageSrc: CASE_IMAGES[index], // index < length (slice acima)
+      // resolveAsset (V2-D2): em draft renderiza o thumb marcado; em final cai
+      // no blueprint, porque o thumb é asset do modelo estrutural.
+      imageSrc: resolveAsset(CASE_IMAGES[index] ?? "").src, // index < length
     };
   });
 
   return (
-    <section id="cases" className={styles.section}>
+    <section
+      id="cases"
+      className={styles.section}
+      data-section="cases"
+      data-tone="dark"
+    >
+      {/* Círculos decorativos (medido: 2 × 423px, gradiente vertical a 12%
+          de opacidade, coluna à esquerda, centrados na altura). */}
+      <div className={styles.decor} aria-hidden="true">
+        <span className={styles.circle} />
+        <span className={styles.circle} />
+      </div>
+
       <div className={`container-s ${styles.inner}`}>
         <p className={`eyebrow ${styles.sectionEyebrow}`}>
           {t("sectionLabel")}
@@ -94,6 +124,11 @@ export default async function CasesSlider() {
           afterValue={omitMetrics ? undefined : afterValue}
           prevLabel={t("previousAriaLabel")}
           nextLabel={t("nextAriaLabel")}
+          searchPlaceholder={t("searchPlaceholder")}
+          searchAriaLabel={t("searchAriaLabel")}
+          searchSubmitAriaLabel={t("searchSubmitAriaLabel")}
+          emptyResult={t("emptyResult")}
+          viewAllLabel={t("viewAll")}
         />
       </div>
     </section>

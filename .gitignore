@@ -45,3 +45,15 @@ design/*.zip
 
 .vercel
 .env*
+
+# ==========================================================================
+# SATTI v2 · material de REFERÊNCIA — nunca entra no histórico (L6 / DEC-016)
+# Site/ tem ~546 MB com o dump completo do site que serve de modelo
+# estrutural (DOM, CSS, bundles JS, 52 imagens, o vídeo de 27 MB) mais o
+# atlas forense. Só as MEDIDAS entram no repo, em design/awsmd-ref/*.json.
+# Um `git add -A` sem estas linhas commitaria o dump inteiro.
+# ==========================================================================
+/Site/
+*.zip
+/.cache/
+/raw/

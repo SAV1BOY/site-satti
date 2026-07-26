@@ -13,7 +13,10 @@
       "operate",
       "grow"
     ],
-    "scroll": "↓"
+    "scroll": "↓",
+    "scrollAriaLabel": "Scroll to services",
+    "anchorsAriaLabel": "Section navigation",
+    "showreelPlayAriaLabel": "Play the showreel"
   },
   "header": {
     "brand": "SATTI",
@@ -266,28 +269,88 @@
         "title": "AI reels pipeline — LS Interbank",
         "tag": "AI · Automation"
       }
-    ]
+    ],
+    "searchPlaceholder": "Search cases",
+    "searchAriaLabel": "Search cases",
+    "searchSubmitAriaLabel": "Search",
+    "emptyResult": "No cases found.",
+    "viewAll": "View all cases"
   },
   "reviews": {
     "sectionLabel": "05 — What clients say",
     "title": "In the words of those who used it",
     "notice": "Reviews to confirm with Miguel",
     "quoteMark": "“",
-    "quote": {
-      "value": "[CONFIRMAR quote]",
-      "confirm": true,
-      "draft": null
-    },
-    "name": {
-      "value": "[CONFIRMAR name]",
-      "confirm": true,
-      "draft": null
-    },
-    "role": {
-      "value": "[CONFIRMAR role · company]",
-      "confirm": true,
-      "draft": null
-    }
+    "items": [
+      {
+        "quote": {
+          "value": "[CONFIRMAR quote]",
+          "confirm": true,
+          "draft": null
+        },
+        "name": {
+          "value": "[CONFIRMAR name]",
+          "confirm": true,
+          "draft": null
+        },
+        "role": {
+          "value": "[CONFIRMAR role · company]",
+          "confirm": true,
+          "draft": null
+        }
+      },
+      {
+        "quote": {
+          "value": "[CONFIRMAR quote]",
+          "confirm": true,
+          "draft": null
+        },
+        "name": {
+          "value": "[CONFIRMAR name]",
+          "confirm": true,
+          "draft": null
+        },
+        "role": {
+          "value": "[CONFIRMAR role · company]",
+          "confirm": true,
+          "draft": null
+        }
+      },
+      {
+        "quote": {
+          "value": "[CONFIRMAR quote]",
+          "confirm": true,
+          "draft": null
+        },
+        "name": {
+          "value": "[CONFIRMAR name]",
+          "confirm": true,
+          "draft": null
+        },
+        "role": {
+          "value": "[CONFIRMAR role · company]",
+          "confirm": true,
+          "draft": null
+        }
+      },
+      {
+        "quote": {
+          "value": "[CONFIRMAR quote]",
+          "confirm": true,
+          "draft": null
+        },
+        "name": {
+          "value": "[CONFIRMAR name]",
+          "confirm": true,
+          "draft": null
+        },
+        "role": {
+          "value": "[CONFIRMAR role · company]",
+          "confirm": true,
+          "draft": null
+        }
+      }
+    ]
   },
   "footer": {
     "sectionLabel": "06 — Contact",
@@ -354,7 +417,8 @@
       "draft": null,
       "machine_translated": true
     },
-    "signature": "contato@sattiai.com"
+    "signature": "contato@sattiai.com",
+    "backToTop": "Back to top"
   },
   "menu": {
     "machine_translated": true,

@@ -29,28 +29,35 @@
   justify-content: flex-end;
 }
 
-/* Backdrop — comp: conteúdo atrás com blur(7px) + rgba(15,17,21,.55).
-   Aqui o "conteúdo atrás" é a própria página real → backdrop-filter. */
+/* Backdrop — v2 (W13): geometria de `overlays.contact.backdrop` do spec pack.
+   blur passou de 7px para 15px e o scrim de graphite 55% para um cinza claro
+   a 25%: no modelo o fundo NÃO escurece, ele desfoca e clareia, o que mantém
+   a página reconhecível atrás do painel em vez de apagá-la. A transição é só
+   de `opacity` — o blur é estático (é propriedade de paint; animá-lo custaria
+   um recomposite por frame). */
 .backdrop {
   position: absolute;
   inset: 0;
-  background: color-mix(in srgb, var(--c-graphite) 55%, transparent);
-  -webkit-backdrop-filter: blur(7px);
-  backdrop-filter: blur(7px);
+  background: color-mix(in srgb, var(--c-line) 25%, transparent);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
 }
 
-/* Painel lateral direito (comp: 620px paper, hairline à esquerda,
-   sombra -40px 0 80px 25% graphite, padding 48/56, gap 36) */
+/* Painel lateral direito. v2: 620px → 850px (`overlays.contact.windowMaxWidth`
+   do spec pack). O form tem 5 campos e a 620px os labels e a faixa de
+   investimento ficavam apertados; 850 é a medida do modelo e resolve os dois.
+   Mobile continua TELA CHEIA (decisão F0–F5, ver @media abaixo). */
 .panel {
   position: relative;
-  width: 620px;
+  width: 850px;
   max-width: 100%;
   height: 100%;
   background: var(--c-paper);
   color: var(--c-iron);
   border-left: 1px solid var(--c-line);
   box-shadow: -40px 0 80px color-mix(in srgb, var(--c-graphite) 25%, transparent);
-  padding: 48px 56px;
+  /* spec: overlays.contact.form.padding [48, 42, 40] */
+  padding: 48px 42px 40px;
   display: flex;
   flex-direction: column;
   gap: 36px;

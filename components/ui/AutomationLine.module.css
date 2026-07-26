@@ -47,6 +47,11 @@
   stroke: var(--al-stroke);
   stroke-width: 1.5;
   stroke-linecap: round;
+  /* O viewBox é construído dos px do container, então hoje a escala é
+     1:1 e isto é inócuo. Mas com preserveAspectRatio="none" basta o
+     ResizeObserver atrasar um frame num resize para o stroke engrossar
+     anisotropicamente (1,5 px em x, outra coisa em y). */
+  vector-effect: non-scaling-stroke;
 }
 
 /* Estado base (reduced-motion / sem JS extra): tudo visível. */

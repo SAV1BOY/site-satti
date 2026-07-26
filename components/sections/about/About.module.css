@@ -1,96 +1,339 @@
 /* ============================================================
    About (S5) — "02 — Sobre" · seção clara (paper)
-   Fonte visual: S5 Sobre Desktop 1920.dc.html / Mobile 375.dc.html
-   Leis: L1 (copy via next-intl; [CONFIRMAR] → steel via
-   data-confirm), L2 (blaze da S5 = CTA "Falar com a SATTI",
-   confirmado no aside de specs da comp; tints dos cards não
-   contam), L3 (circuit só no diagrama — funcional), L9
-   (profundidade = hairline 1px var(--c-line) + tint; zero
-   drop-shadow), L5/L10 (nenhuma animação própria aqui — motion
-   vive nos children FillText/PulseCircle/Marquee/StatVideo, todos
-   gated), L12 (Archivo display · Inter body · Mono caps +0.08em).
-   §4 lei de tradução: padding-right 348px e margin-right 300px do
-   protótipo (andaime da aside de specs) descartados — gutter real
-   via .container-s; min-height 100vh não se aplica (S5 flui);
-   placeholders [ A2 ]…[ A5 ] viram slots de vídeo reais (§8).
-   D1: zero hex literal — só var(--c-*)/var(--tint-*); os cinzas
-   ad hoc de label da comp (#5C4A40/#445377/#5A606B) mapeiam para
-   var(--c-steel) (labels são [CONFIRMAR] → steel por L1).
+   Geometria: design/awsmd-ref/awsmd-geometry.json → about
+   (fonte única — o CSS do modelo NÃO foi aberto; DEC-016).
+
+   v2 · A S5 era o SEGUNDO MAIOR desvio de paridade do site: 21,2 %
+   da altura da página contra 8,8 % do modelo. O excesso vinha de
+   EMPILHAR o que o modelo põe em slider e em coluna, não de padding:
+     · 3 statements de fill-text em pilha  → UM slot em crossfade
+       (spec about.fillTextSlider: 4 slides, effect fade)
+     · faixa de método própria embaixo dos → as duas COLUNAS do bloco
+       stat-cards, diagrama atravessando      `content` (esquerda ≤650,
+       quatro linhas de grid                  direita padding-left 25,
+                                              align-items center)
+     · stat-card min-height 300            → 199 (180 em ≤1366px)
+     · head sem o ::after de colchete      → colchete aberto de 15px
+
+   Leis: L1 ([CONFIRMAR] → steel via data-confirm), L3 (circuit só no
+   grafo), L5/L10 (nenhuma animação própria aqui além de transições
+   discretas de estado em hover/foco; o movimento vive nos children
+   FillText/PulseCircle/Marquee/StatVideo, todos gated), L6 (nenhum
+   logo de terceiro em nenhum modo), L9 (profundidade = hairline 1px +
+   tint, zero drop-shadow), L12 (Archivo display · Inter body · Mono
+   caps +0.08em), D1 (zero hex literal — só var(--c-*)/var(--tint-*)).
    ============================================================ */
 
 .section {
   position: relative;
   background: var(--c-paper);
   color: var(--c-iron);
+
+/* content-visibility (W15 · perf): o Lighthouse mobile mediu **2.163 ms de
+   Style & Layout** — mais que o dobro do custo de script — e esta seção é uma
+   das altas que quase nunca está inteira em tela. `content-visibility: auto`
+   faz o UA pular render E tick de animação do que está fora da viewport.
+
+   `contain-intrinsic-size` NÃO é opcional: sem ele o UA reporta 0 de altura
+   para o conteúdo pulado, a scrollbar salta conforme ele é realizado e o CLS
+   sai de 0. O valor é a altura REAL medida a 375px; `auto` faz o UA lembrar a
+   medida verdadeira depois do primeiro render. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1822px;
 }
 
-/* Comp mobile: padding 40px 20px 48px (inline via .container-s). */
+/* spec: section.padding-top 70. Base 0: a banda de logos fecha a seção. */
 .inner {
-  padding-block: 40px 48px;
+  padding-block: 40px 0;
 }
 
-/* --- Eyebrow (base .eyebrow do globals) —
-       comp: 11px/gap 12/mb 14 mobile · 13px/gap 14/mb 18 desktop --- */
+/* ------------------------------------------------------------
+   Head — eyebrow + título + colchete
+   ------------------------------------------------------------ */
+
+/* spec: head.paddingBottom 44 + head.bracket (15px, border 1px, SEM
+   borda inferior, ancorado na base). É um detalhe pequeno e muito
+   característico: um colchete aberto que abraça o head. */
+.head {
+  position: relative;
+  padding-bottom: 44px;
+}
+
+.head::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 15px;
+  border: 1px solid var(--c-line);
+  border-bottom: none;
+}
+
 p.sectionEyebrow {
-  margin: 0 0 14px;
+  margin: 0;
   font-size: 11px;
 }
 
-/* --- Título — Archivo 800 caps, comp: 40px/12ch mobile ·
-       clamp(2.5rem, 6vw, 5.25rem)/16ch desktop --- */
+/* spec: headTitle "500 58px/1.02", letter-spacing -0.03em. O peso 500
+   é da spec (o display da SATTI usava 800) — paridade vence.
+   spec head.marginTop 23 = o respiro entre eyebrow e título. */
 .title {
-  margin: 0 0 36px;
+  margin: 23px 0 0;
   font-family: var(--ff-display);
-  font-weight: 800;
+  font-weight: 500;
   text-transform: uppercase;
-  font-size: clamp(2.5rem, 6vw, 5.25rem);
+  font-size: clamp(2.125rem, 3.6vw, 3.625rem); /* 34px → 58px */
   line-height: 1.02;
-  letter-spacing: -0.01em;
-  max-width: 12ch;
+  letter-spacing: -0.03em;
+  max-width: 16ch;
 }
 
-/* --- Statements fill-text (tipografia mora no FillText.module) —
-       comp: coluna gap 22/mb 48 mobile · gap 28/mb 96 desktop --- */
+/* ------------------------------------------------------------
+   Content — grafo | statement + passos + descrição + CTA
+   Base (mobile) é coluna única na ordem do DOM: kicker → grafo →
+   statement → passos → descrição → CTA.
+   ------------------------------------------------------------ */
+
+.content {
+  display: grid;
+  gap: 24px;
+  /* spec: content.paddingBlock 33 */
+  padding-block: 33px;
+}
+
+.graphCol {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  /* spec: content.leftMaxWidth 650 */
+  max-width: 650px;
+  min-width: 0;
+}
+
+.copyCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  min-width: 0;
+}
+
+/* Kicker mono — comp: 10px mobile · 11px desktop, steel, caps. */
+.methodKicker {
+  margin: 0;
+  align-self: flex-start;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+/* spec: graph.maxWidth 625, caixa quadrada (o aspect-ratio é do
+   PulseCircle). Mobile fica em 335px, o valor da comp. */
+.diagram {
+  inline-size: min(335px, 100%);
+  align-self: center;
+}
+
+/* ------------------------------------------------------------
+   Statements — UM slot em crossfade (spec about.fillTextSlider)
+   O empilhamento é grid-area 1/1: a altura do slot é a do statement
+   MAIS ALTO e não muda ao trocar de slide (nada de animar height).
+   ------------------------------------------------------------ */
+
 .statements {
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  margin: 0 0 48px;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
 }
 
-.statement {
-  /* max-width entra só no desktop (comp mobile é fluida) */
-  max-width: none;
-}
-
-/* --- Stat-cards — comp: grade 2×2 gap 14/mb 56 mobile ·
-       4 colunas gap 24/mb 120 desktop --- */
-.stats {
+.statementStack {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin: 0 0 56px;
+  min-width: 0;
+}
+
+.statementSlide {
+  grid-area: 1 / 1;
+  min-width: 0;
+  opacity: 0;
+}
+
+.statementSlide[data-on="true"] {
+  opacity: 1;
+}
+
+/* Tipografia do statement: `p.statement` (0,1,1) vence o `.root`
+   (0,1,0) do FillText.module.css sem !important. A escala cai do
+   teto de 48px para 36px porque agora há UM statement em tela e a
+   spec trata 36px como o tamanho display-secundário
+   (services.subtext.fontSize) — é o que faz o slot caber na fatia de
+   altura do modelo sem cortar copy oficial. */
+p.statement {
+  max-width: none;
+  font-size: clamp(1.375rem, 2.2vw, 2.25rem); /* 22px → 36px */
+}
+
+/* Paginação real (o modelo desabilita e o conteúdo fica inalcançável
+   sem o grafo). Cada dot é nomeado pelo próprio statement via
+   aria-labelledby — nenhuma string inventada (L1). */
+.statementDots {
+  display: flex;
+  align-items: center;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* Card: hairline + tint + radius editorial (L9 — sem drop-shadow).
-   Comp mobile: radius 24 / padding 22 / min-height 188. */
+/* W13 auditoria · era 8×8 sem caixa: o único `serious` do axe na página
+   (target-size, 3 nós). Adotada a MESMA solução que os dots do S10 já usavam
+   — caixa de 44px para o alvo, ponto de 8px no ::before para o desenho — em
+   vez de inventar um terceiro padrão. O `gap` sai: as caixas já separam. */
+.statementDot {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.statementDot::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--c-steel);
+  border-radius: var(--r-pill);
+  background: transparent;
+  transform: translate(-50%, -50%);
+}
+
+.statementDot[data-on="true"]::before {
+  width: 28px;
+  border-color: var(--c-blaze);
+  background: var(--c-blaze);
+}
+
+.statementDot:focus-visible {
+  outline: 2px solid var(--c-circuit); /* L3 */
+  outline-offset: -8px;
+  border-radius: var(--r-sm);
+}
+
+/* ------------------------------------------------------------
+   Passos do método — a <ul> que torna o grafo alcançável
+   (ver o cabeçalho do MethodSteps.tsx: é a correção do pior defeito
+   de a11y do modelo, não um extra).
+   ------------------------------------------------------------ */
+
+.methodList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.methodSteps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* a11y §7.9 (alvos ≥44px): estes chips são um alvo REAL de clique — eles
+   trocam o statement da seção. A 31px de altura não passavam.
+   Aqui NÃO usamos o utilitário `.hit-target`: ele estende a área por um
+   ::after absoluto, e esta lista EMBRULHA em várias linhas — o ::after de um
+   chip invadiria a linha de baixo e o vizinho ganharia a disputa de hit-test
+   (medido: 6 dos 10 perdiam o clique na borda inferior). Numa lista que
+   embrulha, o certo é altura real. `align-items` do container mantém os chips
+   alinhados sem esticar. */
+.methodStep {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  padding: 6px 12px;
+  background: transparent;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+  cursor: pointer;
+}
+
+/* Estado do grupo ativo: o mesmo que o anel ativo do grafo mostra.
+   Transição discreta de cor/borda em mudança de estado é sancionada
+   pela L10 (o proibido é escrita por frame). */
+/* O mesmo estado que o anel ativo mostra no grafo — e é o único sinal visual
+   para quem está no teclado, então precisa ser lido de longe: borda + cor de
+   texto + tint (a mesma cor de linha do .ringEdge do PulseCircle). */
+.methodGroup[data-on="true"] .methodStep {
+  border-color: color-mix(in srgb, var(--c-iron) 24%, transparent);
+  background: var(--tint-slate);
+  color: var(--c-iron);
+}
+
+/* Descrição — comp: 15px mobile · 17px/42ch desktop, lh 1.6. */
+.methodDescription {
+  margin: 0;
+  font-family: var(--ff-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--c-iron);
+  max-width: 42ch;
+}
+
+/* CTA — Button primary (pill blaze, texto iron). Comp mobile: 100%. */
+.methodCta {
+  width: 100%;
+}
+
+/* ------------------------------------------------------------
+   Stat-cards — spec about.statCard
+   ------------------------------------------------------------ */
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  /* Mesmo ritmo de 33px do bloco content, em vez dos 56/120 antigos. */
+  margin: 0 0 33px;
+  padding: 0;
+  list-style: none;
+}
+
+/* spec: padding 12px 20px · radius 30 (--r-pill-lg) · min-height 199. */
 .statCard {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-height: 188px;
-  padding: 22px;
+  min-height: 180px;
+  padding: 12px 20px;
   border: 1px solid var(--c-line);
-  border-radius: 24px;
+  border-radius: var(--r-pill-lg);
   overflow: hidden;
   min-width: 0;
 }
 
 /* Tints por card (comp: blaze-soft → blue → slate → paper).
-   São tints, não acento — não contam na blaze-law (L2/§4). */
+   São tints, não acento — não contam na blaze-law (§4). */
 .statBlaze {
   background: var(--tint-blaze);
 }
@@ -107,37 +350,41 @@ p.sectionEyebrow {
   background: var(--c-paper);
 }
 
-/* Valor mono GIGANTE — comp: 34px/ls -0.03em mobile ·
-   76px/ls -0.04em desktop. Iron quando oficial; [CONFIRMAR] →
-   steel via data-confirm (L1/L8 — modo draft). */
+/* spec: value "700 52px/1.3" (46px em ≤1366). */
 .statValue {
   font-family: var(--ff-mono);
-  font-weight: 600;
-  font-size: 34px;
-  line-height: 1;
+  font-weight: 700;
+  font-size: 2rem; /* 32px mobile */
+  line-height: 1.3;
   letter-spacing: -0.03em;
   color: var(--c-iron);
 }
 
+/* [CONFIRMAR] não é número: em 52px ele estoura a largura do card e o
+   overflow:hidden cortaria o texto. O placeholder ganha escala de
+   legenda (e o steel de sempre) — o display de 52px é do valor real. */
 .statValue[data-confirm="true"] {
+  /* 16px na grade 2×2 do mobile (card ~163px): a 22px o "]" é cortado pelo
+     overflow:hidden do card. 22px volta a partir de 768px. */
+  font-size: 1rem;
+  letter-spacing: 0;
   color: var(--c-steel);
 }
 
-/* Label — comp: 12px mobile · 15px/18ch desktop. Steel por padrão
-   (cinzas ad hoc da comp mapeados pro token — cabeçalho). */
+/* spec: label "400 14px/1.25", margin-top 5, max-width 12em. */
 .statLabel {
+  margin-top: 5px;
   font-family: var(--ff-body);
-  font-size: 12px;
-  line-height: 1.45;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.25;
   color: var(--c-steel);
-  max-width: 18ch;
+  max-width: 12em;
 }
 
-/* --- Slot de vídeo A2–A5 (§8) — canto inferior direito do card,
-       comp: 84×84 translate(18%,20%) radius 0 0 24 mobile ·
-       150×150 radius 0 0 28 desktop. Sob o poster, textura
-       blueprint (grade 1px iron 6% sobre tint) = estado antes do
-       asset — mesma linguagem dos placeholders do DS. --- */
+/* Slot de vídeo A2–A5 (§8) — spec statCard.video: maxWidth 150,
+   translate(18%, 20%), radius 0 0 30px 0. Sob o poster, textura
+   blueprint (grade 1px iron 6% sobre tint) = estado antes do asset. */
 .statSlot {
   position: absolute;
   right: 0;
@@ -145,7 +392,7 @@ p.sectionEyebrow {
   width: 84px;
   height: 84px;
   transform: translate(18%, 20%);
-  border-radius: 0 0 24px 0;
+  border-radius: 0 0 var(--r-pill-lg) 0;
   overflow: hidden;
   background-color: var(--tint-slate);
   background-image:
@@ -173,78 +420,35 @@ p.sectionEyebrow {
   object-fit: cover;
 }
 
-/* --- Método (diagrama + copy + CTA) —
-       comp mobile: coluna centrada gap 24/mb 48, kicker à esquerda;
-       comp desktop: grid 560px+1fr gap 80, colunas centradas
-       verticalmente entre si --- */
-.method {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin: 0 0 48px;
-}
+/* ------------------------------------------------------------
+   Tira de logos — spec about.partnerLogos
+   L6 integral: as 10 marcas do modelo estão em
+   excludedEvenInPreview, então NENHUMA imagem entra. Ficam as
+   células com hairline e a legenda oficial about.logosNotice.
+   ------------------------------------------------------------ */
 
-/* Kicker mono — comp: 10px mobile · 11px desktop, steel, caps. */
-.methodKicker {
-  margin: 0;
-  align-self: flex-start;
-  font-family: var(--ff-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--c-steel);
-}
-
-.methodDiagram {
-  display: flex;
-  justify-content: center;
-}
-
-/* PulseCircle: svg 335px mobile (comp) · 480px desktop (comp). */
-.diagram {
-  inline-size: min(335px, 100%);
-}
-
-.methodCopy {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  align-items: flex-start;
-}
-
-/* Descrição — comp: 15px mobile · 17px/42ch desktop, lh 1.6. */
-.methodDescription {
-  margin: 0;
-  font-family: var(--ff-body);
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--c-iron);
-  max-width: 42ch;
-}
-
-/* CTA — Button primary (pill blaze, texto iron): O blaze da S5
-   (L2; aside da comp: "Blaze único do viewport = CTA").
-   Comp mobile: largura total. */
-.methodCta {
-  width: 100%;
-}
-
-/* --- Marquee de logos — banda full-bleed com hairlines,
-       comp: célula 150×110 mobile · 240×160 desktop · 24s linear.
-       L6: sem logos inventados — cada célula renderiza o aviso
-       about.logosNotice em mono steel (placeholder autorizado). --- */
 .logosBand {
+  /* Altura intrínseca do trilho enquanto ele nunca foi renderizado: sem isto o
+     `content-visibility: auto` do Marquee reporta os 180px de default e o
+     scrollHeight do documento oscila 22px quando a seção entra na viewport
+     (medido — a fatia de altura da S5 saía subestimada). */
+  --marquee-h: 142px;
+
   border-top: 1px solid var(--c-line);
   border-bottom: 1px solid var(--c-line);
 }
 
+/* spec: cell 288×202, border 1, adjacentBorderLeft none — como a banda
+   já tem as hairlines de topo/base, cada célula contribui só a da
+   direita (o mesmo desenho, sem linha dupla entre as duas cópias do
+   marquee). Mobile fica no wrapVariant reduzido da spec. */
 .logoCell {
   display: inline-flex;
   flex: none;
   align-items: center;
   justify-content: center;
   width: 150px;
-  height: 110px;
+  height: 140px;
   padding: 0 14px;
   border-right: 1px solid var(--c-line);
   font-family: var(--ff-mono);
@@ -257,101 +461,96 @@ p.sectionEyebrow {
 }
 
 /* ------------------------------------------------------------
-   Desktop (comp 1920): padding-top 96 (bottom 0 — a banda de
-   logos fecha a seção), eyebrow 13/14/18, título mb 64,
-   statements 24ch, stats 4 col, método em grid 560+1fr.
+   ≥768px — spec completa
    ------------------------------------------------------------ */
 @media (min-width: 768px) {
   .inner {
-    padding-block: 96px 0;
+    /* spec: section.paddingTop 70 */
+    padding-block: 70px 0;
   }
 
   p.sectionEyebrow {
     gap: 14px;
-    margin-bottom: 18px;
     font-size: 13px;
   }
 
-  .title {
-    margin-bottom: 64px;
-    max-width: 16ch;
-  }
-
-  .statements {
-    gap: 28px;
-    margin-bottom: 96px;
-  }
-
-  /* Comp: max-width 24ch — aplicado ao statement (ch da própria
-     fonte display do FillText), não ao container 16px do andaime. */
-  .statement {
-    max-width: 24ch;
-  }
-
   .stats {
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--sp-md); /* 24px */
-    margin-bottom: var(--sp-2xl); /* 120px */
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .statCard {
-    gap: 10px;
-    min-height: 300px;
-    padding: 32px;
-    border-radius: var(--r-xl); /* 28px */
+    /* spec: minHeight 199 (180 em ≤1366px — ver bloco abaixo). */
+    min-height: 199px;
   }
 
-  /* 76px na tela da comp (1920); escala fluida entre 768–1920. */
   .statValue {
-    font-size: clamp(2.75rem, 3.96vw, 4.75rem);
-    letter-spacing: -0.04em;
+    font-size: 3.25rem; /* 52px */
   }
 
-  .statLabel {
-    font-size: 15px;
+  .statValue[data-confirm="true"] {
+    font-size: 1.375rem; /* 22px */
   }
 
   .statSlot {
+    /* spec: maxWidth 150 / rendered 150×150 */
     width: 150px;
     height: 150px;
-    border-radius: 0 0 var(--r-xl) 0;
     background-size: 24px 24px;
   }
 
-  /* Método: diagrama à esquerda (atravessa as 4 linhas), kicker +
-     copy à direita, centrados verticalmente pelas linhas 1fr —
-     mesma composição da comp (grid 560px 1fr, gap 80, centrado). */
-  .method {
-    display: grid;
-    grid-template-columns: minmax(0, 560px) 1fr;
-    grid-template-areas:
-      "diagram ."
-      "diagram kicker"
-      "diagram copy"
-      "diagram .";
-    grid-template-rows: 1fr auto auto 1fr;
-    column-gap: clamp(40px, 4.2vw, 80px);
-    row-gap: 28px;
-    margin-bottom: var(--sp-2xl); /* 120px */
+  .logosBand {
+    --marquee-h: 202px;
+  }
+
+  .logoCell {
+    /* spec: cell 288×202 */
+    width: 288px;
+    height: 202px;
+    font-size: 13px;
+  }
+}
+
+/* spec: statCard.minHeight1366 180 · value.fontSize1366 46 */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .statCard {
+    min-height: 180px;
+  }
+
+  .statValue {
+    font-size: 2.875rem; /* 46px */
+  }
+}
+
+/* ------------------------------------------------------------
+   ≥1024px — o bloco `content` em duas colunas (spec about.content)
+   O grafo fica na coluna esquerda (≤650px, que é o berço dos 625px
+   da caixa quadrada) e a copy na direita com o padding-left de 25px
+   da spec. `align-items: center` é da spec.
+   ------------------------------------------------------------ */
+@media (min-width: 1024px) {
+  .content {
+    grid-template-columns: minmax(0, 42%) minmax(0, 58%);
+    align-items: center;
+    gap: 0;
+  }
+
+  .graphCol {
+    gap: 18px;
+  }
+
+  .copyCol {
+    /* spec: content.rightPaddingLeft 25 */
+    padding-left: 25px;
+    gap: 28px;
   }
 
   .methodKicker {
-    grid-area: kicker;
-    align-self: end;
     font-size: 11px;
   }
 
-  .methodDiagram {
-    grid-area: diagram;
-  }
-
   .diagram {
-    inline-size: min(480px, 100%);
-  }
-
-  .methodCopy {
-    grid-area: copy;
-    gap: 28px;
+    /* spec: graph.maxWidth 625 */
+    inline-size: min(625px, 100%);
   }
 
   .methodDescription {
@@ -361,10 +560,33 @@ p.sectionEyebrow {
   .methodCta {
     width: auto;
   }
+}
 
-  .logoCell {
-    width: 240px;
-    height: 160px;
-    font-size: 13px;
+/* ------------------------------------------------------------
+   MOTION — só transições discretas de estado, todas em
+   no-preference (L5). O estado estático declarado acima É o estado
+   reduced-motion: o statement ativo já visível, os passos do grupo
+   ativo já destacados.
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  /* spec: statementLink.speedMs 400, crossFade — é isto, em CSS. */
+  .statementSlide {
+    transition: opacity 400ms var(--ease);
+  }
+
+  /* W13: o desenho do dot mudou para o ::before — a transição vai com ele
+     (width entra porque o ponto ativo alonga 8→28, como no S9/S10). */
+  .statementDot::before {
+    transition:
+      width 0.3s var(--ease),
+      border-color 0.3s var(--ease),
+      background-color 0.3s var(--ease);
+  }
+
+  .methodStep {
+    transition:
+      color 0.3s var(--ease),
+      border-color 0.3s var(--ease),
+      background-color 0.3s var(--ease);
   }
 }

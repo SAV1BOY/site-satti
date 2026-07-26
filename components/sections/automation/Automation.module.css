@@ -1,33 +1,156 @@
 /* ============================================================
-   S6 Automação — seção DARK (zona "automation" do fio D3)
-   Fonte visual: S6 Automacao Desktop 1920.dc.html ·
-                 S6 Automacao Mobile 375.dc.html
+   S6 Automação — seção DARK, a mais longa do site.
+
+   GEOMETRIA: design/awsmd-ref/awsmd-geometry.json → `automation`
+   (fonte única — DEC-016). Coreografia: awsmd-motion.json →
+   ghost-marquee · phone-float · dev-foreground-sticky.
+   COPY/PALETA: comps aprovadas + tokens.css.
+
+   Toda a geometria responsiva mora em custom properties na
+   .section, e a cascata de patamares no fim do arquivo só troca
+   essas properties. Motivo: os patamares do spec pack não são um
+   conjunto único (phones tem 4: 1600/1366/991/565 · mídia, vídeo
+   e mão têm 3 · a font do ghost tem outros 3: 1600/1124/768), e
+   sem um único ponto de troca isso vira seis cascatas paralelas
+   impossíveis de conferir contra o JSON.
+
    Leis aplicadas:
-   D1  — separadores var(--c-line-dark) · bordas de célula/phone
-         var(--c-hairline-dark) (cinzas ad hoc #2E333B/#3A3F47
-         aposentados)
-   D2  — título "{AUTOMAÇÃO} INTELIGENTE **": chaves e ** em
-         steel nos DOIS breakpoints (nunca blaze)
-   L2  — único blaze de destaque do viewport = CTA "Ver portfólio"
-         (pill blaze, texto iron); labels do mosaico nunca blaze
-   L5  — float dos phones SÓ em prefers-reduced-motion:
-         no-preference; reduced = phones parados (estado da comp)
-   L9  — profundidade = hairline 1px + tint; sem drop-shadow
-   L10 — anima apenas transform (float); easing ease-in-out da
-         própria comp (oscilação simétrica ±14px)
-   L12 — Archivo display caps tracking negativo · mono caps +0.08em
-   Cinzas ad hoc da comp (#1B1E24 · rgba(ink, .03/.04)) →
-   color-mix sobre tokens — zero hex literal.
+   D1  — hairlines var(--c-hairline-dark) / var(--c-line-dark)
+   D2  — título "{AUTOMAÇÃO} INTELIGENTE **": chaves e ** em steel
+   L5  — float dos phones só em prefers-reduced-motion:
+         no-preference. O estado declarado aqui (phones parados) É
+         o estado reduced-motion. `sticky` não é animação e não
+         precisa de fallback (awsmd-motion → dev-foreground-sticky).
+   L9  — profundidade por hairline; sem drop-shadow
+   L10 — anima só transform (float dos phones, trilho do ghost)
+   L12 — Archivo display caps tracking negativo
+   Zero hex literal: os cinzas ad hoc das comps são color-mix
+   sobre tokens.
    ============================================================ */
 
 .section {
   position: relative;
-  /* Derivações token-based dos cinzas ad hoc das comps */
+
+  /* Fundo das molduras (tela do mosaico e do vídeo) enquanto a imagem não
+     chegou: derivação token-based do cinza ad hoc da comp, zero hex literal.
+     A grade blueprint 20/24px saiu com os placeholders — as molduras agora
+     recebem captura real. */
   --s6-cell-bg: color-mix(in srgb, var(--c-ink-on-dark) 5%, var(--c-graphite));
-  --s6-grid-line: color-mix(in srgb, var(--c-ink-on-dark) 4%, transparent);
+
+  /* --- Geometria do patamar base (>1600px) --------------------- */
+  --s6-screen-w: 365px;
+  --s6-screen-h: 770px;
+  --s6-screen-m: 12.8px;
+  --s6-wall-pb: 115px;
+
+  --s6-phones-w: 600px;
+  --s6-phones-h: 687px;
+  --s6-phones-top: 235px;
+
+  --s6-video-w: 348px;
+  --s6-video-h: 741px;
+  --s6-video-top: 56px;
+  --s6-video-r: var(--r-video);
+
+  --s6-hand-h: 940px;
+  --s6-hand-w: 1870px;
+  --s6-hand-top: -30px;
+
+  --s6-ghost-fz: 211px;
+
+  /* Altura intrínseca declarada. MEDIDA (playwright + offsetHeight com a
+     subárvore realizada), não estimada — ver a cascata no fim do arquivo.
+     A parcela irredutível de erro é o header, que reflui com a largura dentro
+     de um mesmo patamar (571px @1920 · 566 @1366 · 537 @1124): 4k px de seção
+     não caberiam num único número exato. Só o header entra nessa margem porque
+     a parede tem intrínseca DERIVADA (ver .wall) e a mão é altura fixa. */
+  --s6-intrinsic: 4012px;
+
+  /* content-visibility: a seção é ~4k px de imagens que quase nunca estão na
+     tela. O `contain-intrinsic-size` NÃO é opcional: sem ele o UA reporta 0 de
+     altura enquanto a subárvore está pulada, a scrollbar salta quando o
+     conteúdo é realizado e o CLS deixa de ser 0. O prefixo `auto` faz o UA
+     lembrar o tamanho real depois do primeiro render, então o valor declarado
+     só governa o primeiro paint — mas tem de bater com o real, e por isso ele
+     é MEDIDO por patamar (npx playwright + offsetHeight), não estimado. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto var(--s6-intrinsic);
 }
 
-/* Conteúdo acima da AutomationLine (fundo decorativo z-index 0). */
+/* --- Marquee fantasma (z 0, atrás de tudo) --------------------------------
+   O mesmo texto da faixa de posicionamento, gigante e dark-on-dark. A cor é
+   --c-ghost (5%, medido; o 09-MOTION-SPEC leu ~6%). A font-size mora aqui na
+   raiz do bloco porque o gap do Marquee é em `em`: um valor por patamar governa
+   tamanho de letra E espaçamento entre cópias, como no modelo (padding-inline
+   0,14em de cada lado = gap 0,28em). */
+.ghost {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+
+  font-family: var(--ff-display);
+  font-size: var(--s6-ghost-fz);
+}
+
+/* --marquee-h: altura intrínseca do trilho enquanto ele nunca foi renderizado
+   (o Marquee pausa off-screen com content-visibility). 1,2 × font-size = a
+   linha do ghost — sem isto o scrollHeight do documento oscilaria no primeiro
+   paint, que é exatamente o CLS que estamos evitando. */
+.ghostTrack {
+  --marquee-h: calc(var(--s6-ghost-fz) * 1.2);
+}
+
+.ghostWord {
+  font-size: 1em;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+  color: var(--c-ghost);
+}
+
+/* --- Fio D3: duas metades geométricas (z 0) -------------------------------
+   Cada zona é um containing block absoluto de 50% da seção; o <AutomationLine>
+   é `position: absolute; inset: 0` dentro dela. São metades de ALTURA, não
+   recortes de conteúdo — o handshake automation-a → automation-b acontece no
+   mesmo x (0,62) do THREAD_PLAN, então a costura no meio da seção é invisível.
+   Não entram no fluxo: a altura da seção é definida pelo .stage. */
+.lineZone {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.lineZoneA {
+  top: 0;
+}
+
+.lineZoneB {
+  top: 50%;
+}
+
+/* --- Palco: parede + primeiro plano ---------------------------------------
+   Começa DEPOIS do header porque é o containing block do sticky: a caixa de
+   contenção de um sticky é o bloco pai, e com o header dentro do palco a mão
+   subia até o topo da seção e cobria o título (medido em screenshot). Aqui ela
+   fica presa ao topo da parede. */
+.stage {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Header ---------------------------------------------------------------- */
+
 .inner {
   position: relative;
   z-index: 1;
@@ -41,8 +164,6 @@
     padding-bottom: var(--sp-2xl);
   }
 }
-
-/* --- Eyebrow (classe global .eyebrow dá mono+marcador 8×8) ---- */
 
 .eyebrow {
   margin: 0 0 var(--sp-sm);
@@ -131,79 +252,179 @@
   }
 }
 
-/* --- Phones + mosaico ----------------------------------------- */
+/* --- Parede de telas (z 1) -----------------------------------------------
+   3 fileiras estáticas (DEC-021 §3: NÃO há parallax por coluna). Cada fileira
+   tem 5 slots e sangra a viewport nos cinco patamares — é essa sangria que faz
+   a parede ler como parede e não como grade centrada. `justify-content: center`
+   com conteúdo mais largo que o container derrama igual dos dois lados; o corte
+   vem do paint containment do content-visibility da seção. */
+.wall {
+  position: relative;
+  padding-bottom: var(--s6-wall-pb);
+  overflow: hidden;
 
-.mediaGrid {
-  display: block;
+  /* Segundo nível de content-visibility, dentro do da seção. Com um só nível a
+     seção inteira (~4k px) é realizada de uma vez, então as 12 imagens e os dois
+     phones acordam junto com o header — e a parede fica a 3 mil px da dobra.
+     Aninhado, a parede tem a própria decisão de relevância.
+     A altura intrínseca aqui é DERIVADA, não medida: a parede não tem texto,
+     então 3 fileiras × (tela + 2 × margem) é exato em todos os patamares e o
+     calc se mantém sozinho quando as custom properties trocam. O padding-bottom
+     não entra: contenção de tamanho dimensiona o CONTEÚDO, o padding é somado
+     pelo modelo de caixa por cima. Zero salto de scrollbar, por construção. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto
+    calc(3 * (var(--s6-screen-h) + 2 * var(--s6-screen-m)));
 }
 
-@media (min-width: 768px) {
-  .mediaGrid {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 64px;
-    align-items: start;
-  }
-}
-
-.phones {
+.row {
   display: flex;
-  gap: 14px;
+  flex-wrap: nowrap;
   justify-content: center;
-  margin-bottom: 32px;
 }
 
-@media (min-width: 768px) {
-  .phones {
-    gap: var(--sp-md);
-    justify-content: flex-start;
-    padding-top: var(--sp-xs);
-    margin-bottom: 0;
-  }
+/* Terceira fileira: 2 telas nas pontas. O centro fica para a mão sticky. */
+.rowEnds {
+  justify-content: space-between;
+}
+
+.screen {
+  flex: none;
+  margin: var(--s6-screen-m);
+  width: var(--s6-screen-w);
+  height: var(--s6-screen-h);
+  border-radius: var(--r-screen);
+  overflow: hidden;
+  background-color: var(--s6-cell-bg);
+  border: 1px solid var(--c-hairline-dark);
+}
+
+.screenImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- Phones flutuantes (z 3) ---------------------------------------------
+   Wrapper centrado sobre a parede. As alturas são 80%/90% do wrapper (e não px
+   fixos) porque os quatro pares responsivos do spec pack mantêm a MESMA razão
+   0,873 — logo uma única regra relativa reproduz os quatro patamares, e a razão
+   intrínseca de cada mockup faz a largura. 80% de 687 = 549,6 ≈ os 337×550
+   renderizados do PH-L; 90% = 618,3 ≈ os 378×618 do PH-R. */
+.phones {
+  position: absolute;
+  top: var(--s6-phones-top);
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--s6-phones-w);
+  height: var(--s6-phones-h);
+  z-index: 3;
+  pointer-events: none;
 }
 
 .phone {
-  width: 128px;
-  height: 264px;
-  border-radius: var(--r-xl);
-  border: 1px solid var(--c-hairline-dark);
-  background: var(--c-iron);
-  padding: var(--sp-2xs);
+  position: absolute;
+  width: auto;
+  max-width: none;
 }
 
-.phoneB {
-  margin-top: var(--sp-md);
+.phoneLeft {
+  top: 0;
+  left: 0;
+  height: 80%;
 }
 
-@media (min-width: 768px) {
-  .phone {
-    height: 268px;
-  }
-
-  .phoneB {
-    margin-top: 40px;
-  }
+.phoneRight {
+  bottom: 0;
+  right: 0;
+  height: 90%;
 }
 
-/* Tela do phone: grade blueprint 20px; recebe o slot de vídeo A6. */
-.phoneScreen {
-  position: relative;
-  height: 100%;
+/* --- Primeiro plano: mão + vídeo central (z 2) ---------------------------
+   O ÚNICO position:sticky do site (awsmd-motion → dev-foreground-sticky).
+   pointer-events:none é funcional, não cosmético: a caixa cobre 940px do
+   rodapé da viewport durante toda a parede e sem isso ela engoliria qualquer
+   hover/clique do mosaico e dos CTAs abaixo. */
+.foreground {
+  position: sticky;
+  bottom: 0;
+  height: var(--s6-hand-h);
   overflow: hidden;
-  border-radius: var(--r-lg);
-  border: 1px solid var(--c-line-dark);
-  background-color: var(--c-graphite);
-  background-image:
-    linear-gradient(var(--s6-grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--s6-grid-line) 1px, transparent 1px);
-  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 2;
 }
 
-@media (min-width: 768px) {
-  .phoneScreen {
-    border: 0;
-    background-color: var(--s6-cell-bg);
+/* Vídeo central: aparece pela ÁREA TRANSPARENTE da tela do telefone na foto,
+   então fica ABAIXO da mão na ordem de pintura. */
+.video {
+  position: absolute;
+  top: var(--s6-video-top);
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--s6-video-w);
+  height: var(--s6-video-h);
+  border-radius: var(--s6-video-r);
+  overflow: hidden;
+  background-color: var(--s6-cell-bg);
+  z-index: 0;
+}
+
+.handWrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--s6-hand-top);
+  height: calc(100% - var(--s6-hand-top));
+  z-index: 1;
+}
+
+/* A imagem é DE PROPÓSITO mais larga que a viewport: é o excedente que faz o
+   recorte funcionar (object-position center top mantém o punho e corta a base).
+   max-width: none derruba o reset `img { max-width: 100% }`. */
+.hand {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--s6-hand-w);
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* --- Movimento (L5/L10) ---------------------------------------------------
+   Único movimento próprio da seção: o float dos phones. Mesmo keyframe nos
+   dois; a alternância é a FASE (delay negativo no esquerdo), como no modelo.
+   will-change só aqui dentro — orçamento da seção: trilho do ghost + 2 phones. */
+@media (prefers-reduced-motion: no-preference) {
+  .phone {
+    will-change: transform;
+    animation: s6-float var(--dur-float) ease-in-out infinite;
   }
+
+  .phoneLeft {
+    animation-delay: -3s;
+  }
+
+  @keyframes s6-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+}
+
+/* --- Slot do vídeo A6 (PhoneVideo) ---------------------------------------
+   `inset: 0` sobre a moldura já posicionada pelo pai. O wrapper existe porque
+   o useMediaGate precisa de um elemento próprio para o IntersectionObserver. */
+.phoneSlot {
+  position: absolute;
+  inset: 0;
+  display: block;
 }
 
 .phonePoster {
@@ -218,173 +439,111 @@
   object-fit: cover;
 }
 
-/* Float 6s, fases ±3s (Atlas) — só com motion ok (L5, L10). */
-@media (prefers-reduced-motion: no-preference) and (max-width: 767px) {
-  .phoneA {
-    animation: s6-float-up 6s ease-in-out infinite;
-  }
+/* ==========================================================================
+   Cascata responsiva — SÓ custom properties.
+   Patamares do spec pack (max-width, decrescente):
+     1600  phones 546×625,17 @190 · mídia 310,25×654,5 · vídeo 297×630/48/35
+           · mão 740 / img 1589,5 · ghost 180
+     1366  phones 420×480,9 @160
+     1124  ghost 160
+      991  phones 349,8×400,521 @254 · mídia 200,75×423,5
+           · vídeo 193×405/31/22 · mão 500 / img 1028,5
+      768  ghost 135
+      565  phones 300×343,5 @200 · mídia 150×310 · vídeo 145×305/23/18
+           · margem do item 8 · padding da parede 40 · wrapper da mão -15
+   ========================================================================== */
 
-  .phoneB {
-    animation: s6-float-up 6s ease-in-out -3s infinite;
+@media (max-width: 1600px) {
+  .section {
+    --s6-screen-w: 310.25px;
+    --s6-screen-h: 654.5px;
+    --s6-phones-w: 546px;
+    --s6-phones-h: 625.17px;
+    --s6-phones-top: 190px;
+    --s6-video-w: 297px;
+    --s6-video-h: 630px;
+    --s6-video-top: 48px;
+    --s6-video-r: 35px;
+    --s6-hand-h: 740px;
+    --s6-hand-w: 1589.5px;
+    --s6-ghost-fz: 180px;
+    --s6-intrinsic: 3466px;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
-  .phoneA {
-    animation: s6-float-a 6s ease-in-out infinite;
-  }
-
-  .phoneB {
-    animation: s6-float-b 6s ease-in-out infinite;
-  }
-}
-
-/* Comp mobile: 0 → -14 → 0 (fase via delay -3s no PH-R). */
-@keyframes s6-float-up {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-14px);
+@media (max-width: 1366px) {
+  .section {
+    --s6-intrinsic: 3462px;
+    --s6-phones-w: 420px;
+    --s6-phones-h: 480.9px;
+    --s6-phones-top: 160px;
   }
 }
 
-/* Comp desktop: ±14px em contrafase (equivale a fases ±3s). */
-@keyframes s6-float-a {
-  0%,
-  100% {
-    transform: translateY(-14px);
-  }
-  50% {
-    transform: translateY(14px);
+@media (max-width: 1124px) {
+  .section {
+    --s6-ghost-fz: 160px;
+    /* o título reflui aqui: header 537px contra 566px a 1366 */
+    --s6-intrinsic: 3433px;
   }
 }
 
-@keyframes s6-float-b {
-  0%,
-  100% {
-    transform: translateY(14px);
-  }
-  50% {
-    transform: translateY(-14px);
-  }
-}
-
-/* --- Mosaico 3×4 (2 colunas no mobile) ------------------------ */
-
-.mosaic {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-@media (min-width: 768px) {
-  .mosaic {
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 128px;
-    gap: 14px;
+@media (max-width: 991px) {
+  .section {
+    --s6-screen-w: 200.75px;
+    --s6-screen-h: 423.5px;
+    --s6-phones-w: 349.8px;
+    --s6-phones-h: 400.521px;
+    --s6-phones-top: 254px;
+    --s6-video-w: 193px;
+    --s6-video-h: 405px;
+    --s6-video-top: 31px;
+    --s6-video-r: 22px;
+    --s6-hand-h: 500px;
+    --s6-hand-w: 1028.5px;
+    --s6-intrinsic: 2484px;
   }
 }
 
-/* Mobile: reordena p/ layout da comp 375 (A6 na 5ª célula,
-   A9 na 8ª — DOM segue a ordem desktop row-major). */
-@media (max-width: 767px) {
-  .cell {
-    aspect-ratio: 1 / 1;
-  }
-
-  .mosaic > *:nth-child(1) {
-    order: 1;
-  }
-  .mosaic > *:nth-child(2) {
-    order: 5;
-  }
-  .mosaic > *:nth-child(3) {
-    order: 2;
-  }
-  .mosaic > *:nth-child(4) {
-    order: 3;
-  }
-  .mosaic > *:nth-child(5) {
-    order: 4;
-  }
-  .mosaic > *:nth-child(6) {
-    order: 6;
-  }
-  .mosaic > *:nth-child(7) {
-    order: 7;
-  }
-  .mosaic > *:nth-child(8) {
-    order: 8;
-  }
-  .mosaic > *:nth-child(9) {
-    order: 9;
-  }
-  .mosaic > *:nth-child(10) {
-    order: 10;
-  }
-  .mosaic > *:nth-child(11) {
-    order: 11;
-  }
-  .mosaic > *:nth-child(12) {
-    order: 12;
+@media (max-width: 768px) {
+  .section {
+    --s6-ghost-fz: 135px;
+    --s6-intrinsic: 2457px;
   }
 }
 
-.cell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--r-md);
-  border: 1px solid var(--c-hairline-dark);
-  background-color: var(--s6-cell-bg);
-  background-image:
-    linear-gradient(var(--s6-grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--s6-grid-line) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
+/* Patamar menor: a parede aperta e o ghost sai do centro para a base,
+   entrando pela margem inferior (positionMobile do spec pack). */
+@media (max-width: 565px) {
+  .section {
+    --s6-screen-w: 150px;
+    --s6-screen-h: 310px;
+    --s6-screen-m: 8px;
+    --s6-wall-pb: 40px;
+    --s6-phones-w: 300px;
+    --s6-phones-h: 343.5px;
+    --s6-phones-top: 200px;
+    --s6-video-w: 145px;
+    --s6-video-h: 305px;
+    --s6-video-top: 23px;
+    --s6-video-r: 18px;
+    --s6-hand-top: -15px;
+    --s6-intrinsic: 1981px;
+  }
 
-/* Coluna central destacada: fundo iron + label ink-on-dark
-   (comp desktop usava blaze no label — corrigido p/ L2/D2). */
-.cellCenter {
-  background-color: var(--c-iron);
-}
-
-.cellLabel {
-  font-family: var(--ff-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--c-steel);
-}
-
-@media (min-width: 768px) {
-  .cellLabel {
-    font-size: 11px;
+  .ghost {
+    top: auto;
+    bottom: 0;
+    transform: translate(-50%, 60%);
   }
 }
 
-.cellCenter .cellLabel {
-  color: var(--c-ink-on-dark);
-}
-
-/* Colchetes decorativos: slots A6/A9 sempre; SC só no mobile
-   (comp desktop: "SC1" · comp mobile: "[ SC1 ]"). */
-.labelVideo::before {
-  content: "[ ";
-}
-
-.labelVideo::after {
-  content: " ]";
-}
-
-@media (max-width: 767px) {
-  .labelSc::before {
-    content: "[ ";
-  }
-
-  .labelSc::after {
-    content: " ]";
+/* Patamar que NÃO vem do spec pack e não move geometria nenhuma: só a altura
+   intrínseca. Entre 414px e 375px o título ganha uma linha (header 505px contra
+   463px), e sem este degrau a seção declararia 42px a menos justamente na faixa
+   onde está o tráfego mobile real. */
+@media (max-width: 400px) {
+  .section {
+    --s6-intrinsic: 2023px;
   }
 }

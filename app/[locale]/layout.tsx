@@ -6,10 +6,12 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Analytics } from "@vercel/analytics/next";
 import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/site-url";
+import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import "../styles/tokens.css";
 import "../globals.css";
 import "../styles/animations.css";
-import LenisProvider from "@/components/providers/LenisProvider";
+import ScrollProvider from "@/components/providers/ScrollProvider";
+import IntroAnimation from "@/components/providers/IntroAnimation";
 import CursorProvider from "@/components/providers/CursorProvider";
 
 const archivo = Archivo({
@@ -22,9 +24,14 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+/* preload:false — o mono aparece só em eyebrows, tags e a faixa de valores,
+   todos ABAIXO do elemento de LCP. Preload dele punha ~35 KB no caminho
+   crítico competindo com o poster do hero, sem nenhum ganho visual acima da
+   dobra (v2 · otimização de LCP). */
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
+  preload: false,
 });
 
 /**
@@ -46,6 +53,12 @@ export async function generateMetadata({
     metadataBase: new URL(SITE_URL),
     title: "SATTI",
     description,
+    /* Em `draft` o site serve assets do modelo estrutural marcados para swap e
+       copy [CONFIRMAR] — ambiente de revisão, não conteúdo público. O
+       robots.txt já bloqueia; a meta cobre o crawler que o ignora (V2-D2). */
+    robots: OMIT_UNCONFIRMED
+      ? undefined
+      : { index: false, follow: false, nocache: true },
     alternates: {
       canonical: path,
       languages: {
@@ -111,9 +124,18 @@ export default async function LocaleLayout({
             hooks de i18n — as copies chegam via props dos Server
             Components. Remover o provider corta o JSON de mensagens
             inteiro do payload RSC (Script Eval + peso do HTML). */}
-        <LenisProvider>
+        {/* v2: ScrollProvider substitui o LenisProvider — mesmo scroll suave,
+            mais o loop scroll-linked compartilhado (um flush de layout por
+            frame, `lenis.raf` na mesma volta, e o loop estaciona quando nada
+            está em view). Enquanto nenhum consumidor registra um track, o loop
+            nem liga. */}
+        {/* Fora dos providers de propósito: a intro é CSS puro, não consome o
+            loop de scroll nem o cursor, e não deve estar dentro de nada que
+            possa suspender. Renderiza null no servidor e sob reduced-motion. */}
+        <IntroAnimation />
+        <ScrollProvider>
           <CursorProvider>{children}</CursorProvider>
-        </LenisProvider>
+        </ScrollProvider>
         <Analytics />
       </body>
     </html>

@@ -10,9 +10,10 @@ import styles from "./Hero.module.css";
  * defaults do hook = valores da comp).
  *
  * L1: as palavras chegam por props do server (JSON) — nada aqui.
- * L2: o caret blaze é O elemento blaze do viewport do hero (F0–F5);
- *     blink steps(1) vive no CSS Module, gated por
- *     prefers-reduced-motion: no-preference (L5).
+ * O caret blaze é bloco de 0.15em × 0.8em com PULSO SUAVE de 1,2s
+ * (opacidade 1 → .5 → 1), corrigido em DEC-021 — era um blink 1 → 0 em
+ * steps(1), que é outro efeito. Vive no CSS Module, gated por
+ * prefers-reduced-motion: no-preference (L5).
  * L5: reduced-motion/SSR → o hook devolve a 1ª palavra fixa
  *     ("VENDER", comp), caret estático aceso.
  * A11y: palavra atual no fluxo do h1 com aria-live="off" (não

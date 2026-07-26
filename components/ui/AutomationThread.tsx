@@ -26,8 +26,9 @@ import { useMotionOk } from "@/hooks/useMotionOk";
  * a viagem daquele segmento termina (animationend do offset-distance),
  * seguindo a ordem do THREAD_PLAN com wrap contato → hero.
  *
- * O desenho no scroll é responsabilidade de cada AutomationLine
- * (IO + rAF locais, padrão FillText) — o Thread não roda loop próprio.
+ * O desenho no scroll é responsabilidade de cada AutomationLine (um
+ * track no loop compartilhado do ScrollProvider) — o Thread não roda
+ * loop próprio nem toca no DOM dos segmentos.
  *
  * L5: em reduced-motion nenhum dono é definido — pulso não existe;
  * cada segmento renderiza a linha 100% desenhada por conta própria.
@@ -45,11 +46,14 @@ interface ThreadContextValue {
 
 const ThreadContext = createContext<ThreadContextValue | null>(null);
 
-/** Ordem canônica do fio (para o avanço do pulso). */
+/** Ordem canônica do fio (para o avanço do pulso). A S6 são DUAS zonas
+    desde a W11-F — ver o contrato no topo de automation-thread-plan.ts:
+    um segmento único de ~3.900 px prenderia o pulso por ~15 s. */
 const ZONE_ORDER: ReadonlyArray<ThreadZoneId> = [
   "hero",
   "services",
-  "automation",
+  "automation-a",
+  "automation-b",
   "portfolio",
   "contact",
 ];
@@ -59,7 +63,8 @@ const ZONE_ORDER: ReadonlyArray<ThreadZoneId> = [
     só passa por lá em trânsito, no wrap do ciclo (D3). */
 const INITIAL_OWNER_ORDER: ReadonlyArray<ThreadZoneId> = [
   "services",
-  "automation",
+  "automation-a",
+  "automation-b",
   "portfolio",
   "contact",
   "hero",

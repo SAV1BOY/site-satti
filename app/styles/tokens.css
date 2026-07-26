@@ -33,6 +33,17 @@
   --tint-blue: #E4EBFF;
   --tint-slate: #ECEEF2;
 
+  /* --- V2 · blocos de cor full-bleed (V2-D4: a lei L2 foi revogada;
+         a faixa de posicionamento é o acento dominante da página, como o
+         azul é no modelo). Texto sobre band é SEMPRE iron, nunca branco. --- */
+  --c-band: var(--c-blaze);
+  --c-band-ink: var(--c-iron);
+  /* Marquee fantasma da Automação: mesmo texto da faixa, gigante,
+     dark-on-dark. Medido em 5% no modelo (09-MOTION-SPEC leu ~6%). */
+  --c-ghost: rgb(244 245 247 / 5%);
+  /* Scrim sob o vídeo do card do hero (garante contraste do H1). */
+  --c-hero-scrim: rgb(15 17 21 / 50%);
+
   /* --- Espaçamento (escala 8/12/16/24/48/88/120) --- */
   --sp-2xs: 8px;
   --sp-xs: 12px;
@@ -49,14 +60,43 @@
   --r-xl: 28px;
   --r-pill: 9999px;
 
+  /* --- V2 · raios de paridade (medidos do CSS do modelo, ver
+         design/awsmd-ref/awsmd-geometry.json) --- */
+  --r-service: 7px;    /* card de serviço                                    */
+  --r-btn: 21px;       /* pill de botão / CTA do header                       */
+  --r-pill-lg: 30px;   /* stat-card e info-pill do work-card                  */
+  --r-card: 33px;      /* card do hero e do portfólio                        */
+  --r-video: 42px;     /* moldura do vídeo vertical da Automação              */
+  --r-screen: 44px;    /* tela do mosaico da Automação                       */
+  --r-display: 130px;  /* painel-display do Banner                           */
+
   /* --- Layout --- */
   --container: 1440px;
   --gutter: clamp(20px, 4vw, 64px);
+  --inset-hero: 12px;  /* recuo do card do hero (V2)                          */
 
   /* --- Motion --- */
   --ease: cubic-bezier(0, 0, 0.4, 0.97);        /* easing global (L10) */
   --ease-roll: cubic-bezier(0.76, 0, 0.24, 1);  /* button roll (DS) */
   --dur-roll: 450ms;
+
+  /* --- V2 · durações de paridade (medidas) --- */
+  --dur-roll-fast: 300ms; /* roll do botão no modelo                          */
+  --dur-band: 20s;        /* faixa de posicionamento (full-bleed)             */
+  /* DEC-021 corrigiu para 20s (os 40s vinham do CSS morto do modelo). Ficava
+     divergente do speed={20} que a S6 passa ao Marquee. — W13 auditoria */
+  --dur-ghost: 20s;       /* marquee fantasma da Automação                    */
+  --dur-scaler: 4s;       /* respiro das imagens dos cards de serviço         */
+  --dur-float: 6s;        /* flutuação dos phones (esquerdo com fase −3s)     */
+  --dur-seal: 10s;        /* selo click-to-play (1 volta)                     */
+  --dur-ring: 2s;         /* pulso de anel (scroll-cue e grafo)               */
+
+  /* --- V2 · fatores de parallax medidos (09-MOTION-SPEC) --- */
+  --px-hand: 0.6;      /* mão + vídeo central da Automação                    */
+  --px-col-1: 1;       /* coluna 1 do mosaico                                 */
+  --px-col-2: 0.85;    /* coluna 2                                            */
+  --px-col-3: 0.65;    /* coluna 3                                            */
+  --px-footer: -37%;   /* deslocamento inicial do conteúdo do rodapé          */
 
   /* --- Sombra do pill do header (única sombra do sistema, da comp S1;
          L9 proíbe drop-shadow em CARDS — o header não é card) --- */

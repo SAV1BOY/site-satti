@@ -1,12 +1,17 @@
 /* ============================================================
-   PulseCircle — diagrama circular do método SATTI (S5 Sobre)
-   Ref: S5 Sobre Desktop 1920.dc.html (_diagram)
+   PulseCircle — grafo do método SATTI (S5 Sobre)
+   Geometria: design/awsmd-ref/awsmd-geometry.json → about.graph
+   (4 anéis tangentes a 45°, DEC-021 §7). Ver o cabeçalho do
+   PulseCircle.tsx para o porquê de cada mecanismo.
 
-   L3  — circuit somente em linhas/hub (diagrama = uso funcional)
-   L5  — pulso APENAS dentro de prefers-reduced-motion: no-preference;
-         fallback estático = nodes opacos, diagrama 100% desenhado
-   L10 — animação só opacity/transform (scale), 2s alternate,
-         delay 0.15s × índice via --pulse-delay
+   L3  — circuit só em anéis/nós/hub (grafo = uso funcional)
+   L5  — NADA anima fora de prefers-reduced-motion: no-preference.
+         O estado estático declarado aqui É o estado reduced: anéis
+         desenhados, grupo ativo já no ângulo final, halo invisível.
+   L10 — só transform/opacity animam. O fan-out é UM translate por nó
+         (o modelo escreve top/right por frame: 4–5 invalidações de
+         layout por frame por anel). O halo é scale+opacity de um
+         disco irmão (o modelo anima box-shadow, que é paint).
    ============================================================ */
 
 .diagram {
@@ -16,58 +21,161 @@
   aspect-ratio: 1;
 }
 
-/* Anéis concêntricos (100% / 68% / 42%) — comp: circuit 0.35 (L3 ok) */
+/* --- Anéis ------------------------------------------------------------- */
+
+.ringGroup {
+  /* spec: hover.transition 0.4s — o esmaecimento dos anéis SEGUINTES. */
+  transition: opacity 0.4s var(--ease);
+}
+
 .ring {
   fill: none;
   stroke: var(--c-circuit);
-  stroke-width: 1;
   stroke-opacity: 0.35;
-}
-
-/* Linhas de conexão centro → node (circuit funcional, L3) */
-.spoke {
-  stroke: var(--c-circuit);
   stroke-width: 1;
-  stroke-opacity: 0.22;
 }
 
-/* Hub central */
-.hub {
+/* spec: hover.ringBorder rgb(0 0 0 / 20%) — cor de linha derivada de token
+   (D1: zero hex literal). Irmão em opacity 0 para não transicionar stroke. */
+.ringEdge {
+  fill: none;
+  stroke: color-mix(in srgb, var(--c-iron) 24%, transparent);
+  stroke-width: 1;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+
+/* Alvo de ponteiro do anel: só o stroke recebe evento, então o interior do
+   grafo continua clicável/selecionável. Trigger SECUNDÁRIO (o primário é a
+   <ul> de passos) — por isso não há estado de foco aqui. */
+.ringHit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 26;
+  pointer-events: stroke;
+  cursor: pointer;
+}
+
+/* Anel ativo ganha a borda; os SEGUINTES esmaecem (spec: .6 e o 4º a .3).
+   Escrito anel a anel de propósito: é a leitura literal da spec. */
+.diagram[data-active-ring="2"] .ringGroup[data-ring="2"] .ringEdge,
+.diagram[data-active-ring="3"] .ringGroup[data-ring="3"] .ringEdge,
+.diagram[data-active-ring="4"] .ringGroup[data-ring="4"] .ringEdge {
+  opacity: 1;
+}
+
+.diagram[data-active-ring="2"] .ringGroup[data-ring="3"],
+.diagram[data-active-ring="3"] .ringGroup[data-ring="4"] {
+  opacity: 0.6;
+}
+
+.diagram[data-active-ring="2"] .ringGroup[data-ring="4"] {
+  opacity: 0.3;
+}
+
+/* --- Ponto principal (no ponto de tangência dos quatro anéis) ---------- */
+
+.mainDot {
   fill: var(--c-circuit);
 }
 
-/* Nodes — comp: fill circuit (diagrama funcional, L3).
-   Estado base = fallback estático (L5): opacos, sem animação */
-.node {
+/* spec: points.mainHalo "0 0 0 12px rgb(0 0 0 / 8%)" — halo ESTÁTICO. */
+.mainHalo {
+  fill: color-mix(in srgb, var(--c-iron) 8%, transparent);
+}
+
+/* Onda: estado base (= reduced-motion) é invisível e sem animação. */
+.wave {
+  fill: var(--c-circuit);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* --- Nós rotulados ---------------------------------------------------- */
+
+.dot {
   fill: var(--c-circuit);
 }
 
-/* Labels mono caption */
+/* Rótulo em 14px de UNIDADE DE VIEWBOX (625), não 16px como a spec: os 10
+   rótulos oficiais de about.methodNodes são ~2× mais longos que os do modelo
+   e a 16px o mais longo estoura a caixa. É tipografia decorativa
+   (aria-hidden) — quem lê o rótulo de verdade lê a <ul> do MethodGraph. */
 .label {
   font-family: var(--ff-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   fill: var(--c-steel);
 }
 
-/* Pulso discreto — declarado somente com motion permitido (L5) */
+/* Estado base = reduced-motion: o grupo ativo JÁ está no ângulo final (sem
+   transform), os outros só não aparecem. Nada varre, nada pisca. */
+.node {
+  opacity: 0;
+}
+
+.node[data-on="true"] {
+  opacity: 1;
+}
+
+/* ============================================================
+   MOTION — tudo daqui para baixo só existe com motion permitido (L5)
+   ============================================================ */
 @media (prefers-reduced-motion: no-preference) {
+  /* Fan-out: o nó recolhido mora no ponto de tangência (--fx/--fy levam-no de
+     volta) e varre até o próprio ângulo em 500 ms easeOutSine (spec:
+     about.graph.fanOut). Um único transform por nó. */
   .node {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: pulse 2s ease-in-out var(--pulse-delay, 0s) infinite alternate;
+    transform: translate(var(--fx, 0px), var(--fy, 0px));
+    transition:
+      transform 500ms cubic-bezier(0.39, 0.575, 0.565, 1),
+      opacity 500ms var(--ease);
+  }
+
+  .node[data-on="true"] {
+    transform: translate(0px, 0px);
+  }
+
+  /* Onda única em vez de respiro: o corte em 70%/70,1% devolve a escala a 1
+     com opacity já em 0, então o ciclo tem uma expansão e uma pausa — é o que
+     o spread de box-shadow do modelo faz visualmente. */
+  @keyframes satti-graph-wave {
+    0% {
+      transform: scale(1);
+      opacity: 0.15;
+    }
+
+    70% {
+      transform: scale(4.3);
+      opacity: 0;
+    }
+
+    70.1% {
+      transform: scale(1);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+
+  .wave {
+    animation: satti-graph-wave var(--dur-ring) ease infinite;
   }
 }
 
-@keyframes pulse {
-  from {
-    opacity: 0.35;
-    transform: scale(0.85);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1.15);
+/* ============================================================
+   Mobile — o grafo fica ilegível abaixo de 768px (14 unidades de
+   viewBox em 335px de caixa dão ~7px reais). Os rótulos saem; a
+   <ul> de passos do MethodGraph é a fonte da informação ali.
+   ============================================================ */
+@media (max-width: 767px) {
+  .label {
+    display: none;
   }
 }

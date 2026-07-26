@@ -4,8 +4,15 @@
    padding 0 11px 0 32px · brand Archivo 800 21px −0.01em ·
    nav 15px gap 36 · CTA roll --ease-roll · menu 44px).
    Estados (F0-F5): base = CTA ghost hairline; data-active = CTA
-   preenche blaze (.4s var(--ease), texto iron — L2).
-   L3: focus rings circuit. L5: transições/roll só com motion ok.
+   preenche band (texto --c-band-ink — L2).
+   data-tone (W11-F): o pill inverte sobre seção escura — é o
+   fixedInvert do modelo. O HeaderClient escreve os dois attrs a
+   partir da seção que cruza o centro vertical do pill.
+   Timings do modelo (awsmd-geometry → header.cta): .2s em
+   background/color, .3s na hairline (o "stroke" do pill).
+   L3: focus rings circuit. L5: transições/roll só com motion ok —
+   a TROCA de tom acontece nos dois modos (é legibilidade, não
+   movimento); sem motion ela é instantânea.
    ============================================================ */
 
 .header {
@@ -103,9 +110,47 @@
 }
 
 .header[data-active="true"] .cta {
-  background: var(--c-blaze);
-  border-color: var(--c-blaze);
-  color: var(--c-iron); /* L2: nunca branco sobre blaze */
+  background: var(--c-band);
+  border-color: var(--c-band);
+  color: var(--c-band-ink); /* L2: nunca branco sobre blaze */
+}
+
+/* --- Tom escuro: o pill inverte (fixedInvert do modelo) ----------
+   Só cor. Geometria, posição e persistência do nav não mudam. */
+.header[data-tone="dark"] {
+  background: var(--c-graphite);
+  border-color: var(--c-hairline-dark);
+}
+
+.header[data-tone="dark"] .brand,
+.header[data-tone="dark"] .navLink,
+.header[data-tone="dark"] .localeActive {
+  color: var(--c-ink-on-dark);
+}
+
+.header[data-tone="dark"] .navLink:hover {
+  color: var(--c-steel);
+}
+
+.header[data-tone="dark"] .cta,
+.header[data-tone="dark"] .menu {
+  border-color: var(--c-hairline-dark);
+}
+
+.header[data-tone="dark"] .cta {
+  color: var(--c-ink-on-dark);
+}
+
+.header[data-tone="dark"] .menu span {
+  background: var(--c-ink-on-dark);
+}
+
+/* O CTA preenchido vence o tom nos dois lados: band + band-ink (L2).
+   Especificidade 0,4,0 > os 0,3,0 das duas regras acima. */
+.header[data-tone="dark"][data-active="true"] .cta {
+  background: var(--c-band);
+  border-color: var(--c-band);
+  color: var(--c-band-ink);
 }
 
 /* Roll de texto do CTA (comp: duas camadas, --ease-roll) */
@@ -170,11 +215,21 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* L10: transição DISCRETA de cor em troca de estado é permitida — o
+     proibido é escrita por frame. Aqui o write acontece ~10 vezes na
+     página inteira (uma por fronteira de seção). */
   .header,
-  .cta {
+  .brand,
+  .navLink,
+  .locale,
+  .localeActive,
+  .cta,
+  .menu,
+  .menu span {
     transition:
-      background-color 0.4s var(--ease),
-      border-color 0.4s var(--ease);
+      background-color 0.2s var(--ease),
+      color 0.2s var(--ease),
+      border-color 0.3s var(--ease);
   }
 
   .ctaMask .ctaLabel {

@@ -15,15 +15,51 @@
  * y = fração da altura da seção (0..1). Nodes (círculo + label mono)
  * ancoram em waypoints com `slot`; o LABEL vem da seção consumidora
  * (copy-law L1 — geometria aqui, texto nunca).
+ *
+ * ─────────────────────────────────────────────────────────────────────
+ * CONTRATO COM A W12 — a S6 renderiza DOIS <AutomationLine>
+ * ─────────────────────────────────────────────────────────────────────
+ * A zona "automation" foi DIVIDIDA em "automation-a" e "automation-b"
+ * (W11-F). O motivo é o pulso, não a geometria: o pulso viaja a
+ * PULSE_SPEED px/s constante e o bastão só passa no `animationend` do
+ * segmento dono. Com a S6 crescendo de ~1.140 px para os 3.758 px do
+ * modelo, o segmento único passaria a ter ~3.900 px de arco → ~15 s de
+ * viagem, um quarto de minuto em que nenhuma outra zona pode ser dona
+ * do único pulso do site. Aumentar PULSE_SPEED quebraria a invariante
+ * de px/s constante (é ela que faz o fio parecer UM fio). Dividir a
+ * zona em dois sub-blocos de ~1.879 px preserva as duas coisas.
+ *
+ * Portanto a S6 (components/sections/automation/Automation.tsx, da W12)
+ * deve renderizar DOIS segmentos, um por sub-bloco, cada um ancorado no
+ * seu próprio wrapper `position: relative` de ~metade da seção:
+ *
+ *   <div className={styles.blockA}>   // ~1.879 px
+ *     <AutomationLine zone="automation-a" tone="dark"
+ *                     nodeLabels={{ n1: steps[0], n2: steps[1] }} />
+ *   </div>
+ *   <div className={styles.blockB}>   // ~1.879 px
+ *     <AutomationLine zone="automation-b" tone="dark"
+ *                     nodeLabels={{ n3: steps[2] }} />
+ *   </div>
+ *
+ * Os 3 labels oficiais de `automation.steps` continuam cobertos: n1/n2
+ * no sub-bloco A, n3 no B. O handshake A→B acontece no MESMO x (0,62),
+ * então a costura entre os dois wrappers é invisível — é o mesmo
+ * contrato de continuidade das fronteiras de seção.
  */
 
 export type ThreadZoneId =
   | "hero"
   | "services"
-  | "automation"
+  | "automation-a"
+  | "automation-b"
   | "portfolio"
   | "contact";
 
+/**
+ * Ids aceitos mas obsoletos. Existe UM: a zona "automation" antes do
+ * split da W11-F. Resolve para o sub-bloco A. Some com a W12.
+ */
 export interface ThreadWaypoint {
   /** Fração da largura da seção (0 = esquerda, 1 = direita). */
   x: number;
@@ -60,20 +96,33 @@ export const THREAD_PLAN: ReadonlyArray<ThreadSegmentPlan> = [
       { x: 0.46, y: 1 },
     ],
   },
+  /* Sub-blocos da S6. O x-swing aqui é DELIBERADAMENTE quase full-bleed
+     (0,06 … 0,94): o path do modelo é um S largo que estoura as duas
+     bordas do container, enquanto o nosso era timidamente central
+     (0,24 … 0,76) e lia como uma linha vertical com cotoveladas. */
   {
-    id: "automation",
+    id: "automation-a",
     order: 2,
     waypoints: [
       { x: 0.46, y: 0 },
-      { x: 0.24, y: 0.3, slot: "n1" },
-      { x: 0.76, y: 0.62, slot: "n2" },
-      { x: 0.52, y: 0.86, slot: "n3" },
+      { x: 0.06, y: 0.32, slot: "n1" },
+      { x: 0.94, y: 0.68, slot: "n2" },
+      { x: 0.62, y: 1 },
+    ],
+  },
+  {
+    id: "automation-b",
+    order: 3,
+    waypoints: [
+      { x: 0.62, y: 0 },
+      { x: 0.08, y: 0.34 },
+      { x: 0.92, y: 0.66, slot: "n3" },
       { x: 0.6, y: 1 },
     ],
   },
   {
     id: "portfolio",
-    order: 3,
+    order: 4,
     waypoints: [
       { x: 0.6, y: 0 },
       { x: 0.4, y: 0.5, slot: "n1" },
@@ -82,7 +131,7 @@ export const THREAD_PLAN: ReadonlyArray<ThreadSegmentPlan> = [
   },
   {
     id: "contact",
-    order: 4,
+    order: 5,
     waypoints: [
       { x: 0.22, y: 0 },
       { x: 0.5, y: 0.42, slot: "end" },

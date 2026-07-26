@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "budgets": "node scripts/check-budgets.mjs",
+    "thirdparty": "node scripts/check-thirdparty.mjs --mode final",
+    "parity:dom": "node scripts/parity-timeline.mjs --dom",
+    "parity": "node scripts/parity-timeline.mjs",
+    "parity:reduced": "node scripts/parity-timeline.mjs --reduced",
+    "verify": "npm run build && npm run typecheck && npm run lint && npm run budgets && npm run thirdparty"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
@@ -26,6 +33,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "playwright-core": "^1.58.1",
     "sharp": "^0.35.3",
     "tailwindcss": "^4",
     "typescript": "^5"

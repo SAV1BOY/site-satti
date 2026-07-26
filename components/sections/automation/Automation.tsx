@@ -1,58 +1,92 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
 import AutomationLine from "@/components/ui/AutomationLine";
 import Button from "@/components/ui/Button";
+import Marquee from "@/components/ui/Marquee";
+import { resolveAsset, thirdPartyAttrs } from "@/lib/third-party";
 import PhoneVideo from "./PhoneVideo";
 import styles from "./Automation.module.css";
 
 /**
- * S6 — Automação (seção DARK, zona "automation" do fio D3).
- * Fonte visual: S6 Automacao Desktop 1920.dc.html · Mobile 375.dc.html
+ * S6 — Automação (seção DARK). Server Component (L11): o único client child é
+ * o PhoneVideo (gate de IO do §8) — TODA a coreografia desta seção é CSS.
  *
- * Server Component (L11). Único client child: PhoneVideo (slot A6,
- * §8 autoplay motion-ok). AutomationLine/Button já são self-contained.
+ * Fonte de geometria: design/awsmd-ref/awsmd-geometry.json → `automation`
+ * (+ awsmd-motion.json → ghost-marquee / phone-float / dev-foreground-sticky).
+ * Copy: content/home.pt-BR.json (L1 — nada inventado aqui).
  *
- * D2: título "{AUTOMAÇÃO} INTELIGENTE **" — chaves e ** em steel nos
- * dois breakpoints; o blaze do viewport é o CTA "Ver portfólio".
- * D3: <AutomationLine zone="automation" tone="dark" /> é o PRIMEIRO
- * filho da section (position: relative); conteúdo em wrapper z-index 1.
- * A régua horizontal do rodapé da comp era a aproximação estática do
- * fio — substituída pelo fio contínuo (não portada). Os labels de
- * passo (automation.steps) viram labels dos nodes do segmento.
- * L1: toda copy via next-intl (t.raw no título por causa das chaves
- * {} — sintaxe ICU); labels do mosaico/blueprint são marcação técnica
- * decorativa da comp (aria-hidden), não copy editorial.
+ * ── Por que a seção era 3,5× mais curta que o modelo ────────────────────────
+ * `parity:dom` media 9,7% da altura da página contra 30,2% do modelo. A causa
+ * não era espaçamento: FALTAVAM as três camadas de altura do modelo. A altura
+ * do modelo (3.758px @1080) fecha numa identidade de quatro termos:
+ *
+ *     header ~316  +  parede 3×795,6 = 2.386,8  +  padding 115  +  mão 940
+ *   = 3.757,8 ≈ 3.758
+ *
+ * É essa identidade que fixa a leitura do spec pack: a parede é de **3 fileiras
+ * de 5 slots** (15 slots, 12 preenchidos), não 3 colunas de 5 — 3 colunas dariam
+ * 5 fileiras = 3.978px só de parede e a conta não fecharia em nenhum arranjo.
+ * `mosaic.columns: 3` do JSON é resíduo da assinatura de parallax por coluna que
+ * a DEC-021 §3 apagou; a DEC-021 já corrige o modelo mental para "3 fileiras
+ * flex". As larguras responsivas confirmam: 5 slots sangram a viewport em TODOS
+ * os patamares (1.953>1920 · 1.679>1600 · 1.679>1366 · 1.132>991 · 830>565),
+ * que é exatamente o que se espera de uma parede full-bleed.
+ *
+ * A distribuição 5/5/2 das 12 telas nos 15 slots é INFERÊNCIA (o spec pack dá
+ * contagem, não posição). A dimensão que a paridade mede — a altura — é
+ * invariante à distribuição: são 3 fileiras em qualquer arranjo.
+ *
+ * ── DEC-021 §3: duas camadas de movimento NÃO existem ───────────────────────
+ * Não há parallax de 3 colunas no mosaico nem parallax 0,6 na mão. A parede é
+ * estática e a mão é `position: sticky` — o diferencial de velocidade medido era
+ * o primeiro plano SEGURANDO enquanto as fileiras rolavam. Logo esta seção não
+ * abre um único rAF: ghost marquee e float dos phones são keyframes, a mão é uma
+ * linha de CSS, e o desenho do fio já roda no loop compartilhado dentro do
+ * <AutomationLine>. Custo em JS de cliente desta wave: zero.
+ *
+ * ── Dois <AutomationLine>, um por sub-bloco ─────────────────────────────────
+ * Contrato de components/ui/automation-thread-plan.ts (W11-F): com a seção em
+ * ~3,9k px, um segmento único daria ~15s de viagem do pulso — um quarto de
+ * minuto em que nenhuma outra zona pode ser dona do único pulso do site.
+ * Os dois wrappers são metades geométricas (top 0/50%, height 50%), não recortes
+ * de conteúdo: o handshake A→B acontece no mesmo x (0,62) do plano, então a
+ * costura no meio da seção é invisível, e cada segmento fica com ~1,95k px.
+ *
+ * ── Camadas (z) ────────────────────────────────────────────────────────────
+ * 0 ghost marquee + fio · 1 header/parede · 2 mão+vídeo (sticky) · 3 phones.
+ *
+ * V2-D2: phones, telas do mosaico e mão passam por `resolveAsset()`; o vídeo e o
+ * poster do slot A6 são resolvidos dentro do PhoneVideo.
  */
 
 /** Paths definitivos do MANIFEST (§8 — A6 · Phone S6). */
 const PHONE_VIDEO_SRC = "/media/phone.mp4";
+/* @resolved-by PhoneVideo — só declaração de path; a decisão draft/final é
+   do resolveAsset() dentro do PhoneVideo. */
 const PHONE_POSTER_SRC = "/media/phone-poster.webp";
 
-interface MosaicCell {
-  key: string;
-  /** Coluna central destacada (fundo iron, label ink-on-dark). */
-  center: boolean;
-  label: string;
-}
+/** PH-L / PH-R (MANIFEST §8) — mockups que flutuam sobre a parede. */
+const PHONE_LEFT_SRC = "/img/automation/phone-left.webp";
+const PHONE_RIGHT_SRC = "/img/automation/phone-right.webp";
+/** A9 — recorte fotográfico com alpha; a tela do telefone é transparente. */
+const HAND_SRC = "/img/automation/hand.webp";
 
 /**
- * Mosaico 3×4 na ordem row-major da comp desktop (coluna central:
- * A6 na linha 1, A9 na linha 3). O CSS reordena p/ a comp mobile.
+ * SC01–SC12 em 3 fileiras de 5 slots (12 preenchidos — ver doc acima).
+ * A terceira fileira usa as duas pontas: é onde a mão sticky ocupa o centro.
  */
-const MOSAIC_CELLS: readonly MosaicCell[] = [
-  { key: "sc1", center: false, label: "SC1" },
-  { key: "a6", center: true, label: "A6 · VÍDEO" },
-  { key: "sc2", center: false, label: "SC2" },
-  { key: "sc3", center: false, label: "SC3" },
-  { key: "sc4", center: false, label: "SC4" },
-  { key: "sc5", center: false, label: "SC5" },
-  { key: "sc6", center: false, label: "SC6" },
-  { key: "a9", center: true, label: "A9 · VÍDEO" },
-  { key: "sc7", center: false, label: "SC7" },
-  { key: "sc8", center: false, label: "SC8" },
-  { key: "sc9", center: false, label: "SC9" },
-  { key: "sc10", center: false, label: "SC10" },
+const SCREEN_ROWS: readonly (readonly string[])[] = [
+  ["01", "02", "03", "04", "05"],
+  ["06", "07", "08", "09", "10"],
+  ["11", "12"],
 ];
+
+const screenSrc = (n: string) => `/img/automation/screen-${n}.webp`;
+
+/** Dimensões INTRÍNSECAS (o CSS reescala por patamar via custom property). */
+const SCREEN_W = 365;
+const SCREEN_H = 770;
 
 /**
  * Renderiza o título D2 a partir da string oficial do JSON:
@@ -84,6 +118,27 @@ function TitleContent({ raw }: { raw: string }) {
   );
 }
 
+/** Uma tela da parede. Sem overlay de logo: os do modelo são de TERCEIROS e a
+ *  W12 não tem autorização; sem rótulo mono, porque não existe copy oficial
+ *  para as telas e a L1 proíbe inventar. */
+function Screen({ n }: { n: string }) {
+  const src = screenSrc(n);
+  const asset = resolveAsset(src);
+  if (!asset.render) return null;
+  return (
+    <div className={styles.screen}>
+      <Image
+        src={asset.src}
+        {...thirdPartyAttrs(src)}
+        alt=""
+        width={SCREEN_W}
+        height={SCREEN_H}
+        className={styles.screenImg}
+      />
+    </div>
+  );
+}
+
 export default async function Automation() {
   const t = await getTranslations();
 
@@ -91,29 +146,71 @@ export default async function Automation() {
   const rawTitle: unknown = t.raw("automation.title");
   const title = typeof rawTitle === "string" ? rawTitle : "";
 
-  // Descrição existe só na comp mobile; hoje o JSON traz null — o
-  // parágrafo só renderiza quando a copy oficial for cravada (L1).
+  // Descrição existe só na comp mobile; o CSS a esconde ≥768px.
   const rawDescription: unknown = t.raw("automation.description");
   const description =
     typeof rawDescription === "string" && rawDescription.length > 0
       ? rawDescription
       : null;
 
-  // Labels dos nodes do fio (D3): o segmento "automation" tem 3 slots
-  // (n1/n2/n3) no THREAD_PLAN — um por passo da comp (CAPTURA/AGENTES/ENTREGA).
+  /* Labels dos nodes do fio (D3). O plano dá n1/n2 no sub-bloco A e n3 no B —
+     os 3 passos oficiais (CAPTURA/AGENTES/ENTREGA) continuam cobertos. */
   const rawSteps: unknown = t.raw("automation.steps");
   const steps = Array.isArray(rawSteps)
     ? rawSteps.filter((s): s is string => typeof s === "string")
     : [];
   const [stepOne, stepTwo, stepThree] = steps;
-  const nodeLabels =
-    stepOne !== undefined && stepTwo !== undefined && stepThree !== undefined
-      ? { n1: stepOne, n2: stepTwo, n3: stepThree }
+  const labelsA =
+    stepOne !== undefined && stepTwo !== undefined
+      ? { n1: stepOne, n2: stepTwo }
       : undefined;
+  const labelsB = stepThree !== undefined ? { n3: stepThree } : undefined;
+
+  /* Ghost marquee: MESMO texto da faixa de posicionamento (values.items,
+     separadores inclusos) — é o que o modelo faz, e é copy oficial literal. */
+  const rawGhost: unknown = t.raw("values.items");
+  const ghostItems = Array.isArray(rawGhost)
+    ? rawGhost.filter((s): s is string => typeof s === "string")
+    : [];
+
+  const phoneLeft = resolveAsset(PHONE_LEFT_SRC);
+  const phoneRight = resolveAsset(PHONE_RIGHT_SRC);
+  const hand = resolveAsset(HAND_SRC);
 
   return (
-    <section id="automacao" className={`section-dark ${styles.section}`}>
-      <AutomationLine zone="automation" tone="dark" nodeLabels={nodeLabels} />
+    <section
+      id="automacao"
+      className={`section-dark ${styles.section}`}
+      data-section="automation"
+      data-tone="dark"
+    >
+      {/* Marquee fantasma — atrás de tudo, decoração pura (raiz aria-hidden
+          via `decorative`). 20s / direção `right` (DEC-021 corrigiu os 40s do
+          spec pack; `--dur-ghost` em tokens.css ainda diz 40s e está fora do
+          ownership desta wave, por isso a duração vem da prop). */}
+      <div className={styles.ghost}>
+        <Marquee
+          direction="right"
+          speed={20}
+          gap="0.28em"
+          decorative
+          className={styles.ghostTrack}
+        >
+          {ghostItems.map((item, i) => (
+            <span key={`${item}-${i}`} className={styles.ghostWord}>
+              {item}
+            </span>
+          ))}
+        </Marquee>
+      </div>
+
+      {/* Metades geométricas do fio (não recortes de conteúdo) — ver doc. */}
+      <div className={`${styles.lineZone} ${styles.lineZoneA}`}>
+        <AutomationLine zone="automation-a" tone="dark" nodeLabels={labelsA} />
+      </div>
+      <div className={`${styles.lineZone} ${styles.lineZoneB}`}>
+        <AutomationLine zone="automation-b" tone="dark" nodeLabels={labelsB} />
+      </div>
 
       <div className={`container-s ${styles.inner}`}>
         <p className={`eyebrow ${styles.eyebrow}`}>{t("automation.eyebrow")}</p>
@@ -134,47 +231,82 @@ export default async function Automation() {
             {t("automation.contactCta")}
           </Button>
         </div>
+      </div>
 
-        <div className={styles.mediaGrid}>
-          {/* Phones flutuando (float 6s, fases ±3s). PH-L = slot de
-              vídeo A6 (§8); PH-R = tela blueprint decorativa. */}
-          <div className={styles.phones} aria-hidden="true">
-            <div className={`${styles.phone} ${styles.phoneA}`}>
-              <div className={styles.phoneScreen}>
-                <PhoneVideo
-                  videoSrc={PHONE_VIDEO_SRC}
-                  posterSrc={PHONE_POSTER_SRC}
-                />
-              </div>
+      {/* O palco começa DEPOIS do header, e não é organização de arquivo: ele é
+          o containing block do sticky. A caixa de contenção de um sticky é o
+          bloco pai, então com o header dentro do palco a mão podia subir até o
+          topo da seção e cobria o título inteiro (medido). Começando no topo da
+          parede, ela entra deslizando com a parede e só então gruda no rodapé
+          da viewport. */}
+      <div className={styles.stage}>
+        {/* Parede de telas: 3 fileiras estáticas, full-bleed. */}
+        <div className={styles.wall} aria-hidden="true">
+          {SCREEN_ROWS.map((row, i) => (
+            <div
+              key={i}
+              className={
+                row.length < 5 ? `${styles.row} ${styles.rowEnds}` : styles.row
+              }
+            >
+              {row.map((n) => (
+                <Screen key={n} n={n} />
+              ))}
             </div>
-            <div className={`${styles.phone} ${styles.phoneB}`}>
-              <div className={styles.phoneScreen} />
-            </div>
+          ))}
+
+          {/* Phones flutuando SOBRE a parede (z 3). A alternância é a fase:
+              mesmo keyframe, o esquerdo com animation-delay -3s. */}
+          <div className={styles.phones}>
+            {phoneLeft.render ? (
+              <Image
+                src={phoneLeft.src}
+                {...thirdPartyAttrs(PHONE_LEFT_SRC)}
+                alt=""
+                width={674}
+                height={1100}
+                className={`${styles.phone} ${styles.phoneLeft}`}
+              />
+            ) : null}
+            {phoneRight.render ? (
+              <Image
+                src={phoneRight.src}
+                {...thirdPartyAttrs(PHONE_RIGHT_SRC)}
+                alt=""
+                width={756}
+                height={1236}
+                className={`${styles.phone} ${styles.phoneRight}`}
+              />
+            ) : null}
+          </div>
+        </div>
+
+        {/* Primeiro plano: o ÚNICO position:sticky do site. Segura a mão e o
+            vídeo central no rodapé da viewport enquanto a parede rola — é isso
+            que a DEC-021 §3 identificou como a origem do "parallax" medido.
+            A caixa de 940px existe nos DOIS modos de asset: em `final` a mão é
+            omitida (terceiro), e sem a caixa a seção encurtaria 940px e a
+            paridade de altura mudaria conforme o modo de publicação. */}
+        <div className={styles.foreground} aria-hidden="true">
+          <div className={styles.video}>
+            <PhoneVideo
+              videoSrc={PHONE_VIDEO_SRC}
+              posterSrc={PHONE_POSTER_SRC}
+            />
           </div>
 
-          {/* Mosaico 3×4 (2 col no mobile) — blueprint decorativo. */}
-          <div className={styles.mosaic} aria-hidden="true">
-            {MOSAIC_CELLS.map((cell) => (
-              <div
-                key={cell.key}
-                className={
-                  cell.center
-                    ? `${styles.cell} ${styles.cellCenter}`
-                    : styles.cell
-                }
-              >
-                <span
-                  className={
-                    cell.center
-                      ? `${styles.cellLabel} ${styles.labelVideo}`
-                      : `${styles.cellLabel} ${styles.labelSc}`
-                  }
-                >
-                  {cell.label}
-                </span>
-              </div>
-            ))}
-          </div>
+          {hand.render ? (
+            <div className={styles.handWrap}>
+              <Image
+                src={hand.src}
+                {...thirdPartyAttrs(HAND_SRC)}
+                alt=""
+                width={1920}
+                height={1241}
+                className={styles.hand}
+              />
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

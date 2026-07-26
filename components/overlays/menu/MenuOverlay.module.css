@@ -20,6 +20,21 @@
    (L9). Mobile 375: padding 24/20/40 · label 38px · meta coluna.
    ============================================================ */
 
+/* ============================================================
+   v2 (W13) · MENU EM DUAS COLUNAS
+   Geometria: design/awsmd-ref/awsmd-geometry.json → overlays.menu
+   (sidebar max-width 354, padding 40/40/50 · panel padding 40/30/40/45)
+
+   O v1 era um painel único fullscreen graphite. O modelo divide em uma
+   coluna estreita e COLORIDA com marca e contatos, e o painel largo com
+   a navegação numerada. A coluna usa --c-band (blaze) com texto
+   --c-band-ink (iron): 5,3:1, passa AA, e é a regra que sobrou da L2
+   depois da V2-D4 — texto sobre band é SEMPRE iron, nunca branco.
+
+   Abaixo de 768px volta a uma coluna: 354px de sidebar num viewport de
+   375 não deixa painel nenhum.
+   ============================================================ */
+
 .root {
   position: fixed;
   inset: 0;
@@ -28,7 +43,50 @@
   flex-direction: column;
   background: var(--c-graphite);
   color: var(--c-ink-on-dark);
-  padding: 48px clamp(20px, 6.25vw, 120px) 64px;
+  overflow: hidden auto;
+}
+
+@media (min-width: 768px) {
+  .root {
+    flex-direction: row;
+    overflow: hidden;
+  }
+}
+
+/* --- Coluna de identidade (band) --- */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  flex-shrink: 0;
+  padding: 32px clamp(20px, 6.25vw, 40px);
+  background: var(--c-band);
+  color: var(--c-band-ink);
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    /* spec: sidebar.maxWidth 354, padding [40, 40, 50] */
+    width: 354px;
+    max-width: 354px;
+    padding: 40px 40px 50px;
+  }
+
+  /* spec: panel.padding [40, 30, 40, 45] */
+  .panel {
+    padding: 40px 30px 40px 45px;
+  }
+}
+
+/* --- Painel de navegação --- */
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0;
+  padding: 32px clamp(20px, 6.25vw, 45px) 40px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -78,11 +136,13 @@
 
 /* --- Topbar --------------------------------------------------- */
 
+/* v2: o topbar do painel agora só carrega o botão de fechar — a marca
+   mudou para a coluna de identidade. */
 .topbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 72px;
+  justify-content: flex-end;
+  margin-bottom: 48px;
 }
 
 .brand {
@@ -91,7 +151,8 @@
   text-transform: uppercase;
   font-size: 24px;
   letter-spacing: -0.01em;
-  color: var(--c-ink-on-dark);
+  /* v2: a marca vive na coluna band → herda --c-band-ink do .sidebar. */
+  color: inherit;
 }
 
 .close {
@@ -181,13 +242,13 @@
 
 /* --- Rodapé do overlay ---------------------------------------- */
 
+/* v2: `meta` passou a ser o bloco inferior da coluna de identidade — coluna,
+   não linha, porque a coluna tem 354px e os handles não caberiam lado a lado. */
 .meta {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  column-gap: 40px;
-  margin-top: auto; /* ancora na base em telas altas… */
-  padding-top: 64px; /* …mantendo o respiro mínimo da comp */
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
 }
 
 .metaItem,
@@ -203,6 +264,23 @@
   color: var(--c-steel);
 }
 
+/* CONTRASTE (v2): a `meta` migrou para a coluna band, e ali o steel dá
+   1,63:1 e o ink-on-dark 3,05:1 — os dois reprovam AA para 12px (medido:
+   scripts nas notas do commit). Sobre band só serve tinta escura:
+   iron 5,39:1 · graphite 5,68:1. Escopado à coluna para não afetar o
+   mobile de uma coluna nem qualquer reuso futuro em fundo escuro. */
+.sidebar .metaItem,
+.sidebar .metaLink {
+  color: var(--c-band-ink);
+}
+
+/* Estados [CONFIRMAR] sobre band: o steel do rascunho também reprova, então
+   a distinção passa a ser opacidade sobre a MESMA tinta escura, não outra cor. */
+.sidebar .metaItem[data-confirm="true"] {
+  color: var(--c-band-ink);
+  opacity: 0.72;
+}
+
 .metaLink {
   text-decoration: none;
   transition: color 0.3s ease;
@@ -215,6 +293,15 @@
 
 .metaLink:hover {
   color: var(--c-ink-on-dark);
+}
+
+/* Sobre band o hover NÃO pode clarear (ink-on-dark = 3,05:1, reprova AA para
+   12px). O feedback passa a ser sublinhado: mantém o contraste de 5,39:1 e é
+   um sinal mais forte que uma variação de tom. */
+.sidebar .metaLink:hover {
+  color: var(--c-band-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .language {

@@ -1,0 +1,294 @@
+{
+  "$comment": [
+    "Declaração de assets de terceiro (ULTRAGOAL v2 · V2-D2 / DEC-017).",
+    "Estes assets vêm do site que serve de modelo estrutural. Eles entram em PREVIEW para",
+    "que a paridade visual possa ser avaliada, e são omitidos ou substituídos quando",
+    "NEXT_PUBLIC_CONTENT_MODE=final — o modo do domínio público. Nada aqui chega a sattiai.com.",
+    "",
+    "Este arquivo é a DECLARAÇÃO (escrita à mão, decisão de projeto).",
+    "public/assets-manifest.json é a SAÍDA do import (tamanhos e dimensões reais).",
+    "",
+    "finalMode:",
+    "  omit        → o elemento não renderiza em final",
+    "  placeholder → renderiza o placeholder blueprint em final (campo `placeholder`)",
+    "  omit        → o elemento não renderiza em final (regra para TODO vídeo de terceiro)",
+    "  placeholder → renderiza o placeholder blueprint em final (regra para TODA imagem de terceiro, poster incluído)",
+    "  deferred    → RESERVADO: hoje nenhum asset usa. Um poster marcado como deferred",
+    "                renderizaria o frame do modelo em produção — foi o furo corrigido em DEC-017b.",
+    "swapTarget descreve o que o Miguel precisa produzir para liberar o slot em final.",
+    "A tabela de swap do RELATORIO-FINAL-v2 é gerada a partir daqui."
+  ],
+  "version": 2,
+  "assets": [
+    {
+      "id": "hero-video",
+      "path": "public/media/hero.mp4",
+      "kind": "video",
+      "section": "hero",
+      "finalMode": "omit",
+      "swapTarget": "Vídeo de fundo SATTI 16:9, ~10 s em loop, ≤1,2 MB (docs/06 §2: filamento blaze em circuito sobre paper/graphite)"
+    },
+    {
+      "id": "hero-poster",
+      "path": "public/media/hero-poster.webp",
+      "kind": "image",
+      "section": "hero",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "Frame 0 do vídeo SATTI já codificado, 1600×900 WebP ≤120 KB"
+    },
+    {
+      "id": "service-agents",
+      "path": "public/img/services/agents.webp",
+      "kind": "image",
+      "section": "services",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "A7a — imagem do card Agentes de IA & Automações, 1208×1306 alpha ≤180 KB (docs/06 §5)"
+    },
+    {
+      "id": "service-products",
+      "path": "public/img/services/products.webp",
+      "kind": "image",
+      "section": "services",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "A7b — imagem do card Produtos Web & SaaS, 1208×1306 alpha ≤180 KB"
+    },
+    {
+      "id": "service-data",
+      "path": "public/img/services/data.webp",
+      "kind": "image",
+      "section": "services",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "A7c — imagem do card Dados & Integrações, 1208×1306 alpha ≤180 KB (a fonte do modelo tem só 534×544 — este é o primeiro a substituir)"
+    },
+    {
+      "id": "stat-video-1",
+      "path": "public/media/stats/stat-1.mp4",
+      "kind": "video",
+      "section": "about",
+      "finalMode": "omit",
+      "swapTarget": "A2 — objeto 3D SATTI 1:1 em loop, ≤200 KB (docs/06 §3)"
+    },
+    {
+      "id": "stat-poster-1",
+      "path": "public/media/stats/stat-1-poster.webp",
+      "kind": "image",
+      "section": "about",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "A2 poster — frame do .mp4 SATTI já codificado, 320×320 ≤24 KB"
+    },
+    {
+      "id": "stat-video-2",
+      "path": "public/media/stats/stat-2.mp4",
+      "kind": "video",
+      "section": "about",
+      "finalMode": "omit",
+      "swapTarget": "A3 — objeto 3D SATTI 1:1 em loop, ≤200 KB (docs/06 §3)"
+    },
+    {
+      "id": "stat-poster-2",
+      "path": "public/media/stats/stat-2-poster.webp",
+      "kind": "image",
+      "section": "about",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "A3 poster — frame do .mp4 SATTI já codificado, 320×320 ≤24 KB"
+    },
+    {
+      "id": "stat-video-3",
+      "path": "public/media/stats/stat-3.mp4",
+      "kind": "video",
+      "section": "about",
+      "finalMode": "omit",
+      "swapTarget": "A4 — objeto 3D SATTI 1:1 em loop, ≤200 KB (docs/06 §3)"
+    },
+    {
+      "id": "stat-poster-3",
+      "path": "public/media/stats/stat-3-poster.webp",
+      "kind": "image",
+      "section": "about",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "A4 poster — frame do .mp4 SATTI já codificado, 320×320 ≤24 KB"
+    },
+    {
+      "id": "stat-video-4",
+      "path": "public/media/stats/stat-4.mp4",
+      "kind": "video",
+      "section": "about",
+      "finalMode": "omit",
+      "swapTarget": "A5 — objeto 3D SATTI 1:1 em loop, ≤200 KB (docs/06 §3)"
+    },
+    {
+      "id": "stat-poster-4",
+      "path": "public/media/stats/stat-4-poster.webp",
+      "kind": "image",
+      "section": "about",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "A5 poster — frame do .mp4 SATTI já codificado, 320×320 ≤24 KB"
+    },
+    {
+      "id": "automation-phone-left",
+      "path": "public/img/automation/phone-left.webp",
+      "kind": "image",
+      "section": "automation",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "PH-L — mockup de phone SATTI, 674×1100 alpha ≤250 KB"
+    },
+    {
+      "id": "automation-phone-right",
+      "path": "public/img/automation/phone-right.webp",
+      "kind": "image",
+      "section": "automation",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "PH-R — mockup de phone SATTI, 756×1236 alpha ≤250 KB"
+    },
+    {
+      "id": "automation-hand",
+      "path": "public/img/automation/hand.webp",
+      "kind": "image",
+      "section": "automation",
+      "finalMode": "omit",
+      "swapTarget": "A9 — foto da mão do Miguel segurando o telefone com o CallAudit aberto, fundo removido, WebP com alpha ≤400 KB (docs/06 §6 prefere foto própria)"
+    },
+    {
+      "id": "automation-mosaic",
+      "pathGlob": "public/img/automation/screen-*.webp",
+      "count": 12,
+      "kind": "image",
+      "section": "automation",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "SC01–SC12 — capturas reais de telas de produtos SATTI, 730×1540 ≤120 KB cada"
+    },
+    {
+      "id": "automation-video",
+      "path": "public/media/phone.mp4",
+      "kind": "video",
+      "section": "automation",
+      "finalMode": "omit",
+      "swapTarget": "A6 — gravação real de tela do CallAudit 9:19, ≤250 KB (docs/06 §4: não gerar UI de cliente falsa)"
+    },
+    {
+      "id": "automation-video-poster",
+      "path": "public/media/phone-poster.webp",
+      "kind": "image",
+      "section": "automation",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "A6 poster — frame do .mp4 SATTI já codificado, 384×832 ≤40 KB"
+    },
+    {
+      "id": "portfolio-video-1",
+      "path": "public/media/portfolio-1.mp4",
+      "kind": "video",
+      "section": "portfolio",
+      "finalMode": "omit",
+      "swapTarget": "P1 — gravação REAL de projeto SATTI, 8 s 720×720 ≤1 MB (docs/06 §0.1: portfólio nunca é gerado)"
+    },
+    {
+      "id": "portfolio-video-2",
+      "path": "public/media/portfolio-2.mp4",
+      "kind": "video",
+      "section": "portfolio",
+      "finalMode": "omit",
+      "swapTarget": "P2 — gravação REAL de projeto SATTI, 8 s 720×720 ≤1 MB (docs/06 §0.1: portfólio nunca é gerado)"
+    },
+    {
+      "id": "portfolio-video-3",
+      "path": "public/media/portfolio-3.mp4",
+      "kind": "video",
+      "section": "portfolio",
+      "finalMode": "omit",
+      "swapTarget": "P3 — gravação REAL de projeto SATTI, 8 s 720×720 ≤1 MB (docs/06 §0.1: portfólio nunca é gerado)"
+    },
+    {
+      "id": "portfolio-shots",
+      "pathGlob": "public/img/portfolio/shot-*.webp",
+      "count": 6,
+      "kind": "image",
+      "section": "portfolio",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "P1–P6 — screenshots REAIS dos 6 projetos, 1400×1440 ≤250 KB cada. Os de 1–3 são o frame 0 do respectivo .mp4"
+    },
+    {
+      "id": "banner-textures",
+      "pathGlob": "public/img/texture-*.webp",
+      "count": 2,
+      "kind": "image",
+      "section": "banner",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "A8 ×2 — texturas SATTI, 476×180 ≤40 KB cada (docs/06 §6 — ou gerar proceduralmente e sair desta lista)"
+    },
+    {
+      "id": "cases-thumbs",
+      "pathGlob": "public/img/cases/thumb-*.webp",
+      "count": 3,
+      "kind": "image",
+      "section": "cases",
+      "finalMode": "placeholder",
+      "placeholder": "blueprint",
+      "swapTarget": "C1–C3 — capturas reais dos 3 cases em destaque, 744×480 ≤120 KB cada"
+    }
+  ],
+  "excludedEvenInPreview": {
+    "$comment": [
+      "DEC-017 — um preview Vercel é público, e um link de preview está a um",
+      "compartilhamento de ser público. Para estes itens 'marcar e trocar depois'",
+      "não resolve o problema, porque o problema não é direito autoral de composição:",
+      "é marca viva de empresa que não é cliente da SATTI, é foto de pessoa",
+      "identificável sem base legal, é afirmação verificavelmente falsa de prêmio.",
+      "Nunca importados, em nenhum modo. Os 4 últimos entram aqui por outra razão:",
+      "são triviais de redesenhar, então carregar o arquivo de terceiro não tem",
+      "justificativa nenhuma.",
+      "O check falha se qualquer um destes aparecer em disco."
+    ],
+    "items": [
+      {
+        "id": "review-avatars",
+        "reason": "4 fotos de pessoas reais, com nome e cargo, que no site da SATTI apareceriam como clientes da SATTI — dado pessoal sem base legal (LGPD art. 7)",
+        "renders": "placeholder blueprint 78×78 em public/img/reviews/avatar-{1..4}.webp",
+        "swapTarget": "Foto + nome + cargo de cada depoente, com autorização por escrito (L1: nunca inventar depoimento)"
+      },
+      {
+        "id": "review-platform-badges",
+        "reason": "Selos de prêmio/review conquistados por OUTRA empresa — exibi-los é afirmação factual falsa, pior em preview do que em produção",
+        "renders": "nada; o slot de prova social do hero usa hero.eyebrow ([CONFIRMAR fonte real])",
+        "swapTarget": "Prova social real e verificável da SATTI, ou o slot permanece omitido"
+      },
+      {
+        "id": "client-logos",
+        "reason": "10 marcas vivas de empresas que não são clientes da SATTI — exibi-las num mural de clientes é uso indevido de marca. L6 permanece integral neste ponto",
+        "renders": "marquee de células com hairline 288×202 + about.logosNotice = [SOMENTE com autorização]",
+        "swapTarget": "Logos reais de clientes SATTI, com autorização por escrito de cada empresa, adicionados um a um como asset próprio"
+      },
+      {
+        "id": "model-brand-marks",
+        "reason": "Logo e badge de perfil do próprio site-modelo",
+        "renders": "marca SATTI de Site/BRANDING/logo-factory/out/",
+        "swapTarget": "n/a — a marca SATTI já existe"
+      },
+      {
+        "id": "click-to-play-seal",
+        "reason": "Arte raster do selo do modelo. Redesenhar é trivial e o resultado é melhor: texto em JetBrains Mono sobre path circular, ponto blaze, ~700 B inline, herda currentColor",
+        "renders": "SVG inline first-party no HeroShowreel, girando 10 s",
+        "swapTarget": "n/a — é first-party desde o início"
+      },
+      {
+        "id": "icon-svgs",
+        "reason": "Seta e ícone de play do modelo (307 B e 264 B). Não há razão para carregar arquivo de terceiro para dois paths — a SATTI já renderiza setas como glifo",
+        "renders": "SVG inline nos componentes",
+        "swapTarget": "n/a — é first-party desde o início"
+      }
+    ]
+  }
+}
