@@ -64,6 +64,16 @@ const SECURITY_HEADERS = [
 ];
 
 const nextConfig: NextConfig = {
+  experimental: {
+    /* O Lighthouse mediu 626 ms de render-blocking em duas folhas de CSS
+       (15,3 KB + 6,3 KB) e um LCP com a maior parte em RENDER DELAY — a imagem
+       já estava disponível e o browser não podia pintar. Inlinar o CSS remove
+       as duas requisições do caminho crítico.
+       Custo: o CSS entra no HTML de cada rota (o documento vai de ~20 KB de fio
+       para ~26 KB gzip), o que é barato comparado a duas idas ao servidor antes
+       do primeiro paint. */
+    inlineCss: true,
+  },
   images: {
     /* AVIF primeiro (25-30% abaixo do WebP; o browser negocia por Accept). */
     formats: ["image/avif", "image/webp"],
