@@ -281,21 +281,6 @@
     "title": "Na palavra de quem usou",
     "notice": "Depoimentos a confirmar com o Miguel",
     "quoteMark": "“",
-    "quote": {
-      "value": "[CONFIRMAR depoimento]",
-      "confirm": true,
-      "draft": null
-    },
-    "name": {
-      "value": "[CONFIRMAR nome]",
-      "confirm": true,
-      "draft": null
-    },
-    "role": {
-      "value": "[CONFIRMAR cargo · empresa]",
-      "confirm": true,
-      "draft": null
-    },
     "items": [
       {
         "quote": {

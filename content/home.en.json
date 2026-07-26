@@ -281,21 +281,6 @@
     "title": "In the words of those who used it",
     "notice": "Reviews to confirm with Miguel",
     "quoteMark": "“",
-    "quote": {
-      "value": "[CONFIRMAR quote]",
-      "confirm": true,
-      "draft": null
-    },
-    "name": {
-      "value": "[CONFIRMAR name]",
-      "confirm": true,
-      "draft": null
-    },
-    "role": {
-      "value": "[CONFIRMAR role · company]",
-      "confirm": true,
-      "draft": null
-    },
     "items": [
       {
         "quote": {

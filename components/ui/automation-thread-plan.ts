@@ -46,11 +46,6 @@
  * no sub-bloco A, n3 no B. O handshake A→B acontece no MESMO x (0,62),
  * então a costura entre os dois wrappers é invisível — é o mesmo
  * contrato de continuidade das fronteiras de seção.
- *
- * PONTE TRANSITÓRIA: enquanto a W12 não aterrissar, `zone="automation"`
- * continua aceito e resolve para "automation-a" (ver LEGACY_ZONE_ALIAS).
- * A ponte existe só para não quebrar o build entre waves — a W12 DEVE
- * removê-la junto com a última ocorrência de zone="automation".
  */
 
 export type ThreadZoneId =
@@ -65,12 +60,6 @@ export type ThreadZoneId =
  * Ids aceitos mas obsoletos. Existe UM: a zona "automation" antes do
  * split da W11-F. Resolve para o sub-bloco A. Some com a W12.
  */
-export type LegacyThreadZoneId = "automation";
-
-const LEGACY_ZONE_ALIAS: Readonly<Record<LegacyThreadZoneId, ThreadZoneId>> = {
-  automation: "automation-a",
-};
-
 export interface ThreadWaypoint {
   /** Fração da largura da seção (0 = esquerda, 1 = direita). */
   x: number;
@@ -149,24 +138,6 @@ export const THREAD_PLAN: ReadonlyArray<ThreadSegmentPlan> = [
     ],
   },
 ];
-
-/**
- * Normaliza um id de zona vindo de uma seção. Aceita a zona obsoleta
- * "automation" (ponte W11-F → W12) e avisa em dev.
- */
-export function resolveZoneId(
-  id: ThreadZoneId | LegacyThreadZoneId,
-): ThreadZoneId {
-  const alias = LEGACY_ZONE_ALIAS[id as LegacyThreadZoneId];
-  if (alias === undefined) return id as ThreadZoneId;
-  if (process.env.NODE_ENV !== "production") {
-    console.warn(
-      `[AutomationLine] zone="${id}" é obsoleta (a S6 virou dois sub-blocos na W11-F). ` +
-        `Resolvida para "${alias}" — a W12 deve renderizar automation-a + automation-b.`,
-    );
-  }
-  return alias;
-}
 
 export function getSegmentPlan(id: ThreadZoneId): ThreadSegmentPlan {
   const seg = THREAD_PLAN.find((s) => s.id === id);

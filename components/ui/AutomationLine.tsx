@@ -11,8 +11,6 @@ import {
 import styles from "./AutomationLine.module.css";
 import {
   getSegmentPlan,
-  resolveZoneId,
-  type LegacyThreadZoneId,
   type ThreadZoneId,
   type ThreadWaypoint,
 } from "./automation-thread-plan";
@@ -76,7 +74,7 @@ type PulseStyle = CSSProperties & { "--pulse-duration": string };
 
 interface AutomationLineProps {
   /** Zona do THREAD_PLAN. "automation" é obsoleta (ponte → automation-a). */
-  zone: ThreadZoneId | LegacyThreadZoneId;
+  zone: ThreadZoneId;
   /** Tom da seção: troca os tokens de stroke (D1). Default: light. */
   tone?: "light" | "dark";
   /** Labels mono dos nodes, por slot do plano (ex.: {n1: "TRIGGER"}). */
@@ -148,7 +146,7 @@ export default function AutomationLine({
   nodeLabels,
   className,
 }: AutomationLineProps) {
-  const zoneId = useMemo(() => resolveZoneId(zone), [zone]);
+  const zoneId = zone;
   const plan = useMemo(() => getSegmentPlan(zoneId), [zoneId]);
   const { pulseOwner, advancePulse, register, unregister, motionOk } =
     useAutomationThread();
