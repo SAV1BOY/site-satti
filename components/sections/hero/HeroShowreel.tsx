@@ -50,13 +50,24 @@ const SEAL_RING_ID = "hero-showreel-seal-ring";
  * Um rótulo curto ("Portfólio") esticado por `textLength` para os 214
  * unidades do anel viraria letra solta; repetir é o que selo faz.
  */
+/**
+ * Texto do anel: UMA instância do rótulo, espaçada para preencher a volta.
+ *
+ * A versão anterior repetia o rótulo até encher o anel (4× para "Portfólio"), e
+ * isso reprovava a WCAG 2.5.3 "Label in Name" — o axe mediu texto visível
+ * "PORTFÓLIO · PORTFÓLIO · PORTFÓLIO · PORTFÓLIO ·" contra um nome acessível de
+ * "Portfólio", e a regra exige que o NOME CONTENHA o texto visível.
+ *
+ * O `aria-hidden` do SVG não resolve, e está certo que não resolva: a regra
+ * existe para quem usa COMANDO DE VOZ, que lê a tela e vai dizer o que enxerga.
+ * Se a tela mostra o rótulo quatro vezes, "clicar em Portfólio" fica ambíguo.
+ *
+ * Com uma instância só, o texto visível é exatamente o rótulo, o nome acessível
+ * o contém, e o preenchimento do anel passa a ser trabalho do `letter-spacing`
+ * no CSS — que é onde esse tipo de ajuste deveria estar desde o começo.
+ */
 function ringLabel(label: string): string {
-  const unit = `${label.toUpperCase()} · `;
-  if (unit.trim().length === 0) return "";
-  let out = unit;
-  // Teto de repetições: guarda contra rótulo de 1 caractere.
-  for (let i = 0; i < 8 && out.length < 40; i += 1) out += unit;
-  return out;
+  return label.toUpperCase();
 }
 
 function ShowreelSeal({ label }: { label: string }) {

@@ -104,9 +104,15 @@
   color: var(--c-paper);
 }
 
+/* O anel mostra UMA instância do rótulo (ver ringLabel no TSX: repetir
+   reprovava a WCAG 2.5.3). O preenchimento da volta é feito aqui, por
+   tracking — que é onde ajuste tipográfico pertence. `textLength` no
+   <textPath> já estica o glifo até os 214px do arco; o tracking mantém as
+   letras legíveis em vez de esticadas. */
 .sealText {
   font-family: var(--ff-mono);
   font-size: 8px;
+  letter-spacing: 0.42em;
   fill: currentColor;
 }
 

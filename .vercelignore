@@ -1,0 +1,43 @@
+# =============================================================================
+# .vercelignore — o que NÃO sobe para o deploy.
+#
+# O CLI da Vercel NÃO respeita o .gitignore no upload. Sem este arquivo o
+# `vercel --prod` empacota o diretório inteiro: medido em 899 MB, e o deploy
+# morre com "File size limit exceeded (100 MB)" por causa do zip de referência
+# de 539 MB. Nada aqui é usado pelo build — é material de referência e
+# artefato de auditoria.
+# =============================================================================
+
+# Referência do modelo estrutural: DOM, CSS, bundles, 52 imagens, o vídeo de
+# 27 MB e o atlas forense. Só as MEDIDAS entram no repo, em
+# design/awsmd-ref/*.json (DEC-016). 546 MB.
+/Site
+
+# Zips de referência e de handoff. 539 MB no maior.
+*.zip
+
+# Cache local de trabalho: downloads brutos de vídeo, frames, relatórios de
+# Lighthouse, scripts de medição descartáveis.
+/.cache
+/raw
+
+# Logs de auditoria adversarial do v1 (runs do Codex CLI). 5 MB de texto que
+# não tem nada a ver com o runtime.
+/audits
+
+# Conversas de planejamento e briefings exportados.
+/CHATs WEB
+
+# Handoff de design: as 30 comps .dc.html + o toolkit de extração. É fonte da
+# VERDADE VISUAL para quem desenvolve, e zero para o runtime.
+# design/awsmd-ref/ é a exceção: são as medidas, e são pequenas.
+/design/satti-design-system
+/design/decks
+
+# Fonte usada só no build da imagem de OG (lida por fs no server, nunca servida)
+# — o Next já a inclui no bundle do servidor quando necessário.
+# (mantida: assets/fonts é pequena e o opengraph-image depende dela)
+
+# Padrões locais
+.env*.local
+*.tsbuildinfo
