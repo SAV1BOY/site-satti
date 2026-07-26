@@ -10,7 +10,7 @@ import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import "../styles/tokens.css";
 import "../globals.css";
 import "../styles/animations.css";
-import LenisProvider from "@/components/providers/LenisProvider";
+import ScrollProvider from "@/components/providers/ScrollProvider";
 import CursorProvider from "@/components/providers/CursorProvider";
 
 const archivo = Archivo({
@@ -123,9 +123,14 @@ export default async function LocaleLayout({
             hooks de i18n — as copies chegam via props dos Server
             Components. Remover o provider corta o JSON de mensagens
             inteiro do payload RSC (Script Eval + peso do HTML). */}
-        <LenisProvider>
+        {/* v2: ScrollProvider substitui o LenisProvider — mesmo scroll suave,
+            mais o loop scroll-linked compartilhado (um flush de layout por
+            frame, `lenis.raf` na mesma volta, e o loop estaciona quando nada
+            está em view). Enquanto nenhum consumidor registra um track, o loop
+            nem liga. */}
+        <ScrollProvider>
           <CursorProvider>{children}</CursorProvider>
-        </LenisProvider>
+        </ScrollProvider>
         <Analytics />
       </body>
     </html>
