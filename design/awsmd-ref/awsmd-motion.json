@@ -12,71 +12,357 @@
     "totalFrames": 3288,
     "fps": 24,
     "durationSeconds": 136.96,
-    "viewport": { "width": 1920, "height": 1080 },
-    "smoothScroll": { "library": "lenis", "lerp": 0.1, "$comment": "Confirmado por deltas suaves consecutivos. A SATTI usa lerp 0.12 — manter." },
-    "peakCount": 40
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "smoothScroll": {
+      "library": "lenis",
+      "options": {
+        "duration": 2,
+        "wheelMultiplier": 1.3,
+        "root": true
+      },
+      "$comment": "CORRIGIDO (DEC-021): o modelo usa duration+easing (expo-out), NAO lerp. Eu havia registrado lerp:0.1. A SATTI usa lerp:0.12 — divergencia REAL de sensacao de scroll, registrada como decisao consciente, nao como inferencia. Nao igualar a duration:2 sem decisao do Miguel: muda o feel inteiro."
+    },
+    "peakCount": 40,
+    "libraries": [
+      "gsap (só p/ o cursor Mouse Follower e o tween do marquee)",
+      "lenis",
+      "swiper",
+      "mouse-follower"
+    ],
+    "$libComment": "CORRIGIDO (DEC-021). ScrollTrigger NÃO está no bundle: o único hit é o stub de plugin-ausente do gsap-core (tI=function(t,e){return(N.ScrollTrigger||j(...))...}). Verificado por grep independente: scrub:=0, pin:=0, pinSpacing=0. GSAP entra SÓ por causa do Mouse Follower (quickSetter/ticker) e do tween do Marquee. TODA a coreografia de scroll do modelo é hand-rolled: getBoundingClientRect() + element.style.transform num listener de scroll cru, mais UM position:sticky em CSS.",
+    "noPinning": {
+      "$comment": "Nada no modelo é pinado. Prova: fatia-de-scroll ÷ fatia-de-altura ≈ 1,0 em todas as seções (uma seção pinada daria ≥2). Consequência: o rail de 220vh do ServicesDeck da SATTI (Services.module.css) é a MAIOR violação de paridade do build atual — 2376/1080 = 2,20.",
+      "ratios": {
+        "hero": 0.94,
+        "services": 0.91,
+        "about": 0.82,
+        "development": 0.88,
+        "portfolio": 0.98,
+        "banner": 0.77,
+        "cases": 0.91,
+        "reviews": 0.97
+      },
+      "pinBudgetMax": 1.25
+    }
   },
-
   "sectionTimeline": [
-    { "order": 1,  "id": "hero",              "satti": "hero",       "frameStart": 0,    "frameEnd": 251,  "tStart": 0.00,   "tEnd": 10.46,  "frames": 252, "scrollShare": 0.077, "lumaMedian": 212.9, "lumaMin": 209.7, "lumaMax": 231.3, "tone": "light" },
-    { "order": 2,  "id": "band+services",     "satti": "values+services", "frameStart": 252, "frameEnd": 467, "tStart": 10.50, "tEnd": 19.46, "frames": 216, "scrollShare": 0.066, "lumaMedian": 225.6, "lumaMin": 221.6, "lumaMax": 231.4, "tone": "light", "$comment": "O atlas agrupa a faixa e os serviços numa faixa só — a faixa atravessa a viewport entre f252 e ~f336." },
-    { "order": 3,  "id": "about",             "satti": "about",      "frameStart": 468,  "frameEnd": 707,  "tStart": 19.50,  "tEnd": 29.46,  "frames": 240, "scrollShare": 0.073, "lumaMedian": 230.8, "lumaMin": 115.4, "lumaMax": 246.2, "tone": "light", "$comment": "lumaMin 115 = já é a transição para o escuro no fim da seção." },
-    { "order": 4,  "id": "development-open",  "satti": "automation", "frameStart": 708,  "frameEnd": 935,  "tStart": 29.50,  "tEnd": 38.96,  "frames": 228, "scrollShare": 0.069, "lumaMedian": 69.7,  "lumaMin": 36.7,  "lumaMax": 119.0, "tone": "dark" },
-    { "order": 5,  "id": "development-mosaic","satti": "automation", "frameStart": 936,  "frameEnd": 1535, "tStart": 39.00,  "tEnd": 63.96,  "frames": 600, "scrollShare": 0.182, "lumaMedian": 163.6, "lumaMin": 102.6, "lumaMax": 201.7, "tone": "dark", "$comment": "Fundo escuro, mas as telas do mosaico são claras e dominam a média. A maior fatia isolada do scroll." },
-    { "order": 6,  "id": "portfolio",         "satti": "portfolio",  "frameStart": 1536, "frameEnd": 2183, "tStart": 64.00,  "tEnd": 90.96,  "frames": 648, "scrollShare": 0.197, "lumaMedian": 174.3, "lumaMin": 140.3, "lumaMax": 223.0, "tone": "light" },
-    { "order": 7,  "id": "banner",            "satti": "banner",     "frameStart": 2184, "frameEnd": 2327, "tStart": 91.00,  "tEnd": 96.96,  "frames": 144, "scrollShare": 0.044, "lumaMedian": 197.1, "lumaMin": 133.5, "lumaMax": 224.3, "tone": "light" },
-    { "order": 8,  "id": "cases",             "satti": "cases",      "frameStart": 2328, "frameEnd": 2543, "tStart": 97.00,  "tEnd": 105.96, "frames": 216, "scrollShare": 0.066, "lumaMedian": 95.7,  "lumaMin": 50.4,  "lumaMax": 142.1, "tone": "dark" },
-    { "order": 9,  "id": "reviews",           "satti": "reviews",    "frameStart": 2544, "frameEnd": 2735, "tStart": 106.00, "tEnd": 113.96, "frames": 192, "scrollShare": 0.058, "lumaMedian": 221.8, "lumaMin": 125.3, "lumaMax": 236.7, "tone": "light" },
-    { "order": 10, "id": "footer",            "satti": "footer",     "frameStart": 2736, "frameEnd": 3287, "tStart": 114.00, "tEnd": 136.96, "frames": 552, "scrollShare": 0.168, "lumaMedian": 218.0, "lumaMin": 218.0, "lumaMax": 225.6, "tone": "light" }
+    {
+      "order": 1,
+      "id": "hero",
+      "satti": "hero",
+      "frameStart": 0,
+      "frameEnd": 251,
+      "tStart": 0.0,
+      "tEnd": 10.46,
+      "frames": 252,
+      "scrollShare": 0.077,
+      "lumaMedian": 212.9,
+      "lumaMin": 209.7,
+      "lumaMax": 231.3,
+      "tone": "light"
+    },
+    {
+      "order": 2,
+      "id": "band+services",
+      "satti": "values+services",
+      "frameStart": 252,
+      "frameEnd": 467,
+      "tStart": 10.5,
+      "tEnd": 19.46,
+      "frames": 216,
+      "scrollShare": 0.066,
+      "lumaMedian": 225.6,
+      "lumaMin": 221.6,
+      "lumaMax": 231.4,
+      "tone": "light",
+      "$comment": "O atlas agrupa a faixa e os serviços numa faixa só — a faixa atravessa a viewport entre f252 e ~f336."
+    },
+    {
+      "order": 3,
+      "id": "about",
+      "satti": "about",
+      "frameStart": 468,
+      "frameEnd": 707,
+      "tStart": 19.5,
+      "tEnd": 29.46,
+      "frames": 240,
+      "scrollShare": 0.073,
+      "lumaMedian": 230.8,
+      "lumaMin": 115.4,
+      "lumaMax": 246.2,
+      "tone": "light",
+      "$comment": "lumaMin 115 = já é a transição para o escuro no fim da seção."
+    },
+    {
+      "order": 4,
+      "id": "development-open",
+      "satti": "automation",
+      "frameStart": 708,
+      "frameEnd": 935,
+      "tStart": 29.5,
+      "tEnd": 38.96,
+      "frames": 228,
+      "scrollShare": 0.069,
+      "lumaMedian": 69.7,
+      "lumaMin": 36.7,
+      "lumaMax": 119.0,
+      "tone": "dark"
+    },
+    {
+      "order": 5,
+      "id": "development-mosaic",
+      "satti": "automation",
+      "frameStart": 936,
+      "frameEnd": 1535,
+      "tStart": 39.0,
+      "tEnd": 63.96,
+      "frames": 600,
+      "scrollShare": 0.182,
+      "lumaMedian": 163.6,
+      "lumaMin": 102.6,
+      "lumaMax": 201.7,
+      "tone": "dark",
+      "$comment": "Fundo escuro, mas as telas do mosaico são claras e dominam a média. A maior fatia isolada do scroll."
+    },
+    {
+      "order": 6,
+      "id": "portfolio",
+      "satti": "portfolio",
+      "frameStart": 1536,
+      "frameEnd": 2183,
+      "tStart": 64.0,
+      "tEnd": 90.96,
+      "frames": 648,
+      "scrollShare": 0.197,
+      "lumaMedian": 174.3,
+      "lumaMin": 140.3,
+      "lumaMax": 223.0,
+      "tone": "light"
+    },
+    {
+      "order": 7,
+      "id": "banner",
+      "satti": "banner",
+      "frameStart": 2184,
+      "frameEnd": 2327,
+      "tStart": 91.0,
+      "tEnd": 96.96,
+      "frames": 144,
+      "scrollShare": 0.044,
+      "lumaMedian": 197.1,
+      "lumaMin": 133.5,
+      "lumaMax": 224.3,
+      "tone": "light"
+    },
+    {
+      "order": 8,
+      "id": "cases",
+      "satti": "cases",
+      "frameStart": 2328,
+      "frameEnd": 2543,
+      "tStart": 97.0,
+      "tEnd": 105.96,
+      "frames": 216,
+      "scrollShare": 0.066,
+      "lumaMedian": 95.7,
+      "lumaMin": 50.4,
+      "lumaMax": 142.1,
+      "tone": "dark"
+    },
+    {
+      "order": 9,
+      "id": "reviews",
+      "satti": "reviews",
+      "frameStart": 2544,
+      "frameEnd": 2735,
+      "tStart": 106.0,
+      "tEnd": 113.96,
+      "frames": 192,
+      "scrollShare": 0.058,
+      "lumaMedian": 221.8,
+      "lumaMin": 125.3,
+      "lumaMax": 236.7,
+      "tone": "light"
+    },
+    {
+      "order": 10,
+      "id": "footer",
+      "satti": "footer",
+      "frameStart": 2736,
+      "frameEnd": 3287,
+      "tStart": 114.0,
+      "tEnd": 136.96,
+      "frames": 552,
+      "scrollShare": 0.168,
+      "lumaMedian": 218.0,
+      "lumaMin": 218.0,
+      "lumaMax": 225.6,
+      "tone": "light"
+    }
   ],
-
   "phaseEvents": [
-    { "frame": 0,    "event": "hero em estado inicial: vídeo de fundo e tipografia" },
-    { "frame": 72,   "event": "continuidade do vídeo de fundo; caret e selo em movimento" },
-    { "frame": 192,  "event": "saída gradual do hero durante a rolagem" },
-    { "frame": 252,  "event": "faixa de posicionamento entra e atravessa a viewport" },
-    { "frame": 336,  "event": "cards de serviços entram; imagens oscilam entre escala 1 e 1.2" },
-    { "frame": 468,  "event": "cabeçalho e narrativa da seção Sobre entram" },
-    { "frame": 576,  "event": "métricas e os quatro vídeos decorativos aparecem" },
-    { "frame": 648,  "event": "gráfico de círculos e transição para fundo escuro" },
-    { "frame": 708,  "event": "título gigante, CTAs e phones flutuantes entram sobre fundo escuro" },
-    { "frame": 936,  "event": "rolagem contínua pelo mosaico de telas, mão e vídeo central" },
-    { "frame": 1536, "event": "cabeçalho do portfólio entra" },
-    { "frame": 1632, "event": "grade de seis projetos e mídias atravessa a viewport" },
-    { "frame": 2184, "event": "frase do banner e as duas texturas inline passam pela viewport" },
-    { "frame": 2328, "event": "cabeçalho, busca e três cards de cases entram e saem" },
-    { "frame": 2544, "event": "seção de depoimentos e primeiro slide visíveis durante a rolagem" },
-    { "frame": 2736, "event": "entrada do rodapé e CTA" },
-    { "frame": 2832, "event": "contatos, redes e serviços entram" },
-    { "frame": 2952, "event": "rodapé em repouso; copyright e retorno ao topo visíveis" }
+    {
+      "frame": 0,
+      "event": "hero em estado inicial: vídeo de fundo e tipografia"
+    },
+    {
+      "frame": 72,
+      "event": "continuidade do vídeo de fundo; caret e selo em movimento"
+    },
+    {
+      "frame": 192,
+      "event": "saída gradual do hero durante a rolagem"
+    },
+    {
+      "frame": 252,
+      "event": "faixa de posicionamento entra e atravessa a viewport"
+    },
+    {
+      "frame": 336,
+      "event": "cards de serviços entram; imagens oscilam entre escala 1 e 1.2"
+    },
+    {
+      "frame": 468,
+      "event": "cabeçalho e narrativa da seção Sobre entram"
+    },
+    {
+      "frame": 576,
+      "event": "métricas e os quatro vídeos decorativos aparecem"
+    },
+    {
+      "frame": 648,
+      "event": "gráfico de círculos e transição para fundo escuro"
+    },
+    {
+      "frame": 708,
+      "event": "título gigante, CTAs e phones flutuantes entram sobre fundo escuro"
+    },
+    {
+      "frame": 936,
+      "event": "rolagem contínua pelo mosaico de telas, mão e vídeo central"
+    },
+    {
+      "frame": 1536,
+      "event": "cabeçalho do portfólio entra"
+    },
+    {
+      "frame": 1632,
+      "event": "grade de seis projetos e mídias atravessa a viewport"
+    },
+    {
+      "frame": 2184,
+      "event": "frase do banner e as duas texturas inline passam pela viewport"
+    },
+    {
+      "frame": 2328,
+      "event": "cabeçalho, busca e três cards de cases entram e saem"
+    },
+    {
+      "frame": 2544,
+      "event": "seção de depoimentos e primeiro slide visíveis durante a rolagem"
+    },
+    {
+      "frame": 2736,
+      "event": "entrada do rodapé e CTA"
+    },
+    {
+      "frame": 2832,
+      "event": "contatos, redes e serviços entram"
+    },
+    {
+      "frame": 2952,
+      "event": "rodapé em repouso; copyright e retorno ao topo visíveis"
+    }
   ],
-
   "changePeaks": {
     "$comment": "Frames onde a diferença entre quadros consecutivos é máxima — as batidas da coreografia. W15 compara a DISTRIBUIÇÃO de picos por seção, não os frames exatos (o conteúdo é outro).",
-    "byFrame": [651, 683, 714, 792, 887, 917, 955, 1015, 1048, 1078, 1111, 1186, 1219, 1317, 1350, 1398, 1450, 1511, 1573, 1655, 1737, 1764, 1795, 1833, 1890, 1962, 1990, 2065, 2099, 2130, 2204, 2301, 2332, 2367, 2421, 2461, 2524, 2550, 2605, 2638],
+    "byFrame": [
+      651,
+      683,
+      714,
+      792,
+      887,
+      917,
+      955,
+      1015,
+      1048,
+      1078,
+      1111,
+      1186,
+      1219,
+      1317,
+      1350,
+      1398,
+      1450,
+      1511,
+      1573,
+      1655,
+      1737,
+      1764,
+      1795,
+      1833,
+      1890,
+      1962,
+      1990,
+      2065,
+      2099,
+      2130,
+      2204,
+      2301,
+      2332,
+      2367,
+      2421,
+      2461,
+      2524,
+      2550,
+      2605,
+      2638
+    ],
     "countBySection": {
-      "hero": 0, "band+services": 0, "about": 2, "development-open": 4, "development-mosaic": 12,
-      "portfolio": 12, "banner": 2, "cases": 5, "reviews": 3, "footer": 0
+      "hero": 0,
+      "band+services": 0,
+      "about": 2,
+      "development-open": 4,
+      "development-mosaic": 12,
+      "portfolio": 12,
+      "banner": 2,
+      "cases": 5,
+      "reviews": 3,
+      "footer": 0
     },
-    "maxDiff": { "frame": 1990, "section": "portfolio", "value": 46.215 }
+    "maxDiff": {
+      "frame": 1990,
+      "section": "portfolio",
+      "value": 46.215
+    }
   },
-
   "signatures": [
     {
       "id": "band-marquee",
       "section": "values",
-      "technique": "css-keyframe",
-      "duration": "20s", "timing": "linear", "iteration": "infinite",
+      "technique": "css-keyframe (SATTI) — tween GSAP no modelo",
+      "duration": "20s",
+      "timing": "linear",
+      "iteration": "infinite",
       "transform": "translateX(0) → translateX(-100%)",
-      "speedPxPerSecond": [100, 150],
+      "speedPxPerSecond": [
+        100,
+        150
+      ],
       "notes": "Nunca para. Visualmente atravessa a fronteira hero→services. Conteúdo duplicado com aria-hidden na cópia.",
-      "reducedMotion": "marquee parado, texto legível"
+      "reducedMotion": "marquee parado, texto legível",
+      "pausesOffScreen": true,
+      "$correction": "CORRIGIDO (DEC-021): (a) os keyframes CSS marquee_toLeft/toRight/toUp/toDown e focused_moving sao CODIGO MORTO — nao estao no DOM; todo marquee do modelo e o componente GSAP. (b) os marquees do modelo PAUSAM fora da tela (inView ? play : kill); o 09-MOTION-SPEC erra ao dizer que nunca param. (c) a faixa de valores tem de rodar DESDE O LOAD (entra em meio-curso), entao e o unico call site com pauseOffscreen:false. (d) o marquee de logos da S5 e 15s, nao 20s, e vira grade estatica <=768px."
     },
     {
       "id": "services-breathe",
       "section": "services",
       "technique": "css-keyframe",
-      "duration": "4s", "iteration": "infinite alternate",
+      "duration": "4s",
+      "iteration": "infinite alternate",
       "transform": "scale(1) → scale(1.2)",
       "notes": "Aplicado à IMAGEM do card, não ao card.",
       "reducedMotion": "imagem em scale(1)"
@@ -84,21 +370,36 @@
     {
       "id": "fill-text",
       "section": "about, portfolio",
-      "technique": "scroll-linked",
+      "technique": "scroll-linked (SATTI) — estatico no modelo",
       "baseOpacity": 0.38,
       "revealTransition": "0.3s ease-in-out",
       "mechanism": "per-span opacity",
       "windowVh": 0.6,
       "notes": "MEDIDO: reveal palavra a palavra por opacity, não clip-path. O FillText.tsx da SATTI usa clip-path inset — trocar para reveal por span.",
-      "reducedMotion": "texto 100% opaco"
+      "reducedMotion": "texto 100% opaco",
+      "font": "400 48px/1.15",
+      "sattiVerdict": "MANTER o clip-path inset scrub existente — nao trocar",
+      "$comment": "CORRIGIDO (DEC-021) — inverte o que eu havia escrito. O mecanismo de reveal span-por-span (fill-text_text_over span{opacity:0;transition:.3s}) e CODIGO MORTO: o FillText que o modelo realmente renderiza e <div><p>{texto}</p></div>, sem overlay e sem logica de scroll. O efeito visivel e about_about_fillText::after {content:attr(data-text);color:#000} — um overlay ESTATICO da primeira oracao sobre um paragrafo em rgba(0,0,0,.38). Ou seja: o clip-path scrub do FillText.tsx da SATTI e uma MELHORIA real, nao um erro de mecanismo."
     },
     {
       "id": "stat-card-videos",
       "section": "about",
       "technique": "video-autoplay",
       "count": 4,
-      "natural": [450, 450], "rendered": [150, 150],
-      "durations": [4.053, 3.691, 4.715, 4.053],
+      "natural": [
+        450,
+        450
+      ],
+      "rendered": [
+        150,
+        150
+      ],
+      "durations": [
+        4.053,
+        3.691,
+        4.715,
+        4.053
+      ],
       "attrs": "muted playsInline loop autoplay",
       "reducedMotion": "poster estático"
     },
@@ -108,67 +409,81 @@
       "technique": "css-keyframe",
       "duration": "2s",
       "layers": [
-        { "transform": "scale(0.8) → scale(1.2)" },
-        { "boxShadowTo": 20 }
+        {
+          "target": "halo (irmao do dot)",
+          "transform": "scale(1) -> scale(4.3)",
+          "opacity": ".15 -> 0",
+          "reset": "70% / 70.1% hard reset",
+          "duration": "2s ease infinite",
+          "$note": "No modelo isto e box-shadow spread 0->20px, propriedade de PAINT, que viola L10. Na SATTI vira transform+opacity num anel irmao — mesmo visual, zero paint por frame."
+        }
       ],
       "staggerPerIndex": "0.15s",
       "notes": "Hover num anel esmaece os anéis seguintes (0.6 / 0.3).",
-      "reducedMotion": "pontos estáticos, sem halo animado"
+      "reducedMotion": "pontos estáticos, sem halo animado",
+      "$correction": "CORRIGIDO (DEC-021): o pulso scale(.8)->scale(1.2) que eu listei (about-circle_pulse) e DECLARADO E NUNCA APLICADO — keyframe morto. So o halo roda. Faltavam tambem: o 4o anel (85.4%), a tangencia a 45 graus (os aneis NAO sao concentricos), o tween de fan-out de 500ms e o link anel->statement via Swiper (400ms crossFade) — que e a feature real da secao."
     },
     {
       "id": "ghost-marquee",
       "section": "automation",
       "technique": "css-keyframe",
-      "duration": "40s",
+      "duration": "20s",
       "color": "rgb(244 245 247 / 5%)",
       "fontSize": 211,
       "notes": "Só visível em vídeo: o mesmo texto da faixa de posicionamento, gigante, dark-on-dark, atrás de todo o conteúdo da seção escura.",
-      "reducedMotion": "parado"
+      "reducedMotion": "parado",
+      "direction": "right",
+      "$correction": "CORRIGIDO (DEC-021): 20s, nao 40s. A cor a 5% estava certa."
     },
     {
       "id": "line-draw",
       "section": "automation",
-      "technique": "scroll-linked",
+      "technique": "one-shot time tween",
       "mechanism": "stroke-dasharray / stroke-dashoffset por progresso",
       "notes": "Na SATTI este papel é do AutomationLine (zona 'automation'). NÃO criar um segundo componente de linha.",
-      "reducedMotion": "linha 100% desenhada, sem pulso"
+      "reducedMotion": "linha 100% desenhada, sem pulso",
+      "durationMs": 3000,
+      "ease": "easeOutSine",
+      "trigger": "useInView triggerOnce:true rootMargin:-50%",
+      "property": "stroke-dasharray (2 valores, nao dashoffset)",
+      "pathLength": 3246.53,
+      "viewBox": "0 0 1728 1101",
+      "$correction": "CORRIGIDO (DEC-021): NAO e scroll-linked. E um tween de tempo de 3000ms com easeOutSine, disparado UMA vez quando o elemento cruza a metade da viewport. A 88 px/s do video-base parece scroll-linked, mas nao e. E existe UMA so linha desenhada no site inteiro. O scrub por scroll do AutomationLine da SATTI e superior: nao termina antes de voce ver."
     },
     {
       "id": "phone-float",
       "section": "automation",
       "technique": "css-keyframe",
-      "duration": "6s", "timing": "ease-in-out", "iteration": "infinite",
+      "duration": "6s",
+      "timing": "ease-in-out",
+      "iteration": "infinite",
       "transform": "translateY(0) → translateY(-20px)",
       "phaseOffsetLeft": "-3s",
       "notes": "A fase deslocada no phone esquerdo cria a alternância.",
       "reducedMotion": "phones parados na posição de repouso"
     },
     {
-      "id": "mosaic-columns",
-      "section": "automation",
-      "technique": "scroll-linked",
-      "columnFactors": [1, 0.85, 0.65],
-      "measurement": "Δt=3s: coluna 1 subiu ~122px, coluna 3 ~80px → razão ~1:0.65",
-      "notes": "Três velocidades diferentes numa ÚNICA rAF.",
-      "reducedMotion": "colunas alinhadas, sem deslocamento"
-    },
-    {
-      "id": "hand-parallax",
-      "section": "automation",
-      "technique": "scroll-linked",
-      "factor": 0.6,
-      "notes": "A mão é sticky no rodapé da seção e viaja a 0.6× a velocidade do scroll, sobre o vídeo central.",
-      "reducedMotion": "mão em posição fixa"
-    },
-    {
       "id": "portfolio-hover-glow",
       "section": "portfolio",
       "technique": "css-transition",
-      "duration": "0.4s", "easing": "cubic-bezier(0,0,0.4,0.97)",
+      "duration": "0.4s",
+      "easing": "cubic-bezier(0,0,0.4,0.97)",
       "layers": [
-        { "target": "image", "hover": "scale(1.05)" },
-        { "target": "glow", "rest": "translate(-50%,100%) opacity 0", "hover": "translate(-50%,30%) opacity 1", "blur": 90 },
-        { "target": "linkButton", "hover": "rotate(1turn)", "duration": "0.45s" }
+        {
+          "target": "image",
+          "hover": "scale(1.05)"
+        },
+        {
+          "target": "glow",
+          "rest": "translate(-50%,100%) opacity 0",
+          "hover": "translate(-50%,30%) opacity 1",
+          "blur": 90
+        },
+        {
+          "target": "linkButton",
+          "hover": "rotate(1turn)",
+          "duration": "0.45s"
+        }
       ],
       "notes": "O easing do modelo é exatamente o --ease da SATTI.",
       "reducedMotion": "estado de repouso, sem glow animado"
@@ -186,16 +501,27 @@
       "id": "typewriter",
       "section": "hero",
       "technique": "js-timer",
-      "typeMsPerChar": 90, "holdMs": 1400, "deleteMsPerChar": 45, "pauseMs": 240,
+      "typeMsPerChar": 90,
+      "holdMs": 1400,
+      "deleteMsPerChar": 45,
+      "pauseMs": 240,
       "notes": "O hold do modelo é muito longo (a palavra ficou 10 s sem trocar). A SATTI mantém 1,4 s, máx 3 s.",
-      "caret": { "shape": "block", "widthEm": 0.5, "heightEm": 0.12, "blink": "1s steps(1)" },
+      "caret": {
+        "width": "0.15em",
+        "height": "0.8em",
+        "transform": "translateY(0.03em) scaleY(1.05)",
+        "animation": "1.2s linear infinite, opacity 1 -> .5 -> 1",
+        "$comment": "CORRIGIDO (DEC-021): bloco de 0.15em x 0.8em com PULSO SUAVE ate 0.5 de opacidade — nao um blink 1->0. Os numeros 0.5em x 0.12em que eu tinha aqui sao de hero-title_title_slider span, um placeholder de traco sem relacao com o caret."
+      },
       "reducedMotion": "primeira palavra fixa, sem caret animado, ZERO timers agendados"
     },
     {
       "id": "seal-rotate",
       "section": "hero",
       "technique": "css-keyframe",
-      "duration": "10s", "timing": "linear", "iteration": "infinite",
+      "duration": "10s",
+      "timing": "linear",
+      "iteration": "infinite",
       "transform": "rotate(1turn)",
       "notes": "Selo click-to-play do showreel, renderizado a 138% do player.",
       "reducedMotion": "selo estático"
@@ -204,7 +530,8 @@
       "id": "scroll-cue-pulse",
       "section": "hero",
       "technique": "css-keyframe",
-      "duration": "2s", "iteration": "infinite",
+      "duration": "2s",
+      "iteration": "infinite",
       "transform": "anel scale → 1.6 com opacity decrescente",
       "reducedMotion": "anel estático"
     },
@@ -213,15 +540,22 @@
       "section": "footer",
       "technique": "scroll-linked",
       "startTranslateY": "-37%",
-      "hatRadius": 33,
+      "hatRadius": "0 0 33px 33px",
       "notes": "MEDIDO em -37% (o doc 05-ANIMATIONS.md dizia -30%).",
-      "reducedMotion": "conteúdo em translateY(0)"
+      "reducedMotion": "conteúdo em translateY(0)",
+      "startTranslate": "-50% da PROPRIA altura do elemento",
+      "rate": "metade da velocidade do scroll",
+      "formula": "l = min(0, scrolled*0.5 - 0.5*h); translate3d(0, l, 0)",
+      "hatHeight": 44,
+      "requires": "overflow:hidden no wrapper, senao o offset inicial deixa um vao",
+      "$correction": "CORRIGIDO (DEC-021): -50% da altura do PROPRIO elemento a meia velocidade, chegando a 0 quando a base do wrapper alinha com a base da viewport. Eu havia registrado -37% da viewport, que era a leitura do translate3d(0,-400px,0) capturado."
     },
     {
       "id": "button-roll",
       "section": "global",
       "technique": "css-transition",
-      "duration": "0.3s", "timing": "ease-in-out",
+      "duration": "0.3s",
+      "timing": "ease-in-out",
       "mechanism": "texto duplicado em 2 spans empilhados; wrapper height 1.2em overflow hidden; span translateY(-100%)",
       "notes": "O DS da SATTI especifica 450ms cubic-bezier(0.76,0,0.24,1) — manter o --ease-roll/--dur-roll da SATTI e adotar só a geometria.",
       "reducedMotion": "troca instantânea de cor, sem roll"
@@ -231,12 +565,36 @@
       "section": "global",
       "technique": "page-load",
       "layers": 3,
-      "circle": { "size": "calc((1vw + 1vh) * 24)", "maxSize": 665 },
+      "circle": {
+        "size": "calc((1vw + 1vh) * 24)",
+        "maxSize": 665
+      },
       "notes": "A SATTI não tem equivalente. Entra em W13.",
       "reducedMotion": "sem intro — página já em estado final"
+    },
+    {
+      "id": "dev-foreground-sticky",
+      "section": "automation",
+      "technique": "css-sticky",
+      "css": "position:sticky; bottom:0; height:940px; pointer-events:none",
+      "$correction": "SUBSTITUI as assinaturas mosaic-columns [1, 0.85, 0.65] e hand-parallax 0.6, que eu havia registrado e NAO EXISTEM. A parede de telas e 3 fileiras flex estaticas; a mao e o UNICO position:sticky do site inteiro. O diferencial de velocidade que o 09-MOTION-SPEC mediu era o primeiro plano SEGURANDO enquanto as fileiras rolavam — nao 4 camadas de parallax. Simplifica muito a W12.",
+      "reducedMotion": "sticky nao e animacao — nao precisa de fallback"
+    },
+    {
+      "id": "scroll-reveal",
+      "section": "global",
+      "technique": "intersection-observer one-shot",
+      "firesAt": "topo do elemento cruzando 80% da altura da viewport",
+      "vocabulary": {
+        "fade-y": "opacity 0->1, translateY(100px)->0, .3s ease-in-out",
+        "title-lines": "translateY(25px)->0 + opacity, .6s, stagger .15s/.3s por linha",
+        "suptitle": "opacity only, .4s",
+        "text": "translateY(25px)->0 + opacity, .8s"
+      },
+      "$note": "Sistema de reveal COMPLETO do modelo (AOS-lite, um listener para a pagina toda). O .anim-rise da SATTI ja e 24px/0.7s — a um fio de distancia. Falta so o stagger de linha .15/.3 e a variante suptitle so-opacity.",
+      "reducedMotion": "elemento no estado final, sem transicao"
     }
   ],
-
   "parityThresholds": {
     "$comment": "Critérios de aceite de W15 (scripts/parity-timeline.mjs).",
     "sectionBoundaryRelativeTolerance": 0.05,
@@ -248,6 +606,19 @@
     "peakDistributionTolerance": 0.35,
     "$peakComment": "A contagem de picos por seção deve estar dentro de ±35% — o conteúdo é outro, só o ritmo de mudança precisa bater.",
     "reducedMotionMustBeStatic": true,
-    "$rmComment": "Com prefers-reduced-motion: reduce, a diferença entre quadros consecutivos SEM scroll deve ser ~0 em todas as seções."
+    "$rmComment": "Com prefers-reduced-motion: reduce, a diferença entre quadros consecutivos SEM scroll deve ser ~0 em todas as seções.",
+    "motionDutyCycle": {
+      "reference": 0.298,
+      "tolerance": 0.08,
+      "$comment": "GATE QUE RODA PRIMEIRO — e e sobre o HARNESS, nao sobre o site. A captura de referencia e um scroll EM PASSOS, nao continuo: so 29,8% dos frames tem diff > 1.0, mediana 0.009, 549 rajadas com intervalo mediano de 3 frames (125ms). Se a captura da SATTI usar scroll continuo, todo frame carrega delta, o duty cycle vai a ~1.0 e TODA comparacao de frames vira ruido."
+    },
+    "pinBudgetMax": {
+      "value": 1.25,
+      "$comment": "section.offsetHeight / max(alturaDoStickyStage, vh) <= 1.25 em toda secao. Teste de regressao mais barato possivel para 'alguem pinou algo'. O rail de 220vh do ServicesDeck marca 2,20 e reprova — e a confirmacao de que o harness funciona."
+    },
+    "peakDistributionFloor": {
+      "value": 2,
+      "$comment": "+-35% e intestavel para secao com 0-3 picos; o piso de +-2 picos torna o criterio real."
+    }
   }
 }

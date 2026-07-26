@@ -10,300 +10,1144 @@
   ],
   "meta": {
     "measuredAt": "2026-07-26",
-    "viewport": { "width": 1920, "height": 1080 },
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
     "documentHeight": 13195,
     "sections": 9,
     "usesCssCustomProperties": false,
-    "libraries": ["gsap", "gsap/ScrollTrigger", "lenis", "swiper", "mouse-follower"],
-    "$libComment": "Confirmado por grep nos bundles. O doc 04-REFERENCE-AWSMD.md afirma 'CSS puro sem GSAP' — está errado: a coreografia de seção é keyframe CSS, mas cursor e transforms scroll-linked são GSAP."
+    "libraries": [
+      "gsap (só p/ o cursor Mouse Follower e o tween do marquee)",
+      "lenis",
+      "swiper",
+      "mouse-follower"
+    ],
+    "$libComment": "CORRIGIDO (DEC-021). ScrollTrigger NÃO está no bundle: o único hit é o stub de plugin-ausente do gsap-core (tI=function(t,e){return(N.ScrollTrigger||j(...))...}). Verificado por grep independente: scrub:=0, pin:=0, pinSpacing=0. GSAP entra SÓ por causa do Mouse Follower (quickSetter/ticker) e do tween do Marquee. TODA a coreografia de scroll do modelo é hand-rolled: getBoundingClientRect() + element.style.transform num listener de scroll cru, mais UM position:sticky em CSS.",
+    "noPinning": {
+      "$comment": "Nada no modelo é pinado. Prova: fatia-de-scroll ÷ fatia-de-altura ≈ 1,0 em todas as seções (uma seção pinada daria ≥2). Consequência: o rail de 220vh do ServicesDeck da SATTI (Services.module.css) é a MAIOR violação de paridade do build atual — 2376/1080 = 2,20.",
+      "ratios": {
+        "hero": 0.94,
+        "services": 0.91,
+        "about": 0.82,
+        "development": 0.88,
+        "portfolio": 0.98,
+        "banner": 0.77,
+        "cases": 0.91,
+        "reviews": 0.97
+      },
+      "pinBudgetMax": 1.25
+    }
   },
-
   "breakpoints": {
     "$comment": "max-width, na ordem em que o modelo os declara. SATTI usa clamp() como estratégia primária; estes valores só entram onde a comp exige um salto de layout.",
-    "list": [1600, 1366, 1200, 1124, 1090, 991, 900, 768, 656, 565, 465, 390, 376],
-    "ruleCount": { "768": 34, "1600": 22, "991": 20, "565": 13, "376": 12, "1366": 11, "1124": 11, "465": 8 }
+    "list": [
+      1600,
+      1366,
+      1200,
+      1124,
+      1090,
+      991,
+      900,
+      768,
+      656,
+      565,
+      465,
+      390,
+      376
+    ],
+    "ruleCount": {
+      "768": 34,
+      "1600": 22,
+      "991": 20,
+      "565": 13,
+      "376": 12,
+      "1366": 11,
+      "1124": 11,
+      "465": 8
+    }
   },
-
   "verticalAnatomy": [
-    { "order": 1,  "id": "hero",        "satti": "hero",       "y": 0,     "height": 1080, "videoRange": "0:00-0:10.5", "tone": "media" },
-    { "order": 2,  "id": "focused",     "satti": "values",     "y": 1080,  "height": 280,  "videoRange": "0:10.5-0:14", "tone": "band" },
-    { "order": 3,  "id": "services",    "satti": "services",   "y": 1360,  "height": 956,  "videoRange": "0:14-0:19.5", "tone": "light" },
-    { "order": 4,  "id": "about",       "satti": "about",      "y": 2316,  "height": 1168, "videoRange": "0:19.5-0:29.5", "tone": "light" },
-    { "order": 5,  "id": "development", "satti": "automation", "y": 3484,  "height": 3758, "videoRange": "0:29.5-1:04", "tone": "dark" },
-    { "order": 6,  "id": "portfolio",   "satti": "portfolio",  "y": 7242,  "height": 2657, "videoRange": "1:04-1:31", "tone": "light" },
-    { "order": 7,  "id": "banner",      "satti": "banner",     "y": 9899,  "height": 750,  "videoRange": "1:31-1:37", "tone": "light" },
-    { "order": 8,  "id": "cases",       "satti": "cases",      "y": 10649, "height": 958,  "videoRange": "1:37-1:46", "tone": "dark" },
-    { "order": 9,  "id": "reviews",     "satti": "reviews",    "y": 11607, "height": 787,  "videoRange": "1:46-1:54", "tone": "light" },
-    { "order": 10, "id": "footer",      "satti": "footer",     "y": 12058, "height": 801,  "videoRange": "1:54-2:17", "tone": "light" }
+    {
+      "order": 1,
+      "id": "hero",
+      "satti": "hero",
+      "y": 0,
+      "height": 1080,
+      "videoRange": "0:00-0:10.5",
+      "tone": "media"
+    },
+    {
+      "order": 2,
+      "id": "focused",
+      "satti": "values",
+      "y": 1080,
+      "height": 280,
+      "videoRange": "0:10.5-0:14",
+      "tone": "band"
+    },
+    {
+      "order": 3,
+      "id": "services",
+      "satti": "services",
+      "y": 1360,
+      "height": 956,
+      "videoRange": "0:14-0:19.5",
+      "tone": "light"
+    },
+    {
+      "order": 4,
+      "id": "about",
+      "satti": "about",
+      "y": 2316,
+      "height": 1168,
+      "videoRange": "0:19.5-0:29.5",
+      "tone": "light"
+    },
+    {
+      "order": 5,
+      "id": "development",
+      "satti": "automation",
+      "y": 3484,
+      "height": 3758,
+      "videoRange": "0:29.5-1:04",
+      "tone": "dark"
+    },
+    {
+      "order": 6,
+      "id": "portfolio",
+      "satti": "portfolio",
+      "y": 7242,
+      "height": 2657,
+      "videoRange": "1:04-1:31",
+      "tone": "light"
+    },
+    {
+      "order": 7,
+      "id": "banner",
+      "satti": "banner",
+      "y": 9899,
+      "height": 750,
+      "videoRange": "1:31-1:37",
+      "tone": "light"
+    },
+    {
+      "order": 8,
+      "id": "cases",
+      "satti": "cases",
+      "y": 10649,
+      "height": 958,
+      "videoRange": "1:37-1:46",
+      "tone": "dark"
+    },
+    {
+      "order": 9,
+      "id": "reviews",
+      "satti": "reviews",
+      "y": 11607,
+      "height": 787,
+      "videoRange": "1:46-1:54",
+      "tone": "light"
+    },
+    {
+      "order": 10,
+      "id": "footer",
+      "satti": "footer",
+      "y": 12058,
+      "height": 801,
+      "videoRange": "1:54-2:17",
+      "tone": "light"
+    }
   ],
-
   "header": {
     "$comment": "No modelo o header vive DENTRO da section do hero. A barra é fixa e sobrepõe todas as seções.",
-    "bar": { "width": 1858, "height": 66, "x": 31, "y": 20 },
+    "bar": {
+      "width": 1858,
+      "height": 66,
+      "x": 31,
+      "y": 20
+    },
     "innerPaddingTop": 15,
-    "sticky": { "position": "fixed", "right": 30, "top": 37, "zIndex": 301, "gap": 16 },
-    "cta": { "padding": [12, 17], "radius": 21, "font": "400 16px/1.1", "transitionProperty": ["background", "color"], "duration": "0.2s" },
+    "sticky": {
+      "position": "fixed",
+      "right": 30,
+      "top": 37,
+      "zIndex": 301,
+      "gap": 16
+    },
+    "cta": {
+      "padding": [
+        12,
+        17
+      ],
+      "radius": 21,
+      "font": "400 16px/1.1",
+      "transitionProperty": [
+        "background",
+        "color"
+      ],
+      "duration": "0.2s"
+    },
     "invertState": {
       "$comment": "Ao sair do hero o CTA preenche. No modelo preenche com o índigo da marca deles; na SATTI preenche com --c-band (blaze) e texto --c-band-ink.",
       "trigger": "saída do hero"
     },
-    "menuButton": { "size": 48, "radius": "50%", "block": [18, 14], "barHeight": 2, "firstBarWidth": 10, "firstBarLeft": 8, "transition": "0.4s ease-in-out 0.3s" },
-    "languageButton": { "padding": [12.5, 17.5], "radius": 16, "font": "400 16px/1.2", "iconSize": 17, "listOffsetTop": 6, "listRadius": 10, "listItemPadding": [10, 14] }
+    "menuButton": {
+      "size": 48,
+      "radius": "50%",
+      "block": [
+        18,
+        14
+      ],
+      "barHeight": 2,
+      "firstBarWidth": 10,
+      "firstBarLeft": 8,
+      "transition": "0.4s ease-in-out 0.3s"
+    },
+    "languageButton": {
+      "padding": [
+        12.5,
+        17.5
+      ],
+      "radius": 16,
+      "font": "400 16px/1.2",
+      "iconSize": 17,
+      "listOffsetTop": 6,
+      "listRadius": 10,
+      "listItemPadding": [
+        10,
+        14
+      ]
+    }
   },
-
   "hero": {
-    "section": { "height": "100vh", "padding": 12 },
-    "card": { "radius": 33, "radiusMobile": 15, "scrim": "rgb(0 0 0 / 50%)", "childrenPadding": [8, 19, 30] },
-    "video": { "objectFit": "cover", "objectPosition": "center", "natural": [1920, 1080], "rendered": [1896, 1056], "duration": 10 },
-    "content": { "padding": [25, 20, 0], "align": "flex-end", "justify": "space-between" },
-    "titleBlock": { "fontSize": 162, "maxWidth": "6.12em", "paddingBottom": 40 },
-    "title": { "textTransform": "uppercase", "borderBottom": 1, "paddingBottom": 25, "lineHeight": 0.9, "letterSpacing": "-0.04em" },
-    "caret": { "$comment": "Bloco, não pipe.", "width": "0.5em", "height": "0.12em", "marginLeft": "0.05em" },
-    "typewriter": { "fontSizeRatio": 0.9 },
+    "section": {
+      "height": "100vh",
+      "padding": 12
+    },
+    "card": {
+      "radius": 33,
+      "radiusMobile": 15,
+      "scrim": "rgb(0 0 0 / 50%)",
+      "childrenPadding": [
+        8,
+        19,
+        30
+      ]
+    },
+    "video": {
+      "objectFit": "cover",
+      "objectPosition": "center",
+      "natural": [
+        1920,
+        1080
+      ],
+      "rendered": [
+        1896,
+        1056
+      ],
+      "duration": 10
+    },
+    "content": {
+      "padding": [
+        25,
+        20,
+        0
+      ],
+      "align": "flex-end",
+      "justify": "space-between"
+    },
+    "titleBlock": {
+      "fontSize": 162,
+      "maxWidth": "6.12em",
+      "paddingBottom": 40
+    },
+    "title": {
+      "textTransform": "uppercase",
+      "borderBottom": 1,
+      "paddingBottom": 25,
+      "lineHeight": 0.9,
+      "letterSpacing": "-0.04em"
+    },
+    "caret": {
+      "width": "0.15em",
+      "height": "0.8em",
+      "transform": "translateY(0.03em) scaleY(1.05)",
+      "animation": "1.2s linear infinite, opacity 1 -> .5 -> 1",
+      "$comment": "CORRIGIDO (DEC-021): bloco de 0.15em x 0.8em com PULSO SUAVE ate 0.5 de opacidade — nao um blink 1->0. Os numeros 0.5em x 0.12em que eu tinha aqui sao de hero-title_title_slider span, um placeholder de traco sem relacao com o caret."
+    },
+    "typewriter": {
+      "fontSizeRatio": 0.9
+    },
     "scrollButton": {
       "$comment": "Fica INLINE no meio do texto do H1, não abaixo dele.",
-      "size": "0.617em", "marginInline": ["0.197em", "0.259em"], "border": 3, "radius": "50%",
-      "ring": { "size": "105%", "border": 2, "animation": "ring-pulse 2s infinite" },
-      "hover": { "transform": "scale(1.1)", "ringAnimation": "none", "arrowSwap": true, "arrowDelay": "0.05s" },
+      "size": "0.617em",
+      "marginInline": [
+        "0.197em",
+        "0.259em"
+      ],
+      "border": 3,
+      "radius": "50%",
+      "ring": {
+        "size": "105%",
+        "border": 2,
+        "animation": "ring-pulse 2s infinite"
+      },
+      "hover": {
+        "transform": "scale(1.1)",
+        "ringAnimation": "none",
+        "arrowSwap": true,
+        "arrowDelay": "0.05s"
+      },
       "arrowWidth": "20%"
     },
     "showreel": {
       "$comment": "SATTI não tem showreel real — o slot nasce apontando para public/media/showreel.mp4 (diferido) e o final mode omite se não existir.",
-      "size": [405, 230], "radius": 20,
-      "playButton": { "size": 88, "radius": "50%", "background": "rgb(255 255 255 / 80%)", "transition": "0.4s ease-in-out" },
-      "seal": { "renderedSize": 156, "naturalSize": 244, "scale": "138%", "animation": "seal-rotate 10s linear infinite" }
+      "size": [
+        405,
+        230
+      ],
+      "radius": 20,
+      "playButton": {
+        "size": 88,
+        "radius": "50%",
+        "background": "rgb(255 255 255 / 80%)",
+        "transition": "0.4s ease-in-out"
+      },
+      "seal": {
+        "renderedSize": 156,
+        "naturalSize": 244,
+        "scale": "138%",
+        "animation": "seal-rotate 10s linear infinite"
+      }
     },
     "socialProof": {
       "$comment": "No modelo é um selo Clutch. Na SATTI é o slot hero.socialProof/[CONFIRMAR fonte real] — SEM selo de terceiro (V2, exceção declarada).",
-      "marginTop": 18, "wrapperPadding": [6, 10], "wrapperRadius": 50, "boxPadding": [6.2, 12, 6.2, 6.2], "boxRadius": 74, "fontSize": 16
+      "marginTop": 18,
+      "wrapperPadding": [
+        6,
+        10
+      ],
+      "wrapperRadius": 50,
+      "boxPadding": [
+        6.2,
+        12,
+        6.2,
+        6.2
+      ],
+      "boxRadius": 74,
+      "fontSize": 16
     }
   },
-
   "band": {
     "$comment": "Faixa de posicionamento full-bleed. É o bloco de cor dominante da página (V2-D4).",
     "height": 280,
-    "text": { "font": "500 231px/1.21", "paddingInline": "0.14em", "whiteSpace": "nowrap", "userSelect": "none" },
-    "responsiveFontSize": { "1600": 160, "991": "15vw", "565": "25vw" },
-    "animation": { "name": "band-move", "duration": "20s", "timing": "linear", "iteration": "infinite", "transform": "translateX(0) → translateX(-100%)" },
+    "text": {
+      "font": "500 231px/1.21",
+      "paddingInline": "0.14em",
+      "whiteSpace": "nowrap",
+      "userSelect": "none"
+    },
+    "responsiveFontSize": {
+      "1600": 160,
+      "991": "15vw",
+      "565": "25vw"
+    },
+    "animation": {
+      "name": "band-move",
+      "duration": "20s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "transform": "translateX(0) → translateX(-100%)"
+    },
     "duplicatedForLoop": true
   },
-
   "services": {
-    "section": { "paddingBlock": 60 },
-    "subtext": { "marginTop": 23, "maxWidth": "25.5em", "fontSize": 36, "fontSize1366": 30 },
-    "list": { "marginTop": 50, "display": "flex" },
-    "item": { "flex": "0 0 33.3333%", "padding": 1.5 },
+    "section": {
+      "paddingBlock": 60
+    },
+    "subtext": {
+      "marginTop": 23,
+      "maxWidth": "25.5em",
+      "fontSize": 36,
+      "fontSize1366": 30
+    },
+    "list": {
+      "marginTop": 50,
+      "display": "flex"
+    },
+    "item": {
+      "flex": "0 0 33.3333%",
+      "padding": 1.5
+    },
     "card": {
       "$comment": "Card PREENCHIDO por imagem com texto claro por cima — não é card tintado com texto escuro (reversão consciente vs Tints S4; ver plano, risco 2). O tint da SATTI vira underlay atrás da imagem.",
-      "radius": 7, "overflow": "hidden", "containerPadding": 25
+      "radius": 7,
+      "overflow": "hidden",
+      "containerPadding": 25
     },
-    "image": { "objectFit": "cover", "objectPosition": "center bottom", "natural": [1068, 1142], "rendered": [604, 653], "animation": "scaler 4s infinite alternate", "scale": [1, 1.2] },
-    "shadow": { "$comment": "Gradiente inferior que garante legibilidade do texto sobre a imagem.", "position": "bottom", "maxHeight": "60%" },
-    "title": { "font": "500 48px/1.2", "textTransform": "uppercase", "letterSpacing": "-0.01em" },
-    "text": { "marginTop": 240, "font": "400 16px/1.2", "maxWidth": "93%", "marginBottom": 20, "opacity": 0.85 },
-    "tags": { "borderTop": 1, "paddingTop": 20, "flexWrap": "wrap", "marginInline": -2 }
+    "image": {
+      "objectFit": "cover",
+      "objectPosition": "center bottom",
+      "natural": [
+        1068,
+        1142
+      ],
+      "rendered": [
+        604,
+        653
+      ],
+      "animation": "scaler 4s infinite alternate",
+      "scale": [
+        1,
+        1.2
+      ]
+    },
+    "shadow": {
+      "$comment": "Gradiente inferior que garante legibilidade do texto sobre a imagem.",
+      "position": "bottom",
+      "maxHeight": "60%"
+    },
+    "title": {
+      "font": "500 48px/1.2",
+      "textTransform": "uppercase",
+      "letterSpacing": "-0.01em"
+    },
+    "text": {
+      "marginTop": 240,
+      "font": "400 16px/1.2",
+      "maxWidth": "93%",
+      "marginBottom": 20,
+      "opacity": 0.85
+    },
+    "tags": {
+      "borderTop": 1,
+      "paddingTop": 20,
+      "flexWrap": "wrap",
+      "marginInline": -2
+    }
   },
-
   "about": {
-    "section": { "paddingTop": 70 },
-    "head": {
-      "marginTop": 23, "paddingBottom": 44,
-      "bracket": { "$comment": "::after — colchete aberto (sem borda inferior) que abraça o head.", "height": 15, "border": 1, "borderBottom": "none", "position": "absolute bottom" }
+    "section": {
+      "paddingTop": 70
     },
-    "headTitle": { "font": "500 58px/1.02", "letterSpacing": "-0.03em" },
-    "content": { "paddingBlock": 33, "align": "center", "leftMaxWidth": 650, "rightPaddingLeft": 25 },
-    "fillTextSlider": { "$comment": "Swiper em fade, 4 slides (o 1º statement repete).", "slides": 4, "effect": "fade" },
+    "head": {
+      "marginTop": 23,
+      "paddingBottom": 44,
+      "bracket": {
+        "$comment": "::after — colchete aberto (sem borda inferior) que abraça o head.",
+        "height": 15,
+        "border": 1,
+        "borderBottom": "none",
+        "position": "absolute bottom"
+      }
+    },
+    "headTitle": {
+      "font": "500 58px/1.02",
+      "letterSpacing": "-0.03em"
+    },
+    "content": {
+      "paddingBlock": 33,
+      "align": "center",
+      "leftMaxWidth": 650,
+      "rightPaddingLeft": 25
+    },
+    "fillTextSlider": {
+      "$comment": "Swiper em fade, 4 slides (o 1º statement repete).",
+      "slides": 4,
+      "effect": "fade"
+    },
     "statCard": {
-      "padding": [12, 20], "radius": 30, "minHeight": 199, "minHeight1366": 180,
-      "value": { "font": "700 52px/1.3", "fontSize1366": 46 },
-      "label": { "font": "400 14px/1.25", "marginTop": 5, "maxWidth": "12em" },
-      "video": { "position": "right bottom", "maxWidth": 150, "transform": "translate(18%, 20%)", "radius": "0 0 30px 0", "natural": [450, 450], "rendered": [150, 150] }
+      "padding": [
+        12,
+        20
+      ],
+      "radius": 30,
+      "minHeight": 199,
+      "minHeight1366": 180,
+      "value": {
+        "font": "700 52px/1.3",
+        "fontSize1366": 46
+      },
+      "label": {
+        "font": "400 14px/1.25",
+        "marginTop": 5,
+        "maxWidth": "12em"
+      },
+      "video": {
+        "position": "right bottom",
+        "maxWidth": 150,
+        "transform": "translate(18%, 20%)",
+        "radius": "0 0 30px 0",
+        "natural": [
+          450,
+          450
+        ],
+        "rendered": [
+          150,
+          150
+        ]
+      }
     },
     "graph": {
       "$comment": "3 anéis concêntricos com pontos rotulados. O modelo tem 13 pontos (3 principais); a SATTI tem 10 nós de método em content.about.methodNodes — manter os 10 da SATTI, adotar a mecânica de hover do modelo.",
-      "maxWidth": 625, "aspect": "1:1",
-      "rings": { "count": 3, "radiiPercent": [85.4, 68.14, 42] },
-      "points": { "modelCount": 13, "sattiCount": 10, "size": 4, "mainSize": 12, "mainHalo": "0 0 0 12px rgb(0 0 0 / 8%)" },
-      "label": { "source": "attr(data-label)", "font": "600 16px/1.2", "offsetLeft": 14, "fontSizeMobile": 11, "offsetLeftMobile": 8, "mainLabelOffsetTop": -18 },
-      "hover": { "$comment": "Ao passar num anel, ele ganha borda e os anéis SEGUINTES esmaecem.", "ringBorder": "rgb(0 0 0 / 20%)", "siblingOpacity": 0.6, "fourthOpacity": 0.3, "transition": "0.4s ease-in-out" },
+      "maxWidth": 625,
+      "aspect": "1:1",
+      "rings": {
+        "count": 4,
+        "sizesPercent": [
+          100,
+          85.4,
+          68.14,
+          42
+        ],
+        "$comment": "CORRIGIDO (DEC-021): são 4 anéis, não 3, e o de 100% é disabled (sem palavras). E eles NÃO são concêntricos: cada um é posicionado por polar(45°) de modo a ficar TANGENTE INTERNAMENTE num ponto da diagonal inferior-direita. Círculos que se beijam num ponto — não alvo de tiro. É a assinatura visual."
+      },
+      "points": {
+        "modelCount": 13,
+        "sattiCount": 10,
+        "size": 4,
+        "mainSize": 12,
+        "mainHalo": "0 0 0 12px rgb(0 0 0 / 8%)"
+      },
+      "label": {
+        "source": "attr(data-label)",
+        "font": "600 16px/1.2",
+        "offsetLeft": 14,
+        "fontSizeMobile": 11,
+        "offsetLeftMobile": 8,
+        "mainLabelOffsetTop": -18
+      },
+      "hover": {
+        "$comment": "Ao passar num anel, ele ganha borda e os anéis SEGUINTES esmaecem.",
+        "ringBorder": "rgb(0 0 0 / 20%)",
+        "siblingOpacity": 0.6,
+        "fourthOpacity": 0.3,
+        "transition": "0.4s ease-in-out"
+      },
       "pulses": [
-        { "name": "point-pulse", "duration": "2s", "transform": "scale(0.8) → scale(1.2)" },
-        { "name": "point-halo", "duration": "2s", "boxShadowTo": 20 }
-      ]
+        {
+          "name": "point-pulse",
+          "duration": "2s",
+          "transform": "scale(0.8) → scale(1.2)"
+        },
+        {
+          "name": "point-halo",
+          "duration": "2s",
+          "boxShadowTo": 20
+        }
+      ],
+      "fanOut": {
+        "durationMs": 500,
+        "ease": "easeOutSine",
+        "$comment": "No hover, os pontos rotulados varrem do dot principal até o próprio ângulo em 500 ms."
+      },
+      "statementLink": {
+        "trigger": "hover/focus no anel i",
+        "effect": "crossfade do statement da seção Sobre para i",
+        "library": "swiper",
+        "speedMs": 400,
+        "crossFade": true,
+        "$comment": "A INTERAÇÃO QUE FALTAVA no spec: hover no anel i chama slideTo(i) no Swiper dos statements. A SATTI não tem isso. É a feature real da seção, não a decoração."
+      }
     },
     "partnerLogos": {
       "$comment": "TERCEIROS no modelo (10 marcas). Na SATTI só entram logos de cliente com autorização por escrito — até então, células vazias com hairline.",
-      "cell": [288, 202], "border": 1, "adjacentBorderLeft": "none",
-      "wrapVariant": { "flexBasis": "50%", "height": 180 }
+      "cell": [
+        288,
+        202
+      ],
+      "border": 1,
+      "adjacentBorderLeft": "none",
+      "wrapVariant": {
+        "flexBasis": "50%",
+        "height": 180
+      }
     }
   },
-
   "automation": {
     "$comment": "A seção mais longa: 3758 px ≈ 25% de todo o scroll. 4 camadas de movimento simultâneas.",
-    "section": { "height": 3758, "tone": "dark" },
+    "section": {
+      "height": 3758,
+      "tone": "dark"
+    },
     "ghostMarquee": {
       "$comment": "Mesmo texto da faixa de posicionamento, gigante, dark-on-dark, ATRÁS de todo o conteúdo.",
-      "font": "500 211px/1.2", "color": "rgb(244 245 247 / 5%)", "paddingInline": "0.14em",
-      "responsiveFontSize": { "1600": 180, "1124": 160, "768": 135 },
-      "position": { "top": "50%", "left": "50%", "transform": "translate(-50%, -50%)" },
-      "positionMobile": { "bottom": 0, "transform": "translate(-50%, 60%)" },
+      "font": "500 211px/1.2",
+      "color": "rgb(244 245 247 / 5%)",
+      "paddingInline": "0.14em",
+      "responsiveFontSize": {
+        "1600": 180,
+        "1124": 160,
+        "768": 135
+      },
+      "position": {
+        "top": "50%",
+        "left": "50%",
+        "transform": "translate(-50%, -50%)"
+      },
+      "positionMobile": {
+        "bottom": 0,
+        "transform": "translate(-50%, 60%)"
+      },
       "duration": "40s"
     },
     "line": {
       "$comment": "SVG desenhado no scroll por stroke-dasharray/offset. Na SATTI este papel é do AutomationLine da zona 'automation' — não criar um segundo componente.",
-      "top": 32, "svgMinWidth": 1157, "svgTransform": "translateX(236px)", "justify": "flex-end", "technique": "stroke-dasharray/stroke-dashoffset por progresso"
+      "top": 32,
+      "svgMinWidth": 1157,
+      "svgTransform": "translateX(236px)",
+      "justify": "flex-end",
+      "technique": "stroke-dasharray/stroke-dashoffset por progresso"
     },
     "phones": {
-      "wrapper": { "width": 600, "height": 687, "top": 235, "left": "50%", "transform": "translateX(-50%)", "zIndex": 3 },
+      "wrapper": {
+        "width": 600,
+        "height": 687,
+        "top": 235,
+        "left": "50%",
+        "transform": "translateX(-50%)",
+        "zIndex": 3
+      },
       "responsive": [
-        { "bp": 1600, "top": 190, "width": 546, "height": 625.17 },
-        { "bp": 1366, "top": 160, "width": 420, "height": 480.9 },
-        { "bp": 991,  "top": 254, "width": 349.8, "height": 400.521 },
-        { "bp": 565,  "top": 200, "width": 300, "height": 343.5 }
+        {
+          "bp": 1600,
+          "top": 190,
+          "width": 546,
+          "height": 625.17
+        },
+        {
+          "bp": 1366,
+          "top": 160,
+          "width": 420,
+          "height": 480.9
+        },
+        {
+          "bp": 991,
+          "top": 254,
+          "width": 349.8,
+          "height": 400.521
+        },
+        {
+          "bp": 565,
+          "top": 200,
+          "width": 300,
+          "height": 343.5
+        }
       ],
-      "left":  { "maxHeight": "80%", "anchor": "top left",     "animation": "float 6s ease-in-out -3s infinite" },
-      "right": { "maxHeight": "90%", "anchor": "bottom right", "animation": "float 6s ease-in-out infinite" },
-      "float": { "translateY": [0, -20] },
-      "naturalSizes": { "phone-01": [1155, 1884], "phone-02": [1275, 2085] },
-      "renderedSizes": { "phone-01": [337, 550], "phone-02": [378, 618] }
+      "left": {
+        "maxHeight": "80%",
+        "anchor": "top left",
+        "animation": "float 6s ease-in-out -3s infinite"
+      },
+      "right": {
+        "maxHeight": "90%",
+        "anchor": "bottom right",
+        "animation": "float 6s ease-in-out infinite"
+      },
+      "float": {
+        "translateY": [
+          0,
+          -20
+        ]
+      },
+      "naturalSizes": {
+        "phone-01": [
+          1155,
+          1884
+        ],
+        "phone-02": [
+          1275,
+          2085
+        ]
+      },
+      "renderedSizes": {
+        "phone-01": [
+          337,
+          550
+        ],
+        "phone-02": [
+          378,
+          618
+        ]
+      }
     },
     "mosaic": {
       "$comment": "Parede de telas em 3 colunas que rolam a velocidades DIFERENTES (fatores medidos em 09-MOTION-SPEC).",
-      "columns": 3, "slotsPerColumn": 5, "filledSlots": 12,
-      "item": { "margin": 12.8, "marginMobile": 8, "radius": 44 },
-      "media": { "width": 365, "height": 770, "natural": [650, 1374] },
+      "columns": 3,
+      "slotsPerColumn": 5,
+      "filledSlots": 12,
+      "item": {
+        "margin": 12.8,
+        "marginMobile": 8,
+        "radius": 44
+      },
+      "media": {
+        "width": 365,
+        "height": 770,
+        "natural": [
+          650,
+          1374
+        ]
+      },
       "mediaResponsive": [
-        { "width": 310.25, "height": 654.5 },
-        { "width": 200.75, "height": 423.5 },
-        { "width": 150, "height": 310 }
+        {
+          "width": 310.25,
+          "height": 654.5
+        },
+        {
+          "width": 200.75,
+          "height": 423.5
+        },
+        {
+          "width": 150,
+          "height": 310
+        }
       ],
-      "paddingBottom": 115, "paddingBottomMobile": 40,
-      "columnParallax": [1, 0.85, 0.65],
-      "brandOverlay": { "$comment": "TERCEIROS no modelo (3 marcas de cliente). Na SATTI: só com autorização.", "scrimOpacity": 0.4, "revealOn": "hover", "transition": "opacity 0.2s ease-in-out" }
+      "paddingBottom": 115,
+      "paddingBottomMobile": 40,
+      "brandOverlay": {
+        "$comment": "TERCEIROS no modelo (3 marcas de cliente). Na SATTI: só com autorização.",
+        "scrimOpacity": 0.4,
+        "revealOn": "hover",
+        "transition": "opacity 0.2s ease-in-out"
+      },
+      "$parallaxCorrection": "CORRIGIDO (DEC-021): NÃO existe parallax por coluna. A parede é de 3 fileiras flex de <Image> estáticas. O diferencial de velocidade que o 09-MOTION-SPEC mediu ([1, 0.85, 0.65]) era o primeiro plano SEGURANDO (a mão é sticky) enquanto as fileiras rolavam normalmente."
     },
-    "centerVideo": { "width": 348, "height": 741, "top": 56, "radius": 42, "natural": [460, 996], "duration": 5.44,
+    "centerVideo": {
+      "width": 348,
+      "height": 741,
+      "top": 56,
+      "radius": 42,
+      "natural": [
+        460,
+        996
+      ],
+      "duration": 5.44,
       "responsive": [
-        { "width": 297, "height": 630, "top": 48, "radius": 35 },
-        { "width": 193, "height": 405, "top": 31, "radius": 22 },
-        { "width": 145, "height": 305, "top": 23, "radius": 18 }
+        {
+          "width": 297,
+          "height": 630,
+          "top": 48,
+          "radius": 35
+        },
+        {
+          "width": 193,
+          "height": 405,
+          "top": 31,
+          "radius": 22
+        },
+        {
+          "width": 145,
+          "height": 305,
+          "top": 23,
+          "radius": 18
+        }
       ]
     },
     "hand": {
       "$comment": "Recorte fotográfico que 'segura' o vídeo central. Sticky no rodapé da seção, com parallax 0.6×. pointer-events:none para não interceptar hovers.",
-      "position": "sticky", "bottom": 0, "height": 940, "heightResponsive": [740, 500],
-      "wrapper": { "top": -30, "height": "calc(100% + 30px)", "topMobile": -15 },
-      "image": { "width": 1870, "objectFit": "cover", "objectPosition": "center top", "widthResponsive": [1589.5, 1028.5], "natural": [1920, 1241] },
-      "parallax": 0.6, "pointerEvents": "none"
+      "position": "sticky",
+      "bottom": 0,
+      "height": 940,
+      "heightResponsive": [
+        740,
+        500
+      ],
+      "wrapper": {
+        "top": -30,
+        "height": "calc(100% + 30px)",
+        "topMobile": -15
+      },
+      "image": {
+        "width": 1870,
+        "objectFit": "cover",
+        "objectPosition": "center top",
+        "widthResponsive": [
+          1589.5,
+          1028.5
+        ],
+        "natural": [
+          1920,
+          1241
+        ]
+      },
+      "pointerEvents": "none",
+      "$parallaxCorrection": "CORRIGIDO (DEC-021): não há parallax em JS. É só position:sticky; bottom:0; height:940px — o ÚNICO position:sticky do site inteiro."
     }
   },
-
   "portfolio": {
-    "section": { "paddingBlock": [100, 55] },
-    "head": { "justify": "space-between", "rightPaddingLeft": 25 },
-    "headTitle": { "font": "400 70px/1.125", "letterSpacing": "-0.03em", "maxWidth": "9.375em" },
-    "headFillText": { "marginTop": 83, "font": "400 25px/1.335", "maxWidth": "14.241em" },
-    "list": { "marginTop": 85, "columns": 2, "verticalStagger": "coluna direita começa ~meio card abaixo" },
-    "card": { "height": 720, "radius": 33, "cursor": "pointer", "overflow": "hidden" },
-    "cardImage": { "transition": "transform 0.4s cubic-bezier(0,0,0.4,0.97)", "hoverScale": 1.05, "objectFit": "cover" },
+    "section": {
+      "paddingBlock": [
+        100,
+        55
+      ]
+    },
+    "head": {
+      "justify": "space-between",
+      "rightPaddingLeft": 25
+    },
+    "headTitle": {
+      "font": "400 70px/1.125",
+      "letterSpacing": "-0.03em",
+      "maxWidth": "9.375em"
+    },
+    "headFillText": {
+      "marginTop": 83,
+      "font": "400 25px/1.335",
+      "maxWidth": "14.241em"
+    },
+    "list": {
+      "marginTop": 85,
+      "columns": 2,
+      "verticalStagger": "coluna direita começa ~meio card abaixo"
+    },
+    "card": {
+      "height": 720,
+      "radius": 33,
+      "cursor": "pointer",
+      "overflow": "hidden"
+    },
+    "cardImage": {
+      "transition": "transform 0.4s cubic-bezier(0,0,0.4,0.97)",
+      "hoverScale": 1.05,
+      "objectFit": "cover"
+    },
     "glow": {
       "$comment": "Único brilho de cor do sistema (L9). No modelo é azul; na SATTI é --c-blaze.",
-      "position": "bottom center", "width": "100%", "height": "40%", "radius": "20%", "blur": 90,
-      "rest": { "transform": "translate(-50%, 100%)", "opacity": 0 },
-      "hover": { "transform": "translate(-50%, 30%)", "opacity": 1 },
+      "position": "bottom center",
+      "width": "100%",
+      "height": "40%",
+      "radius": "20%",
+      "blur": 90,
+      "rest": {
+        "transform": "translate(-50%, 100%)",
+        "opacity": 0
+      },
+      "hover": {
+        "transform": "translate(-50%, 30%)",
+        "opacity": 1
+      },
       "transition": "0.4s cubic-bezier(0,0,0.4,0.97)"
     },
-    "linkButton": { "hover": "rotate(1turn)", "transition": "transform 0.45s ease-in-out" },
-    "infoPill": { "radius": 30, "padding": [19, 19, 19, 35], "margin": 10, "maxWidth": "calc(100% - 20px)", "position": "bottom left" },
+    "linkButton": {
+      "hover": "rotate(1turn)",
+      "transition": "transform 0.45s ease-in-out"
+    },
+    "infoPill": {
+      "radius": 30,
+      "padding": [
+        19,
+        19,
+        19,
+        35
+      ],
+      "margin": 10,
+      "maxWidth": "calc(100% - 20px)",
+      "position": "bottom left"
+    },
     "videoPlayback": {
       "$comment": "MEDIDO: no modelo os vídeos tocam durante todo o scroll, não no hover. Isso contradiz 05-ANIMATIONS.md #8; 09-MOTION-SPEC é posterior e medido, e vence. A SATTI obtém o mesmo efeito dentro do budget com preload=none + IntersectionObserver.",
-      "trigger": "in-view", "ioThreshold": 0.35, "preload": "none", "pauseOffscreen": true
+      "trigger": "in-view",
+      "ioThreshold": 0.35,
+      "preload": "none",
+      "pauseOffscreen": true
     },
-    "mediaMix": { "videos": 3, "images": 3 }
+    "mediaMix": {
+      "videos": 3,
+      "images": 3
+    }
   },
-
   "banner": {
     "$comment": "No modelo o painel é CLARO. A SATTI havia escolhido graphite e registrado como divergência intencional — a paridade reverte para claro (plano, risco 1).",
-    "section": { "height": "100vh", "maxHeight": 750, "paddingBlock": 20 },
-    "container": { "maxHeight": 710 },
-    "display": { "radius": 130, "maxHeight": 840, "tone": "light", "align": "center", "overflow": "hidden" },
-    "title": { "font": "500 87px/1.1", "letterSpacing": "-0.02em", "textAlign": "center", "direction": "column" },
-    "inlineImage": { "$comment": "As texturas são palavras visuais no fluxo do texto.", "width": "2.46875em", "radius": "0.4583em", "verticalAlign": "middle", "natural": [238, 90], "rendered": [215, 81] },
-    "decorativeMarquee": { "position": "center", "zIndex": 1 }
+    "section": {
+      "height": "100vh",
+      "maxHeight": 750,
+      "paddingBlock": 20
+    },
+    "container": {
+      "maxHeight": 710
+    },
+    "display": {
+      "radius": 130,
+      "maxHeight": 840,
+      "tone": "light",
+      "align": "center",
+      "overflow": "hidden"
+    },
+    "title": {
+      "font": "500 87px/1.1",
+      "letterSpacing": "-0.02em",
+      "textAlign": "center",
+      "direction": "column"
+    },
+    "inlineImage": {
+      "$comment": "As texturas são palavras visuais no fluxo do texto.",
+      "width": "2.46875em",
+      "radius": "0.4583em",
+      "verticalAlign": "middle",
+      "natural": [
+        238,
+        90
+      ],
+      "rendered": [
+        215,
+        81
+      ]
+    },
+    "decorativeMarquee": {
+      "position": "center",
+      "zIndex": 1
+    }
   },
-
   "cases": {
-    "section": { "paddingBlock": [130, 120], "tone": "dark", "overflow": "hidden" },
-    "container": { "maxWidth": 1306 },
-    "decorativeCircles": { "size": 423, "radius": "50%", "gradient": "linear-gradient(180deg, rgb(255 255 255 / 12%), rgb(255 255 255 / 80%))", "opacity": 0.12, "position": "left center" },
-    "suptitle": { "font": "500 18px/1.05" },
-    "title": { "font": "500 48px/1.23", "letterSpacing": "-0.03em", "maxWidth": "4.22em", "marginTop": 23 },
+    "section": {
+      "paddingBlock": [
+        130,
+        120
+      ],
+      "tone": "dark",
+      "overflow": "hidden"
+    },
+    "container": {
+      "maxWidth": 1306
+    },
+    "decorativeCircles": {
+      "size": 423,
+      "radius": "50%",
+      "gradient": "linear-gradient(180deg, rgb(255 255 255 / 12%), rgb(255 255 255 / 80%))",
+      "opacity": 0.12,
+      "position": "left center"
+    },
+    "suptitle": {
+      "font": "500 18px/1.05"
+    },
+    "title": {
+      "font": "500 48px/1.23",
+      "letterSpacing": "-0.03em",
+      "maxWidth": "4.22em",
+      "marginTop": 23
+    },
     "search": {
       "$comment": "No modelo o campo não filtra nada (testado no atlas). A SATTI implementa o campo por paridade visual + filtro client-side real sobre os cases já carregados — barato e honesto.",
-      "maxWidth": 246, "paddingBottom": 15, "borderBottom": 1, "radius": 0, "background": "transparent"
+      "maxWidth": 246,
+      "paddingBottom": 15,
+      "borderBottom": 1,
+      "radius": 0,
+      "background": "transparent"
     },
-    "slider": { "slides": 3, "library": "swiper", "thumb": { "rendered": [372, 240] } }
+    "slider": {
+      "slides": 3,
+      "library": "swiper",
+      "thumb": {
+        "rendered": [
+          372,
+          240
+        ]
+      }
+    }
   },
-
   "reviews": {
     "$comment": "Carrossel de 4 slides. A SATTI não tem nenhum depoimento real: em draft os 4 slides renderizam [CONFIRMAR] + avatar blueprint; em final a seção continua omitida (DEC-012).",
-    "slides": 4, "library": "swiper",
-    "blockquote": { "width": "3.9375em", "alignSelf": "flex-start" },
-    "content": { "paddingLeft": "3.375em" },
-    "quote": { "font": "600 2.2em/1.2", "maxWidth": "30em", "paddingBottom": "1.55em" },
-    "row": { "borderTop": 1, "paddingTop": "2.5em", "marginTop": "auto" },
-    "avatar": { "size": 78, "radius": "50%", "objectFit": "cover", "natural": [400, 400] },
-    "clientColumn": { "paddingLeft": 24 },
-    "badges": { "$comment": "TERCEIROS (selos de plataforma de review). NÃO entram na SATTI, nem em preview (V2, exceção declarada).", "excluded": true }
+    "slides": 4,
+    "library": "swiper",
+    "blockquote": {
+      "width": "3.9375em",
+      "alignSelf": "flex-start"
+    },
+    "content": {
+      "paddingLeft": "3.375em"
+    },
+    "quote": {
+      "font": "600 2.2em/1.2",
+      "maxWidth": "30em",
+      "paddingBottom": "1.55em"
+    },
+    "row": {
+      "borderTop": 1,
+      "paddingTop": "2.5em",
+      "marginTop": "auto"
+    },
+    "avatar": {
+      "size": 78,
+      "radius": "50%",
+      "objectFit": "cover",
+      "natural": [
+        400,
+        400
+      ]
+    },
+    "clientColumn": {
+      "paddingLeft": 24
+    },
+    "badges": {
+      "$comment": "TERCEIROS (selos de plataforma de review). NÃO entram na SATTI, nem em preview (V2, exceção declarada).",
+      "excluded": true
+    }
   },
-
   "footer": {
-    "section": { "height": 801, "tone": "light" },
-    "parallax": { "$comment": "MEDIDO em -37% (o doc 05-ANIMATIONS.md dizia -30%).", "hatRadius": 33, "contentTranslateY": "-37%", "technique": "translate3d por progresso de entrada na viewport" },
-    "columns": ["contato", "social", "serviços"],
+    "section": {
+      "height": 801,
+      "tone": "light"
+    },
+    "parallax": {
+      "$comment": "MEDIDO em -37% (o doc 05-ANIMATIONS.md dizia -30%).",
+      "hatRadius": 33,
+      "contentTranslateY": "-37%",
+      "technique": "translate3d por progresso de entrada na viewport"
+    },
+    "columns": [
+      "contato",
+      "social",
+      "serviços"
+    ],
     "backToTop": true
   },
-
   "overlays": {
     "menu": {
       "$comment": "No modelo o menu é de 2 COLUNAS (sidebar colorida + painel). A SATTI hoje é painel único graphite.",
       "height": "100vh",
-      "sidebar": { "maxWidth": 354, "padding": [40, 40, 50] },
-      "panel": { "padding": [40, 30, 40, 45], "flexGrow": 1 },
-      "toast": { "top": 20, "maxWidth": 310, "radius": 20, "padding": [10, 20, 10, 14], "markSize": 30, "markBorder": "1px dashed" }
+      "sidebar": {
+        "maxWidth": 354,
+        "padding": [
+          40,
+          40,
+          50
+        ]
+      },
+      "panel": {
+        "padding": [
+          40,
+          30,
+          40,
+          45
+        ],
+        "flexGrow": 1
+      },
+      "toast": {
+        "top": 20,
+        "maxWidth": 310,
+        "radius": 20,
+        "padding": [
+          10,
+          20,
+          10,
+          14
+        ],
+        "markSize": 30,
+        "markBorder": "1px dashed"
+      }
     },
     "contact": {
       "$comment": "Painel lateral direito. Modelo usa 850 px; a SATTI usava 620 px.",
-      "align": "flex-end", "windowMaxWidth": 850, "zIndex": 500,
-      "backdrop": { "blur": 15, "scrim": "rgb(202 202 202 / 25%)", "transition": "opacity 0.25s ease-in-out" },
-      "form": { "padding": [48, 42, 40] },
-      "close": { "size": 54, "radius": "50%", "top": 20, "right": 31, "barSize": [16, 2] },
-      "input": { "minHeight": 60, "radius": 5, "paddingInline": 18, "headMarginBottom": 16, "titleFont": "700 16px/1.2", "errorFont": "400 13px/1", "errorMarginTop": 4 }
+      "align": "flex-end",
+      "windowMaxWidth": 850,
+      "zIndex": 500,
+      "backdrop": {
+        "blur": 15,
+        "scrim": "rgb(202 202 202 / 25%)",
+        "transition": "opacity 0.25s ease-in-out"
+      },
+      "form": {
+        "padding": [
+          48,
+          42,
+          40
+        ]
+      },
+      "close": {
+        "size": 54,
+        "radius": "50%",
+        "top": 20,
+        "right": 31,
+        "barSize": [
+          16,
+          2
+        ]
+      },
+      "input": {
+        "minHeight": 60,
+        "radius": 5,
+        "paddingInline": 18,
+        "headMarginBottom": 16,
+        "titleFont": "700 16px/1.2",
+        "errorFont": "400 13px/1",
+        "errorMarginTop": 4
+      }
     },
-    "language": { "buttonPadding": [12.5, 17.5], "buttonRadius": 16, "listOffsetTop": 6, "listRadius": 10, "itemPadding": [10, 14] }
+    "language": {
+      "buttonPadding": [
+        12.5,
+        17.5
+      ],
+      "buttonRadius": 16,
+      "listOffsetTop": 6,
+      "listRadius": 10,
+      "itemPadding": [
+        10,
+        14
+      ]
+    }
   },
-
   "button": {
     "$comment": "Recalibração do ui/Button. O roll do modelo é 0.3s ease-in-out; o DS da SATTI especifica 450ms cubic-bezier(0.76,0,0.24,1) — manter o --ease-roll da SATTI e adotar a geometria do modelo.",
-    "padding": [12, 29], "radius": 21, "font": "500 16px/1.2", "letterSpacing": "-0.03em",
-    "roll": { "wrapperHeight": "1.2em", "overflow": "hidden", "spanTransform": "translateY(-100%)", "transition": "transform 0.3s ease-in-out" },
-    "disabled": { "opacity": 0.4, "pointerEvents": "none" }
+    "padding": [
+      12,
+      29
+    ],
+    "radius": 21,
+    "font": "500 16px/1.2",
+    "letterSpacing": "-0.03em",
+    "roll": {
+      "wrapperHeight": "1.2em",
+      "overflow": "hidden",
+      "spanTransform": "translateY(-100%)",
+      "transition": "transform 0.3s ease-in-out"
+    },
+    "disabled": {
+      "opacity": 0.4,
+      "pointerEvents": "none"
+    }
   },
-
   "fillText": {
-    "$comment": "MEDIDO: o modelo revela span por span com opacity, NÃO com clip-path. A base fica em 38% de opacidade — que é exatamente o rgba(0,0,0,.38) do CSS deles. O FillText.tsx da SATTI usa clip-path inset (varredura suave); trocar para reveal por span dá a fidelidade palavra-a-palavra.",
-    "font": "400 48px/1.15", "baseOpacity": 0.38, "revealTransition": "0.3s ease-in-out", "technique": "per-span opacity", "windowVh": 0.6
+    "font": "400 48px/1.15",
+    "baseOpacity": 0.38,
+    "sattiVerdict": "MANTER o clip-path inset scrub existente — nao trocar",
+    "$comment": "CORRIGIDO (DEC-021) — inverte o que eu havia escrito. O mecanismo de reveal span-por-span (fill-text_text_over span{opacity:0;transition:.3s}) e CODIGO MORTO: o FillText que o modelo realmente renderiza e <div><p>{texto}</p></div>, sem overlay e sem logica de scroll. O efeito visivel e about_about_fillText::after {content:attr(data-text);color:#000} — um overlay ESTATICO da primeira oracao sobre um paragrafo em rgba(0,0,0,.38). Ou seja: o clip-path scrub do FillText.tsx da SATTI e uma MELHORIA real, nao um erro de mecanismo."
   },
-
   "intro": {
     "$comment": "Animação de entrada da página. A SATTI não tem nada equivalente. 3 camadas de fundo em cascata + um círculo central.",
-    "layers": 3, "layerTransform": "translateY(100%) → 0",
-    "circle": { "size": "calc((1vw + 1vh) * 24)", "maxSize": 665, "radius": "50%", "position": "center" }
+    "layers": 3,
+    "layerTransform": "translateY(100%) → 0",
+    "circle": {
+      "size": "calc((1vw + 1vh) * 24)",
+      "maxSize": 665,
+      "radius": "50%",
+      "position": "center"
+    }
   },
-
   "thirdPartyClasses": {
     "$comment": "Categorias de conteúdo do modelo que NÃO são geometria e têm tratamento próprio (V2-D2). Os dois primeiros grupos ficam fora até em preview.",
-    "excludedEvenInPreview": ["avatares de depoimento (pessoas reais)", "selos de plataforma de review/portfólio"],
-    "previewOnlyWithSwap": ["telas do mosaico", "phones", "recorte da mão", "texturas do banner", "imagens dos cards de serviço", "mídias do portfólio", "thumbs de case", "selo click-to-play", "os 9 vídeos"],
-    "neverUsed": ["logos de clientes de terceiros", "fontes licenciadas do modelo", "qualquer copy do modelo", "ids de analytics"]
+    "excludedEvenInPreview": [
+      "avatares de depoimento (pessoas reais)",
+      "selos de plataforma de review/portfólio"
+    ],
+    "previewOnlyWithSwap": [
+      "telas do mosaico",
+      "phones",
+      "recorte da mão",
+      "texturas do banner",
+      "imagens dos cards de serviço",
+      "mídias do portfólio",
+      "thumbs de case",
+      "selo click-to-play",
+      "os 9 vídeos"
+    ],
+    "neverUsed": [
+      "logos de clientes de terceiros",
+      "fontes licenciadas do modelo",
+      "qualquer copy do modelo",
+      "ids de analytics"
+    ]
   }
 }
