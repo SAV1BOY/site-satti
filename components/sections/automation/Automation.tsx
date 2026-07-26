@@ -112,7 +112,10 @@ export default async function Automation() {
       : undefined;
 
   return (
-    <section id="automacao" className={`section-dark ${styles.section}`}>
+    <section id="automacao" className={`section-dark ${styles.section}`}
+      data-section="automation"
+      data-tone="dark"
+    >
       <AutomationLine zone="automation" tone="dark" nodeLabels={nodeLabels} />
 
       <div className={`container-s ${styles.inner}`}>

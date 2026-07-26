@@ -34,7 +34,12 @@ export default async function Reviews() {
   }
 
   return (
-    <section id="depoimentos" className={styles.root}>
+    <section
+      id="depoimentos"
+      className={styles.root}
+      data-section="reviews"
+      data-tone="light"
+    >
       <p className={`eyebrow ${styles.eyebrow}`}>{t("sectionLabel")}</p>
 
       <div className={styles.head}>

@@ -78,7 +78,12 @@ export default async function CasesSlider() {
   });
 
   return (
-    <section id="cases" className={styles.section}>
+    <section
+      id="cases"
+      className={styles.section}
+      data-section="cases"
+      data-tone="dark"
+    >
       <div className={`container-s ${styles.inner}`}>
         <p className={`eyebrow ${styles.sectionEyebrow}`}>
           {t("sectionLabel")}

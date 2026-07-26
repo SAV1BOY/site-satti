@@ -56,7 +56,12 @@ export default async function Portfolio() {
   const items = t.raw("items") as PortfolioItemJson[];
 
   return (
-    <section id="portfolio" className={styles.section}>
+    <section
+      id="portfolio"
+      className={styles.section}
+      data-section="portfolio"
+      data-tone="light"
+    >
       {/* D3: zona "portfolio" do fio — primeiro filho da section relative.
           Sem nodeLabels: a comp S7 não traz strings de node. */}
       <AutomationLine zone="portfolio" tone="light" />

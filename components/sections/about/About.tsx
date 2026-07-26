@@ -91,7 +91,12 @@ export default async function About() {
   const metrics = t.raw("metrics") as MetricJson[];
 
   return (
-    <section id="sobre" className={styles.section}>
+    <section
+      id="sobre"
+      className={styles.section}
+      data-section="about"
+      data-tone="light"
+    >
       <div className={`container-s ${styles.inner}`}>
         <p className={`eyebrow ${styles.sectionEyebrow}`}>
           {t("sectionLabel")}

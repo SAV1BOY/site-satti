@@ -54,7 +54,11 @@ export default async function Hero() {
   );
 
   return (
-    <section className={styles.section}>
+    <section
+      className={styles.section}
+      data-section="hero"
+      data-tone="light"
+    >
       <AutomationLine zone="hero" tone="light" className={styles.threadLine} />
 
       <HeroMedia videoSrc={HERO_VIDEO} posterSrc={HERO_POSTER} />

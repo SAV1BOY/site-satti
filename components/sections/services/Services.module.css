@@ -62,22 +62,21 @@
 }
 
 /* ============================================================
-   Deck — trilho da coreografia (ServicesDeck, client)
+   Deck — coreografia dos cards (ServicesDeck, client)
+
+   v2 · RAIL DE 220vh REMOVIDO (DEC-021 §2). O modelo não pina nada:
+   fatia-de-scroll ÷ fatia-de-altura ≈ 1,0 em todas as seções dele, e
+   os 3 cards são uma fila flex simples (`flex: 0 0 33.333%`), sem
+   coreografia alguma. O trilho fazia esta seção ocupar 2,62 viewports
+   e 23,1% da altura da página contra os 7,9% do modelo — a maior
+   violação de paridade do build v1, medida por `npm run parity:dom`.
+
+   A abertura dos cards SOBREVIVE (é original da SATTI e não custa
+   estrutura): passa a ser dirigida pela passagem natural da seção pela
+   viewport, não por um pin. Sem `height`, sem `sticky`.
+
    Estado base (SSR / reduced / mobile): fluxo normal, fila final.
-   [data-active] (motion ok + ≥1024px): trilho 220vh + stage sticky.
    ============================================================ */
-.deck[data-active="true"] {
-  height: 220vh;
-}
-
-.deck[data-active="true"] .stage {
-  position: sticky;
-  top: 0;
-  display: flex;
-  align-items: center;
-  min-height: 100vh;
-}
-
 .deck[data-active="true"] .card {
   will-change: transform;
 }

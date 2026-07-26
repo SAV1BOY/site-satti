@@ -88,7 +88,12 @@ export default async function Footer() {
   });
 
   return (
-    <footer id="contato" className={styles.root}>
+    <footer
+      id="contato"
+      className={styles.root}
+      data-section="footer"
+      data-tone="dark"
+    >
       {/* D3: fim do fio — primeiro filho da section relative. */}
       <AutomationLine zone="contact" tone="dark" />
 

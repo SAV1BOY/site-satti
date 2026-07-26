@@ -69,7 +69,10 @@ export default async function Banner() {
   const [lineA, lineB, lineC, lineD, lineE] = draftLines;
 
   return (
-    <section className={`section-dark ${styles.section}`}>
+    <section className={`section-dark ${styles.section}`}
+      data-section="banner"
+      data-tone="dark"
+    >
       <p className={`eyebrow ${styles.eyebrow}`}>{t("eyebrow")}</p>
 
       <div className={styles.statementBlock}>

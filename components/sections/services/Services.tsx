@@ -55,7 +55,12 @@ export default async function Services() {
   const items = t.raw("items") as ServiceItem[];
 
   return (
-    <section id="servicos" className={styles.section}>
+    <section
+      id="servicos"
+      className={styles.section}
+      data-section="services"
+      data-tone="light"
+    >
       <AutomationLine zone="services" tone="light" />
 
       <div className={styles.inner}>

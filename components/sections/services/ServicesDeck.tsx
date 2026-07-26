@@ -9,16 +9,20 @@ import styles from "./Services.module.css";
  * (Atlas 03 + spec §6-W3). Client child mínimo (L11): os cards chegam
  * SERVER-RENDERED como children; aqui só vive o efeito de scroll.
  *
+ * v2 · O TRILHO DE 220vh FOI REMOVIDO (DEC-021 §2). O modelo não pina
+ * nada — fatia-de-scroll ÷ fatia-de-altura ≈ 1,0 em todas as seções
+ * dele — e os 3 cards dele são uma fila flex simples sem coreografia.
+ * O trilho fazia esta seção ocupar 2,62 viewports e 23,1% da altura da
+ * página contra 7,9% do modelo: a maior violação de paridade do v1.
+ *
  * Desktop (≥1024px) com motion ok:
- * - O deck vira um trilho de 220vh com stage sticky (CSS via
- *   [data-active]); os cards 2 e 3 começam EMPILHADOS sobre o card 1
- *   com offset visível de 40px entre eles ("stack com offset ~40px")
- *   e deslizam para a fila final com sobreposição -40px (comp) ao
- *   longo do pin.
- * - Progresso: IO liga/desliga rAF; o frame lê o rect do trilho e
- *   escreve APENAS transform: translateX (L10) nos cards móveis.
- *   Mapeamento linear com o scroll (scroll é o easing — mesmo padrão
- *   da AutomationLine); janelas escalonadas por card.
+ * - Os cards 2 e 3 começam EMPILHADOS sobre o card 1 com offset visível
+ *   de 40px e deslizam para a fila final com sobreposição -40px (comp).
+ * - Progresso agora vem da PASSAGEM NATURAL da seção pela viewport, não
+ *   de um pin: p = (vh − rect.top) / (vh + rect.height), então p≈0,5
+ *   quando a seção está centrada. IO liga/desliga rAF; o frame lê o rect
+ *   e escreve APENAS transform: translateX (L10) nos cards móveis.
+ *   Mapeamento linear (scroll é o easing — mesmo padrão da AutomationLine).
  *
  * Estado base (SSR / reduced-motion / <1024px): nenhum atributo,
  * nenhum transform — fila final desktop / pilha vertical mobile,
@@ -30,10 +34,15 @@ const DESKTOP_MQ = "(min-width: 1024px)";
 /** Offset visível entre cartas no stack = sobreposição final (comp). */
 const LIP = 40;
 
-/** Janela [início, fim] do progresso do pin em que cada card móvel viaja. */
+/**
+ * Janela [início, fim] do progresso da passagem em que cada card móvel viaja.
+ * Recalibradas no v2: com o pin, o progresso ia de 0 a 1 ao longo do trilho e
+ * dava para terminar em 0,95. Na passagem natural, p ≈ 0,5 é a seção centrada
+ * — a fila final tem de estar formada AÍ, não quando a seção já está saindo.
+ */
 const DEAL_WINDOWS: ReadonlyArray<readonly [number, number]> = [
-  [0, 0.6],
-  [0.35, 0.95],
+  [0.15, 0.5],
+  [0.3, 0.65],
 ];
 
 export default function ServicesDeck({ children }: { children: ReactNode }) {
@@ -69,8 +78,12 @@ export default function ServicesDeck({ children }: { children: ReactNode }) {
 
     const frame = () => {
       const rect = deck.getBoundingClientRect();
-      const travel = rect.height - window.innerHeight;
-      const raw = travel > 0 ? -rect.top / travel : 1;
+      const vh = window.innerHeight;
+      // Passagem natural: p = 0 quando o topo da seção toca a base da
+      // viewport, p = 1 quando a base da seção sai pelo topo. p ≈ 0,5 com a
+      // seção centrada — é aí que a fila final precisa estar formada.
+      const travel = vh + rect.height;
+      const raw = travel > 0 ? (vh - rect.top) / travel : 1;
       const p = Math.round(Math.min(1, Math.max(0, raw)) * 1000) / 1000;
 
       if (p !== lastP) {
@@ -105,7 +118,10 @@ export default function ServicesDeck({ children }: { children: ReactNode }) {
           raf = requestAnimationFrame(frame);
         }
       },
-      { rootMargin: "20% 0px 20% 0px" },
+      // 15% é a convenção única de gate de track scroll-linked no projeto
+      // (mesma da AutomationLine): o track fica vivo antes do elemento estar
+      // visível, então o primeiro valor escrito não é um salto.
+      { rootMargin: "15% 0px 15% 0px" },
     );
     io.observe(deck);
 

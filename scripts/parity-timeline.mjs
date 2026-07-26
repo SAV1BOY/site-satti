@@ -19,7 +19,7 @@
  *     e é um gate sobre o HARNESS, não sobre o site.
  */
 
-import { readFileSync, existsSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import { readFileSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 

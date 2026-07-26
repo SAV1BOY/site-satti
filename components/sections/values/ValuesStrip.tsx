@@ -19,7 +19,11 @@ export default async function ValuesStrip() {
   const items = t.raw("items") as string[];
 
   return (
-    <section className={styles.root}>
+    <section
+      className={styles.root}
+      data-section="values"
+      data-tone="light"
+    >
       <Marquee speed={20} gap="56px">
         {items.map((item, i) => (
           <span
