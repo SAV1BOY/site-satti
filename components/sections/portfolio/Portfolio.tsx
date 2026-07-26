@@ -42,6 +42,9 @@ function readField(field: CopyField): { text: string; confirm: boolean } {
  * unificados em `shot-{1..6}`: 3 assets e 3 linhas de budget a menos, e o
  * poster passa a ser sempre o frame 0 do próprio .mp4 (zero "pop" no play).
  */
+/* @resolved-by WorkCard — este arquivo só DECLARA a tabela de paths; a decisão
+   draft/final de cada asset é tomada pelo resolveAsset() dentro do WorkCard.
+   Resolver aqui também resolveria duas vezes. */
 const CARD_MEDIA: ReadonlyArray<{ videoSrc: string; posterSrc: string }> = [
   { videoSrc: "/media/portfolio-1.mp4", posterSrc: "/img/portfolio/shot-1.webp" },
   { videoSrc: "/media/portfolio-2.mp4", posterSrc: "/img/portfolio/shot-2.webp" },

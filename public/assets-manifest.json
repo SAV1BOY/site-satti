@@ -1,0 +1,678 @@
+{
+  "$comment": [
+    "SAÍDA do scripts/import-ref-assets.mjs (W10-A) — não editar à mão.",
+    "Registra bytes e dimensões REAIS do que foi escrito em public/.",
+    "É a fonte de verdade do check-thirdparty.mjs: enquanto um path não",
+    "estiver aqui, o slot é diferido (aviso); no instante em que aparece,",
+    "referenciá-lo num componente sem resolveAsset() vira FAIL.",
+    "Escopo desta lista: imagens estáticas (W10-A). Vídeos e posters de",
+    "vídeo são da W10-B e não são registrados por este script.",
+    "thirdParty: null = original SATTI ou placeholder blueprint do DS."
+  ],
+  "version": 2,
+  "generatedBy": "scripts/import-ref-assets.mjs",
+  "scope": "w10-completo (imagens + video + poster)",
+  "assets": [
+    {
+      "id": "service-agents",
+      "path": "public/img/services/agents.webp",
+      "bytes": 90354,
+      "width": 1208,
+      "height": 1306,
+      "format": "webp",
+      "alpha": true,
+      "quality": 82,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "mob-dev.png"
+      }
+    },
+    {
+      "id": "service-products",
+      "path": "public/img/services/products.webp",
+      "bytes": 182638,
+      "width": 1208,
+      "height": 1306,
+      "format": "webp",
+      "alpha": true,
+      "quality": 76,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "design-solutions.png"
+      }
+    },
+    {
+      "id": "service-data",
+      "path": "public/img/services/data.webp",
+      "bytes": 171976,
+      "width": 1208,
+      "height": 1306,
+      "format": "webp",
+      "alpha": true,
+      "quality": 82,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "web-dev.png"
+      }
+    },
+    {
+      "id": "automation-phone-left",
+      "path": "public/img/automation/phone-left.webp",
+      "bytes": 97038,
+      "width": 674,
+      "height": 1100,
+      "format": "webp",
+      "alpha": true,
+      "quality": 82,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "phone-01.png"
+      }
+    },
+    {
+      "id": "automation-phone-right",
+      "path": "public/img/automation/phone-right.webp",
+      "bytes": 79976,
+      "width": 756,
+      "height": 1236,
+      "format": "webp",
+      "alpha": true,
+      "quality": 82,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "phone-02.png"
+      }
+    },
+    {
+      "id": "automation-hand",
+      "path": "public/img/automation/hand.webp",
+      "bytes": 58424,
+      "width": 1920,
+      "height": 1241,
+      "format": "webp",
+      "alpha": true,
+      "quality": 82,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "hand.png"
+      }
+    },
+    {
+      "id": "automation-mosaic-01",
+      "path": "public/img/automation/screen-01.webp",
+      "bytes": 114320,
+      "width": 730,
+      "height": 1540,
+      "format": "webp",
+      "alpha": false,
+      "quality": 78,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "screen1-1.png"
+      }
+    },
+    {
+      "id": "automation-mosaic-02",
+      "path": "public/img/automation/screen-02.webp",
+      "bytes": 25458,
+      "width": 730,
+      "height": 1540,
+      "format": "webp",
+      "alpha": false,
+      "quality": 78,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "screen1-2.png"
+      }
+    },
+    {
+      "id": "automation-mosaic-03",
+      "path": "public/img/automation/screen-03.webp",
+      "bytes": 27834,
+      "width": 730,
+      "height": 1540,
+      "format": "webp",
+      "alpha": false,
+      "quality": 78,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "screen1-3.png"
+      }
+    },
+    {
+      "id": "automation-mosaic-04",
+      "path": "public/img/automation/screen-04.webp",
+      "bytes": 17610,
+      "width": 730,
+      "height": 1540,
+      "format": "webp",
+      "alpha": false,
+      "quality": 78,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "screen1-4.png"
+      }
+    },
+    {
+      "id": "automation-mosaic-05",
+      "path": "public/img/automation/screen-05.webp",
+      "bytes": 56316,
+      "width": 730,
+      "height": 1540,
+      "format": "webp",
+      "alpha": false,
+      "quality": 78,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "screen2-1.png"
+      }
+    },
+    {
+      "id": "automation-mosaic-06",
+      "path": "public/img/automation/screen-06.webp",
+      "bytes": 30184,
+      "width": 730,
+      "height": 1540,
+      "format": "webp",
+      "alpha": false,
+      "quality": 78,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "screen2-2.png"
+      }
+    },
+    {
+      "id": "automation-mosaic-07",
+      "path": "public/img/automation/screen-07.webp",
+      "bytes": 111170,
+      "width": 730,
+      "height": 1540,
+      "format": "webp",
+      "alpha": false,
+      "quality": 72,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "screen2-3.png"
+      }
+    },
+    {
+      "id": "automation-mosaic-08",
+      "path": "public/img/automation/screen-08.webp",
+      "bytes": 30370,
+      "width": 730,
+      "height": 1540,
+      "format": "webp",
+      "alpha": false,
+      "quality": 78,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "screen2-4.png"
+      }
+    },
+    {
+      "id": "automation-mosaic-09",
+      "path": "public/img/automation/screen-09.webp",
+      "bytes": 21388,
+      "width": 730,
+      "height": 1540,
+      "format": "webp",
+      "alpha": false,
+      "quality": 78,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "screen3-1.png"
+      }
+    },
+    {
+      "id": "automation-mosaic-10",
+      "path": "public/img/automation/screen-10.webp",
+      "bytes": 36640,
+      "width": 730,
+      "height": 1540,
+      "format": "webp",
+      "alpha": false,
+      "quality": 78,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "screen3-2.png"
+      }
+    },
+    {
+      "id": "automation-mosaic-11",
+      "path": "public/img/automation/screen-11.webp",
+      "bytes": 20730,
+      "width": 730,
+      "height": 1540,
+      "format": "webp",
+      "alpha": false,
+      "quality": 78,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "screen3-3.png"
+      }
+    },
+    {
+      "id": "automation-mosaic-12",
+      "path": "public/img/automation/screen-12.webp",
+      "bytes": 25806,
+      "width": 730,
+      "height": 1540,
+      "format": "webp",
+      "alpha": false,
+      "quality": 78,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "screen3-4.png"
+      }
+    },
+    {
+      "id": "portfolio-shot-4",
+      "path": "public/img/portfolio/shot-4.webp",
+      "bytes": 61334,
+      "width": 1400,
+      "height": 1440,
+      "format": "webp",
+      "alpha": false,
+      "quality": 80,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "portfolio-2.webp"
+      }
+    },
+    {
+      "id": "portfolio-shot-5",
+      "path": "public/img/portfolio/shot-5.webp",
+      "bytes": 86354,
+      "width": 1400,
+      "height": 1440,
+      "format": "webp",
+      "alpha": false,
+      "quality": 80,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "portfolio-4.webp"
+      }
+    },
+    {
+      "id": "portfolio-shot-6",
+      "path": "public/img/portfolio/shot-6.webp",
+      "bytes": 127044,
+      "width": 1400,
+      "height": 1440,
+      "format": "webp",
+      "alpha": false,
+      "quality": 80,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "portfolio-6.webp"
+      }
+    },
+    {
+      "id": "banner-texture-1",
+      "path": "public/img/texture-1.webp",
+      "bytes": 4062,
+      "width": 476,
+      "height": 180,
+      "format": "webp",
+      "alpha": false,
+      "quality": 82,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "texture-1.e7b6d3a7.jpg"
+      }
+    },
+    {
+      "id": "banner-texture-2",
+      "path": "public/img/texture-2.webp",
+      "bytes": 4710,
+      "width": 476,
+      "height": 180,
+      "format": "webp",
+      "alpha": false,
+      "quality": 82,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "texture-2.42807562.jpg"
+      }
+    },
+    {
+      "id": "cases-thumb-1",
+      "path": "public/img/cases/thumb-1.webp",
+      "bytes": 39342,
+      "width": 744,
+      "height": 480,
+      "format": "webp",
+      "alpha": false,
+      "quality": 80,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "syfter.jpeg"
+      }
+    },
+    {
+      "id": "cases-thumb-2",
+      "path": "public/img/cases/thumb-2.webp",
+      "bytes": 29090,
+      "width": 744,
+      "height": 480,
+      "format": "webp",
+      "alpha": false,
+      "quality": 80,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "vvs.jpeg"
+      }
+    },
+    {
+      "id": "cases-thumb-3",
+      "path": "public/img/cases/thumb-3.webp",
+      "bytes": 37880,
+      "width": 744,
+      "height": 480,
+      "format": "webp",
+      "alpha": false,
+      "quality": 80,
+      "thirdParty": {
+        "origin": "model",
+        "sourceFile": "ritilo.jpeg"
+      }
+    },
+    {
+      "id": "review-avatar-1",
+      "path": "public/img/reviews/avatar-1.webp",
+      "bytes": 1908,
+      "width": 156,
+      "height": 156,
+      "format": "webp",
+      "alpha": true,
+      "quality": 82,
+      "thirdParty": null
+    },
+    {
+      "id": "review-avatar-2",
+      "path": "public/img/reviews/avatar-2.webp",
+      "bytes": 1934,
+      "width": 156,
+      "height": 156,
+      "format": "webp",
+      "alpha": true,
+      "quality": 82,
+      "thirdParty": null
+    },
+    {
+      "id": "review-avatar-3",
+      "path": "public/img/reviews/avatar-3.webp",
+      "bytes": 1930,
+      "width": 156,
+      "height": 156,
+      "format": "webp",
+      "alpha": true,
+      "quality": 82,
+      "thirdParty": null
+    },
+    {
+      "id": "review-avatar-4",
+      "path": "public/img/reviews/avatar-4.webp",
+      "bytes": 1922,
+      "width": 156,
+      "height": 156,
+      "format": "webp",
+      "alpha": true,
+      "quality": 82,
+      "thirdParty": null
+    },
+    {
+      "id": "media-hero",
+      "path": "public/media/hero.mp4",
+      "bytes": 1012686,
+      "width": 1920,
+      "height": 1080,
+      "format": "yuv420p",
+      "durationS": 10.0,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "hero-video",
+        "finalMode": "omit"
+      }
+    },
+    {
+      "id": "media-hero-poster",
+      "path": "public/media/hero-poster.webp",
+      "bytes": 29784,
+      "width": 1600,
+      "height": 900,
+      "format": "webp",
+      "alpha": false,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "hero-poster",
+        "finalMode": "placeholder"
+      }
+    },
+    {
+      "id": "media-stats-stat-1",
+      "path": "public/media/stats/stat-1.mp4",
+      "bytes": 120459,
+      "width": 450,
+      "height": 450,
+      "format": "yuv420p",
+      "durationS": 4.037,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "stat-video-1",
+        "finalMode": "omit"
+      }
+    },
+    {
+      "id": "media-stats-stat-1-poster",
+      "path": "public/media/stats/stat-1-poster.webp",
+      "bytes": 5464,
+      "width": 320,
+      "height": 320,
+      "format": "webp",
+      "alpha": false,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "stat-poster-1",
+        "finalMode": "placeholder"
+      }
+    },
+    {
+      "id": "media-stats-stat-2",
+      "path": "public/media/stats/stat-2.mp4",
+      "bytes": 152854,
+      "width": 450,
+      "height": 450,
+      "format": "yuv420p",
+      "durationS": 3.67,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "stat-video-2",
+        "finalMode": "omit"
+      }
+    },
+    {
+      "id": "media-stats-stat-2-poster",
+      "path": "public/media/stats/stat-2-poster.webp",
+      "bytes": 8418,
+      "width": 320,
+      "height": 320,
+      "format": "webp",
+      "alpha": false,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "stat-poster-2",
+        "finalMode": "placeholder"
+      }
+    },
+    {
+      "id": "media-stats-stat-3",
+      "path": "public/media/stats/stat-3.mp4",
+      "bytes": 23866,
+      "width": 450,
+      "height": 450,
+      "format": "yuv420p",
+      "durationS": 4.705,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "stat-video-3",
+        "finalMode": "omit"
+      }
+    },
+    {
+      "id": "media-stats-stat-3-poster",
+      "path": "public/media/stats/stat-3-poster.webp",
+      "bytes": 5364,
+      "width": 320,
+      "height": 320,
+      "format": "webp",
+      "alpha": false,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "stat-poster-3",
+        "finalMode": "placeholder"
+      }
+    },
+    {
+      "id": "media-stats-stat-4",
+      "path": "public/media/stats/stat-4.mp4",
+      "bytes": 137679,
+      "width": 450,
+      "height": 450,
+      "format": "yuv420p",
+      "durationS": 4.037,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "stat-video-4",
+        "finalMode": "omit"
+      }
+    },
+    {
+      "id": "media-stats-stat-4-poster",
+      "path": "public/media/stats/stat-4-poster.webp",
+      "bytes": 9400,
+      "width": 320,
+      "height": 320,
+      "format": "webp",
+      "alpha": false,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "stat-poster-4",
+        "finalMode": "placeholder"
+      }
+    },
+    {
+      "id": "media-phone",
+      "path": "public/media/phone.mp4",
+      "bytes": 200841,
+      "width": 460,
+      "height": 996,
+      "format": "yuv420p",
+      "durationS": 5.433,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "automation-video",
+        "finalMode": "omit"
+      }
+    },
+    {
+      "id": "media-phone-poster",
+      "path": "public/media/phone-poster.webp",
+      "bytes": 1964,
+      "width": 384,
+      "height": 832,
+      "format": "webp",
+      "alpha": false,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "automation-video-poster",
+        "finalMode": "placeholder"
+      }
+    },
+    {
+      "id": "media-portfolio-1",
+      "path": "public/media/portfolio-1.mp4",
+      "bytes": 624388,
+      "width": 720,
+      "height": 720,
+      "format": "yuv420p",
+      "durationS": 8.0,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "portfolio-video-1",
+        "finalMode": "omit"
+      }
+    },
+    {
+      "id": "media-portfolio-2",
+      "path": "public/media/portfolio-2.mp4",
+      "bytes": 628325,
+      "width": 720,
+      "height": 720,
+      "format": "yuv420p",
+      "durationS": 8.0,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "portfolio-video-2",
+        "finalMode": "omit"
+      }
+    },
+    {
+      "id": "media-portfolio-3",
+      "path": "public/media/portfolio-3.mp4",
+      "bytes": 645104,
+      "width": 720,
+      "height": 720,
+      "format": "yuv420p",
+      "durationS": 8.0,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "portfolio-video-3",
+        "finalMode": "omit"
+      }
+    },
+    {
+      "id": "img-portfolio-shot-1",
+      "path": "public/img/portfolio/shot-1.webp",
+      "bytes": 100574,
+      "width": 1400,
+      "height": 1440,
+      "format": "webp",
+      "alpha": false,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "portfolio-shots",
+        "finalMode": "placeholder"
+      }
+    },
+    {
+      "id": "img-portfolio-shot-2",
+      "path": "public/img/portfolio/shot-2.webp",
+      "bytes": 68770,
+      "width": 1400,
+      "height": 1440,
+      "format": "webp",
+      "alpha": false,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "portfolio-shots",
+        "finalMode": "placeholder"
+      }
+    },
+    {
+      "id": "img-portfolio-shot-3",
+      "path": "public/img/portfolio/shot-3.webp",
+      "bytes": 100758,
+      "width": 1400,
+      "height": 1440,
+      "format": "webp",
+      "alpha": false,
+      "thirdParty": {
+        "origin": "model",
+        "assetId": "portfolio-shots",
+        "finalMode": "placeholder"
+      }
+    }
+  ],
+  "thirdPartyCount": 44
+}

@@ -111,13 +111,36 @@ const componentFiles = globSync("components/**/*.tsx");
 const usesResolve = new Set();
 for (const f of componentFiles) {
   const src = readFileSync(f, "utf8");
-  if (src.includes("resolveAsset")) usesResolve.add(f.replace(/\\/g, "/"));
+  const p = f.replace(/\\/g, "/");
+  /* Um arquivo está coberto de duas formas legítimas:
+     (a) chama resolveAsset() ele mesmo; ou
+     (b) só DECLARA a tabela de paths e entrega a um filho que resolve — nesse
+         caso chamar resolveAsset aqui resolveria duas vezes. A cobertura é
+         declarada com `@resolved-by <Componente>` num comentário, que é
+         grep-ável, revisável e obriga a nomear quem resolve. */
+  if (src.includes("resolveAsset") || /@resolved-by\s+\w/.test(src)) {
+    usesResolve.add(p);
+  }
 }
 let pendingWiring = 0;
+/* Um asset pode ser declarado por `path` (1 arquivo) OU por `pathGlob` (um grupo:
+   mosaico, shots do portfólio, texturas, thumbs de case). A primeira versão deste
+   loop fazia `if (!literal) continue` quando `path` estava ausente — e com isso
+   ignorava os 4 grupos glob, 23 arquivos, deixando 11 slots REAIS com bytes de
+   terceiro em disco sem nenhuma cobertura de gate. Agora expandimos o glob para
+   os arquivos concretos que existem em disco e confrontamos cada um. */
+const declaredFiles = [];
 for (const a of decl.assets) {
-  const literal = (a.path ?? "").replace(/^public/, "");
-  if (!literal) continue;
-  const imported = IMPORTED.has(a.path.replace(/\\/g, "/"));
+  const files = a.pathGlob
+    ? globSync(a.pathGlob)
+    : (a.path ? [a.path] : []);
+  for (const f of files) {
+    declaredFiles.push({ asset: a, file: f.replace(/\\/g, "/") });
+  }
+}
+for (const { asset: a, file } of declaredFiles) {
+  const literal = file.replace(/^public/, "");
+  const imported = IMPORTED.has(file);
   for (const f of componentFiles) {
     const p = f.replace(/\\/g, "/");
     const src = readFileSync(f, "utf8");
@@ -126,7 +149,7 @@ for (const a of decl.assets) {
     if (imported) problems.push(msg);
     else {
       pendingWiring++;
-      notes.push(`${msg} — terceiro ainda não importado; vira FAIL quando a W10 registrar`);
+      notes.push(`${msg} — terceiro ainda não importado; vira FAIL quando o import registrar`);
     }
   }
 }

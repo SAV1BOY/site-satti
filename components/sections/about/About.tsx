@@ -57,6 +57,8 @@ function readField(field: CopyField): { text: string; confirm: boolean } {
 /** Slots A2–A5, na ordem dos cards (paths definitivos do MANIFEST). */
 const STAT_MEDIA: ReadonlyArray<{ videoSrc: string; posterSrc: string }> = [
   {
+    // @resolved-by StatVideo — a tabela abaixo só declara paths; a decisão
+    // draft/final é do resolveAsset() dentro do StatVideo.
     videoSrc: "/media/stats/stat-1.mp4",
     posterSrc: "/media/stats/stat-1-poster.webp",
   },

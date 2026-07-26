@@ -28,6 +28,7 @@ import { getTranslations } from "next-intl/server";
 import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import CasesClient, { type CaseSlideData } from "./CasesClient";
 import styles from "./CasesSlider.module.css";
+import { resolveAsset } from "@/lib/third-party";
 
 /** Campo de copy L1: string oficial OU { value, confirm } ([CONFIRMAR] → steel). */
 type CopyField =
@@ -44,13 +45,18 @@ function readField(field: CopyField): { text: string; confirm: boolean } {
 }
 
 /**
- * Screenshots REAIS (MANIFEST, nunca gerados — L6), na ordem dos 3
+ * Screenshots REAIS (MANIFEST v2, nunca gerados — L6), na ordem dos 3
  * primeiros cases.items do JSON (curadoria D4: slice 3).
+ *
+ * v2: passou de `/img/portfolio/shot-{1..3}` para `/img/cases/thumb-{1..3}`.
+ * O MANIFEST v2 declara os thumbs de case como slot próprio a 744×480 (razão
+ * 1,55, o render de 372×240 do modelo); o `shot-*` é 1400×1440, quase quadrado
+ * — reusá-lo aqui perdia ~44 % da altura no crop da mídia do slider.
  */
 const CASE_IMAGES: readonly string[] = [
-  "/img/portfolio/shot-1.webp",
-  "/img/portfolio/shot-2.webp",
-  "/img/portfolio/shot-3.webp",
+  "/img/cases/thumb-1.webp",
+  "/img/cases/thumb-2.webp",
+  "/img/cases/thumb-3.webp",
 ];
 
 export default async function CasesSlider() {
@@ -73,7 +79,9 @@ export default async function CasesSlider() {
       title: title.text,
       titleConfirm: title.confirm,
       tag: tag.text,
-      imageSrc: CASE_IMAGES[index], // index < length (slice acima)
+      // resolveAsset (V2-D2): em draft renderiza o thumb marcado; em final cai
+      // no blueprint, porque o thumb é asset do modelo estrutural.
+      imageSrc: resolveAsset(CASE_IMAGES[index] ?? "").src, // index < length
     };
   });
 

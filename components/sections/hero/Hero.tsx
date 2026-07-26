@@ -32,6 +32,8 @@ interface ConfirmField {
 
 /** Paths definitivos do MANIFEST (A1) — contrato §8. */
 const HERO_VIDEO = "/media/hero.mp4";
+/* @resolved-by HeroMedia — só declaração de path; a decisão draft/final e o
+   gate de 768px do vídeo são do HeroMedia. */
 const HERO_POSTER = "/media/hero-poster.webp";
 
 /** Alvos das âncoras da nav secundária (ids das seções — integrador). */

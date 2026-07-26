@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import Button from "@/components/ui/Button";
 import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import styles from "./Banner.module.css";
+import { resolveAsset, thirdPartyAttrs } from "@/lib/third-party";
 
 /**
  * Banner (S8) — Server Component (L11).
@@ -46,7 +47,8 @@ function Texture({ index }: { index: 0 | 1 }) {
   return (
     <span className={styles.texture} aria-hidden="true">
       <Image
-        src={TEXTURES[index]}
+        src={resolveAsset(TEXTURES[index]).src}
+        {...thirdPartyAttrs(TEXTURES[index])}
         alt=""
         fill
         sizes={TEXTURE_SIZES}

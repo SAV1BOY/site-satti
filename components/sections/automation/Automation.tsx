@@ -26,6 +26,8 @@ import styles from "./Automation.module.css";
 
 /** Paths definitivos do MANIFEST (§8 — A6 · Phone S6). */
 const PHONE_VIDEO_SRC = "/media/phone.mp4";
+/* @resolved-by PhoneVideo — só declaração de path; a decisão draft/final é
+   do resolveAsset() dentro do PhoneVideo. */
 const PHONE_POSTER_SRC = "/media/phone-poster.webp";
 
 interface MosaicCell {

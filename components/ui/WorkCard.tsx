@@ -18,6 +18,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./WorkCard.module.css";
+import { resolveAsset } from "@/lib/third-party";
 
 type HeadingLevel = "h2" | "h3" | "h4";
 
@@ -198,7 +199,7 @@ export default function WorkCard({
     <>
       <div className={styles.media}>
         <Image
-          src={posterSrc}
+          src={resolveAsset(posterSrc).src}
           alt=""
           fill
           sizes={POSTER_SIZES}
@@ -210,7 +211,12 @@ export default function WorkCard({
             className={
               isPlaying ? `${styles.video} ${styles.videoPlaying}` : styles.video
             }
-            poster={posterSrc}
+            /* SEM atributo `poster`: o <Image> logo abaixo já renderiza o poster,
+            otimizado por next/image (AVIF + srcSet). O `poster=` do <video>
+            baixa o arquivo CRU no path literal, sem otimização nenhuma, e em
+            duplicata — a auditoria da W10 mediu 531 KiB só nos 6 do portfólio.
+            Um <video> sem dados é transparente, então o <Image> aparece por
+            baixo até o primeiro frame chegar. */
             data-asset={videoSrc}
             preload="none"
             muted

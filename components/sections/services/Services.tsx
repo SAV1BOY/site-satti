@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import AutomationLine from "@/components/ui/AutomationLine";
 import ServicesDeck from "./ServicesDeck";
 import styles from "./Services.module.css";
+import { resolveAsset } from "@/lib/third-party";
 
 /**
  * Services (S4) — Server Component (L11).
@@ -76,7 +77,7 @@ export default async function Services() {
             >
               <div className={styles.media} aria-hidden="true">
                 <Image
-                  src={CARD_IMAGES[i] ?? CARD_IMAGES[0]}
+                  src={resolveAsset(CARD_IMAGES[i] ?? CARD_IMAGES[0]).src}
                   alt=""
                   fill
                   sizes={IMAGE_SIZES}

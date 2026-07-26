@@ -206,6 +206,16 @@
   }
 }
 
+/* Slot do A6 dentro da .phoneScreen. Existe porque o useMediaGate precisa de um
+   elemento próprio para o IntersectionObserver observar — antes o PhoneVideo era
+   um fragmento e não havia o que observar. `inset: 0` sobre a tela já posicionada
+   pelo pai, então não altera layout nenhum. */
+.phoneSlot {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
 .phonePoster {
   object-fit: cover;
 }
