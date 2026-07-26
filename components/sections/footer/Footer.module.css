@@ -35,6 +35,18 @@
   overflow: hidden; /* contém o hat gigante e o curso do parallax */
   background: color-mix(in srgb, var(--c-line) 55%, var(--c-paper));
   color: var(--c-iron);
+
+/* content-visibility (W15 · perf): o Lighthouse mobile mediu **2.163 ms de
+   Style & Layout** — mais que o dobro do custo de script — e esta seção é uma
+   das altas que quase nunca está inteira em tela. `content-visibility: auto`
+   faz o UA pular render E tick de animação do que está fora da viewport.
+
+   `contain-intrinsic-size` NÃO é opcional: sem ele o UA reporta 0 de altura
+   para o conteúdo pulado, a scrollbar salta conforme ele é realizado e o CLS
+   sai de 0. O valor é a altura REAL medida a 375px; `auto` faz o UA lembrar a
+   medida verdadeira depois do primeiro render. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1757px;
 }
 
 /* Tampa arredondada do modelo (44px, raio 0 0 33 33): visualmente é a

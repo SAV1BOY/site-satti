@@ -35,7 +35,8 @@
 
 import { getTranslations } from "next-intl/server";
 import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
-import CasesClient, { type CaseSlideData } from "./CasesClient";
+import CasesClient from "./CasesClientLazy";
+import { type CaseSlideData } from "./CasesClient";
 import styles from "./CasesSlider.module.css";
 import { resolveAsset } from "@/lib/third-party";
 

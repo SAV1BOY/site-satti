@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
-import ReviewsClient, { type ReviewItem } from "./ReviewsClient";
+import ReviewsClient from "./ReviewsClientLazy";
+import { type ReviewItem } from "./ReviewsClient";
 import styles from "./Reviews.module.css";
 
 /**
