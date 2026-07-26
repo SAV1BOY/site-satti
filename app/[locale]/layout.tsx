@@ -11,6 +11,7 @@ import "../styles/tokens.css";
 import "../globals.css";
 import "../styles/animations.css";
 import ScrollProvider from "@/components/providers/ScrollProvider";
+import IntroAnimation from "@/components/providers/IntroAnimation";
 import CursorProvider from "@/components/providers/CursorProvider";
 
 const archivo = Archivo({
@@ -128,6 +129,10 @@ export default async function LocaleLayout({
             frame, `lenis.raf` na mesma volta, e o loop estaciona quando nada
             está em view). Enquanto nenhum consumidor registra um track, o loop
             nem liga. */}
+        {/* Fora dos providers de propósito: a intro é CSS puro, não consome o
+            loop de scroll nem o cursor, e não deve estar dentro de nada que
+            possa suspender. Renderiza null no servidor e sob reduced-motion. */}
+        <IntroAnimation />
         <ScrollProvider>
           <CursorProvider>{children}</CursorProvider>
         </ScrollProvider>

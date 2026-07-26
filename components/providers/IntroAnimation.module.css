@@ -1,0 +1,117 @@
+/* ============================================================
+   IntroAnimation — animação de entrada
+   Geometria: design/awsmd-ref/awsmd-geometry.json → intro
+   (3 camadas em cascata por translateY(100%)→0 · círculo central
+    calc((1vw + 1vh) * 24) com máximo de 665px)
+
+   Restrições que valem mais que a fidelidade aqui:
+   - ZERO request. Só CSS + o símbolo inline que já existe no bundle.
+     Se a intro adicionasse fonte, imagem ou fetch, ela atrasaria o LCP
+     (hoje o payload acima da dobra é 445 KiB e o LCP é o poster do hero)
+     e não valeria o efeito.
+   - Só `transform` e `opacity` (L10). Nenhum `filter`, nenhum `height`.
+   - Sob `prefers-reduced-motion: reduce` NÃO EXISTE — o componente nem
+     monta (o gate é no TSX, não aqui). Hoje o reduced-motion mede
+     maxDiff 0,0000 nas 10 seções e a intro não pode introduzir movimento.
+   - Duração total 1,05s. Mais que isso vira obstáculo, não boas-vindas.
+   - Desmonta ao terminar: menos DOM, e o estado limpo é o mesmo estado
+     do reduced-motion — as duas rotas convergem por construção.
+   ============================================================ */
+
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 999; /* acima de tudo, inclusive dos overlays (100) */
+  overflow: hidden;
+  pointer-events: none; /* nunca captura clique, nem durante */
+}
+
+/* As 3 camadas entram de baixo em cascata. A ordem termina no paper, que
+   É o fundo real da página — então o último quadro da intro já é o site. */
+.layer {
+  position: absolute;
+  inset: 0;
+  transform: translateY(100%);
+  will-change: transform;
+}
+
+.layer1 {
+  background: var(--c-graphite);
+}
+
+.layer2 {
+  background: var(--c-band);
+}
+
+.layer3 {
+  background: var(--c-paper);
+}
+
+/* Círculo central com a marca. `calc((1vw + 1vh) * 24)` é a medida do
+   spec: escala com a diagonal da viewport em vez de com um eixo só, então
+   não vira elipse gigante em telas largas. */
+.circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(calc((1vw + 1vh) * 24), 665px);
+  height: min(calc((1vw + 1vh) * 24), 665px);
+  border-radius: 50%;
+  background: var(--c-paper);
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+}
+
+.mark {
+  width: 22%;
+  color: var(--c-iron);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .layer {
+    animation: intro-rise 0.42s var(--ease) forwards;
+  }
+  /* Cascata: cada camada sai 0,12s depois da anterior. */
+  .layer2 {
+    animation-delay: 0.12s;
+  }
+  .layer3 {
+    animation-delay: 0.24s;
+  }
+
+  .circle {
+    animation: intro-circle 0.66s var(--ease) 0.18s forwards;
+  }
+}
+
+@keyframes intro-rise {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* O círculo cresce, segura um instante e sai crescendo — quem "abre" a
+   página é a saída dele, não um fade do container. */
+@keyframes intro-circle {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  38% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  66% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.4);
+    opacity: 0;
+  }
+}

@@ -66,35 +66,79 @@ export default async function MenuOverlay() {
 
   return (
     <div className={styles.root}>
-      {/* Linha de Automação vertical decorativa (comp O1) */}
-      <svg
-        className={styles.line}
-        viewBox="0 0 40 1000"
-        preserveAspectRatio="none"
-        role="img"
-        aria-label={t("lineAriaLabel")}
-      >
-        <path className={styles.linePath} d="M20,0 L20,1000" />
-        <g className={styles.pulse} aria-hidden="true">
-          <circle className={styles.pulseHalo} cx="20" cy="0" r="9" />
-          <circle className={styles.pulseDot} cx="20" cy="0" r="4" />
-        </g>
-        {LINE_NODES.map((y) => (
-          <g key={y}>
-            <circle className={styles.nodeOuter} cx="20" cy={y} r="7" />
-            <circle className={styles.nodeInner} cx="20" cy={y} r="2.5" />
-          </g>
-        ))}
-      </svg>
-
-      {/* Topbar: wordmark + fechar */}
-      <div className={styles.topbar}>
+      {/* ── Coluna de identidade (354px, band) ─────────────────────────────
+          O modelo divide o menu em duas colunas: uma estreita e colorida com
+          a marca e os contatos, e o painel largo com a navegação. A coluna
+          usa --c-band (blaze) com texto --c-band-ink (iron, 5,3:1 — AA),
+          nunca branco: é a mesma regra da faixa de posicionamento, o que
+          sobrou da L2 depois da V2-D4.
+          Abaixo de 768px as duas colunas viram uma só (ver CSS). */}
+      <div className={styles.sidebar}>
         <span className={styles.brand}>{t("brand")}</span>
-        <MenuClose className={styles.close} label={t("closeAriaLabel")} />
+
+        <div className={styles.meta}>
+          <a className={styles.metaLink} href={`mailto:${contactEmail}`}>
+            {contactEmail}
+          </a>
+          <a
+            className={styles.metaLink}
+            href={tFooter("githubUrl")}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {github.text}
+          </a>
+          {/* W6 modo final: sociais sem handle oficial são omitidos. */}
+          {!(OMIT_UNCONFIRMED && linkedin.confirm) ? (
+            <span
+              className={styles.metaItem}
+              data-confirm={linkedin.confirm ? "true" : undefined}
+            >
+              {linkedin.text}
+            </span>
+          ) : null}
+          {!(OMIT_UNCONFIRMED && instagram.confirm) ? (
+            <span
+              className={styles.metaItem}
+              data-confirm={instagram.confirm ? "true" : undefined}
+            >
+              {instagram.text}
+            </span>
+          ) : null}
+          <span className={styles.metaItem}>{t("location")}</span>
+        </div>
       </div>
 
-      {/* Navegação numerada 01–06 (D5) */}
-      <nav className={styles.nav} aria-label={tFooter("navigationTitle")}>
+      {/* ── Painel de navegação ──────────────────────────────────────────── */}
+      <div className={styles.panel}>
+        {/* Linha de Automação vertical decorativa (comp O1). Vive no painel,
+            não na coluna colorida: sobre o band ela desapareceria. */}
+        <svg
+          className={styles.line}
+          viewBox="0 0 40 1000"
+          preserveAspectRatio="none"
+          role="img"
+          aria-label={t("lineAriaLabel")}
+        >
+          <path className={styles.linePath} d="M20,0 L20,1000" />
+          <g className={styles.pulse} aria-hidden="true">
+            <circle className={styles.pulseHalo} cx="20" cy="0" r="9" />
+            <circle className={styles.pulseDot} cx="20" cy="0" r="4" />
+          </g>
+          {LINE_NODES.map((y) => (
+            <g key={y}>
+              <circle className={styles.nodeOuter} cx="20" cy={y} r="7" />
+              <circle className={styles.nodeInner} cx="20" cy={y} r="2.5" />
+            </g>
+          ))}
+        </svg>
+
+        <div className={styles.topbar}>
+          <MenuClose className={styles.close} label={t("closeAriaLabel")} />
+        </div>
+
+        {/* Navegação numerada 01–06 (D5) */}
+        <nav className={styles.nav} aria-label={tFooter("navigationTitle")}>
         {items.map((item, i) => {
           // "01 — Serviços" → num "01" + label "Serviços" (só layout —
           // a string oficial permanece intacta, L1).
@@ -114,39 +158,8 @@ export default async function MenuOverlay() {
             </MenuNavLink>
           );
         })}
-      </nav>
+        </nav>
 
-      {/* Rodapé do overlay: e-mail · sociais · localização · idioma */}
-      <div className={styles.meta}>
-        <a className={styles.metaLink} href={`mailto:${contactEmail}`}>
-          {contactEmail}
-        </a>
-        <a
-          className={styles.metaLink}
-          href={tFooter("githubUrl")}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {github.text}
-        </a>
-        {/* W6 modo final: sociais sem handle oficial são omitidos. */}
-        {!(OMIT_UNCONFIRMED && linkedin.confirm) ? (
-          <span
-            className={styles.metaItem}
-            data-confirm={linkedin.confirm ? "true" : undefined}
-          >
-            {linkedin.text}
-          </span>
-        ) : null}
-        {!(OMIT_UNCONFIRMED && instagram.confirm) ? (
-          <span
-            className={styles.metaItem}
-            data-confirm={instagram.confirm ? "true" : undefined}
-          >
-            {instagram.text}
-          </span>
-        ) : null}
-        <span className={styles.metaItem}>{t("location")}</span>
         <MenuLanguage className={styles.language}>
           <span className={styles.srOnly}>{tLanguage("title")} — </span>
           {tLanguage("ptCode")} / {tLanguage("enCode")}

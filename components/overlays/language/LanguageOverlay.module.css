@@ -47,7 +47,8 @@
   gap: 6px;
   background: var(--c-paper);
   border: 1px solid var(--c-line);
-  border-radius: var(--r-lg);
+  /* spec: overlays.language.listRadius 10 — o v1 usava --r-lg (16px). */
+  border-radius: 10px;
   padding: 14px;
   transform-origin: top right; /* origem no seletor (comp) */
 }
@@ -108,7 +109,10 @@
   background: transparent;
   border: 1px solid var(--c-line);
   border-radius: var(--r-md);
-  padding: 14px 16px;
+  /* spec: overlays.language.itemPadding [10, 14] + piso de 44px de alvo
+     (a11y §7.9 vence a densidade do modelo). */
+  padding: 10px 14px;
+  min-height: 44px;
   text-align: left;
   text-decoration: none;
   cursor: pointer;
