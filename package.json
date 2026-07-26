@@ -10,6 +10,9 @@
     "typecheck": "tsc --noEmit",
     "budgets": "node scripts/check-budgets.mjs",
     "thirdparty": "node scripts/check-thirdparty.mjs --mode final",
+    "parity:dom": "node scripts/parity-timeline.mjs --dom",
+    "parity": "node scripts/parity-timeline.mjs",
+    "parity:reduced": "node scripts/parity-timeline.mjs --reduced",
     "verify": "npm run build && npm run typecheck && npm run lint && npm run budgets && npm run thirdparty"
   },
   "dependencies": {
