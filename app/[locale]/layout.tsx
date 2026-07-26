@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Analytics } from "@vercel/analytics/next";
 import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/site-url";
+import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import "../styles/tokens.css";
 import "../globals.css";
 import "../styles/animations.css";
@@ -22,9 +23,14 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+/* preload:false — o mono aparece só em eyebrows, tags e a faixa de valores,
+   todos ABAIXO do elemento de LCP. Preload dele punha ~35 KB no caminho
+   crítico competindo com o poster do hero, sem nenhum ganho visual acima da
+   dobra (v2 · otimização de LCP). */
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
+  preload: false,
 });
 
 /**
@@ -46,6 +52,12 @@ export async function generateMetadata({
     metadataBase: new URL(SITE_URL),
     title: "SATTI",
     description,
+    /* Em `draft` o site serve assets do modelo estrutural marcados para swap e
+       copy [CONFIRMAR] — ambiente de revisão, não conteúdo público. O
+       robots.txt já bloqueia; a meta cobre o crawler que o ignora (V2-D2). */
+    robots: OMIT_UNCONFIRMED
+      ? undefined
+      : { index: false, follow: false, nocache: true },
     alternates: {
       canonical: path,
       languages: {

@@ -13,7 +13,10 @@
       "OPERAR",
       "CRESCER"
     ],
-    "scroll": "↓"
+    "scroll": "↓",
+    "scrollAriaLabel": "Rolar para os serviços",
+    "anchorsAriaLabel": "Navegação da seção",
+    "showreelPlayAriaLabel": "Assistir ao showreel"
   },
   "header": {
     "brand": "SATTI",
@@ -89,7 +92,7 @@
       "Processo ágil apoiado em medição: cada entrega sai com número antes e número depois.",
       "Ideia boa é ideia testada. Experimentos contínuos são o nosso motor."
     ],
-    "metricsTitle": null,
+    "metricsTitle": "Alguns números",
     "metrics": [
       {
         "value": {
@@ -266,7 +269,12 @@
         "title": "Pipeline de reels com IA — LS Interbank",
         "tag": "IA · Automação"
       }
-    ]
+    ],
+    "searchPlaceholder": "Buscar cases",
+    "searchAriaLabel": "Buscar cases",
+    "searchSubmitAriaLabel": "Buscar",
+    "emptyResult": "Nenhum case encontrado.",
+    "viewAll": "Ver todos os cases"
   },
   "reviews": {
     "sectionLabel": "05 — Quem já trabalhou com a gente",
@@ -287,7 +295,77 @@
       "value": "[CONFIRMAR cargo · empresa]",
       "confirm": true,
       "draft": null
-    }
+    },
+    "items": [
+      {
+        "quote": {
+          "value": "[CONFIRMAR depoimento]",
+          "confirm": true,
+          "draft": null
+        },
+        "name": {
+          "value": "[CONFIRMAR nome]",
+          "confirm": true,
+          "draft": null
+        },
+        "role": {
+          "value": "[CONFIRMAR cargo · empresa]",
+          "confirm": true,
+          "draft": null
+        }
+      },
+      {
+        "quote": {
+          "value": "[CONFIRMAR depoimento]",
+          "confirm": true,
+          "draft": null
+        },
+        "name": {
+          "value": "[CONFIRMAR nome]",
+          "confirm": true,
+          "draft": null
+        },
+        "role": {
+          "value": "[CONFIRMAR cargo · empresa]",
+          "confirm": true,
+          "draft": null
+        }
+      },
+      {
+        "quote": {
+          "value": "[CONFIRMAR depoimento]",
+          "confirm": true,
+          "draft": null
+        },
+        "name": {
+          "value": "[CONFIRMAR nome]",
+          "confirm": true,
+          "draft": null
+        },
+        "role": {
+          "value": "[CONFIRMAR cargo · empresa]",
+          "confirm": true,
+          "draft": null
+        }
+      },
+      {
+        "quote": {
+          "value": "[CONFIRMAR depoimento]",
+          "confirm": true,
+          "draft": null
+        },
+        "name": {
+          "value": "[CONFIRMAR nome]",
+          "confirm": true,
+          "draft": null
+        },
+        "role": {
+          "value": "[CONFIRMAR cargo · empresa]",
+          "confirm": true,
+          "draft": null
+        }
+      }
+    ]
   },
   "footer": {
     "sectionLabel": "06 — Contato",
@@ -354,7 +432,8 @@
       "draft": null,
       "machine_translated": false
     },
-    "signature": "Feito com engenharia"
+    "signature": "Feito com engenharia",
+    "backToTop": "Voltar ao topo"
   },
   "menu": {
     "machine_translated": false,

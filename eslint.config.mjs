@@ -16,6 +16,12 @@ const eslintConfig = defineConfig([
     "design/**",
     "tasks/**",
     "audits/**",
+    // SATTI v2: material de referência — DOM/CSS/bundles do site-modelo, o
+    // starter antigo e o runtime gerado do handoff. Não é código nosso e não
+    // entra no git (.gitignore). Sem esta linha o lint reprova em arquivos
+    // que ninguém deve editar.
+    "Site/**",
+    "CHATs WEB/**",
   ]),
 ]);
 

@@ -33,23 +33,19 @@ function readField(field: CopyField): { text: string; confirm: boolean } {
 }
 
 /**
- * Mídia por card, na ordem dos itens do JSON (paths do MANIFEST):
- * 1–3 → vídeo P1–P3 (toca só no hover/in-view; o WorkCard resolve) +
- * poster · 4–6 → videoSrc "" (WorkCard mostra só o screenshot).
+ * Mídia por card, na ordem dos itens do JSON (paths do MANIFEST v2):
+ * 1–3 → vídeo P1–P3 + poster · 4–6 → videoSrc "" (só o screenshot).
+ *
+ * v2: os posters dos 3 primeiros cards eram `/media/portfolio-{n}-poster.webp`,
+ * um SEGUNDO arquivo para o mesmo slot visual que `shot-{n}` já ocupa — o
+ * CasesSlider consome exatamente `shot-{1..3}` para os mesmos 3 cases. Slots
+ * unificados em `shot-{1..6}`: 3 assets e 3 linhas de budget a menos, e o
+ * poster passa a ser sempre o frame 0 do próprio .mp4 (zero "pop" no play).
  */
 const CARD_MEDIA: ReadonlyArray<{ videoSrc: string; posterSrc: string }> = [
-  {
-    videoSrc: "/media/portfolio-1.mp4",
-    posterSrc: "/media/portfolio-1-poster.webp",
-  },
-  {
-    videoSrc: "/media/portfolio-2.mp4",
-    posterSrc: "/media/portfolio-2-poster.webp",
-  },
-  {
-    videoSrc: "/media/portfolio-3.mp4",
-    posterSrc: "/media/portfolio-3-poster.webp",
-  },
+  { videoSrc: "/media/portfolio-1.mp4", posterSrc: "/img/portfolio/shot-1.webp" },
+  { videoSrc: "/media/portfolio-2.mp4", posterSrc: "/img/portfolio/shot-2.webp" },
+  { videoSrc: "/media/portfolio-3.mp4", posterSrc: "/img/portfolio/shot-3.webp" },
   { videoSrc: "", posterSrc: "/img/portfolio/shot-4.webp" },
   { videoSrc: "", posterSrc: "/img/portfolio/shot-5.webp" },
   { videoSrc: "", posterSrc: "/img/portfolio/shot-6.webp" },

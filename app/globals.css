@@ -18,6 +18,8 @@
   --color-tint-blaze: var(--tint-blaze);
   --color-tint-blue: var(--tint-blue);
   --color-tint-slate: var(--tint-slate);
+  --color-band: var(--c-band);
+  --color-band-ink: var(--c-band-ink);
 
   --font-display: var(--ff-display);
   --font-sans: var(--ff-body);
@@ -25,6 +27,13 @@
 
   --radius-md: var(--r-md);
   --radius-xl: var(--r-xl);
+  --radius-service: var(--r-service);
+  --radius-btn: var(--r-btn);
+  --radius-pill-lg: var(--r-pill-lg);
+  --radius-card: var(--r-card);
+  --radius-video: var(--r-video);
+  --radius-screen: var(--r-screen);
+  --radius-display: var(--r-display);
 }
 
 body {
