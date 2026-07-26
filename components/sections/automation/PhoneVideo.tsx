@@ -31,8 +31,15 @@ interface PhoneVideoProps {
   posterSrc: string;
 }
 
-/** Tela interna do phone: 128px de frame − 2×8px de padding. */
-const POSTER_SIZES = "112px";
+/**
+ * Largura real da moldura do vídeo central por patamar (W12 · geometry →
+ * `automation.centerVideo`). Era "112px", da moldura de 128px do blueprint que
+ * a W12 substituiu: com o slot agora em 348px, aquele hint fazia o next/image
+ * servir um poster de 112px esticado 3,1× — só o `sizes` mudou, o gate de IO e
+ * o preload="none" medidos na W10 estão intocados.
+ */
+const POSTER_SIZES =
+  "(max-width: 565px) 145px, (max-width: 991px) 193px, (max-width: 1600px) 297px, 348px";
 
 export default function PhoneVideo({ videoSrc, posterSrc }: PhoneVideoProps) {
   const { canPlay, ref } = useMediaGate();

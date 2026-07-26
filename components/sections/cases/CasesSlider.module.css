@@ -1,62 +1,206 @@
 /* ============================================================
-   CasesSlider (S9) — Swiper 1 coluna · 3 cases com métrica (D4)
-   Fonte visual: S9 CasesSlider Desktop 1920.dc.html / Mobile 375.dc.html
-   Leis: L1 ([CONFIRMAR] em steel via data-confirm), L2 (blaze da
-   dobra = dot ativo da paginação — decisão F0–F5: dots S9 = blaze
-   no ativo), L3 (setas prev/next em circuit = controle funcional,
-   como na comp; focus ring circuit), L8 (métricas [CONFIRMAR] até
-   o Miguel cravar), L9 (profundidade = hairline 1px + tint, sem
-   drop-shadow), L5/L10 (track do Swiper anima só transform; duração
-   550ms via prop `speed` zerada em reduced-motion; transições dos
-   dots gated por media query), L12 (var(--ff-display/body/mono)).
+   CasesSlider (S9) — Swiper de 1 coluna · 3 cases com métrica (D4)
+   Geometria: awsmd-geometry.json → cases.* (fonte única, DEC-016).
+   Copy e paleta: comps S9 Desktop 1920 / Mobile 375.
+   Leis: L1 ([CONFIRMAR] em steel/dim via data-confirm), L2 (blaze da
+   dobra = dot ativo da paginação), L3 (setas e ring em circuit =
+   controle funcional), L8 (métricas [CONFIRMAR] até o Miguel cravar),
+   L9 (profundidade = hairline + tint, sem drop-shadow), L5/L10 (track
+   do Swiper anima só transform; duração via prop `speed`, zerada em
+   reduced-motion), L12 (var(--ff-display/body/mono)).
 
-   ERRO DO 1º PASSE corrigido: tema do Swiper 100% via tokens — a lib
-   define --swiper-theme-color: #007aff em :root; o escopo .slider
-   sobrescreve --swiper-theme-color / --swiper-pagination-* para
-   steel (inativo) e blaze (ativo). Zero azul default da lib.
+   V2 (W12-E) — a seção virou ESCURA (é o ritmo do modelo, e o
+   data-tone="dark" já dizia isso desde a W11 enquanto o fundo era paper).
+   Consequência de contraste: `--c-steel` sobre graphite dá 3,49:1 e
+   reprova AA para texto pequeno (§7.9 / DEC-014 escureceu o steel
+   justamente para NÃO ter isso). A de-ênfase no escuro passa a ser
+   --c-dim-on-dark = ink-on-dark a 72% sobre graphite → #B4B5B8, 9,2:1
+   sobre o fundo. Nenhum hex literal: color-mix de tokens.
 
-   §4 lei de tradução comp→código: padding-right 348px do protótipo
-   descartado (gutter real via .container-s); seção flui (sem 100vh);
-   aside "Specs", placeholders "[ S9-IMG-n ]", data-screen-label e
-   badges motion on/off descartados. Atlas/D4: Swiper de 1 coluna
-   (1 slide por vez, sem busca) — no 375 o card mantém o peek do
-   próximo (comp: card 295 num viewport 375); no desktop o case abre
-   "em detalhe" em 2 colunas (mídia + conteúdo) dentro do card, já
-   que a curadoria é de 3 cases e o slider é de coluna única.
+   Tema do Swiper 100% via tokens — a lib define --swiper-theme-color:
+   #007aff em :root; o escopo .slider sobrescreve para o par claro/blaze.
    ============================================================ */
 
 .section {
   position: relative;
-  background: var(--c-paper); /* tela clara após o dark do S8 Banner */
-  color: var(--c-iron);
-  padding-block: 40px 48px; /* comp mobile: 40 / 48 */
+  overflow: hidden; /* medido: contém os círculos decorativos */
+  background: var(--c-graphite); /* V2: tom escuro do modelo */
+  color: var(--c-ink-on-dark);
+  padding-block: 64px 56px; /* mobile */
+
+  --c-dim-on-dark: color-mix(
+    in srgb,
+    var(--c-ink-on-dark) 72%,
+    var(--c-graphite)
+  );
 }
 
-.inner {
+/* Container do modelo: 1306px. O seletor é `div.inner` (0,1,1) de
+   propósito: `.container-s` declara max-width: var(--container) = 1440 com
+   a mesma especificidade, e a ordem entre globals.css e o CSS de módulo
+   não é garantida — quem tem de vencer é este, sempre. */
+div.inner {
   position: relative;
+  z-index: 1; /* acima dos círculos */
+  max-width: 1306px;
+  margin-inline: auto;
 }
 
-/* Eyebrow — base .eyebrow (globals); comp: mb 14px mobile / 18px desktop,
-   gap marcador→texto 12px mobile / 14px desktop. */
+/* --- Círculos decorativos ---------------------------------------
+   Medido: 423×423, raio 50%, linear-gradient(180deg, linha a 12%,
+   linha a 80%) com opacity .12, coluna à esquerda, centrados na altura.
+   Puramente ornamentais e clipados pelo overflow da seção. */
+.decor {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: -150px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  transform: translateY(-50%);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.circle {
+  display: block;
+  width: 423px;
+  height: 423px;
+  border-radius: 50%;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--c-ink-on-dark) 12%, transparent),
+    color-mix(in srgb, var(--c-ink-on-dark) 80%, transparent)
+  );
+}
+
+/* Suptitle — base .eyebrow (globals). No escuro o steel reprova AA,
+   então a cor vem de --c-dim-on-dark. */
 p.sectionEyebrow {
   margin: 0 0 14px;
+  color: var(--c-dim-on-dark);
 }
 
 .title {
   margin: 0;
   font-family: var(--ff-display);
   font-size: 2rem; /* comp mobile: 32px */
-  font-weight: 800;
-  line-height: 1.04;
-  letter-spacing: -0.01em;
+  font-weight: 500; /* medido: title 500 */
+  line-height: 1.23;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
-  max-width: 16ch;
+  max-width: 4.22em; /* medido */
 }
 
-/* Linha título + setas (comp desktop: flex between align-end, mb 48).
-   Mobile: só o título (comp 375 não tem setas — swipe + dots). */
+/* Linha título + ferramentas (busca, "ver todos", setas). */
 .headRow {
-  margin-bottom: 28px; /* comp mobile: h2 mb 28 */
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.headText {
+  min-width: 0;
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}
+
+/* --- Busca (filtro client-side real) ----------------------------
+   Medido: max-width 246, padding-bottom 15, border-bottom 1, raio 0,
+   fundo transparente. */
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 246px;
+  padding-bottom: 15px;
+  border: 0;
+  border-bottom: 1px solid var(--c-hairline-dark);
+  border-radius: 0;
+  background: transparent;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 0;
+  min-height: 32px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--c-ink-on-dark);
+  font-family: var(--ff-body);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.searchInput::placeholder {
+  color: var(--c-dim-on-dark);
+}
+
+.searchInput:focus-visible {
+  outline: none;
+}
+
+/* O ring de foco vai no CAMPO INTEIRO (a borda inferior é a única
+   affordance visível), não no input sem caixa. */
+.search:focus-within {
+  border-bottom-color: var(--c-circuit); /* L3 */
+}
+
+.searchSubmit {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px; /* §7.9 */
+  height: 44px;
+  margin-block: -6px; /* não empurra a linha de base do campo */
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--c-ink-on-dark);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.searchSubmit:focus-visible {
+  outline: 2px solid var(--c-circuit); /* L3 */
+  outline-offset: 2px;
+}
+
+.viewAll {
+  color: var(--c-ink-on-dark);
+  font-family: var(--ff-body);
+  font-size: 0.9375rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* §7.9 */
+}
+
+.viewAll:focus-visible {
+  outline: 2px solid var(--c-circuit);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+/* Resultado vazio da busca (copy oficial cases.emptyResult). */
+.empty {
+  margin: 0;
+  padding: 40px 0;
+  color: var(--c-dim-on-dark);
+  font-family: var(--ff-body);
+  font-size: 1rem;
 }
 
 .controls {
@@ -93,9 +237,9 @@ p.sectionEyebrow {
    Swiper — tema via tokens (escopo .slider vence o :root da lib)
    ------------------------------------------------------------ */
 .slider {
-  --swiper-theme-color: var(--c-steel);
+  --swiper-theme-color: var(--c-dim-on-dark);
   --swiper-pagination-color: var(--c-blaze); /* dot ativo = blaze (L2) */
-  --swiper-pagination-bullet-inactive-color: var(--c-steel);
+  --swiper-pagination-bullet-inactive-color: var(--c-dim-on-dark);
   --swiper-pagination-bullet-inactive-opacity: 1;
   --swiper-pagination-bullet-size: 8px; /* comp: dots 8px */
   --swiper-pagination-bullet-border-radius: var(--r-pill);
@@ -118,7 +262,7 @@ p.sectionEyebrow {
 }
 
 /* ------------------------------------------------------------
-   Card do case (comp: hairline + radius editorial + mídia 16:9)
+   Card do case (hairline no escuro + raio editorial + mídia 16:9)
    ------------------------------------------------------------ */
 .card {
   display: flex;
@@ -126,9 +270,9 @@ p.sectionEyebrow {
   gap: 18px; /* comp mobile */
   width: 100%;
   padding: var(--sp-sm); /* comp mobile: 16 */
-  border: 1px solid var(--c-line); /* L9: hairline, sem sombra */
+  border: 1px solid var(--c-hairline-dark); /* D1: célula no escuro */
   border-radius: var(--r-xl); /* comp: 24 mobile / 28 desktop → token 28 */
-  background: var(--c-paper);
+  background: var(--c-iron); /* um passo acima do graphite da seção */
 }
 
 .media {
@@ -136,7 +280,7 @@ p.sectionEyebrow {
   aspect-ratio: 16 / 9; /* comp */
   border-radius: var(--r-lg); /* comp: 16 */
   overflow: hidden;
-  background: var(--tint-slate); /* L9: tint sob a imagem */
+  background: var(--c-graphite);
 }
 
 .mediaImg {
@@ -162,7 +306,7 @@ p.sectionEyebrow {
   font-size: 0.625rem; /* comp mobile: 10px */
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--c-steel);
+  color: var(--c-dim-on-dark);
 }
 
 .cardTitle {
@@ -173,11 +317,12 @@ p.sectionEyebrow {
   line-height: 1.12;
   text-transform: uppercase;
   min-height: 2.24em; /* comp: alinha títulos de 1 e 2 linhas */
+  color: var(--c-ink-on-dark);
 }
 
-/* Case sem título oficial (L1): steel, nunca ink final. */
+/* Case sem título oficial (L1): de-ênfase, nunca ink final. */
 .cardTitle[data-confirm="true"] {
-  color: var(--c-steel);
+  color: var(--c-dim-on-dark);
 }
 
 /* ------------------------------------------------------------
@@ -187,7 +332,7 @@ p.sectionEyebrow {
   display: flex;
   align-items: stretch;
   margin: 0 4px 4px; /* comp mobile */
-  border-top: 1px solid var(--c-line);
+  border-top: 1px solid var(--c-line-dark);
   padding-top: var(--sp-sm); /* comp mobile: 16 */
 }
 
@@ -203,7 +348,7 @@ p.sectionEyebrow {
   font-size: 0.625rem; /* comp: 10px */
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--c-steel);
+  color: var(--c-dim-on-dark);
 }
 
 .metricValue {
@@ -212,13 +357,13 @@ p.sectionEyebrow {
   font-size: 1.125rem; /* comp mobile: 18px */
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--c-iron); /* "Depois" confirmado = iron (comp) */
+  color: var(--c-ink-on-dark); /* "Depois" confirmado (comp) */
 }
 
-/* "Antes" sempre de-enfatizado (comp) e todo [CONFIRMAR] em steel (L1). */
+/* "Antes" sempre de-enfatizado (comp) e todo [CONFIRMAR] idem (L1). */
 .metricBefore,
 .metricValue[data-confirm="true"] {
-  color: var(--c-steel);
+  color: var(--c-dim-on-dark);
 }
 
 /* Seta entre os grupos — PSEUDO-elemento (audit LH: dentro de <dl> só
@@ -234,7 +379,7 @@ p.sectionEyebrow {
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--c-iron);
+  color: var(--c-ink-on-dark);
   font-size: 1rem; /* comp mobile: 16px */
 }
 
@@ -274,32 +419,38 @@ p.sectionEyebrow {
 }
 
 /* ------------------------------------------------------------
-   Desktop (comp 1920): padding 96/120, título clamp(2.5rem,5vw,4rem),
-   linha título+setas, card em 2 colunas (mídia 16:9 + detalhe),
-   tipos 11/24/22px, dots à esquerda mt 48 gap 10.
+   Desktop (≥768): geometria medida — padding 130/120, suptitle
+   500 18px/1.05, título 500 48px/1.23 mt 23, linha título+ferramentas,
+   card em 2 colunas (mídia + detalhe), dots à esquerda.
    ------------------------------------------------------------ */
 @media (min-width: 768px) {
   .section {
-    padding-block: 96px var(--sp-2xl); /* 96 / 120 */
+    padding-block: 130px 120px; /* medido: cases.section.paddingBlock */
   }
 
   p.sectionEyebrow {
     gap: 14px;
-    margin-bottom: 18px;
+    margin-bottom: 0;
+    font-size: 1.125rem; /* medido: suptitle 500 18px/1.05 */
+    line-height: 1.05;
   }
 
   .title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1.02;
-    max-width: 18ch;
+    margin-top: 23px; /* medido */
+    font-size: 3rem; /* medido: 48px */
   }
 
   .headRow {
-    display: flex;
+    flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 32px; /* comp */
+    gap: 32px;
     margin-bottom: var(--sp-lg); /* comp: 48 */
+  }
+
+  .tools {
+    justify-content: flex-end;
+    gap: 28px;
   }
 
   .controls {

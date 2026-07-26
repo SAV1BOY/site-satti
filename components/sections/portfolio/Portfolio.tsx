@@ -1,19 +1,27 @@
 /**
- * Portfolio (S7) — "03 — Portfólio" · grid de 6 work-cards (D4).
- * Fonte visual: S7 Portfolio Desktop 1920.dc.html / Mobile 375.dc.html
+ * Portfolio (S7) — "03 — Portfólio" · 6 work-cards em 2 colunas com stagger.
+ * Geometria: design/awsmd-ref/awsmd-geometry.json → portfolio (DEC-016).
+ * Copy e paleta: comps S7 Portfolio Desktop 1920 / Mobile 375.
  *
- * Server Component (L11): copy 100% via next-intl (L1); todo o motion
- * mora nos client children já prontos (WorkCard: scale + glow blaze
- * blur(90px) op .8 + vídeo só no hover · AutomationLine: desenho no
- * scroll + pulso único do fio). Blaze-law (L2): nesta dobra o blaze é
- * o glow do card em hover — ou o pulso da Linha quando estiver aqui.
+ * Server Component (L11): copy 100% via next-intl (L1); todo o motion mora
+ * nos client children (WorkCard: parallax da mídia + scale + glow blaze ·
+ * AutomationLine: desenho no scroll + pulso único do fio).
  *
  * Mídia (MANIFEST/§8): cards 1–3 com vídeo real deferido (markup final,
  * preload="none" + data-asset via WorkCard) · cards 4–6 só screenshot.
+ *
+ * Fill-text do cabeçalho (medido: headFillText, margin-top 83, 400
+ * 25px/1.335, max 14.241em): renderizado SÓ quando
+ * `portfolio.supportingText` tem string. Hoje o EN tem copy oficial e o
+ * PT-BR está `null` — e `null` neste JSON significa "slot omitido"
+ * (footer.eyebrow, footer.preferEmail seguem a mesma convenção), não
+ * "inventar um placeholder". Quando o Miguel escrever a versão PT o slot
+ * aparece sem mudança de código. L1: nada é inventado aqui.
  */
 
 import { getTranslations } from "next-intl/server";
 import AutomationLine from "@/components/ui/AutomationLine";
+import FillText from "@/components/ui/FillText";
 import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
 import WorkCard from "@/components/ui/WorkCard";
 import styles from "./Portfolio.module.css";
@@ -54,9 +62,31 @@ const CARD_MEDIA: ReadonlyArray<{ videoSrc: string; posterSrc: string }> = [
   { videoSrc: "", posterSrc: "/img/portfolio/shot-6.webp" },
 ];
 
+/**
+ * Sentido do parallax da mídia por posição no grid de 2 colunas
+ * row-major: `(coluna + linha) % 2`. Cards vizinhos — na horizontal e na
+ * vertical — derivam em sentidos opostos, que é o que faz o efeito ser
+ * legível em vez de parecer um scroll mais lento.
+ */
+function parallaxDir(index: number): 1 | -1 {
+  const col = index % 2;
+  const row = Math.floor(index / 2);
+  return (col + row) % 2 === 0 ? -1 : 1;
+}
+
 export default async function Portfolio() {
   const t = await getTranslations("portfolio");
   const items = t.raw("items") as PortfolioItemJson[];
+  /* W13 (auditoria): o guard tinha de ser `t.has`, não `t.raw`. O resolvePath do
+     use-intl LANÇA para valor `null` e `t.raw` devolve o getMessageFallback —
+     isto é, a STRING "portfolio.supportingText" — então `typeof === "string"`
+     dava true e a chave crua era pintada na página em PT-BR (mais um
+     MISSING_MESSAGE no log do build). `t.has` devolve false no mesmo caso. */
+  const supporting = t.has("supportingText") ? t.raw("supportingText") : null;
+  const supportingText =
+    typeof supporting === "string" && supporting.trim() !== ""
+      ? supporting
+      : null;
 
   return (
     <section
@@ -73,40 +103,49 @@ export default async function Portfolio() {
         <p className={`eyebrow ${styles.sectionEyebrow}`}>
           {t("sectionLabel")}
         </p>
-        <h2 className={styles.title}>{t("title")}</h2>
 
-        <ul className={styles.grid}>
-          {items.slice(0, CARD_MEDIA.length).flatMap((item, index) => {
-            const media = CARD_MEDIA[index]; // index < length (slice acima)
-            const title = readField(item.title);
-            const tag = readField(item.tag);
-            // W6 modo final: card sem projeto confirmado (6º) é omitido.
-            if (OMIT_UNCONFIRMED && (title.confirm || tag.confirm)) {
-              return [];
-            }
-            return (
-              <li
-                key={title.text}
-                className={styles.gridItem}
-                data-confirm={title.confirm ? "true" : undefined}
-              >
-                <WorkCard
-                  title={title.text}
-                  tags={[tag.text]}
-                  videoSrc={media.videoSrc}
-                  posterSrc={media.posterSrc}
-                />
-              </li>
-            );
-          })}
-        </ul>
+        <div className={styles.head}>
+          <h2 className={styles.title}>{t("title")}</h2>
+          {supportingText !== null ? (
+            <FillText className={styles.headFill}>{supportingText}</FillText>
+          ) : null}
+        </div>
 
-        <a className={styles.allCta} href="#cases">
-          {t("allCta")}
-          <span className={styles.allCtaArrow} aria-hidden="true">
-            →
-          </span>
-        </a>
+        <div className={styles.list}>
+          <ul className={styles.grid}>
+            {items.slice(0, CARD_MEDIA.length).flatMap((item, index) => {
+              const media = CARD_MEDIA[index]; // index < length (slice acima)
+              const title = readField(item.title);
+              const tag = readField(item.tag);
+              // W6 modo final: card sem projeto confirmado (6º) é omitido.
+              if (OMIT_UNCONFIRMED && (title.confirm || tag.confirm)) {
+                return [];
+              }
+              return (
+                <li
+                  key={title.text}
+                  className={styles.gridItem}
+                  data-confirm={title.confirm ? "true" : undefined}
+                >
+                  <WorkCard
+                    title={title.text}
+                    tags={[tag.text]}
+                    videoSrc={media.videoSrc}
+                    posterSrc={media.posterSrc}
+                    parallaxDir={parallaxDir(index)}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+
+          <a className={styles.allCta} href="#cases">
+            {t("allCta")}
+            <span className={styles.allCtaArrow} aria-hidden="true">
+              →
+            </span>
+          </a>
+        </div>
       </div>
     </section>
   );

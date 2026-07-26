@@ -1,58 +1,118 @@
 /* ============================================================
-   Banner (S8) — comps: "S8 Banner Desktop 1920.dc.html" e
-   "S8 Banner Mobile 375.dc.html" (verdade visual).
-   Full-viewport DARK: uma das 3 únicas seções 100vh (§4). Lei de
-   tradução comp→código: o padding-right 348px do protótipo era
-   andaime da aside de specs → aqui os DOIS lados usam o mesmo
-   eixo do hero, clamp(20px, 6.25vw, 120px) (= 120px @1920,
-   20px @375, os valores das comps).
-   L1 · statement é rascunho [CONFIRMAR]: steel via data-confirm,
-        nunca ink final (se um dia confirm cair, o default volta
-        a ink-on-dark sem tocar neste arquivo).
-   L2 · único blaze de destaque da dobra = CTA primary (Button);
-        marcador 8×8 do eyebrow/confirmTag não conta.
-   L9 · profundidade = hairline 1px var(--c-hairline-dark) (D1)
-        no chip de textura + fundo iron; sem drop-shadow.
-   L5/L10 · seção ESTÁTICA por desenho (spec da comp: "Banner
-        estático por desenho"; reduced-motion = idêntico ao base)
-        — zero animação própria; o roll do CTA mora no Button,
-        já gated por no-preference.
-   L12 · Archivo display caps tracking neg · Mono caps +0.08em.
-   Zero hex literal — só var(--c-*) (D1/§4).
+   Banner (S8) — painel-display CLARO (DEC-018a: reversão do v1).
+
+   Geometria: design/awsmd-ref/awsmd-geometry.json → `banner`
+     section  height 100vh · max-height 750 · padding-block 20
+     container max-height 710
+     display  radius 130 (--r-display) · tone light · overflow hidden
+     title    500 87px/1.1 · ls −0.02em · center · column
+     inline   width 2.46875em · radius .4583em · vertical-align middle
+     decor    marquee centralizado, z-index 1
+
+   Cor: a SEÇÃO é a moldura (--tint-slate) e o PAINEL é paper. O
+   brief pede "fundo claro (paper)" no display; para o raio de 130px
+   e o recuo de 20px existirem visualmente, a moldura tem de ser
+   outra superfície. --tint-slate é o neutro do DS (token existente,
+   zero hex novo) e aproxima a luminância do modelo (banner mediana
+   197 contra 248 de dois paper empilhados). Um único valor troca:
+   .section { background }.
+
+   L1 · statement é rascunho [CONFIRMAR]: steel via data-confirm.
+   L9 · profundidade por hairline/tint — sem drop-shadow.
+   L5/L10 · a camada de conteúdo é ESTÁTICA; o único movimento é o
+        marquee decorativo, gated dentro do próprio Marquee.
+   Zero hex literal — só var(--*).
    ============================================================ */
 
-/* Base mobile (comp 375): padding 48/20, coluna gap 28, 88svh
-   centrado. Desktop assume 100svh (full-viewport §4). */
 .section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 28px;
-  min-height: 88vh;
-  min-height: 88svh;
-  padding: 48px clamp(20px, 6.25vw, 120px);
+  height: 100vh;
+  max-height: 750px;
+  padding-block: 20px;
+  background: var(--tint-slate);
 }
 
-/* Eyebrow "Pronto para construir" — base global .eyebrow (marcador
-   8×8 blaze; não conta na L2). Comp desktop: 13px, gap 14px. A comp
-   MOBILE não mostra este eyebrow (a linha com marcador vira o rótulo
-   [CONFIRMAR] do statement) → none no mobile. */
+/* Largura: o display do modelo é quase full-bleed — a barra do header
+   mede 1858 a 1920, logo o container dele NÃO é o container editorial.
+   Prender esta seção ao --container de 1440 do DS deixaria 1.216px de
+   texto para um statement de 87px: a primeira linha ("Número bom [tex]
+   não mente:" ≈ 1.365px) quebraria, o bloco iria a 784px e o
+   `overflow: hidden` do painel CORTARIA a copy. Logo o display é inset
+   pelos mesmos 20px do padding-block. Medido: 0 overflow de 375 a 1920. */
+.container {
+  height: 100%;
+  max-height: 710px;
+  padding-inline: 20px;
+}
+
+/* O raio de 130px é a assinatura da seção; a 375px de largura ele
+   viraria um estádio, então interpola até o valor medido (a spec dá
+   só o patamar de 1920). */
+.display {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: clamp(48px, 9vw, var(--r-display));
+  background: var(--c-paper);
+}
+
+/* ------------------------------------------------------------
+   Marquee decorativo — caixas vazias contornadas atrás do texto.
+   Geometria medida: 185×307, border 2.7px, radius 25, margem
+   inline 10.5px (→ 21px entre caixas), sentido `right`, 20s.
+   ------------------------------------------------------------ */
+.decor {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center; /* geometry: decorativeMarquee position "center" */
+  pointer-events: none;
+}
+
+/* altura real do trilho, para contain-intrinsic-size não estimar */
+.decorTrack {
+  --marquee-h: 307px;
+}
+
+.decorBox {
+  flex: none;
+  width: 185px;
+  height: 307px;
+  margin-inline: 10.5px;
+  border: 2.7px solid var(--c-line);
+  border-radius: 25px;
+}
+
+/* ------------------------------------------------------------
+   Conteúdo — coluna centralizada sobre o marquee.
+   Orçamento de altura a 1920: painel 710 − padding 88 = 622;
+   statement 4 linhas × 95,7 = 383 + eyebrow 15 + tag 15 +
+   notice 14 + CTA 53 = 480, sobram 142 para 4 gaps de 24.
+   ------------------------------------------------------------ */
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 1.4vw, 24px);
+  padding: clamp(20px, 2.2vw, 44px);
+  max-width: 100%;
+  text-align: center;
+}
+
+/* Eyebrow "Pronto para construir" — a comp MOBILE não o mostra (lá o
+   rótulo [CONFIRMAR] assume o posto, com marcador 8×8 blaze). */
 p.eyebrow {
   display: none;
   margin: 0;
 }
 
-/* Bloco do statement (comp desktop: label ↔ h2 ↔ notice, gap 24;
-   mobile segue o ritmo 28 da seção). */
-.statementBlock {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 28px;
-}
-
-/* Rótulo [CONFIRMAR] (L1) — mono caps steel. Mobile (comp): assume o
-   posto do eyebrow, com marcador 8×8 blaze via ::before. */
+/* Rótulo [CONFIRMAR] (L1) — mono caps steel. */
 .confirmTag {
   margin: 0;
   display: inline-flex;
@@ -74,58 +134,42 @@ p.eyebrow {
   flex-shrink: 0;
 }
 
-/* Statement display — Archivo 800 caps (L12). Comp mobile: 40px @375,
-   lh 1.0; desktop: clamp(3rem, 7vw, 6.5rem), lh 0.98, ls −0.015em.
-   Cor default = ink-on-dark (copy oficial futura, W6). */
+/* Statement — 500 87px/1.1, ls −0.02em, coluna centralizada. O piso do
+   clamp (2.5rem = 40px) é o valor da comp mobile 375. */
 .statement {
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-family: var(--ff-display);
-  font-weight: 800;
+  font-weight: 500;
+  font-size: clamp(2.5rem, 5.6vw, 5.4375rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  font-size: min(10.7vw, 40px);
-  line-height: 1;
-  letter-spacing: -0.015em;
-  color: var(--c-ink-on-dark);
+  color: var(--c-iron);
 }
 
-/* L1: rascunho [CONFIRMAR] fica em steel — nunca branco/final. */
+/* L1: rascunho [CONFIRMAR] em steel — nunca a cor final. */
 .statement[data-confirm="true"] {
   color: var(--c-steel);
 }
 
-/* Linha com textura inline. flex-wrap: no mobile "não mente:" quebra
-   sozinho para a linha seguinte (exatamente o arranjo da comp 375). */
-.row {
-  display: flex;
-  align-items: center;
-  gap: 0.28em;
-  flex-wrap: wrap;
-}
-
+/* Linha de texto normal, NÃO flex: a textura só se comporta como
+   palavra dentro de fluxo inline. */
 .line {
   display: block;
 }
 
-/* Chip de textura A8 — proporções da comp (1.5em × 0.78em do corpo do
-   statement), radius 12 funcional, hairline D1 + fundo iron (L9);
-   a imagem 1:1 cobre o chip (crop ao formato da comp). */
+/* Textura A8 — palavra visual no fluxo do texto. */
 .texture {
-  position: relative;
-  display: inline-flex;
-  width: 1.5em;
-  height: 0.78em;
-  flex: none;
-  border: 1px solid var(--c-hairline-dark);
-  border-radius: var(--r-md);
-  overflow: hidden;
-  background: var(--c-iron);
+  display: inline;
+  width: 2.46875em;
+  height: auto;
+  border-radius: 0.4583em;
+  vertical-align: middle;
 }
 
-.textureImg {
-  object-fit: cover;
-}
-
-/* Aviso de rascunho (comp: mono 10px mobile / 11px desktop, steel). */
 .draftNotice {
   margin: 0;
   font-family: var(--ff-mono);
@@ -135,39 +179,25 @@ p.eyebrow {
   color: var(--c-steel);
 }
 
-/* CTA — o blaze da dobra (L2), texto iron via Button primary.
-   Mobile (comp): pill de largura total com +4px de respiro. */
+/* CTA — Button primary (pill blaze, texto iron). */
 .ctaRow {
   display: flex;
-  margin-top: 4px;
+  justify-content: center;
+  width: 100%;
 }
 
 .ctaRow .cta {
-  flex: 1;
   justify-content: center;
 }
 
 /* ------------------------------------------------------------
-   Desktop (comp 1920): 100svh, padding-block 120, gap 56,
-   eyebrow visível 13px, confirmTag 12px sem marcador, statement
-   clamp 7vw, notice 11px, CTA inline.
+   Desktop: eyebrow visível, rótulo sem marcador, CTA no natural.
    ------------------------------------------------------------ */
 @media (min-width: 768px) {
-  .section {
-    gap: 56px;
-    min-height: 100vh;
-    min-height: 100svh;
-    padding-block: var(--sp-2xl); /* 120px */
-  }
-
   p.eyebrow {
     display: inline-flex;
     gap: 14px;
     font-size: 13px;
-  }
-
-  .statementBlock {
-    gap: var(--sp-md); /* 24px */
   }
 
   .confirmTag {
@@ -179,26 +209,11 @@ p.eyebrow {
     display: none; /* comp desktop: rótulo sem marcador */
   }
 
-  .statement {
-    font-size: clamp(3rem, 7vw, 6.5rem);
-    line-height: 0.98;
-  }
-
-  .row {
-    gap: 0.3em;
-  }
-
   .draftNotice {
     font-size: 11px;
   }
 
-  .ctaRow {
-    display: block;
-    margin-top: 0;
-  }
-
   .ctaRow .cta {
     flex: none;
-    justify-content: flex-start;
   }
 }

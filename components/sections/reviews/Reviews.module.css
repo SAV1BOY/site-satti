@@ -1,13 +1,14 @@
 /* ============================================================
-   Reviews (S10 · Depoimentos) — grade estática 3 cards / paper
-   Comp: padding 96/…/120 (348px direito = scaffold, descartado §4)
-   · eyebrow 8×8 · h2 800 clamp(2.5-4rem) 1.02 −0.01em max 18ch ·
-   aviso mono 11 steel com dot 6px · grid 3×1fr gap 24 · card
-   hairline radius 28 padding 40 min-h 420 · aspas 900 64px blaze
-   (1/card, conforme comp) · avatar 52px blueprint · nome 15/600
-   iron · cargo mono 11 steel. Mobile 375: padding 40/20/48 ·
-   título 32px · 1 col gap 18 · card radius 24 padding 28.
-   Seção 100% estática — nenhum motion próprio (L5 por construção).
+   Reviews (S10 · Depoimentos) — carrossel de 4 slides / paper
+   Geometria: awsmd-geometry.json → reviews.* (fonte única, DEC-016):
+   blockquote 3.9375em alinhado ao topo · conteúdo pl 3.375em · citação
+   600 2.2em/1.2 max 30em pb 1.55em · linha bt 1px pt 2.5em mt auto ·
+   avatar 78×78 circular cover · coluna do cliente pl 24 · fade .5s.
+   Copy e paleta: comps S10 Desktop 1920 / Mobile 375 — eyebrow 8×8,
+   h2 800 clamp(2.5-4rem) 1.02 −0.01em max 18ch, aviso mono 11 steel
+   com dot 6px, nome 600 iron, cargo mono steel.
+   Leis: L1 ([CONFIRMAR] em steel via data-confirm), L5 (o fade é a prop
+   `speed` do Swiper, zerada em reduced-motion), L10 (só opacity anima).
    ============================================================ */
 
 .root {
@@ -63,76 +64,90 @@
   flex: none;
 }
 
-.grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+/* ------------------------------------------------------------
+   Carrossel — um depoimento por vez, crossfade
+   ------------------------------------------------------------ */
+.slider {
+  position: relative;
 }
 
-.card {
+/* Em `effect: fade` os slides se sobrepõem; a altura do wrapper é a do
+   slide mais alto. Os 4 placeholders são idênticos, então não há salto. */
+.slider .slide {
   display: flex;
-  flex-direction: column;
-  gap: 28px;
-  border: 1px solid var(--c-line);
-  border-radius: var(--r-xl);
-  background: var(--c-paper);
-  padding: 40px;
-  min-height: 420px;
+  height: auto;
 }
 
-/* Aspas blaze — 1 por card, conforme a comp aprovada */
-.quoteMark {
-  display: block;
+.figure {
+  display: flex;
+  align-items: flex-start; /* medido: blockquote alinhado ao topo */
+  margin: 0;
+  width: 100%;
+}
+
+/* Aspas blaze — a "blockquote" do modelo é a coluna do sinal gráfico.
+   Aqui é um span decorativo: o <blockquote> real envolve a citação. */
+.mark {
+  flex: none;
+  /* Medido em 3.9375em = 63px. Em `rem` de propósito: a medida é relativa
+     à base do documento, não ao font-size de 64px DESTE elemento — em `em`
+     daria 252px e a coluna comeria metade do slide. */
+  width: 3.9375rem;
   font-family: var(--ff-display);
   font-weight: 900;
   font-size: 64px;
-  line-height: 0.6;
-  height: 32px;
+  line-height: 0.75;
   color: var(--c-blaze);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  padding-left: 3.375em; /* medido */
 }
 
 .quote {
   margin: 0;
-  flex: 1;
-  font-size: 19px;
-  line-height: 1.55;
+  font-size: 2.2em; /* medido */
+  font-weight: 600;
+  line-height: 1.2;
+  max-width: 30em;
+  padding-bottom: 1.55em;
   color: var(--c-iron);
 }
 
 /* Placeholder [CONFIRMAR]: steel, como na comp (L1/draft) */
-.quote[data-confirm="true"] {
+.quote[data-confirm="true"],
+.name[data-confirm="true"],
+.role[data-confirm="true"] {
   color: var(--c-steel);
 }
 
-.person {
+.row {
   display: flex;
   align-items: center;
-  gap: 16px;
+  margin-top: auto; /* medido */
   border-top: 1px solid var(--c-line);
-  padding-top: 24px;
+  padding-top: 2.5em; /* medido */
 }
 
-/* Avatar blueprint 52px (grade 13px hairline — sem foto até W6/L1) */
 .avatar {
-  width: 52px;
-  height: 52px;
   flex: none;
+  width: 78px; /* medido */
+  height: 78px;
   border-radius: var(--r-pill);
-  border: 1px solid var(--c-line);
+  object-fit: cover;
   background-color: var(--tint-slate);
-  background-image:
-    linear-gradient(var(--c-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--c-line) 1px, transparent 1px);
-  background-size: 13px 13px;
 }
 
-.personMeta {
+.client {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  padding-left: 24px; /* medido */
+  min-width: 0;
 }
 
 .name {
@@ -149,6 +164,65 @@
   color: var(--c-steel);
 }
 
+/* --- Dots próprios (rótulo numérico — ver ReviewsClient) --------- */
+/* Sem `gap`: a caixa de 44px de cada dot já dá o ritmo. Encolher a caixa
+   ou sobrepô-las com margem negativa aproximaria os pontos, mas alvos
+   clicáveis sobrepostos são pior defeito do que dots espaçados. */
+.dots {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+}
+
+/* Caixa de 44px para o alvo a11y (§7.9) com o ponto de 8px no centro:
+   o alvo cresce sem que o desenho cresça. */
+.dot {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dot::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--c-steel);
+  transform: translate(-50%, -50%);
+}
+
+/* Dot ativo = blaze e alongado (mesma assinatura do S9). */
+.dot[aria-current="true"]::before {
+  width: 28px;
+  background: var(--c-blaze);
+}
+
+.dot:focus-visible {
+  outline: 2px solid var(--c-circuit); /* L3 */
+  outline-offset: -8px;
+  border-radius: var(--r-sm);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dot::before {
+    transition:
+      width 0.4s var(--ease),
+      background-color 0.4s var(--ease);
+  }
+}
+
+/* ------------------------------------------------------------
+   Mobile (comp 375): a coluna das aspas sai da linha e o
+   depoimento passa a ser uma coluna só.
+   ------------------------------------------------------------ */
 @media (max-width: 767px) {
   .root {
     padding: 40px 20px 48px;
@@ -165,43 +239,38 @@
     font-size: 32px;
   }
 
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
+  .figure {
+    flex-direction: column;
   }
 
-  .card {
-    border-radius: 24px;
-    padding: 28px;
-    min-height: 0;
-    gap: 22px;
-  }
-
-  .quoteMark {
+  .mark {
     font-size: 52px;
-    height: 26px;
+    width: auto;
+  }
+
+  .content {
+    padding-left: 0;
   }
 
   .quote {
-    font-size: 17px;
+    font-size: 1.5em;
+    padding-bottom: 1.2em;
   }
 
-  .person {
-    gap: 14px;
-    padding-top: 20px;
+  .row {
+    padding-top: 1.6em;
   }
 
   .avatar {
-    width: 48px;
-    height: 48px;
-    background-size: 12px 12px;
+    width: 64px;
+    height: 64px;
   }
 
-  .name {
-    font-size: 14px;
+  .client {
+    padding-left: 16px;
   }
 
-  .role {
-    font-size: 10px;
+  .dots {
+    margin-top: 28px;
   }
 }

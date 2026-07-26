@@ -81,11 +81,18 @@ async function domPass(page) {
           if (!node) break;
           bg = getComputedStyle(node).backgroundColor;
         }
-        /* maior descendente com position:sticky — assinatura de pin */
+        /* Maior descendente com position:sticky que possa ser um PIN DE CONTEÚDO.
+           Um overlay sticky DECORATIVO não é pin: ele não segura nada legível,
+           só flutua sobre a seção. Distinguimos pelo que o próprio elemento
+           declara — `pointer-events: none` ou `aria-hidden` significa que ele
+           não é conteúdo nem alvo de interação. */
         let stickyH = 0;
         for (const d of el.querySelectorAll("*")) {
-          const p = getComputedStyle(d).position;
-          if (p === "sticky") stickyH = Math.max(stickyH, d.getBoundingClientRect().height);
+          const cs = getComputedStyle(d);
+          if (cs.position !== "sticky") continue;
+          if (cs.pointerEvents === "none") continue;
+          if (d.getAttribute("aria-hidden") === "true") continue;
+          stickyH = Math.max(stickyH, d.getBoundingClientRect().height);
         }
         return {
           idx: i,
@@ -112,6 +119,15 @@ async function domPass(page) {
    * seção sem descendente sticky não pode estar pinada, independente da altura.
    * (Formulação corrigida: a versão anterior dividia por max(stickyH, vh) e
    * reprovava qualquer seção com mais de 1,25 viewport.)                     */
+  /* Nota de calibração, aprendida na marra DUAS vezes:
+       v1 dividia por max(stickyH, vh) e reprovava qualquer seção com mais de
+          1,25 viewport — mas o portfólio do próprio modelo tem 2,46 viewports e
+          não é pinado.
+       v2 dividia pelo maior sticky de qualquer tipo — e reprovava a mão da
+          Automação, que é overlay decorativo com pointer-events:none. Com essa
+          formulação o PRÓPRIO MODELO pontuaria 3758/940 = 4,00 e reprovaria no
+          seu próprio teste.
+     A formulação válida é: seção ÷ sticky que segura CONTEÚDO. */
   const pins = dom.sections
     .filter((s) => s.stickyH > 0)
     .map((s) => ({ id: s.id, budget: s.offsetHeight / s.stickyH, stickyH: s.stickyH }))
@@ -164,15 +180,24 @@ async function domPass(page) {
   console.log("       perfil:", profile.map((p) => `${p.name} ${(p.ours * 100).toFixed(1)}/${(p.theirs * 100).toFixed(1)}`).join(" · "));
 
   /* --- teste 3 · ritmo claro/escuro --------------------------------------
-   * É o ritmo da página. A referência: 3 blocos escuros (development-open,
-   * development-mosaic, cases) e 7 claros.                                */
-  const refDark = REF.sectionTimeline.filter((s) => s.tone === "dark").length;
-  const ourDark = dom.sections.filter((s) => (s.tone ? s.tone === "dark" : s.bgLuma !== null && s.bgLuma < 128)).length;
+   * É o ritmo da página. Comparação PELOS MESMOS GRUPOS, não por contagem
+   * bruta: a referência tem 3 BLOCOS escuros, mas dois deles
+   * (development-open e development-mosaic) são a nossa ÚNICA seção
+   * `automation`. Contar 3 contra 2 acusaria um erro que não existe — é o
+   * mesmo bug bloco-vs-seção que o perfil de altura já resolve pelo GROUPS. */
+  const toneOf = (s) => s.tone ?? (s.bgLuma !== null && s.bgLuma < 128 ? "dark" : "light");
+  const toneMismatch = GROUPS.filter((g) => {
+    const ours = g.ours.some((i) => dom.sections[i] && toneOf(dom.sections[i]) === "dark");
+    const theirs = g.ref.some((id) => refById[id]?.tone === "dark");
+    return ours !== theirs;
+  });
   gate(
-    "contagem de seções escuras bate com o modelo",
-    ourDark === refDark,
-    `nossas ${ourDark} vs referência ${refDark}` +
-      (dom.fromAttr ? "" : " (por luminância de fundo; fica exato quando data-tone existir)"),
+    "ritmo claro/escuro bate por grupo",
+    toneMismatch.length === 0,
+    toneMismatch.length
+      ? toneMismatch.map((g) => `${g.name}: nosso ${g.ours.map((i) => toneOf(dom.sections[i])).join("/")} vs ${g.ref.map((id) => refById[id]?.tone).join("/")}`).join(" · ")
+      : `${GROUPS.filter((g) => g.ref.some((id) => refById[id]?.tone === "dark")).map((g) => g.name).join(", ")} escuros nos dois lados` +
+        (dom.fromAttr ? "" : " (por luminância; exato quando data-tone existir)"),
   );
 
   /* --- teste 10 · loops rAF persistentes --------------------------------- */

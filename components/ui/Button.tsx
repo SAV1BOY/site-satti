@@ -53,7 +53,11 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
  * O texto é duplicado em duas camadas dentro de uma máscara; no hover a
  * camada de cima sobe (translateY(-100%)) e a de baixo entra — 450ms
  * var(--ease-roll). Em reduced-motion não há roll (L5): hover estático
- * translateY(-1px). Alvo ≥ 44px de altura (60px reais).
+ * translateY(-1px).
+ *
+ * V2 (W12-E): geometria recalibrada pelo spec pack (12/29, raio 21,
+ * 500 16px/1.2, tracking −.03em) — o botão encolheu de 60px para 44px
+ * de altura. O easing/duração do roll continuam sendo os do DS SATTI.
  */
 export default function Button(props: ButtonProps) {
   const { variant = "primary", arrow = false, children, className } = props;

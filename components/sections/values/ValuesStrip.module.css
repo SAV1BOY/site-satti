@@ -1,48 +1,90 @@
 /* ============================================================
-   ValuesStrip (S3 · Var A paper) — full-bleed 280px / 180px mobile
-   Comp: hairlines top/bottom · Archivo 900 118px/56px −0.015em ·
-   separadores steel · "resultado mensurável" em blaze (texto).
-   Marquee 20s linear (components/ui/Marquee cuida do loop e do L5).
+   ValuesStrip (S3) — faixa de posicionamento full-bleed.
+
+   Geometria: design/awsmd-ref/awsmd-geometry.json → `band`
+     font: 500 231px/1.21 · padding-inline 0.14em (→ gap 0.28em
+     entre cópias) · white-space nowrap · user-select none
+     responsivo 231 → 160 (≤1600) → 15vw (≤991) → 25vw (≤565)
+     animação: 20s linear infinite, translateX(0 → -100%)
+       (no nosso trilho, -50% de 2 lanes = 1 lane = o mesmo)
+
+   ALTURA: não é declarada. 231 × 1,21 = 279,5px — os "280px de
+   faixa" do atlas são o line-height do texto, não uma caixa.
+   Cravar height aqui desalinharia o texto do modelo em todo
+   breakpoint responsivo.
+
+   A font-size mora na RAIZ (não nos itens) porque o gap do
+   Marquee é em `em`: assim um único valor por breakpoint governa
+   tamanho de letra E espaçamento, exatamente como no modelo.
+
+   Sem background/hairline no variant "text": o modelo não tem
+   nenhum dos dois aqui — é texto sobre o fundo da página. As
+   hairlines do v1 vinham da comp e, sem cor de fundo, leriam
+   como uma faixa vazia.
    ============================================================ */
 
 .root {
-  height: 280px;
-  display: flex;
-  align-items: center;
+  /* encostada no hero por desenho (no modelo a faixa o empurra p/ fora) */
+  margin: 0;
   overflow: hidden;
-  background: var(--c-paper);
-  border-block: 1px solid var(--c-line);
+
+  font-family: var(--ff-display);
+  font-size: 231px;
 }
 
-.item,
-.sep,
-.blaze {
-  font-family: var(--ff-display);
-  font-weight: 900;
-  font-size: 118px;
-  line-height: 1;
+/* Duração pelo token de paridade (--dur-band = 20s). Precisa vir da
+   folha, não da prop `speed`: o inline style da prop venceria isto. */
+.marquee {
+  --marquee-duration: var(--dur-band);
+}
+
+.word {
+  font-size: 1em;
+  font-weight: 500;
+  line-height: 1.21;
   letter-spacing: -0.015em;
   text-transform: uppercase;
   white-space: nowrap;
-  color: var(--c-iron);
+  user-select: none;
 }
 
-.sep {
-  color: var(--c-steel);
+/* --- variant "text" (default): paridade real — texto no acento ----------- */
+.root[data-variant="text"] {
+  background: transparent;
 }
 
-.blaze {
-  color: var(--c-blaze);
+.root[data-variant="text"] .word {
+  color: var(--c-band);
 }
 
-@media (max-width: 767px) {
+/* --- variant "band": faixa preenchida. Texto SEMPRE band-ink (iron),
+       nunca branco — DEC-015 preservou essa metade da L2. -------------- */
+.root[data-variant="band"] {
+  background: var(--c-band);
+}
+
+.root[data-variant="band"] .word {
+  color: var(--c-band-ink);
+}
+
+/* --- Responsivo: os 4 patamares medidos do modelo -----------------------
+   15vw a 991px = 148,7px (quase contínuo com os 160 do patamar acima);
+   25vw a 565px é um SALTO deliberado do modelo — em tela estreita a
+   faixa cresce em relação à largura para continuar sendo a faixa. */
+@media (max-width: 1600px) {
   .root {
-    height: 180px;
+    font-size: 160px;
   }
+}
 
-  .item,
-  .sep,
-  .blaze {
-    font-size: 56px;
+@media (max-width: 991px) {
+  .root {
+    font-size: 15vw;
+  }
+}
+
+@media (max-width: 565px) {
+  .root {
+    font-size: 25vw;
   }
 }

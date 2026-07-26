@@ -1,44 +1,99 @@
 /* ============================================================
-   Hero (S1+S2) — comps: "S1+S2 Hero Desktop 1920.dc.html" e
-   "S1+S2 Hero Mobile 375.dc.html" (verdade visual).
-   Full-viewport: uma das 3 únicas seções 100vh (§4, lei de
-   tradução comp→código).
-   L2 · blaze do viewport do hero = caret do typewriter (F0–F5);
-        o pulso da Linha conta na dobra em que estiver (D3).
-   L5 · caret-blink steps(1) e cue-ping SÓ em no-preference;
-        reduced = estado estático das comps (palavra fixa,
-        caret aceso, anel parado, poster no lugar do vídeo).
-   L9 · profundidade = hairline 1px var(--c-line) + tint;
-        sem drop-shadow (a sombra do header não é desta seção).
-   L10 · só transform/opacity animam (cue-ping = scale+opacity;
-        caret = opacity). Easing do cue-ping vem da comp.
-   L12 · Archivo display caps tracking neg · Mono caps +0.08em.
-   Zero hex literal — só var(--c-*) (D1/§4).
+   Hero (S1+S2) — v2 · paridade estrutural (W11-A)
+
+   Geometria: design/awsmd-ref/awsmd-geometry.json → `hero`.
+   Coreografia: awsmd-motion.json → `typewriter` (caret) e
+   `scroll-cue-pulse`. Copy/paleta: comps aprovadas + tokens.
+
+   O QUE MUDOU EM RELAÇÃO AO v1 E POR QUÊ
+   - A seção deixou de ser full-bleed e virou MOLDURA de 12px
+     (--inset-hero) em volta de um CARD de raio 33px (--r-card).
+     É a assinatura visual mais visível do modelo, e o motivo
+     pelo qual `--r-card`/`--inset-hero`/`--c-hero-scrim` existem
+     nos tokens desde a W9.
+   - Com o scrim (--c-hero-scrim) o interior do card é ESCURO, então
+     o H1 passa a ser --c-ink-on-dark. Mesmo assim a `section` continua
+     data-tone="light" de PROPÓSITO: `tone` é o ritmo claro/escuro da
+     PÁGINA, e nele o hero não é um bloco escuro — o awsmd-geometry
+     classifica o hero como "media" (verticalAnatomy) e os 3 blocos
+     escuros da referência são development-open, development-mosaic e
+     cases. Marcar o hero como dark somaria um 4º escuro no gate de
+     ritmo do parity-timeline e inverteria o pill do header, que sobre
+     vídeo escuro precisa justamente permanecer claro.
+   - Micro-tipografia (nav, prova social) fica em PÍLULA CLARA com
+     texto --c-steel. Sobre vídeo arbitrário + scrim de 50% o pior
+     caso de contraste de texto claro é 3,3:1 — passa para o H1
+     (texto grande, AA ≥ 3) e REPROVA para 11–16px (AA ≥ 4,5). A
+     pílula clara garante os 5,11:1 do steel independentemente do
+     frame do vídeo. Mesmo raciocínio de DEC-014: a11y vence hex.
+   - O scroll-cue de 44px que ficava no rodapé do card foi
+     substituído pelo scroll-button INLINE no meio do H1
+     (geometry hero.scrollButton) — inclusive o anel a 105% com o
+     reset duro em 70%/70,1%, que é o que faz o pulso ser um anel
+     EXPANDINDO e não um respiro simétrico.
+   - Caret (DEC-021): bloco 0.15em × 0.8em com pulso 1 → .5 → 1 em
+     1,2s linear. Era um blink 1 → 0 em steps(1) — errado.
+
+   L5  · toda animação vive em (prefers-reduced-motion: no-preference);
+         o estado declarado fora dela É o estado reduced-motion.
+   L9  · profundidade por hairline; sem drop-shadow.
+   L10 · só transform/opacity animam. As transições discretas de
+         color/background em hover são estado, não escrita por frame.
+   L12 · Archivo display caps · Mono caps +0.08em.
+   Zero hex literal — só var(--*) e color-mix sobre tokens.
    ============================================================ */
 
+/* --- Seção = moldura de 12px em volta do card (hero.section) --- */
 .section {
   position: relative;
   height: 100vh;
   height: 100svh;
   min-height: 880px;
+  padding: var(--inset-hero);
   overflow: hidden;
   background: var(--c-paper);
   color: var(--c-iron);
 }
 
-/* Fio da Linha de Automação (D3): primeiro filho da section;
-   sobe acima do vídeo, fica sob o conteúdo. Seletor composto
-   para vencer o z-index:0 do módulo do AutomationLine. */
+/* Fio da Linha de Automação (D3): primeiro filho da section, cobre a
+   seção inteira (inclusive por cima do card) e fica SOB o conteúdo.
+   z-index 2 para passar por cima do scrim do card (z-index 1) —
+   abaixo dele o fio apareceria lavado a 50%. */
 .section > .threadLine {
-  z-index: 1;
+  z-index: 2;
 }
 
-/* --- Slot de vídeo A1 (§8) — frame full-bleed com margem,
-       comp: inset 12px / radius 16px (mobile 8px / 12px) --- */
+/* --- Card (hero.card): raio 33px, overflow hidden, padding
+       [8,19,30] e o conteúdo empurrado para a base --- */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 8px 19px 30px;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: var(--tint-slate);
+  color: var(--c-ink-on-dark);
+}
+
+/* Scrim do card — a razão de --c-hero-scrim existir: garante o
+   contraste do H1 sobre um frame de vídeo qualquer. */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--c-hero-scrim);
+  pointer-events: none;
+}
+
+/* --- Slot de vídeo A1 (§8): preenche o card; quem arredonda e
+       corta é o card, não o slot --- */
 .media {
   position: absolute;
-  inset: 12px;
-  border-radius: var(--r-lg);
+  inset: 0;
   overflow: hidden;
   background: var(--tint-slate);
   z-index: 0;
@@ -56,54 +111,143 @@
   object-fit: cover;
 }
 
-/* --- S2 · conteúdo (comp: left 120px, bottom 150px, gap 36) --- */
+/* --- Conteúdo (hero.content): padding [25,20,0], base alinhada,
+       título à esquerda e showreel/prova social à direita --- */
 .content {
-  position: absolute;
-  left: clamp(20px, 6.25vw, 120px);
-  bottom: 150px;
-  z-index: 2;
+  position: relative;
+  z-index: 3;
   display: flex;
-  flex-direction: column;
-  gap: 36px;
-  align-items: flex-start;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(24px, 3vw, 56px);
+  padding: 25px 20px 0;
 }
 
-/* Badge/eyebrow do hero — [CONFIRMAR] em steel (L1, modo draft;
-   W6 modo final omite via data-confirm). Comp: sem uppercase. */
-.badge {
-  border: 1px solid var(--c-line);
-  border-radius: var(--r-pill);
-  padding: 10px 20px;
-  font-family: var(--ff-mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  color: var(--c-steel);
-  background: color-mix(in srgb, var(--c-paper) 72%, transparent);
+/* Bloco do título (hero.titleBlock): 162px a 1920 (8.4375vw = 162/1920),
+   padding-bottom 40px. O modelo crava 162px em px — clamp() é a correção
+   deliberada.
+   DIVERGÊNCIA MEDIDA, max-width: o spec dá 6.12em, mas 6.12em é derivado
+   da copy DELES. A palavra mais longa do H1 da SATTI ("CONSTRUÍMOS") mede
+   7,95em em Archivo 900 caps com tracking −.04em — num box de 6.12em ela
+   transbordaria 300px para fora da hairline inferior, que é um defeito
+   visível. O box vai a 8.2em (7,95 + folga de métrica); a alternativa era
+   baixar a fonte para ~125px e perder o número mais visível do spec.
+   O segundo termo do min() é o freio de colisão: entre 1200 e 1920 o
+   título divide a linha com o showreel de 405px, e sem ele a palavra
+   longa avança sobre a coluna da direita. */
+.titleBlock {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 8.2em;
+  padding-bottom: 40px;
+  font-size: clamp(3rem, min(8.4375vw, 12.5vw - 76px), 162px);
 }
 
-/* H1 — display Archivo 900 caps, comp: clamp(3rem,13vw,10.5rem),
-   lh 0.92, ls −0.02em. Único <h1> do site. */
+/* H1 único do site (hero.title): caps, hairline inferior a 25px,
+   line-height .9, tracking −.04em. */
 .title {
   margin: 0;
+  padding-bottom: 25px;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--c-ink-on-dark) 45%, transparent);
   font-family: var(--ff-display);
+  font-size: inherit;
   font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
   text-transform: uppercase;
-  font-size: clamp(3rem, 13vw, 10.5rem);
-  line-height: 0.92;
-  letter-spacing: -0.02em;
-  color: var(--c-iron);
+  color: var(--c-ink-on-dark);
 }
 
-.titleLine {
-  display: block;
-}
-
-/* Linha 3 — typewriter. Ghost reserva a largura de "CRESCER"
-   (última palavra do JSON) → zero layout shift (comp). */
-.typeLine {
-  display: block;
-  font-size: 0.9em;
+/* --- Scroll-button INLINE no meio do H1 (hero.scrollButton) ---
+   Não é um cue no rodapé: é uma palavra visual dentro da frase.
+   .617em / border 3px / margin-inline .197em .259em / anel 105%. */
+.scrollButton {
   position: relative;
+  display: inline-block;
+  width: 0.617em;
+  height: 0.617em;
+  margin-inline: 0.197em 0.259em;
+  border: 3px solid currentColor;
+  border-radius: 50%;
+  vertical-align: middle;
+  color: var(--c-ink-on-dark);
+  text-decoration: none;
+  transition: transform 0.3s var(--ease);
+}
+
+/* Anel a 105%: em repouso encosta na borda de 3px e expande. */
+.scrollButton::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 105%;
+  height: 105%;
+  transform: translate(-50%, -50%);
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.9;
+}
+
+/* Setas: a de repouso e a que entra na troca (arrowWidth 20% do
+   botão → .123em do H1). Reset de peso/tracking do display. */
+.scrollArrow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--ff-body);
+  font-size: 0.123em;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+  transition:
+    transform 0.3s var(--ease),
+    opacity 0.3s var(--ease);
+}
+
+.scrollArrowIn {
+  transform: translate(-50%, -260%);
+  opacity: 0;
+}
+
+.scrollButton:hover,
+.scrollButton:focus-visible {
+  transform: scale(1.1);
+}
+
+.scrollButton:hover::before,
+.scrollButton:focus-visible::before {
+  animation: none;
+}
+
+.scrollButton:hover .scrollArrow,
+.scrollButton:focus-visible .scrollArrow {
+  transform: translate(-50%, 220%);
+  opacity: 0;
+  transition-delay: 0.05s;
+}
+
+.scrollButton:hover .scrollArrowIn,
+.scrollButton:focus-visible .scrollArrowIn {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  transition-delay: 0.05s;
+}
+
+.scrollButton:focus-visible {
+  /* L3: circuit só funcional — focus ring */
+  outline: 2px solid var(--c-circuit);
+  outline-offset: 4px;
+}
+
+/* --- Linha do typewriter (hero.typewriter.fontSizeRatio .9) ---
+   O ghost reserva a largura da última palavra do JSON → zero CLS. */
+.typeLine {
+  position: relative;
+  display: inline-block;
+  font-size: 0.9em;
   white-space: nowrap;
 }
 
@@ -120,28 +264,64 @@
   gap: 0.1em;
 }
 
-/* Caret — O elemento blaze do viewport do hero (L2, F0–F5).
-   Estático (aceso) por padrão; blink só com motion ok. */
+/* Caret (DEC-021 · motion.typewriter.caret): bloco .15em × .8em com
+   pulso suave até .5 — NÃO o blink 1→0 que estava aqui. O transform
+   é estado estático (posiciona o bloco), não animação. */
 .caret {
   display: inline-block;
-  width: 0.5em;
-  height: 0.12em;
+  width: 0.15em;
+  height: 0.8em;
+  transform: translateY(0.03em) scaleY(1.05);
   background: var(--c-blaze);
 }
 
-/* --- Nav âncora secundária (desktop, comp: right 60 bottom 48) --- */
-.anchorNav {
-  position: absolute;
-  right: 60px;
-  bottom: 48px;
-  z-index: 2;
+/* --- Coluna direita: showreel + prova social --- */
+.aside {
+  flex: 0 0 auto;
+  max-width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Prova social (hero.socialProof) — o selo de plataforma de review do
+   modelo está em excludedEvenInPreview (DEC-017); o slot renderiza
+   hero.eyebrow em steel com data-confirm, na geometria do modelo. */
+.proof {
+  display: inline-flex;
   align-items: center;
-  gap: 28px;
+  margin-top: 18px;
+  padding: 6px 10px;
+  border: 1px solid var(--c-line);
+  border-radius: 50px;
+  background: color-mix(in srgb, var(--c-paper) 92%, transparent);
+}
+
+.proofBox {
+  padding: 6.2px 12px 6.2px 6.2px;
+  border-radius: 74px;
+  background: var(--tint-slate);
+  font-family: var(--ff-mono);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  color: var(--c-steel);
+}
+
+/* --- Nav secundária de âncoras: os 6 rótulos OFICIAIS de
+       footer.navigation (L1 — nada de copy nova) --- */
+.anchorNav {
+  position: relative;
+  z-index: 3;
+  align-self: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 28px;
+  margin: 20px 20px 0;
+  padding: 12px 28px;
   border: 1px solid var(--c-line);
   border-radius: var(--r-pill);
-  padding: 12px 28px;
-  background: color-mix(in srgb, var(--c-paper) 72%, transparent);
+  background: color-mix(in srgb, var(--c-paper) 92%, transparent);
 }
 
 .anchorLink {
@@ -151,105 +331,129 @@
   text-transform: uppercase;
   color: var(--c-steel);
   text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
+
+.anchorLink:hover {
+  color: var(--c-iron);
 }
 
 .anchorLink:focus-visible {
-  /* L3: circuit só funcional — focus ring */
   outline: 2px solid var(--c-circuit);
   outline-offset: 2px;
   border-radius: var(--r-sm);
 }
 
-/* --- Scroll-cue (comp: 44×44, anel pulsa hairline, NUNCA blaze) --- */
-.cue {
-  position: absolute;
-  left: 50%;
-  bottom: 40px;
-  transform: translateX(-50%);
-  width: 44px;
-  height: 44px;
-  z-index: 2;
-}
-
-.cuePing,
-.cueDisc {
-  position: absolute;
-  inset: 0;
-  border: 1px solid var(--c-line);
-  border-radius: var(--r-pill);
-}
-
-.cueDisc {
-  background: color-mix(in srgb, var(--c-paper) 72%, transparent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  color: var(--c-steel);
-}
-
-/* --- Motion (L5): tudo dentro de no-preference --- */
+/* --- Motion (L5): tudo aqui dentro --- */
 @media (prefers-reduced-motion: no-preference) {
   .caret {
-    animation: caret-blink 1.1s steps(1, end) infinite;
+    animation: caret-pulse 1.2s linear infinite;
   }
 
-  /* Easing do cue-ping = o da comp (anotação: "anel pulsa
-     hairline, nunca blaze"); anima só transform/opacity (L10). */
-  .cuePing {
-    animation: cue-ping 2.4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+  .scrollButton::before {
+    animation: ring-pulse var(--dur-ring) var(--ease) infinite;
   }
 
-  @keyframes caret-blink {
+  /* Pulso do caret: 1 → .5 → 1. Só opacity (L10). */
+  @keyframes caret-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
     50% {
-      opacity: 0;
+      opacity: 0.5;
     }
   }
 
-  @keyframes cue-ping {
+  /* Anel expandindo. O corte duro em 70%/70.1% devolve o anel ao
+     tamanho de repouso JÁ INVISÍVEL: sem ele o keyframe encolheria
+     de volta à vista e o efeito viraria um respiro simétrico. Os 30%
+     finais são o re-arme (fade-in em repouso). */
+  @keyframes ring-pulse {
     0% {
-      transform: scale(0.55);
+      transform: translate(-50%, -50%) scale(1);
       opacity: 0.9;
     }
-    100% {
-      transform: scale(1.5);
+    70% {
+      transform: translate(-50%, -50%) scale(2);
       opacity: 0;
+    }
+    70.1% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.9;
     }
   }
 }
 
-/* --- Mobile 375 (comp mobile) --- */
+/* --- ≤1200 (breakpoint do modelo): a coluna do showreel desce para
+       baixo do título, então o título recupera o card inteiro e o freio
+       de colisão do min() sai de cena --- */
+@media (max-width: 1200px) {
+  .content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .aside {
+    align-items: flex-start;
+    max-width: 100%;
+  }
+
+  .titleBlock {
+    padding-bottom: 24px;
+    font-size: clamp(3rem, 8.4375vw, 162px);
+  }
+}
+
+/* --- Mobile 375 (hero.card.radiusMobile = 15) --- */
 @media (max-width: 767px) {
   .section {
     min-height: 760px;
   }
 
-  .media {
-    inset: 8px;
-    border-radius: var(--r-md);
+  .card {
+    /* 15px é o radiusMobile medido; não há token para ele porque é
+       exclusivo do card do hero. */
+    border-radius: 15px;
+    padding: 8px 10px 20px;
   }
 
   .content {
-    left: 20px;
-    right: 20px;
-    bottom: 118px;
-    gap: 24px;
+    padding: 20px 10px 0;
+    gap: 20px;
   }
 
-  .badge {
-    padding: 8px 14px;
-    font-size: 10px;
+  /* "CONSTRUÍMOS" mede 7,95em (medido em Chromium): a 375px sobram
+     311px de largura útil no card, logo o teto de fonte é 39px. O v1
+     usava min(14.6vw, 54.8px) = 54,7px a 375 → 435px de palavra num
+     box de 335px, e o overflow:hidden da seção CORTAVA o H1 no mobile.
+     Este cap é o que fecha esse defeito. */
+  .titleBlock {
+    font-size: min(9.8vw, 39px);
+    padding-bottom: 20px;
   }
 
   .title {
-    font-size: min(14.6vw, 54.8px);
+    padding-bottom: 16px;
   }
 
+  .proof {
+    margin-top: 12px;
+    padding: 4px 8px;
+  }
+
+  .proofBox {
+    padding: 5px 10px 5px 5px;
+    font-size: 12px;
+  }
+
+  /* Os mesmos 6 destinos vivem no rodapé — a nav do hero é reforço
+     de desktop, e 6 pílulas mono não caberiam em 375px. */
   .anchorNav {
     display: none;
-  }
-
-  .cue {
-    bottom: 32px;
   }
 }

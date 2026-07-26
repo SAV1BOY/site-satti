@@ -83,7 +83,9 @@
   /* --- V2 · durações de paridade (medidas) --- */
   --dur-roll-fast: 300ms; /* roll do botão no modelo                          */
   --dur-band: 20s;        /* faixa de posicionamento (full-bleed)             */
-  --dur-ghost: 40s;       /* marquee fantasma da Automação                    */
+  /* DEC-021 corrigiu para 20s (os 40s vinham do CSS morto do modelo). Ficava
+     divergente do speed={20} que a S6 passa ao Marquee. — W13 auditoria */
+  --dur-ghost: 20s;       /* marquee fantasma da Automação                    */
   --dur-scaler: 4s;       /* respiro das imagens dos cards de serviço         */
   --dur-float: 6s;        /* flutuação dos phones (esquerdo com fase −3s)     */
   --dur-seal: 10s;        /* selo click-to-play (1 volta)                     */

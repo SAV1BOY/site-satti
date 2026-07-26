@@ -1,14 +1,21 @@
 /* ============================================================
-   Portfolio (S7) — grid de 6 work-cards (D4)
-   Fonte visual: S7 Portfolio Desktop 1920.dc.html / Mobile 375.dc.html
-   Leis: L1 (copy via next-intl; [CONFIRMAR] em steel), L2 (blaze da
-   dobra = glow do WorkCard em hover ou o pulso da Linha ao passar),
-   L9 (profundidade só hairline + tint; o glow mora no WorkCard),
-   L5/L10 (esta seção não anima nada por conta própria — motion vive
-   nos children WorkCard/AutomationLine), D3 (zona "portfolio" do fio).
-   §4 lei de tradução: padding-right 348px do protótipo descartado
-   (gutter real via .container-s); min-height 100vh não se aplica
-   (S7 flui); aside "Specs" e data-screen-label descartados.
+   Portfolio (S7) — 6 work-cards em 2 colunas com stagger vertical
+   Geometria: awsmd-geometry.json → portfolio.section / head / headTitle /
+   list (fonte única, DEC-016). Copy e paleta: comps S7 Desktop 1920 /
+   Mobile 375.
+   Leis: L1 (copy via next-intl; [CONFIRMAR] em steel), L9 (profundidade
+   só hairline + tint; o glow mora no WorkCard), L5/L10 (esta seção não
+   anima nada por conta própria — o motion vive nos children WorkCard/
+   AutomationLine), D3 (zona "portfolio" do fio).
+
+   ORÇAMENTO DE ALTURA (parity-timeline · fatia de altura por seção):
+   o portfólio é 23,7% do documento sem rodapé e a tolerância é ±4pp —
+   é a seção mais crítica do gate. Por isso o STAGGER NÃO EMPILHA
+   ALTURA por linha: as colunas ficam num grid row-major normal e a
+   coluna direita desce por `transform`, com o vão reservado UMA vez
+   em `padding-bottom` no fim da lista. Fazer o stagger com margin-top
+   nos itens pares dobraria a altura de CADA linha (720 → 1080), o que
+   somaria ~1.000px à seção e estouraria o gate.
    ============================================================ */
 
 .section {
@@ -31,23 +38,49 @@ p.sectionEyebrow {
   margin: 0 0 14px;
 }
 
-.title {
-  margin: 0 0 36px;
-  font-family: var(--ff-display);
-  font-size: 2.125rem; /* comp mobile: 34px */
-  font-weight: 800;
-  line-height: 1.04;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  max-width: 16ch;
+/* Cabeçalho: título à esquerda, coluna de apoio à direita (medido:
+   head.justify space-between · rightPaddingLeft 25). */
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-/* Grid de cards: 1 coluna mobile (gap 20) · 2 colunas desktop (gap 24). */
+.title {
+  margin: 0;
+  font-family: var(--ff-display);
+  font-size: 2.125rem; /* comp mobile: 34px */
+  font-weight: 400; /* medido: headTitle 400 (era 800) */
+  line-height: 1.125;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  max-width: 9.375em; /* medido */
+}
+
+/* Fill-text de apoio do cabeçalho (medido: margin-top 83, 400 25px/1.335,
+   max-width 14.241em). Só existe quando há copy oficial — ver Portfolio.tsx. */
+.headFill {
+  margin: 24px 0 0;
+  font-size: 1.125rem; /* mobile */
+  font-weight: 400;
+  line-height: 1.335;
+  max-width: 14.241em;
+}
+
+/* Envelope da lista: ancora o CTA no vão que o stagger abre (o CTA não
+   pode ser filho do <ul>, então quem é `relative` é este wrapper). */
+.list {
+  position: relative;
+  margin-top: 32px; /* comp mobile */
+}
+
+/* Grid de cards: 1 coluna mobile (gap 20) · 2 colunas com stagger no
+   desktop. */
 .grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
-  margin: 0 0 32px; /* comp mobile: CTA a 32px do grid */
+  margin: 0 0 32px; /* comp mobile: 32px até o CTA */
   padding: 0;
   list-style: none;
 }
@@ -68,15 +101,19 @@ p.sectionEyebrow {
   align-items: center;
   justify-content: center;
   gap: var(--sp-xs);
-  padding: 16px 28px;
+  padding: 12px 29px; /* geometria de botão do spec pack */
   border: 1px solid var(--c-line);
-  border-radius: var(--r-pill);
+  border-radius: var(--r-btn); /* 21px */
   background: transparent;
   color: var(--c-iron);
   font-family: var(--ff-body);
-  font-size: 0.9375rem; /* 15px */
+  font-size: 1rem;
   font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
   text-decoration: none;
+  min-height: 44px; /* §7.9 */
+  box-sizing: border-box;
 }
 
 .allCta:focus-visible {
@@ -85,16 +122,17 @@ p.sectionEyebrow {
 }
 
 .allCtaArrow {
-  font-size: 0.9375rem; /* comp: 15px nos dois breakpoints */
+  font-size: 1rem;
 }
 
 /* ------------------------------------------------------------
-   Desktop (comp 1920): padding 96/120, título clamp(2.5rem,5vw,4rem),
-   grid 2 colunas gap 24 mb 64, CTA inline 17×34/16px.
+   Desktop (≥768): geometria medida do modelo.
+   section padding-block 100/55 · head title 70px/1.125 max 9.375em ·
+   list margin-top 85 · 2 colunas com a direita descida meio card.
    ------------------------------------------------------------ */
 @media (min-width: 768px) {
   .section {
-    padding-block: 96px var(--sp-2xl); /* 96 / 120 */
+    padding-block: 100px 55px; /* medido: portfolio.section.paddingBlock */
   }
 
   p.sectionEyebrow {
@@ -102,22 +140,56 @@ p.sectionEyebrow {
     margin-bottom: 18px;
   }
 
-  .title {
-    margin-bottom: 56px;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1.02;
-    max-width: 18ch;
+  .head {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    /* W13 auditoria: sem o wrap, título (max 9.375em @70px) + gap + fill
+       (max 14.241em @25px, flex:none) somam mais que o container entre 768 e
+       ~789px e o DOCUMENTO ganhava scroll horizontal — medido no /en, que é
+       o único locale com portfolio.supportingText. O wrap só engata nessa
+       faixa; de 790px para cima a linha cabe e a geometria medida fica
+       intacta. Preferido a encolher o fill, que mudaria a caixa medida. */
+    flex-wrap: wrap;
+    gap: 25px; /* medido: head.rightPaddingLeft */
   }
 
+  .title {
+    font-size: 4.375rem; /* medido: 70px */
+  }
+
+  .headFill {
+    margin-top: 83px; /* medido: headFillText.marginTop */
+    font-size: 1.5625rem; /* medido: 25px */
+    flex: none;
+  }
+
+  .list {
+    margin-top: 85px; /* medido: list.marginTop */
+  }
+
+  /* --- stagger de 2 colunas ---------------------------------------
+     O deslocamento é meio card + meia calha (720/2 + 24/2 = 372), pelo
+     mesmo motivo do comentário do topo: `transform` não gera altura.
+     O `padding-bottom` reserva o vão UMA vez, no fim da lista. */
   .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--sp-md); /* 24px */
-    margin-bottom: 64px;
+    margin-bottom: 0;
+    padding-bottom: 372px;
   }
 
+  .gridItem:nth-child(even) {
+    transform: translateY(372px);
+  }
+
+  /* O CTA ocupa o vão que o stagger abre embaixo à esquerda, em vez de
+     empilhar mais 118px de altura depois da lista. */
   .allCta {
+    position: absolute;
+    left: 0;
+    bottom: 0;
     display: inline-flex;
-    padding: 17px 34px;
-    font-size: 1rem;
+    width: max-content;
   }
 }

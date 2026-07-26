@@ -4,7 +4,9 @@ import HeaderClient from "./HeaderClient";
 /**
  * StickyHeader — pill fixo do topo (comp S1+S2, estado base).
  * Server wrapper: resolve copy (header.*) e locale; o comportamento
- * (estado ativo aos ~80% do hero, menu O1 no W4) vive no HeaderClient.
+ * vive no HeaderClient — que desde a W11-F lê a seção sob o centro do
+ * pill e escreve data-tone (inversão sobre seção escura) + data-active
+ * (CTA preenche ao SAIR do hero, o gatilho do modelo).
  */
 
 /** Âncoras na ordem de header.nav (Serviços · Sobre · Portfólio · Contato). */

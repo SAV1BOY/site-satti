@@ -69,6 +69,38 @@ body {
   flex-shrink: 0;
 }
 
+/* --- Área de toque mínima (a11y §7.9: alvos ≥44px) -------------------------
+   Estende a área INTERATIVA de um controle até 44×44 px sem tocar no visual
+   nem no layout: um ::after invisível centrado sobre o elemento. É a técnica
+   padrão para nav de texto, onde a altura da linha é ~17–32 px e aumentar
+   padding de verdade quebraria a composição do pill e da nav do hero.
+
+   Nota de norma: o mínimo AA da WCAG 2.2 (SC 2.5.8) é 24×24 px; os 44×44 vêm
+   do SC 2.5.5, que é AAA — e é a barra que o checklist do próprio projeto
+   fixou. Cumprimos a mais alta.
+
+   A expansão é APENAS VERTICAL, de propósito. Numa nav horizontal, esticar a
+   largura faz as áreas de toque de itens adjacentes se sobreporem e roubarem
+   cliques uma da outra — pior para o usuário do que um alvo estreito. A altura
+   é o problema real (17–23 px é genuinamente difícil de acertar); na largura, os
+   itens já superam com folga o mínimo de 24 px do SC 2.5.8 contando o
+   espaçamento entre eles.
+
+   Requer `position: relative` no elemento (a regra abaixo garante). --- */
+.hit-target {
+  position: relative;
+}
+.hit-target::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: max(100%, 44px);
+  transform: translateY(-50%);
+  /* Não intercepta nada além do próprio controle: o ::after É o controle. */
+}
+
 /* --- Seções escuras (graphite) --- */
 .section-dark {
   background: var(--c-graphite);

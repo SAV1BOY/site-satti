@@ -1,37 +1,67 @@
 import { getTranslations } from "next-intl/server";
 import { OMIT_UNCONFIRMED } from "@/lib/content-mode";
+import ReviewsClient, { type ReviewItem } from "./ReviewsClient";
 import styles from "./Reviews.module.css";
 
 /**
- * Reviews (S10 · Depoimentos) — grade ESTÁTICA de 3 cards sobre paper.
- * Fonte visual: "S10 Depoimentos Desktop 1920.dc.html" + Mobile 375.
- * (Rebuild do CC: a 1ª entrega trouxe um slider dark de card único que
- * não existe na comp — FAIL bloqueante do gate W3, item 1.)
+ * Reviews (S10 · Depoimentos) — carrossel de 4 slides sobre paper.
+ * Geometria: awsmd-geometry.json → reviews (4 slides, Swiper, fade).
+ * Copy e paleta: comps "S10 Depoimentos Desktop 1920" + Mobile 375.
  *
- * L1: NUNCA inventar nome/cargo/foto/citação — os 3 cards renderizam os
- * placeholders [CONFIRMAR] do JSON (reviews.quote/name/role), com
- * data-confirm para o modo final (W6) omitir a seção sem depoimento real.
- * Cores dos placeholders = as da comp (quote steel, nome iron).
- * Aspas: Archivo 900 64px blaze — 1 por card, conforme a comp aprovada.
- * Avatar: círculo blueprint 52px sem texto (o rótulo da comp é template
- * var sem string oficial — nada a inventar).
- * Server Component puro: seção 100% estática (sem motion próprio).
+ * V2 (W12-E): era uma grade estática de 3 cards; o modelo é um carrossel
+ * de 4 slides com um depoimento por vez. `reviews.items[]` (4 entradas,
+ * todas [CONFIRMAR]) foi criado na W9 exatamente para isto — as chaves
+ * singulares reviews.quote/name/role continuam no JSON como legado e não
+ * são mais lidas aqui.
+ *
+ * L1: NUNCA inventar nome/cargo/foto/citação. Em draft os 4 slides
+ * renderizam os placeholders do JSON em steel com data-confirm e o avatar
+ * blueprint da SATTI (DEC-017: os avatares do modelo são pessoas reais e
+ * não entram nem em preview). Em final (DEC-012) a seção inteira não
+ * renderiza enquanto não houver depoimento autorizado.
+ *
+ * Selos de plataforma de review do modelo: `excludedEvenInPreview` —
+ * nenhum é renderizado, em nenhum modo.
+ *
+ * Server Component: só o carrossel (estado do slider) é client island.
  */
 
 type CopyField = { value: string; confirm?: boolean };
 
-const CARD_COUNT = 3;
+interface ReviewItemJson {
+  quote: CopyField;
+  name: CopyField;
+  role: CopyField;
+}
+
+/** Avatar blueprint por slide (MANIFEST v2 · RV1–RV4, 78×78 render). */
+function avatarSrc(index: number): string {
+  return `/img/reviews/avatar-${index + 1}.webp`;
+}
 
 export default async function Reviews() {
   const t = await getTranslations("reviews");
-  const quote = t.raw("quote") as CopyField;
-  const name = t.raw("name") as CopyField;
-  const role = t.raw("role") as CopyField;
+  const raw = t.raw("items") as ReviewItemJson[];
 
-  // W6 modo final: sem depoimento REAL a seção inteira é omitida (§6-W6).
-  if (OMIT_UNCONFIRMED && (quote.confirm || name.confirm || role.confirm)) {
-    return null;
-  }
+  const items: ReviewItem[] = raw.map((item, i) => ({
+    quote: item.quote.value,
+    quoteConfirm: item.quote.confirm === true,
+    name: item.name.value,
+    nameConfirm: item.name.confirm === true,
+    role: item.role.value,
+    roleConfirm: item.role.confirm === true,
+    avatarSrc: avatarSrc(i),
+  }));
+
+  // W6 modo final: só depoimento REAL entra; sem nenhum, a seção inteira
+  // desaparece (DEC-012). Em draft os 4 placeholders ficam.
+  const visible = OMIT_UNCONFIRMED
+    ? items.filter((i) => !i.quoteConfirm && !i.nameConfirm && !i.roleConfirm)
+    : items;
+
+  if (visible.length === 0) return null;
+
+  const hasPlaceholder = visible.some((i) => i.quoteConfirm);
 
   return (
     <section
@@ -44,41 +74,13 @@ export default async function Reviews() {
 
       <div className={styles.head}>
         <h2 className={styles.title}>{t("title")}</h2>
-        <p className={styles.notice}>{t("notice")}</p>
+        {/* Aviso de rascunho: só existe enquanto houver placeholder. */}
+        {hasPlaceholder ? (
+          <p className={styles.notice}>{t("notice")}</p>
+        ) : null}
       </div>
 
-      <ul className={styles.grid}>
-        {Array.from({ length: CARD_COUNT }, (_, i) => (
-          <li key={i} className={styles.card}>
-            <span className={styles.quoteMark} aria-hidden="true">
-              {t("quoteMark")}
-            </span>
-            <blockquote
-              className={styles.quote}
-              data-confirm={quote.confirm ? "true" : undefined}
-            >
-              {quote.value}
-            </blockquote>
-            <div className={styles.person}>
-              <span className={styles.avatar} aria-hidden="true" />
-              <span className={styles.personMeta}>
-                <span
-                  className={styles.name}
-                  data-confirm={name.confirm ? "true" : undefined}
-                >
-                  {name.value}
-                </span>
-                <span
-                  className={styles.role}
-                  data-confirm={role.confirm ? "true" : undefined}
-                >
-                  {role.value}
-                </span>
-              </span>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <ReviewsClient items={visible} quoteMark={t("quoteMark")} />
     </section>
   );
 }

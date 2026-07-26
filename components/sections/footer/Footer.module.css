@@ -1,34 +1,63 @@
 /* ============================================================
    Footer/Contato (S11) — D6 + fim da Linha de Automação (D3)
-   Fonte visual: S11 Footer Desktop 1920.dc.html / Mobile 375.dc.html
+   Geometria: awsmd-geometry.json → footer (section 801px, tom CLARO,
+   hat 44px raio 0 0 33 33, parallax) + awsmd-motion.json →
+   footer-parallax (fonte única, DEC-016/DEC-021 §2).
+   Copy e paleta: comps S11 Desktop 1920 / Mobile 375.
    Leis: L1 ([CONFIRMAR] em steel via data-confirm) · L2 (blaze da
    dobra = botão Enviar/Button primary; o pulso da Linha conta na
    dobra em que estiver) · L3 (circuit SÓ focus ring; ring de input =
    circuit a 28% via color-mix — sem hex/rgba literal) · L5 (toda
-   transição dentro de no-preference; o parallax do hat é gated por
-   useMotionOk no FooterHat) · L9 (profundidade = hairline + tint,
-   zero drop-shadow — o box-shadow do focus é ring funcional) ·
-   L10 (só transform/opacity + var(--ease)) · L12 (Archivo display
-   caps tracking neg · Inter body · Mono caps +0.08em) · D1 (dark:
-   --c-line-dark separadores · --c-hairline-dark bordas de célula —
-   default dos 4 estados de input sobre graphite).
-   §4 lei de tradução: padding-right 348px, aside Specs,
-   data-screen-label e SMIL da comp descartados; full-viewport
-   MANTIDO (S11 é uma das 3 seções 100vh); a "linha separadora" da
-   comp é o próprio fio D3 (AutomationLine zone="contact").
-   4 estados de input: default (hairline-dark) → :focus-visible
-   (borda circuit + ring) → .isError (--c-error) → .isSuccess
-   (--c-success + ✓). .isError/.isSuccess prontos p/ o W4 ligar.
+   transição dentro de no-preference; o parallax vem do loop
+   compartilhado, que não monta sob reduced-motion) · L9 (profundidade
+   = hairline + tint, zero drop-shadow) · L10 (só transform/opacity) ·
+   L12 (Archivo display caps · Inter body · Mono caps +0.08em).
+
+   V2 (W12-E) — DUAS REVERSÕES do v1, por paridade:
+   (a) o rodapé era GRAPHITE e agora é CLARO (o modelo mede tom light,
+       luma mediana 218). Consequência: os tokens D1 de escuro
+       (--c-line-dark / --c-hairline-dark / --c-ink-on-dark) saem daqui
+       e voltam os de claro (--c-line / --c-iron).
+   (b) o `min-height: 100vh` saiu: o rodapé do modelo tem 801px, e uma
+       seção de 100vh com ~700px de conteúdo é 380px de vazio.
+   A superfície é `--c-line` a 55% sobre `--c-paper` (≈ #EDEFF3): paper
+   puro não se distinguiria da S10 acima, e `--c-line` cheio derruba o
+   steel para 4,39:1, abaixo de AA (é exatamente o que DEC-014 evitou).
+   Nesta mistura o steel mede 4,77:1 — passa AA para os metadados mono.
+   O "hat" de 44px com raio 0 0 33 33 é a tampa arredondada do modelo:
+   ela é `--c-paper` para ler como a base arredondada da seção de cima.
+   4 estados de input: default (line) → :focus-visible (borda circuit +
+   ring) → .isError (--c-error) → .isSuccess (--c-success + ✓).
    ============================================================ */
 
 .root {
   position: relative; /* âncora do AutomationLine (D3) */
-  display: flex;
-  overflow: hidden; /* contém o hat gigante */
-  min-height: 100vh;
-  min-height: 100svh;
-  background: var(--c-graphite);
-  color: var(--c-ink-on-dark);
+  overflow: hidden; /* contém o hat gigante e o curso do parallax */
+  background: color-mix(in srgb, var(--c-line) 55%, var(--c-paper));
+  color: var(--c-iron);
+}
+
+/* Tampa arredondada do modelo (44px, raio 0 0 33 33): visualmente é a
+   base arredondada da seção anterior encostando no rodapé. */
+.cap {
+  height: 26px; /* medido ≤768px */
+  border-radius: 0 0 20px 20px; /* medido ≤768px */
+  background: var(--c-paper);
+}
+
+/* --- Parallax de entrada (FooterParallax) ------------------------
+   overflow: hidden é REQUISITO da mecânica, não estética: o conteúdo
+   começa deslocado −50 % da própria altura e sem o corte sobra um vão. */
+.parallax {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.parallaxTrack {
+  /* Estado estático = estado de reduced-motion (L5). O JS só escreve
+     translate3d aqui quando o loop compartilhado está montado. */
+  display: block;
 }
 
 /* Conteúdo acima do fio (z-index 1 vs z-index 0 do AutomationLine). */
@@ -38,7 +67,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-block: 40px; /* comp mobile: 40 / 40 */
+  padding-block: 64px 40px; /* mobile */
 }
 
 /* Eyebrow — base .eyebrow (globals); comp: mb 24 mobile / 48 desktop. */
@@ -46,12 +75,11 @@ p.sectionEyebrow {
   margin: 0 0 24px;
 }
 
-/* Duas colunas do miolo; flex:1 empurra hat+meta para a base (100svh). */
+/* Duas colunas do miolo. */
 .grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 44px;
-  flex: 1;
 }
 
 /* --- Coluna esquerda: título + form ------------------------------ */
@@ -107,21 +135,22 @@ p.sectionEyebrow {
   font-size: 0.8125rem; /* comp mobile: 13px */
   font-weight: 500;
   line-height: 1.4;
-  color: var(--c-ink-on-dark);
+  color: var(--c-iron);
 }
 
 .control {
   position: relative;
 }
 
-/* Estado DEFAULT — hairline-dark sobre graphite (D1). */
+/* Estado DEFAULT — hairline claro; o campo é paper sobre a superfície
+   mista do rodapé, então a caixa se lê sem precisar de sombra (L9). */
 .input,
 .textarea {
   width: 100%;
-  border: 1px solid var(--c-hairline-dark);
+  border: 1px solid var(--c-line);
   border-radius: var(--r-md); /* 12px funcional (DS) */
-  background: transparent;
-  color: var(--c-ink-on-dark);
+  background: var(--c-paper);
+  color: var(--c-iron);
   font-family: var(--ff-body);
   font-size: 0.875rem; /* comp mobile: 14px */
   line-height: 1.5;
@@ -260,7 +289,7 @@ p.sectionEyebrow {
   text-transform: uppercase;
   font-size: 1.75rem; /* comp mobile: 28px */
   letter-spacing: -0.01em;
-  color: var(--c-ink-on-dark);
+  color: var(--c-iron);
 }
 
 .email {
@@ -268,7 +297,7 @@ p.sectionEyebrow {
   align-items: center;
   align-self: flex-start;
   min-height: 44px; /* alvo a11y */
-  color: var(--c-ink-on-dark);
+  color: var(--c-iron);
   font-size: 1rem;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -306,7 +335,7 @@ p.sectionEyebrow {
   display: inline-flex;
   align-items: center;
   min-height: 44px; /* alvo a11y (comp: pitch 16+14 ≈ 30 → 44) */
-  color: var(--c-ink-on-dark);
+  color: var(--c-iron);
   font-size: 1rem;
   text-decoration: none;
 }
@@ -325,7 +354,7 @@ p.sectionEyebrow {
 
 /* Sociais [CONFIRMAR] — spans (sem URL confirmada não há link). */
 .socialCol {
-  border-top: 1px solid var(--c-line-dark); /* comp mobile */
+  border-top: 1px solid var(--c-line); /* comp mobile */
   padding-top: 20px;
 }
 
@@ -334,7 +363,7 @@ p.sectionEyebrow {
   align-items: center;
   min-height: 44px;
   font-size: 0.9375rem; /* comp mobile: 15px */
-  color: var(--c-ink-on-dark);
+  color: var(--c-iron);
 }
 
 /* L1: copy não confirmada SEMPRE em steel. */
@@ -355,8 +384,10 @@ p.sectionEyebrow {
 
 /* --- Parallax hat (FooterHat) ------------------------------------ */
 
-/* Wordmark gigante dark-on-dark (--c-line-dark): presença, não brilho
-   (L9 — nenhum glow/sombra). O transform vive no .hatInner (JS). */
+/* Wordmark gigante light-on-light: presença, não brilho (L9 — nenhum
+   glow/sombra). O transform vive no .hatInner (JS).
+   V2: era --c-line-dark sobre graphite; no rodapé claro a mesma ideia é
+   iron a 12% sobre a superfície mista — mesmo peso ótico, tom invertido. */
 .hat {
   overflow: hidden;
   margin-top: 40px;
@@ -371,18 +402,45 @@ p.sectionEyebrow {
   text-transform: uppercase;
   font-size: min(28vw, 400px);
   letter-spacing: -0.02em;
-  color: var(--c-line-dark);
+  color: color-mix(in srgb, var(--c-iron) 12%, transparent);
 }
 
-/* --- Meta final (copyright + assinatura) ------------------------- */
+/* --- Meta final (copyright + assinatura + voltar ao topo) -------- */
 
 .meta {
   display: flex;
   flex-direction: column;
   gap: 6px;
   margin-top: 24px;
-  border-top: 1px solid var(--c-line-dark); /* comp mobile */
+  border-top: 1px solid var(--c-line); /* comp mobile */
   padding-top: 24px;
+}
+
+/* Voltar ao topo (copy oficial footer.backToTop). */
+.backToTop {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  min-height: 44px; /* §7.9 */
+  color: var(--c-iron);
+  font-family: var(--ff-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.backToTop:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.backToTop:focus-visible {
+  outline: 2px solid var(--c-circuit); /* L3 */
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
 }
 
 .metaItem {
@@ -421,7 +479,7 @@ p.sectionEyebrow {
    ------------------------------------------------------------ */
 @media (min-width: 768px) {
   .inner {
-    padding-block: 96px 56px;
+    padding-block: 120px 50px; /* medido: footer padding-block */
   }
 
   p.sectionEyebrow {
@@ -482,7 +540,7 @@ p.sectionEyebrow {
 
   .sideCol {
     gap: 48px;
-    border-left: 1px solid var(--c-line-dark); /* comp: divisória D1 */
+    border-left: 1px solid var(--c-line); /* comp: divisória */
     padding-left: clamp(32px, 3.3vw, 64px);
   }
 
@@ -525,6 +583,11 @@ p.sectionEyebrow {
     margin-top: 28px; /* comp: 28px após a Linha */
     border-top: 0;
     padding-top: 0;
+  }
+
+  .cap {
+    height: 44px; /* medido: footer hat 44px */
+    border-radius: 0 0 var(--r-card) var(--r-card); /* 0 0 33 33 */
   }
 
   .metaItem {

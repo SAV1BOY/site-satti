@@ -1,31 +1,31 @@
 /* ============================================================
    Services — S4 Serviços
-   Fonte visual: S4 Servicos Desktop 1920.dc.html / Mobile 375.dc.html
-   Lei de tradução (§4): scaffold descartado — padding-right 348px,
-   aside "Specs", placeholders rotulados [ S4-IMG-* ], data-screen-label,
-   badge motion, SMIL animateMotion (a AutomationLine resolve o fio);
-   min-height:100vh não se aplica (S4 flui). O SVG interno da comp era
-   aproximação de preview da Linha — substituído por <AutomationLine
-   zone="services">.
-   Leis: L2 (NENHUM blaze estático na S4 — o blaze da dobra é o pulso
-   da Linha passando; tints ≠ acento), L5 (toda animação em
-   no-preference; reduced = estado estático da comp), L9 (profundidade
-   = hairline 1px + tint, sem drop-shadow), L10 (só transform/opacity,
-   easing var(--ease)), L12 (Archivo display caps tracking negativo ·
-   Inter body · JetBrains Mono tags — exceção do mono-caps: grafia
-   oficial de marcas nas tags, sem uppercase).
-   Cores derivadas dos tints (número/descrição/borda de tag/fundo de
-   mídia por card): a comp usa derivações disciplinadas dos tints
-   (card1: 9A6F58/5C4A40/D9B7A6 · card2: 6079B5/445377/B9C7EC ·
-   card3: 6E7480/5A606B/CBD0D9 — valores sem "#" de propósito: gate
-   §7.2 exige zero hex literal). Reproduzidas via color-mix() só com
-   tokens — fórmulas conferidas canal a canal contra os alvos da
-   comp (Δ ≤ ~5%).
-   Coreografia (spec §6-W3 + Atlas 03 "cards sobrepostos no scroll"):
-   desktop = stack com offset 40px que se "distribui" em fila com
-   sobreposição -40px durante o pin (stage sticky; transforms via
-   IO + rAF no ServicesDeck). Mobile = pilha vertical sem sticky
-   (comp mobile). Reduced-motion/SSR = fila final estática (comp).
+   Geometria: design/awsmd-ref/awsmd-geometry.json → services
+   (fonte única — o CSS do modelo NÃO foi aberto; DEC-016).
+
+   v2 · CARD PREENCHIDO POR IMAGEM (DEC-018b). O v1 era card tintado
+   com texto escuro e uma janela de imagem no topo; o modelo é card
+   cheio de imagem com texto claro por cima, raio 7px, com gradiente
+   inferior de legibilidade. O tint da SATTI virou UNDERLAY atrás da
+   imagem: a paleta por card sobrevive à troca de composição E é o
+   fallback quando o modo `final` não renderiza a imagem.
+
+   Leis: L4 (budgets), L5 (o respiro só existe em no-preference;
+   reduced = imagem parada, fila final), L9 (profundidade = hairline +
+   tint, zero drop-shadow), L10 (só transform/opacity animam; as
+   transições de hover são discretas, de estado), L12 (Archivo display
+   caps tracking negativo · Inter body · JetBrains Mono tags —
+   exceção do mono-caps: grafia oficial de marcas nas tags),
+   D1 (zero hex literal — só var(--c-*)/var(--tint-*)).
+
+   CONTRASTE (é gate, e a conta é contra a PIOR hipótese: imagem
+   branca por baixo). Texto = var(--c-ink-on-dark), L≈0,913.
+     · piso uniforme 58 % de graphite → fundo L≈0,175 → 4,29:1.
+       Cobre o título de 48px (texto grande exige 3:1).
+     · faixa inferior (60 % da altura) somando 72 % sobre o piso =
+       88 % efetivos → fundo L≈0,028 → 12,4:1. Cobre número (11px),
+       descrição (16px a 85 % → 9,3:1) e tags (12px).
+   Se um dia reprovar: escurecer o gradiente, NUNCA clarear o texto.
    ============================================================ */
 
 /* --- Seção (paper) --- */
@@ -33,9 +33,9 @@
   position: relative;
   background: var(--c-paper);
   color: var(--c-iron);
-  /* Comp 1920: 96px topo · 120px base · 120px de gutter real
-     (o 348px da direita era scaffold da aside — descartado). */
-  padding: 96px clamp(20px, 6.25vw, 120px) 120px;
+  /* spec: section.paddingBlock 60. Gutter inline real (o 348px da
+     direita da comp era scaffold da aside de specs — §4). */
+  padding: 40px clamp(20px, 6.25vw, 120px);
 }
 
 .inner {
@@ -46,12 +46,12 @@
 /* --- Eyebrow "01 — Serviços" (classe base .eyebrow do globals) --- */
 .kicker {
   display: flex;
-  margin-bottom: 18px; /* comp desktop */
+  margin-bottom: 14px;
 }
 
 /* --- Título da seção --- */
 .title {
-  margin: 0 0 64px;
+  margin: 0;
   font-family: var(--ff-display);
   font-weight: 800;
   text-transform: uppercase;
@@ -62,148 +62,145 @@
 }
 
 /* ============================================================
-   Deck — coreografia dos cards (ServicesDeck, client)
+   Deck / lista — spec: list.marginTop 50, list.display flex,
+   item.flex "0 0 33.3333%", item.padding 1.5
 
-   v2 · RAIL DE 220vh REMOVIDO (DEC-021 §2). O modelo não pina nada:
-   fatia-de-scroll ÷ fatia-de-altura ≈ 1,0 em todas as seções dele, e
-   os 3 cards são uma fila flex simples (`flex: 0 0 33.333%`), sem
-   coreografia alguma. O trilho fazia esta seção ocupar 2,62 viewports
-   e 23,1% da altura da página contra os 7,9% do modelo — a maior
-   violação de paridade do build v1, medida por `npm run parity:dom`.
-
-   A abertura dos cards SOBREVIVE (é original da SATTI e não custa
-   estrutura): passa a ser dirigida pela passagem natural da seção pela
-   viewport, não por um pin. Sem `height`, sem `sticky`.
+   O RAIL DE 220vh FOI REMOVIDO (DEC-021 §2) e não volta: nada no
+   modelo é pinado (fatia-de-scroll ÷ fatia-de-altura ≈ 1,0 em todas
+   as seções dele) e os 3 cards são uma fila flex simples. Sem
+   `height`, sem `sticky`. A abertura dos cards sobrevive porque é
+   original da SATTI e não custa estrutura — passa a ser dirigida pela
+   passagem natural da seção pela viewport.
 
    Estado base (SSR / reduced / mobile): fluxo normal, fila final.
    ============================================================ */
-.deck[data-active="true"] .card {
+
+.deck {
+  /* spec: list.marginTop 50 */
+  margin-top: 36px;
+}
+
+.deck[data-active="true"] .item {
   will-change: transform;
 }
 
-/* --- Fila de cards (comp: 3 × flex, sobreposição -40px) --- */
 .row {
   position: relative;
   display: flex;
-  align-items: stretch;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
 }
 
-/* --- Card (tint editorial 28px + hairline — L9) --- */
-.card {
-  flex: 1 1 0;
+/* spec: item.flex "0 0 33.3333%" + item.padding 1.5 — a "goteira" de
+   3px entre cards é o padding do item, não gap. Mobile é pilha. */
+.item {
+  display: flex;
   min-width: 0;
-  box-sizing: border-box;
-  aspect-ratio: 510 / 552; /* proporção da comp (~604×653 em 1920 real) */
+}
+
+/* --- Card preenchido por imagem --- */
+.card {
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  padding: 28px;
-  border: 1px solid var(--c-line);
-  border-radius: var(--r-xl);
-  background: var(--card-tint);
-}
-
-.card + .card {
-  margin-left: -40px; /* sobreposição da comp/Atlas */
-}
-
-/* Tints por card (F0–F5: tints, NÃO acento) + derivações da comp.
-   --card-seed é só insumo de mistura — nunca pinta nada puro. */
-.card:nth-of-type(1) {
-  --card-tint: var(--tint-blaze);
-  --card-seed: color-mix(in srgb, var(--c-blaze) 30%, var(--c-iron) 70%);
-  /* seed 85% (vs 62% da comp): AA 6.87:1 sobre a tint — a11y vence a
-     derivação exata da comp (gate LH §7.9); matiz preservado. */
-  --card-label: color-mix(in srgb, var(--card-seed) 85%, var(--card-tint) 15%);
-  --card-body: color-mix(in srgb, var(--card-seed) 50%, var(--c-steel) 50%); /* ≈ comp 5C4A40 · 6.58:1 */
-  --card-tag-line: color-mix(in srgb, var(--card-seed) 26%, var(--card-tint) 74%); /* ≈ comp D9B7A6 (decorativa) */
-}
-
-.card:nth-of-type(2) {
-  --card-tint: var(--tint-blue);
-  /* Circuit entra SÓ como insumo do color-mix para reproduzir os
-     azuis derivados aprovados da comp — nunca aparece puro (L3). */
-  --card-seed: color-mix(in srgb, var(--c-circuit) 55%, var(--c-iron) 45%);
-  /* seed 85% (vs 70% da comp): AA 5.22:1 sobre a tint (gate LH §7.9). */
-  --card-label: color-mix(in srgb, var(--card-seed) 85%, var(--card-tint) 15%);
-  --card-body: color-mix(in srgb, var(--card-seed) 55%, var(--c-steel) 45%); /* ≈ comp 445377 · 5.53:1 */
-  --card-tag-line: color-mix(in srgb, var(--card-tint) 80%, var(--card-seed) 20%); /* ≈ comp B9C7EC */
-}
-
-.card:nth-of-type(3) {
-  --card-tint: var(--tint-slate);
-  --card-seed: var(--c-steel);
-  /* steel puro da comp dá 4.04:1 sobre a slate — escurecido p/ AA
-     6.15:1 (gate LH §7.9), matiz steel preservado. */
-  --card-label: color-mix(in srgb, var(--c-steel) 70%, var(--c-iron) 30%);
-  --card-body: color-mix(in srgb, var(--c-steel) 80%, var(--c-iron) 20%); /* ≈ comp 5A606B */
-  --card-tag-line: color-mix(in srgb, var(--card-tint) 75%, var(--c-steel) 25%); /* ≈ comp CBD0D9 */
-}
-
-/* --- Mídia do card (placeholder rotulado da comp → imagem real A7) --- */
-.media {
-  position: relative;
+  width: 100%;
+  min-width: 0;
   overflow: hidden;
-  border-radius: var(--r-lg);
-  aspect-ratio: 454 / 196; /* janela da comp (card 510 − 2×28 de padding) */
-  background: color-mix(in srgb, var(--card-tint) 92%, var(--card-seed) 8%);
+  /* spec: card.radius 7 */
+  border-radius: var(--r-service);
+  /* UNDERLAY: o tint da SATTI atrás da imagem (e sozinho quando o modo
+     final não renderiza a imagem). */
+  background: var(--card-tint);
+  color: var(--c-ink-on-dark);
+}
+
+/* Tints por card (F0–F5: tints, NÃO acento). */
+.item:nth-of-type(1) .card {
+  --card-tint: var(--tint-blaze);
+}
+
+.item:nth-of-type(2) .card {
+  --card-tint: var(--tint-blue);
+}
+
+.item:nth-of-type(3) .card {
+  --card-tint: var(--tint-slate);
+}
+
+/* --- Imagem cobrindo o card --- */
+.media {
+  position: absolute;
+  inset: 0;
 }
 
 .mediaImg {
   object-fit: cover;
-  transform-origin: center;
+  /* spec: image.objectPosition "center bottom" */
+  object-position: center bottom;
+  transform-origin: center bottom;
 }
 
-/* --- Número mono + título Archivo + seta de hover --- */
-.heading {
+/* --- Scrim de legibilidade (estrutural — cálculo no cabeçalho) --- */
+.scrim {
+  position: absolute;
+  inset: 0;
+  background-color: color-mix(in srgb, var(--c-graphite) 58%, transparent);
+}
+
+/* spec: shadow.position bottom, shadow.maxHeight 60% */
+.scrim::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 60%;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--c-graphite) 72%, transparent),
+    transparent
+  );
+}
+
+/* --- Corpo (spec: card.containerPadding 25) --- */
+.body {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  padding: 20px;
 }
 
-.number {
-  margin: 0;
-  font-family: var(--ff-mono);
-  font-size: 0.6875rem; /* 11px */
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--card-label);
-}
-
-.titleRow {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-}
-
+/* spec: title "500 48px/1.2" uppercase, letter-spacing -0.01em */
 .cardTitle {
   position: relative;
+  display: block;
   margin: 0;
   font-family: var(--ff-display);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
-  font-size: clamp(1.4375rem, 1.5vw + 0.6rem, 1.875rem); /* 23px → 30px */
-  line-height: 1.1;
-  padding-bottom: 3px;
+  font-size: clamp(1.625rem, 2.6vw, 3rem); /* 26px → 48px */
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 /* Sublinha hairline do hover — ::after com opacity (L10: nada de
-   transição de border-color). Estado revelado também existe em
-   reduced-motion (instantâneo, sem animação — "sem sublinha ANIMADA"). */
+   transição de border-color aqui, e nada de animar layout). */
 .cardTitle::after {
   content: "";
   position: absolute;
-  left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -3px;
+  left: 0;
   height: 1px;
-  background: var(--c-iron);
+  background: var(--c-ink-on-dark);
   opacity: 0;
 }
 
 .arrow {
-  font-size: 1.125rem; /* 18px */
+  margin-left: 12px;
   opacity: 0;
 }
 
@@ -214,135 +211,135 @@
   }
 }
 
-/* --- Descrição --- */
-.desc {
-  margin: 0;
-  font-size: 0.9375rem; /* 15px */
-  line-height: 1.6;
-  color: var(--card-body);
-  max-width: 42ch;
+/* spec: text.marginTop 240 — é o que empurra o bloco de baixo para a
+   base do card. Como o card não tem altura fixa, este número É a
+   composição: 240px no desktop, reduzido no mobile (onde 240px de vão
+   sobre uma pilha de 3 cards custaria uma viewport inteira). */
+.foot {
+  margin-top: 110px;
 }
 
-/* --- Tags de stack (grafia oficial de marcas — sem caps, L12) --- */
+/* Número mono — mora no bloco de baixo por causa do contraste
+   (cabeçalho): 11px no topo do card exigiria escurecer o card inteiro. */
+.number {
+  margin: 0 0 6px;
+  font-family: var(--ff-mono);
+  font-size: 0.6875rem; /* 11px */
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-ink-on-dark);
+  /* 0.85 e não 0.75: a 0.75 o contraste medido do número sobre a imagem mais
+     clara das três fica em 5,00:1 contra o mínimo de 4,5 — margem pequena
+     demais para um slot cuja imagem ainda vai ser trocada (MANIFEST A7). */
+  opacity: 0.85;
+}
+
+/* spec: text "400 16px/1.2", maxWidth 93%, marginBottom 20, opacity .85 */
+.desc {
+  margin: 0 0 20px;
+  font-family: var(--ff-body);
+  font-weight: 400;
+  font-size: 0.9375rem; /* 15px mobile */
+  line-height: 1.35;
+  max-width: 93%;
+  opacity: 0.85;
+}
+
+/* spec: tags.borderTop 1, tags.paddingTop 20, flexWrap wrap,
+   marginInline -2 (a compensação da margem de 2px de cada tag) */
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin: 0;
-  margin-top: auto; /* comp: tags ancoradas na base do card */
-  padding: 0;
+  margin: 0 -2px;
+  padding: 16px 0 0;
+  border-top: 1px solid
+    color-mix(in srgb, var(--c-ink-on-dark) 32%, transparent);
   list-style: none;
 }
 
 .tag {
-  border: 1px solid var(--card-tag-line);
+  margin: 2px;
+  border: 1px solid color-mix(in srgb, var(--c-ink-on-dark) 32%, transparent);
   border-radius: var(--r-pill);
-  padding: 8px 16px;
+  padding: 6px 12px;
   font-family: var(--ff-mono);
-  font-size: 0.75rem; /* 12px */
-  color: var(--c-iron);
+  font-size: 0.6875rem; /* 11px */
+  color: var(--c-ink-on-dark);
+}
+
+/* ============================================================
+   ≥1024px — a fila de 3 da spec
+   ============================================================ */
+@media (min-width: 1024px) {
+  .section {
+    padding-block: 60px; /* spec: section.paddingBlock 60 */
+  }
+
+  .kicker {
+    margin-bottom: 18px;
+  }
+
+  .deck {
+    margin-top: 50px; /* spec: list.marginTop 50 */
+  }
+
+  .row {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .item {
+    flex: 0 0 33.3333%;
+    padding: 1.5px; /* spec: item.padding 1.5 */
+  }
+
+  .body {
+    padding: 25px; /* spec: card.containerPadding 25 */
+  }
+
+  .foot {
+    margin-top: 240px; /* spec: text.marginTop 240 */
+  }
+
+  .desc {
+    font-size: 1rem; /* spec: text 16px */
+    line-height: 1.2;
+  }
+
+  .tags {
+    padding-top: 20px; /* spec: tags.paddingTop 20 */
+  }
+
+  .tag {
+    font-size: 0.75rem; /* 12px */
+    padding: 8px 14px;
+  }
 }
 
 /* ============================================================
    MOTION — tudo dentro de no-preference (L5); só transform/opacity
-   com easing var(--ease) (L10). Reduced = comp estática: imagem em
-   scale 1, fila final, sem transições.
+   (L10). Reduced = imagem em scale 1, fila final, sem transições.
    ============================================================ */
 @media (prefers-reduced-motion: no-preference) {
-  /* Respiração da imagem: scale 1 → 1.2 · 4s · infinite alternate
-     (comp "s4-zoom"; declarada local para escopo garantido do módulo). */
-  @keyframes s4-breathe {
+  /* spec: image.animation "scaler 4s infinite alternate",
+     image.scale [1, 1.2] — a duração é o token --dur-scaler. */
+  @keyframes s4-scaler {
     from {
       transform: scale(1);
     }
+
     to {
       transform: scale(1.2);
     }
   }
 
   .mediaImg {
-    animation: s4-breathe 4s var(--ease) infinite alternate;
+    animation: s4-scaler var(--dur-scaler) var(--ease) infinite alternate;
   }
 
   .cardTitle::after,
   .arrow {
     transition: opacity 0.3s var(--ease);
-  }
-}
-
-/* ============================================================
-   MOBILE (< 1024px) — comp S4 Mobile 375: pilha vertical, sem
-   sticky e sem sobreposição; o fio da Linha é a AutomationLine
-   (o indent de 36px da comp era scaffold da linha de preview).
-   ============================================================ */
-@media (max-width: 1023px) {
-  .section {
-    padding: 40px 20px 56px;
-  }
-
-  .kicker {
-    margin-bottom: 14px;
-  }
-
-  .title {
-    margin-bottom: 36px;
-    line-height: 1.04;
-    max-width: 16ch;
-  }
-
-  .row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 24px;
-  }
-
-  .card {
-    aspect-ratio: auto;
-    gap: 18px;
-    padding: 20px;
-    border-radius: 24px; /* comp mobile */
-  }
-
-  .card + .card {
-    margin-left: 0;
-  }
-
-  .media {
-    aspect-ratio: auto;
-    height: 172px; /* comp mobile */
-    border-radius: var(--r-md);
-  }
-
-  .heading {
-    gap: 5px;
-  }
-
-  .number {
-    font-size: 0.625rem; /* 10px */
-  }
-
-  .cardTitle {
-    line-height: 1.12;
-    padding-bottom: 0;
-  }
-
-  .cardTitle::after,
-  .arrow {
-    display: none; /* comp mobile não tem seta/sublinha de hover */
-  }
-
-  .desc {
-    font-size: 0.875rem; /* 14px */
-    max-width: none;
-  }
-
-  .tags {
-    gap: 8px;
-    margin-top: 0; /* comp mobile: tags seguem o fluxo */
-  }
-
-  .tag {
-    padding: 7px 14px;
-    font-size: 0.6875rem; /* 11px */
   }
 }

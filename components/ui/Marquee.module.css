@@ -1,10 +1,22 @@
 /* ============================================================
-   Marquee — trilho CSS-only (ref: S3 ValuesStrip Var A · S5 logos)
-   Loop: translateX 0 → -50%. Cada cópia leva padding-right igual
-   ao gap, então -50% do trilho = exatamente 1 cópia (sem salto).
-   L5: animação SÓ dentro de prefers-reduced-motion: no-preference;
-   fallback estático = trilho parado, primeira cópia visível.
-   L10: só transform/opacity · timing linear (loop contínuo).
+   Marquee — trilho CSS-only. Contrato e leis no doc do .tsx.
+   Estrutura: .marquee > .track > .lane × 2 > .set × repeat > itens
+
+   Geometria do loop: o .track NÃO tem gap; cada .lane leva
+   padding-right (padding-bottom no eixo y) = gap. Com 2 lanes
+   idênticas, -50% do trilho é exatamente uma lane — a costura
+   fica com o mesmo espaçamento de dentro da lane.
+
+   Custom properties que a grade estática (staticBelow) troca:
+   --marquee-play / --marquee-wrap / --marquee-track-w /
+   --marquee-lane-w / --marquee-lane-pad / --marquee-clone /
+   --marquee-set / --marquee-item-basis / --marquee-item-grow.
+   Todas têm fallback = comportamento de marquee, então o CSS
+   funciona sem o <style> escopado.
+
+   L5: animação só dentro de prefers-reduced-motion: no-preference;
+       fallback estático = trilho parado, lane 0 visível.
+   L10: só transform · timing linear (loop contínuo).
    ============================================================ */
 
 .marquee {
@@ -13,39 +25,99 @@
 
   width: 100%;
   overflow: hidden;
+
+  /* pauseOffscreen (default): o UA pula render E tick de animação da
+     subárvore fora da tela — é a pausa off-screen que o modelo faz em
+     JS, a custo zero e mantendo o componente Server.
+     --marquee-h: altura intrínseca enquanto o trilho nunca foi
+     renderizado. Defina-a na seção quando a altura é conhecida. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto var(--marquee-h, 180px);
+}
+
+/* pauseOffscreen={false}: o trilho tem de estar em meio-curso quando
+   entra na viewport, logo não pode ter o render pulado. */
+.marquee[data-pause="off"] {
+  content-visibility: visible;
+  contain-intrinsic-size: none;
 }
 
 .track {
   display: flex;
-  width: max-content;
-  white-space: nowrap;
+  width: var(--marquee-track-w, max-content);
 }
 
-/* Cada cópia: itens espaçados pelo gap; padding-right fecha o loop */
-.copy {
+.marquee[data-axis="y"] .track {
+  flex-direction: column;
+  width: var(--marquee-track-w, 100%);
+}
+
+.lane,
+.set {
   flex: none;
   display: flex;
   align-items: center;
   gap: var(--marquee-gap);
-  padding-right: var(--marquee-gap);
+  flex-wrap: var(--marquee-wrap, nowrap);
+  width: var(--marquee-lane-w, auto);
 }
 
-/* Estado base (reduced-motion incluso): parado em translateX(0),
-   primeira cópia visível — a duplicata aria-hidden fica clipada. */
+/* Costura do loop: uma lane vale exatamente 50% do trilho. */
+.lane {
+  padding-right: var(--marquee-lane-pad, var(--marquee-gap));
+}
+
+.marquee[data-axis="y"] .lane,
+.marquee[data-axis="y"] .set {
+  flex-direction: column;
+}
+
+.marquee[data-axis="y"] .lane {
+  padding-right: 0;
+  padding-bottom: var(--marquee-lane-pad, var(--marquee-gap));
+}
+
+/* Alvos da grade estática. Fora dela, os fallbacks são os valores
+   normais de marquee (visível / conforme o item declarar). */
+.clone {
+  display: var(--marquee-clone, flex);
+}
+
+.setExtra {
+  display: var(--marquee-set, flex);
+}
+
+.set > * {
+  flex-basis: var(--marquee-item-basis, auto);
+  flex-grow: var(--marquee-item-grow, 0);
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .track {
     will-change: transform;
-    animation: marquee var(--marquee-duration) linear infinite;
+    animation: satti-marquee-x var(--marquee-duration) linear infinite;
+    /* a grade estática para o trilho em translate(0) sem mexer no nome */
+    animation-play-state: var(--marquee-play, running);
   }
 
-  .reverse {
+  .marquee[data-axis="y"] .track {
+    animation-name: satti-marquee-y;
+  }
+
+  /* right/down = mesmo keyframe ao contrário (2 keyframes, não 4) */
+  .marquee[data-reverse="true"] .track {
     animation-direction: reverse;
   }
 
-  @keyframes marquee {
+  @keyframes satti-marquee-x {
     to {
       transform: translateX(-50%);
+    }
+  }
+
+  @keyframes satti-marquee-y {
+    to {
+      transform: translateY(-50%);
     }
   }
 }

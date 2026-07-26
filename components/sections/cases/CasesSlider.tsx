@@ -1,7 +1,16 @@
 /**
  * CasesSlider (S9) — "04 — Cases em detalhe" · 3 cases curados com
  * métrica antes→depois num Swiper de 1 coluna (D4: S9 ≠ S7).
- * Fonte visual: S9 CasesSlider Desktop 1920.dc.html / Mobile 375.dc.html
+ * Geometria: awsmd-geometry.json → cases (section 130/120 · tom ESCURO ·
+ * overflow hidden · container 1306 · círculos 423 · busca 246).
+ * Copy e paleta: comps S9 Desktop 1920 / Mobile 375.
+ *
+ * V2 (W12-E): a seção passou a ser ESCURA de fato. O `data-tone="dark"`
+ * já estava aqui desde a W11 (é o ritmo claro/escuro do modelo, e o
+ * parity-timeline conta por atributo), mas o fundo era `--c-paper` — o
+ * atributo e o pixel discordavam. Agora é graphite, e todo texto pequeno
+ * saiu do steel: steel sobre graphite dá 3,49:1 e reprova AA (§7.9), então
+ * a de-ênfase no escuro é `--c-dim-on-dark` (9,2:1) — ver module.css.
  *
  * Server Component (L11): copy 100% via next-intl (L1); o Swiper, os
  * controles prev/next e os dots moram na client island CasesClient
@@ -92,6 +101,13 @@ export default async function CasesSlider() {
       data-section="cases"
       data-tone="dark"
     >
+      {/* Círculos decorativos (medido: 2 × 423px, gradiente vertical a 12%
+          de opacidade, coluna à esquerda, centrados na altura). */}
+      <div className={styles.decor} aria-hidden="true">
+        <span className={styles.circle} />
+        <span className={styles.circle} />
+      </div>
+
       <div className={`container-s ${styles.inner}`}>
         <p className={`eyebrow ${styles.sectionEyebrow}`}>
           {t("sectionLabel")}
@@ -107,6 +123,11 @@ export default async function CasesSlider() {
           afterValue={omitMetrics ? undefined : afterValue}
           prevLabel={t("previousAriaLabel")}
           nextLabel={t("nextAriaLabel")}
+          searchPlaceholder={t("searchPlaceholder")}
+          searchAriaLabel={t("searchAriaLabel")}
+          searchSubmitAriaLabel={t("searchSubmitAriaLabel")}
+          emptyResult={t("emptyResult")}
+          viewAllLabel={t("viewAll")}
         />
       </div>
     </section>

@@ -1,26 +1,34 @@
 /* ============================================================
    WorkCard — S7 Portfólio
-   Fonte visual: S7 Portfolio Desktop 1920.dc.html / Mobile 375.dc.html
+   Geometria: awsmd-geometry.json → portfolio.card / cardImage / glow /
+   linkButton / infoPill. Paleta e copy: comps S7 Desktop 1920 / Mobile 375.
    Leis: L2 (texto iron sobre superfícies claras), L5 (motion só em
    no-preference; estado base = fallback estático), L9 (hairline +
-   glow blaze blur(90px) op 0.8 — ÚNICO glow do sistema; sem
-   drop-shadow), L10 (só transform/opacity, easing var(--ease)).
+   glow blaze blur(90px) — ÚNICO glow do sistema; sem drop-shadow),
+   L10 (só transform/opacity).
+
+   V2 (W12-E) — a anatomia mudou: a MÍDIA preenche o card (720px, raio 33)
+   e o texto vive numa info-pill ancorada embaixo à esquerda. Três camadas:
+     z0 .media  → poster/vídeo, sobredimensionada p/ o parallax
+     z1 .glow   → bloom blaze que sobe da base no hover
+     z2 .pill   → tags + título + botão de link
+   O hover escala a IMAGEM (1.05), não o card — era o card antes, e isso
+   fazia o card vizinho ser coberto no grid de 2 colunas.
    ============================================================ */
 
 .card {
   position: relative;
-  isolation: isolate; /* garante glow ::before (z -1) acima do bg graphite */
-  display: flex;
-  flex-direction: column;
+  display: block;
   box-sizing: border-box;
-  height: clamp(520px, 30vw + 240px, 720px); /* ~520 mobile → ~720 desktop */
-  padding: var(--sp-sm); /* 16px, fiel à comp */
-  border: 1px solid var(--c-line);
-  border-radius: var(--r-xl); /* 28px editorial */
-  background: var(--c-graphite);
-  color: var(--c-ink-on-dark);
+  /* Medida do modelo: 720px. No mobile (1 coluna, ~335px de largura) um
+     card de 720px vira uma coluna de 2:1 — a comp 375 usa card mais baixo. */
+  height: clamp(520px, 30vw + 240px, 720px);
+  overflow: hidden; /* recorta mídia, glow e o raio do card */
+  border-radius: var(--r-card); /* 33px medido */
+  background: var(--c-iron); /* fundo enquanto o poster decodifica */
+  color: var(--c-iron);
   text-decoration: none;
-  cursor: pointer;
+  cursor: pointer; /* medido: portfolio.card.cursor */
 }
 
 .card:focus-visible {
@@ -28,31 +36,13 @@
   outline-offset: 3px;
 }
 
-/* --- GLOW assinatura (L9: único glow do sistema) ---
-   Estado base (inclui reduced-motion): opacity 0, sem transição. */
-.card::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  left: 12%;
-  bottom: -130px;
-  width: 76%;
-  height: 190px;
-  background: var(--c-blaze);
-  filter: blur(90px);
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* --- Mídia cobrindo o topo --- */
+/* --- Camada de mídia (z0) -----------------------------------------
+   Sobredimensionada em ±150px na vertical: é a folga que o parallax
+   consome. Sem ela o translate de 150px expõe a borda da imagem. */
 .media {
-  position: relative;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-  border-radius: var(--r-lg); /* 16px, fiel à comp */
-  border: 1px solid var(--c-hairline-dark); /* D1: borda de célula no escuro */
-  background: var(--c-iron);
+  position: absolute;
+  z-index: 0;
+  inset: -150px 0;
 }
 
 .poster {
@@ -72,13 +62,53 @@
   opacity: 1;
 }
 
-/* --- Meta: tags mono + título Archivo caps + pill --- */
-.meta {
+/* --- GLOW assinatura (z1 · L9: único glow do sistema) ---
+   Estado base (inclui reduced-motion): fora do card, opacity 0, sem
+   transição. Medido: 100% × 40%, raio 20%, blur 90, repouso
+   translate(-50%,100%) → hover translate(-50%,30%), opacity 0 → 1.
+
+   `mix-blend-mode: screen` NÃO é decoração: sem ele, um retângulo blaze
+   opaco de 40% da altura com blur(90px) por cima da mídia APAGA a metade
+   de baixo do card (medido em screenshot — o blaze da SATTI é #FF4D00,
+   muito mais agressivo que o azul médio do modelo). Em `screen` o glow
+   soma luz em vez de pintar: a estrutura da imagem sobrevive e o efeito
+   passa a ser o que um glow fisicamente é. Todos os números medidos
+   (tamanho, raio, blur, transforms, opacity 1) ficam intactos.
+   É propriedade estática — nada de blend por frame (L10). */
+.glow {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 0;
+  width: 100%;
+  height: 40%;
+  border-radius: 20%;
+  background: var(--c-blaze);
+  filter: blur(90px); /* estático: nunca entra em transição (L10) */
+  mix-blend-mode: screen;
+  transform: translate(-50%, 100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --- Info-pill (z2) — tags + título + botão de link --------------
+   Medido: raio 30, padding 19/19/19/35, margem 10, largura máxima
+   calc(100% - 20px), ancorada embaixo à esquerda. */
+.pill {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  bottom: 0;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  align-items: center;
   gap: var(--sp-sm);
-  padding: 20px var(--sp-xs) var(--sp-2xs); /* fiel à comp (20/12/8) */
+  box-sizing: border-box;
+  margin: 10px;
+  max-width: calc(100% - 20px);
+  padding: 19px 19px 19px 35px;
+  border-radius: var(--r-pill-lg); /* 30px medido */
+  background: var(--c-paper);
+  color: var(--c-iron); /* L2: texto iron sobre superfície clara */
 }
 
 .info {
@@ -121,76 +151,104 @@
   font-weight: 700;
   line-height: 1.1;
   text-transform: uppercase;
-  color: var(--c-ink-on-dark);
+  color: var(--c-iron);
 }
 
-/* Info-pill "Ver case" — estado base VISÍVEL e estático
-   (fallback L5: reduced-motion e touch veem a pill parada). */
-.pill {
+/* Botão de link (decorativo): círculo iron com seta. Gira 1 volta no
+   hover do card — medido em .45s ease-in-out. */
+.linkBtn {
   display: inline-flex;
   flex: none;
   align-items: center;
-  gap: 10px;
-  white-space: nowrap;
-  padding: 10px 18px;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
   border-radius: var(--r-pill);
-  background: var(--c-ink-on-dark);
-  color: var(--c-iron); /* L2: texto iron sobre superfície clara */
-  font-family: var(--ff-body);
-  font-size: 0.8125rem; /* 13px */
-  font-weight: 600;
-}
-
-.pillArrow {
-  font-size: 0.875rem;
+  background: var(--c-iron);
+  color: var(--c-paper);
+  font-size: 1rem;
+  line-height: 1;
 }
 
 /* ============================================================
    MOTION — tudo dentro de no-preference (L5); só transform/opacity
-   com easing var(--ease) (L10).
+   com o easing medido, que é exatamente o var(--ease) da SATTI.
    ============================================================ */
 @media (prefers-reduced-motion: no-preference) {
-  .card::before {
-    transition: opacity 0.4s var(--ease);
-  }
-
   .video {
     transition: opacity 0.4s var(--ease);
   }
 
-  /* Touch: glow acompanha o card ativo in-view (vídeo tocando) */
-  .card[data-active="true"]::before {
-    opacity: 0.8;
-  }
-}
-
-/* Hover fino (desktop): scale + glow + pill deslizando */
-@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
-  .card {
-    transition: transform 0.4s var(--ease);
-  }
-
-  .card:hover,
-  .card:focus-visible {
-    transform: scale(1.05);
-  }
-
-  .card:hover::before,
-  .card:focus-visible::before {
-    opacity: 0.8;
-  }
-
-  .pill {
-    opacity: 0;
-    transform: translateY(10px);
+  .glow {
     transition:
       opacity 0.4s var(--ease),
       transform 0.4s var(--ease);
   }
 
-  .card:hover .pill,
-  .card:focus-visible .pill {
+  /* Touch: glow acompanha o card ativo in-view (vídeo tocando) */
+  .card[data-active="true"] .glow {
+    transform: translate(-50%, 30%);
     opacity: 1;
-    transform: translateY(0);
+  }
+}
+
+/* Hover fino (desktop): imagem escala, glow sobe, botão gira */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .poster,
+  .video {
+    transition: transform 0.4s var(--ease);
+  }
+
+  .linkBtn {
+    transition: transform 0.45s ease-in-out; /* medido: linkButton */
+  }
+
+  .card:hover .poster,
+  .card:focus-visible .poster,
+  .card:hover .video,
+  .card:focus-visible .video {
+    transform: scale(1.05); /* medido: cardImage.hoverScale */
+  }
+
+  .card:hover .glow,
+  .card:focus-visible .glow {
+    transform: translate(-50%, 30%);
+    opacity: 1;
+  }
+
+  .card:hover .linkBtn,
+  .card:focus-visible .linkBtn {
+    transform: rotate(1turn);
+  }
+}
+
+/* Glow fora em ≤991px (medido: o brilho é feature de hover fino). */
+@media (max-width: 991px) {
+  .glow {
+    display: none;
+  }
+}
+
+/* Folga da mídia acompanha a amplitude do parallax por breakpoint
+   (±75 em ≤900px · desligado <768px — ver parallaxAmplitude()). */
+@media (max-width: 900px) {
+  .media {
+    inset: -75px 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .media {
+    inset: 0;
+  }
+
+  .pill {
+    gap: var(--sp-xs);
+    padding: 14px 14px 14px 24px;
+  }
+
+  .linkBtn {
+    width: 40px;
+    height: 40px;
   }
 }

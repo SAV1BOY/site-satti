@@ -1,0 +1,147 @@
+/* ============================================================
+   HeroShowreel — slot SR do MANIFEST §1, geometria de
+   awsmd-geometry.json → hero.showreel.
+
+   frame 405×230 raio 20px · botão de play 88px circular a 80% de
+   paper · selo a 138% do botão girando em --dur-seal (10s linear).
+
+   O selo é SVG INLINE FIRST-PARTY: o raster do modelo está em
+   excludedEvenInPreview (lib/third-party-assets.json →
+   click-to-play-seal) justamente porque redesenhar é trivial e o
+   resultado é melhor — herda currentColor, ~700 B, zero request.
+
+   L5 · a rotação do selo vive em no-preference; parado é o estado
+        declarado. L10 · só transform/opacity animam.
+   ============================================================ */
+
+/* 405px CRAVADO, não min(405px, 100%): a `.root` mora numa coluna flex
+   dimensionada pelo próprio conteúdo, então um 100% ali é circular e o
+   Chromium resolvia o frame em 265px. O teto de largura é do `.aside`. */
+.root {
+  position: relative;
+  width: 405px;
+  max-width: 100%;
+}
+
+.frame {
+  position: relative;
+  /* 405×230 medidos (hero.showreel.size) */
+  aspect-ratio: 405 / 230;
+  border: 1px solid color-mix(in srgb, var(--c-paper) 45%, transparent);
+  /* 20px é o raio medido do frame; entre --r-lg (16) e --r-pill-lg (30)
+     não há token para ele. */
+  border-radius: 20px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--c-graphite) 55%, transparent);
+}
+
+.poster {
+  object-fit: cover;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Botão de play (hero.showreel.playButton): 88px, 80% de paper. */
+.trigger {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--c-paper) 80%, transparent);
+  color: var(--c-iron);
+  cursor: pointer;
+  transition:
+    transform 0.4s ease-in-out,
+    background 0.4s ease-in-out;
+}
+
+.trigger:hover {
+  transform: translate(-50%, -50%) scale(1.06);
+  background: var(--c-paper);
+}
+
+.trigger:focus-visible {
+  /* L3: circuit só funcional */
+  outline: 2px solid var(--c-circuit);
+  outline-offset: 4px;
+}
+
+.playIcon {
+  width: 20px;
+  height: 22px;
+  fill: currentColor;
+}
+
+/* Selo a 138% do botão de 88px = 121,44px (hero.showreel.seal.scale).
+   Em px explícitos e não `138%`: o pai é um container GRID e a base de
+   porcentagem de um filho abspos ali depende da área de grade, o que é
+   sutil o suficiente para não querer depender dela — e o mobile escala
+   junto com o botão de 64px na media query, sem herdar surpresa.
+   (Nota de medição, para quem for auditar com getBoundingClientRect: o
+   rect deste elemento oscila entre 121 e 172px porque ele está GIRANDO;
+   um quadrado a 45° mede lado×√2. Não é o tamanho que muda.) */
+.seal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(88px * 1.38);
+  height: calc(88px * 1.38);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  color: var(--c-paper);
+}
+
+.sealText {
+  font-family: var(--ff-mono);
+  font-size: 8px;
+  fill: currentColor;
+}
+
+.sealDot {
+  fill: var(--c-blaze);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .seal {
+    animation: seal-rotate var(--dur-seal) linear infinite;
+  }
+
+  @keyframes seal-rotate {
+    from {
+      transform: translate(-50%, -50%) rotate(0turn);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(1turn);
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .trigger {
+    width: 64px;
+    height: 64px;
+  }
+
+  .playIcon {
+    width: 15px;
+    height: 17px;
+  }
+
+  .seal {
+    width: calc(64px * 1.38);
+    height: calc(64px * 1.38);
+  }
+}

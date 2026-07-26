@@ -6,7 +6,8 @@
      .fill — absoluta por cima, iron, revelada por clip-path
    L10 (exceção documentada): clip-path é o mecanismo da própria
    assinatura fill-text — muda só clip-path/transform/opacity,
-   nunca layout. O valor é escrito via style pelo frame loop.
+   nunca layout. O valor é escrito via style pela fase de WRITE do
+   loop compartilhado (ScrollProvider/useScrollTimeline).
    ============================================================ */
 
 .root {
